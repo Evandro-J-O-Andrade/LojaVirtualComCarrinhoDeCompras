@@ -56,13 +56,13 @@ nav {
 nav ul {
 
     display: inline-block;
-    list-style: none;
+    list-style-type: none;
 
 }
 
 nav ul li {
     display: inline-block;
-    margin-right: 50px;
+    margin-right: 20px;
 
 }
 
@@ -122,21 +122,21 @@ p {
     margin: 30px 0;
     border-radius: 30px;
     transition: background 0.5s;
-    
+
 
 }
 
-.btn:hover{
+.btn:hover {
     background: var(--cor-btn-hover);
-    color:var(--cor-btn-fonte);
+    color: var(--cor-btn-fonte);
 }
 
-.categorias{
+.categorias {
     margin: 70px 0;
 
 }
 
-.corpo-categorias{
+.corpo-categorias {
     max-width: 1080px;
     margin: auto;
     padding-left: 25px;
@@ -144,18 +144,19 @@ p {
 }
 
 
-.col-3{
-    flex-basis:  30%;
+.col-3 {
+    flex-basis: 30%;
     max-width: 250px;
     margin-bottom: 30px;
 }
 
-.col-3 img{
+.col-3 img {
     width: 100%;
-    object-fit: cover;  
+    object-fit: cover;
     object-position: center;
 }
-.col-4{
+
+.col-4 {
     flex-basis: 25%;
     max-width: 200;
     padding: 10px;
@@ -164,11 +165,67 @@ p {
 
 }
 
-.col-4:hover{
+.col-4:hover {
     transform: scale(1.1);
 }
-.col-4 img{
+
+.col-4 img {
     width: 100%;
     object-fit: cover;
     object-position: center;
+}
+
+.titulo {
+    position: relative;
+    line-height: 80px;
+    margin: 0 auto 80px;
+    text-align: center;
+    color: var(--cor-fonte-corpo);
+
+
+}
+
+.titulo::after {
+    content: '';
+    background-color: var(--cor-padrao);
+    width: 80px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+h4 {
+    color: var(--cor-fonte-corpo);
+    font-weight: normal;
+
+}
+
+.col-4 p {
+    font-size: 14px;
+
+}
+
+.classificacao{
+
+    color: var(--cor-padrao);
+}
+.ofertas{
+    background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+    margin-top: 80px;
+    padding: 30px 0;
+
+}
+.col-2 .ofertas-img{
+    padding: 50px;
+
+}
+small{
+    color:var(--cor-btn-fonte);
+}
+.depoimentos{
+    
+
 }
