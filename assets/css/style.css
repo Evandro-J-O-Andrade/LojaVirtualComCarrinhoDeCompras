@@ -280,3 +280,56 @@ small {
     font-weight: 600;
     color: var(--cor-fonte-corpo);
 }
+
+
+.depoimentos-icone{
+    font-size: 34px;
+    color: var(--cor-padrao);
+}
+
+.col-3 p{
+    font-size: 13px;
+    color: var(--cor-fonte-corpo-leve);
+    margin: 12px 0;
+}
+
+.depoimentos .col-3 h3{
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cor-fonte-corpo-leve);
+
+}
+
+.marcas{
+    margin: 100px auto;
+
+}
+.col-5{
+    width: 160px;
+}
+.col-5 img{
+    width: 150px;
+    cursor: pointer;
+    filter: grayscale(100%);
+ }
+ .col-5 img:hover{
+    filter: grayscale(0);
+
+ }
+
+.rodape{
+    background: var(--cor-btn-fonte);
+    color: var(--cor-fonte);
+    padding: 60px 0 20px;
+    font-size: 14px;
+
+}
+.rodape p{
+    color: var(--cor-fonte);
+    
+}
+
+.rodape h3{
+    color: var(--cor-fonte);
+    margin-top: 20px;
+}
