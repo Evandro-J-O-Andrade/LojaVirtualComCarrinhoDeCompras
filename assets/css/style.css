@@ -96,7 +96,8 @@ p {
 .col-2 img {
     max-width: 100%;
     padding: 50px 0;
-
+    margin-top:auto;
+    
 
 }
 
@@ -398,6 +399,103 @@ ul {
 
 }
 
+.novoMenu nav ul li a {
+    color: var(--cor-btn-fonte);
+
+}
+.novoMenu{
+    box-shadow: 0 2px 0 0 rgb(0,0,0,0.1);
+}
+.linha2{
+
+    margin: 100px auto 50px;
+    justify-content:space-between ;
+}
+.linha2 select{
+    padding: 5px;
+    border: 1px solid var(--cor-padrao);
+}
+.lnha2 select:focus{
+    outline: none;
+}
+
+.paginacao{
+    margin: 0 auto 80px;
+}
+
+.paginacao span{
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border: 1px solid var(--cor-padrao);
+    text-align: center;
+    line-height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.paginacao span:hover{
+    background: var(--cor-padrao);
+    color:var(--cor-fonte);
+}
+
+.ver-produtos{
+    margin-top: 40px;
+}
+
+.ver-produtos .col-2 img{
+    width: 100%;
+    padding: 0;
+}
+
+.ver-produtos #produtoImg{
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+    object-position: top;
+
+}
+.ver-produtos .col-2{
+padding: 20px;
+
+}
+
+.ver-produtos h4{
+    margin: 20px 0;
+    font-size: 22px;
+    font-weight:bold ;
+}
+.ver-produtos select{
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid var(--cor-padrao);
+    font-size: 20px;
+    
+}
+
+.ver-produtos select:focus{
+    outline: none;
+}
+
+.ver-produtos input{
+    width: 50px;
+    height: 40px;
+    margin-right: 10px ;
+    padding-left: 10px;
+    border: 1px solid var(--cor-padrao);
+    font-size: 20px;
+}
+.ver-produtos input:focus{
+    outline: none;
+}
+
+.ver-produtos .btn{
+    border: none;
+    background-color: var();
+}
+
+
+
 @media only screen and (max-width:800px) {
     nav ul {
         position: absolute;
@@ -423,23 +521,42 @@ ul {
     .menu-celular {
         display: block;
     }
-}
-@media only screen and (max-width:600px) {
-.linha{
-    text-align: center;
-    }
-    .col-2, .col-3, .col-4{
-        flex-basis: 100%;
-    }
-    .col-2 h1{
-        font-size: 27px;
-    }
-    .rodape-col-3, .rodape-col-4{
-       
-        text-align:  center;
+
+    .novoMenu nav ul li a {
+        color: var(--cor-fonte);
 
     }
-    .col-4 p{
+}
+
+
+@media only screen and (max-width:600px) {
+    .linha {
+        text-align: center;
+    }
+
+    .col-2,
+    .col-3,
+    .col-4 {
+        flex-basis: 100%;
+    }
+
+    .col-2 h1 {
+        font-size: 27px;
+    }
+
+    .rodape-col-3,
+    .rodape-col-4 {
+
+        text-align: center;
+
+    }
+
+    .col-4 p {
         font-size: 24px;
+    }
+
+    .novoMenu nav ul li a {
+        color: var(--cor-fonte);
+
     }
 }
