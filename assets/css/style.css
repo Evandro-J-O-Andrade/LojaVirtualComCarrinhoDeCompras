@@ -23,6 +23,7 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
+
 .banner {
     background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
     width: 100%;
@@ -77,8 +78,10 @@ nav {
 
 nav ul {
 
+    overflow: hidden;
     display: inline-block;
     list-style-type: none;
+    width: 100%;
 
 }
 
@@ -533,7 +536,11 @@ ul {
 
 
 
-@media only screen and (min-width: 300px) and (max-width:800px) {
+@media only screen and (min-width: 100px) and (max-width:800px) {
+    .logo {
+        width: 100%; /* Ajuste a largura da logo para telas menores */
+        max-width: 200px; /* Defina um tamanho máximo, se necessário */
+    }
 
     nav ul {
         position: absolute;
@@ -545,13 +552,36 @@ ul {
         overflow: hidden;
         transition: max-height 0.5s;
         min-width: 100%;
+        max-width: 0;
+    }
+    .menu-ativo nav ul {
+        max-height: 300px; /* Ajuste conforme necessário */
     }
 
-    @media only screen and (min-width: 300px) and (max-width: 740px) {
-        /* Estilos para telas entre 300px e 800px */
+    nav ul li {
+        display: block; /* Altere para bloco */
+        margin-top: 10px;
+        margin-right: 0; /* Remova margem direita para menu em coluna */
+        margin-bottom: 10px;
+    }
+}
+    @media only screen and (min-width: 100px) and (max-width: 740px) {
+
+        /* Estilos para telas entre 200px e 800px */
+        .logo {
+            width: 100%; /* Ajuste a largura da logo para telas menores */
+            max-width: 200px; /* Defina um tamanho máximo, se necessário */
+        }
     }
 
-    @media only screen and (min-width: 300px) and (max-width: 600px) {
+    @media only screen and (min-width: 100px)and (max-width: 600px) {
+        .logo {
+            width: 100%; /* Ajuste a largura da logo para telas menores */
+            max-width: 200px; /* Defina um tamanho máximo, se necessário */
+        }
+    }
+    
+    @media only screen and (min-width: 100px) and (max-width: 600px) {
 
         nav ul {
             position: absolute;
@@ -564,7 +594,10 @@ ul {
             transition: max-height 0.5s;
             min-width: 100%;
         }
-
+        .logo {
+            width: 100%; /* Ajuste a largura da logo para telas menores */
+            max-width: 200px; /* Defina um tamanho máximo, se necessário */
+        }
         /* Ajustes específicos para telas menores */
         #MenuItens {
             width: 100%;
@@ -601,10 +634,10 @@ ul {
         color: var(--cor-fonte);
 
     }
-}
 
 
-@media only screen and (max-width:300px) and (min-width: 500px) {
+
+@media only screen and (max-width:100px) and (min-width: 500px) {
     nav ul {
         position: absolute;
         top: 70px;
