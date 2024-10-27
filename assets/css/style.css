@@ -25,8 +25,20 @@ body {
 
 .banner {
     background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
-
+    width: 100%;
+    /* Garante que o banner ocupe toda a largura da tela */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+    min-height: 100px;
+    /* Define uma altura mínima para o banner */
+    display: flex;
+    /* Para centralizar conteúdo, se necessário */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
 }
+
 
 .banner .linha {
 
@@ -35,10 +47,17 @@ body {
 
 .container {
 
-    max-width: 1500px;
-    margin: auto;
-    padding-left: 25px;
-    padding-right: 25px;
+
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%;
+    /* Certifique-se de que a largura não exceda 100% */
+    margin: 0 auto;
+    /* Centraliza o container */
+    padding: 0 15px;
+    /* Adiciona padding, se necessário */
+    box-sizing: border-box;
+    /* Inclui o padding na largura total */
 
 }
 
@@ -47,7 +66,10 @@ body {
     align-items: center;
     padding: 20px;
 }
-
+.logo img{
+    width: 100%; /* Ajusta a largura da imagem para ocupar 100% do seu container */
+    height: auto; /* Mantém a proporção da imagem */
+}
 nav {
     flex: 1;
     text-align: right;
@@ -95,9 +117,10 @@ p {
 
 .col-2 img {
     max-width: 100%;
+    height: auto;
     padding: 50px 0;
-    margin-top:auto;
-    
+    margin-top: auto;
+
 
 }
 
@@ -378,8 +401,14 @@ ul {
 }
 
 .app-logo img {
-    width: 140px;
+    width: 100%;
+    /* Garante que a logo ocupe toda a largura do contêiner */
+    max-width: 140px;
+    /* Define um tamanho máximo para a logo */
+    height: auto;
+    /* Mantém a proporção da imagem */
 }
+
 
 .rodape hr {
     border: none;
@@ -403,27 +432,31 @@ ul {
     color: var(--cor-btn-fonte);
 
 }
-.novoMenu{
-    box-shadow: 0 2px 0 0 rgb(0,0,0,0.1);
+
+.novoMenu {
+    box-shadow: 0 2px 0 0 rgb(0, 0, 0, 0.1);
 }
-.linha2{
+
+.linha2 {
 
     margin: 100px auto 50px;
-    justify-content:space-between ;
+    justify-content: space-between;
 }
-.linha2 select{
+
+.linha2 select {
     padding: 5px;
     border: 1px solid var(--cor-padrao);
 }
-.lnha2 select:focus{
+
+.lnha2 select:focus {
     outline: none;
 }
 
-.paginacao{
+.paginacao {
     margin: 0 auto 80px;
 }
 
-.paginacao span{
+.paginacao span {
     width: 40px;
     height: 40px;
     display: inline-block;
@@ -433,78 +466,120 @@ ul {
     margin-left: 10px;
     cursor: pointer;
 }
-.paginacao span:hover{
+
+.paginacao span:hover {
     background: var(--cor-padrao);
-    color:var(--cor-fonte);
+    color: var(--cor-fonte);
 }
 
-.ver-produtos{
+.ver-produtos {
     margin-top: 40px;
 }
 
-.ver-produtos .col-2 img{
+.ver-produtos .col-2 img {
     width: 100%;
     padding: 0;
 }
 
-.ver-produtos #produtoImg{
+.ver-produtos #produtoImg {
     width: 600px;
     height: 400px;
     object-fit: cover;
     object-position: top;
 
 }
-.ver-produtos .col-2{
-padding: 20px;
+
+.ver-produtos .col-2 {
+    padding: 20px;
 
 }
 
-.ver-produtos h4{
+.ver-produtos h4 {
     margin: 20px 0;
     font-size: 22px;
-    font-weight:bold ;
+    font-weight: bold;
 }
-.ver-produtos select{
+
+.ver-produtos select {
     display: block;
     margin-top: 20px;
     padding: 10px;
     border: 1px solid var(--cor-padrao);
     font-size: 20px;
-    
+
 }
 
-.ver-produtos select:focus{
+.ver-produtos select:focus {
     outline: none;
 }
 
-.ver-produtos input{
+.ver-produtos input {
     width: 50px;
     height: 40px;
-    margin-right: 10px ;
+    margin-right: 10px;
     padding-left: 10px;
     border: 1px solid var(--cor-padrao);
     font-size: 20px;
 }
-.ver-produtos input:focus{
+
+.ver-produtos input:focus {
     outline: none;
 }
 
-.ver-produtos .btn{
+.ver-produtos .btn {
     border: none;
     background-color: var();
 }
 
 
 
-@media only screen and (max-width:800px) {
+@media only screen and (min-width: 300px) and (max-width:800px) {
+
     nav ul {
         position: absolute;
         top: 70px;
         left: 0;
         background: var(--cor-btn-fonte);
         width: 100%;
+        height: auto;
         overflow: hidden;
         transition: max-height 0.5s;
+        min-width: 100%;
+    }
+
+    @media only screen and (min-width: 300px) and (max-width: 740px) {
+        /* Estilos para telas entre 300px e 800px */
+    }
+
+    @media only screen and (min-width: 300px) and (max-width: 600px) {
+
+        nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+        }
+
+        /* Ajustes específicos para telas menores */
+        #MenuItens {
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+
+    #MenuItens {
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .menu-ativo nav ul {
+        max-width: 300px;
+        transition: max-heitght 0.3s ease-in-out;
     }
 
     nav ul li {
@@ -529,7 +604,19 @@ padding: 20px;
 }
 
 
-@media only screen and (max-width:600px) {
+@media only screen and (max-width:300px) and (min-width: 500px) {
+    nav ul {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--cor-btn-fonte);
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        min-width: 100%;
+    }
+
     .linha {
         text-align: center;
     }
@@ -538,6 +625,7 @@ padding: 20px;
     .col-3,
     .col-4 {
         flex-basis: 100%;
+        min-width: 100%;
     }
 
     .col-2 h1 {
