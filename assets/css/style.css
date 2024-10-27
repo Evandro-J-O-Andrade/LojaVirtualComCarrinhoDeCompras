@@ -531,12 +531,30 @@ ul {
 
 .ver-produtos .btn {
     border: none;
-    background-color: var();
+    background-color: var(--cor-padrao);
+    height: 42px;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
+.ver-produtos .btn:hover{
+    background-color: var(--cor-btn-hover);
 
+}
 
-@media only screen and (min-width: 100px) and (max-width:800px) {
+.ver-produtos p{
+    font-size: 13px;
+}
+
+.img-linha{
+display: flex;
+justify-content: space-between;
+}
+.img-col{
+    flex-basis: 24%;
+    cursor: pointer;
+}
+@media only screen and (min-width: 100px) and (max-width:500px) {
     .logo {
         width: 100%; /* Ajuste a largura da logo para telas menores */
         max-width: 200px; /* Defina um tamanho máximo, se necessário */
