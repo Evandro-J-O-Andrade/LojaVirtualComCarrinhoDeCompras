@@ -24,21 +24,9 @@ body {
     font-family: 'Poppins', sans-serif;
 }
 
-
 .banner {
     background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
-    width: 100%;
-    /* Garante que o banner ocupe toda a largura da tela */
-    height: auto;
-    /* Ajusta a altura automaticamente */
-    min-height: 100px;
-    /* Define uma altura mínima para o banner */
-    display: flex;
-    /* Para centralizar conteúdo, se necessário */
-    align-items: center;
-    /* Centraliza verticalmente */
-    justify-content: center;
-    /* Centraliza horizontalmente */
+
 }
 
 .banner .linha {
@@ -48,17 +36,10 @@ body {
 
 .container {
 
-
+    max-width: 100%;
+    margin: 0 auto;
     padding-left: 15px;
     padding-right: 15px;
-    max-width: 100%;
-    /* Certifique-se de que a largura não exceda 100% */
-    margin: 0 auto;
-    /* Centraliza o container */
-    padding: 0 15px;
-    /* Adiciona padding, se necessário */
-    box-sizing: border-box;
-    /* Inclui o padding na largura total */
 
 }
 
@@ -71,6 +52,7 @@ body {
     width: 100%; /* Ajusta a largura da imagem para ocupar 100% do seu container */
     height: auto; /* Mantém a proporção da imagem */
 }
+
 nav {
     flex: 1;
     text-align: right;
@@ -78,10 +60,8 @@ nav {
 
 nav ul {
 
-    overflow: hidden;
     display: inline-block;
     list-style-type: none;
-    width: 100%;
 
 }
 
@@ -404,14 +384,8 @@ ul {
 }
 
 .app-logo img {
-    width: 100%;
-    /* Garante que a logo ocupe toda a largura do contêiner */
-    max-width: 140px;
-    /* Define um tamanho máximo para a logo */
-    height: auto;
-    /* Mantém a proporção da imagem */
+    width: 140px;
 }
-
 
 .rodape hr {
     border: none;
@@ -536,11 +510,7 @@ ul {
 
 
 
-@media only screen and (min-width: 100px) and (max-width:800px) {
-    .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
+@media only screen and (max-width:800px) {
 
     nav ul {
         position: absolute;
@@ -552,52 +522,10 @@ ul {
         overflow: hidden;
         transition: max-height 0.5s;
         min-width: 100%;
-        max-width: 0;
-    }
-    .menu-ativo nav ul {
-        max-height: 300px; /* Ajuste conforme necessário */
     }
 
-    nav ul li {
-        display: block; /* Altere para bloco */
-        margin-top: 10px;
-        margin-right: 0; /* Remova margem direita para menu em coluna */
-        margin-bottom: 10px;
-    }
-}
-    @media only screen and (min-width: 100px) and (max-width: 740px) {
+    @media only screen and (max-width: 768px) {
 
-        /* Estilos para telas entre 200px e 800px */
-        .logo {
-            width: 100%; /* Ajuste a largura da logo para telas menores */
-            max-width: 200px; /* Defina um tamanho máximo, se necessário */
-        }
-    }
-
-    @media only screen and (min-width: 100px)and (max-width: 600px) {
-        .logo {
-            width: 100%; /* Ajuste a largura da logo para telas menores */
-            max-width: 200px; /* Defina um tamanho máximo, se necessário */
-        }
-    }
-    
-    @media only screen and (min-width: 100px) and (max-width: 600px) {
-
-        nav ul {
-            position: absolute;
-            top: 70px;
-            left: 0;
-            background: var(--cor-btn-fonte);
-            width: 100%;
-            height: auto;
-            overflow: hidden;
-            transition: max-height 0.5s;
-            min-width: 100%;
-        }
-        .logo {
-            width: 100%; /* Ajuste a largura da logo para telas menores */
-            max-width: 200px; /* Defina um tamanho máximo, se necessário */
-        }
         /* Ajustes específicos para telas menores */
         #MenuItens {
             width: 100%;
@@ -634,22 +562,10 @@ ul {
         color: var(--cor-fonte);
 
     }
+}
 
 
-
-@media only screen and (max-width:100px) and (min-width: 500px) {
-    nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
-    }
-
+@media only screen and (max-width:300) {
     .linha {
         text-align: center;
     }
@@ -681,138 +597,7 @@ ul {
 
     }
 }
-@media only screen and (min-width: 100px) and (max-width: 800px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
 
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
-        max-width: 0;
-    }
-
-    .resolucao .menu-ativo nav ul {
-        max-height: 300px; /* Ajuste conforme necessário */
-    }
-
-    .resolucao nav ul li {
-        display: block; /* Altere para bloco */
-        margin-top: 10px;
-        margin-right: 0; /* Remova margem direita para menu em coluna */
-        margin-bottom: 10px;
-    }
-}
-
-@media only screen and (min-width: 100px) and (max-width: 740px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-}
-
-@media only screen and (min-width: 100px) and (max-width: 600px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
-    }
-
-    .resolucao #MenuItens {
-        width: 100%;
-        max-width: 100%;
-    }
-}
-
-.resolucao #MenuItens {
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-}
-
-.resolucao .menu-ativo nav ul {
-    max-width: 300px;
-    transition: max-height 0.3s ease-in-out;
-}
-
-.resolucao nav ul li {
-    display: block;
-    margin-top: 10px;
-    margin-right: 50px;
-    margin-bottom: 10px;
-}
-
-.resolucao nav ul li a {
-    color: var(--cor-fonte);
-}
-
-.resolucao .menu-celular {
-    display: block;
-}
-
-.resolucao .novoMenu nav ul li a {
-    color: var(--cor-fonte);
-}
-
-@media only screen and (max-width: 100px) and (min-width: 500px) {
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
-    }
-
-    .resolucao .linha {
-        text-align: center;
-    }
-
-    .resolucao .col-2,
-    .resolucao .col-3,
-    .resolucao .col-4 {
-        flex-basis: 100%;
-        min-width: 100%;
-    }
-
-    .resolucao .col-2 h1 {
-        font-size: 27px;
-    }
-
-    .resolucao .rodape-col-3,
-    .resolucao .rodape-col-4 {
-        text-align: center;
-    }
-
-    .resolucao .col-4 p {
-        font-size: 24px;
-    }
-
-    .resolucao .novoMenu nav ul li a {
-        color: var(--cor-fonte);
-    }
-}
 .resolucao {
     /* As regras padrão (caso queira manter) */
   
