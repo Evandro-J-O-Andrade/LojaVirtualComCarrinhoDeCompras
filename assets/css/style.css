@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -39,7 +40,6 @@ body {
     justify-content: center;
     /* Centraliza horizontalmente */
 }
-
 
 .banner .linha {
 
@@ -680,4 +680,159 @@ ul {
         color: var(--cor-fonte);
 
     }
+}
+@media only screen and (min-width: 100px) and (max-width: 800px) {
+    .resolucao .logo {
+        width: 100%; /* Ajuste a largura da logo para telas menores */
+        max-width: 200px; /* Defina um tamanho máximo, se necessário */
+    }
+
+    .resolucao nav ul {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--cor-btn-fonte);
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        min-width: 100%;
+        max-width: 0;
+    }
+
+    .resolucao .menu-ativo nav ul {
+        max-height: 300px; /* Ajuste conforme necessário */
+    }
+
+    .resolucao nav ul li {
+        display: block; /* Altere para bloco */
+        margin-top: 10px;
+        margin-right: 0; /* Remova margem direita para menu em coluna */
+        margin-bottom: 10px;
+    }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 740px) {
+    .resolucao .logo {
+        width: 100%; /* Ajuste a largura da logo para telas menores */
+        max-width: 200px; /* Defina um tamanho máximo, se necessário */
+    }
+}
+
+@media only screen and (min-width: 100px) and (max-width: 600px) {
+    .resolucao .logo {
+        width: 100%; /* Ajuste a largura da logo para telas menores */
+        max-width: 200px; /* Defina um tamanho máximo, se necessário */
+    }
+
+    .resolucao nav ul {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--cor-btn-fonte);
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        min-width: 100%;
+    }
+
+    .resolucao #MenuItens {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+.resolucao #MenuItens {
+    overflow: hidden;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.resolucao .menu-ativo nav ul {
+    max-width: 300px;
+    transition: max-height 0.3s ease-in-out;
+}
+
+.resolucao nav ul li {
+    display: block;
+    margin-top: 10px;
+    margin-right: 50px;
+    margin-bottom: 10px;
+}
+
+.resolucao nav ul li a {
+    color: var(--cor-fonte);
+}
+
+.resolucao .menu-celular {
+    display: block;
+}
+
+.resolucao .novoMenu nav ul li a {
+    color: var(--cor-fonte);
+}
+
+@media only screen and (max-width: 100px) and (min-width: 500px) {
+    .resolucao nav ul {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--cor-btn-fonte);
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        min-width: 100%;
+    }
+
+    .resolucao .linha {
+        text-align: center;
+    }
+
+    .resolucao .col-2,
+    .resolucao .col-3,
+    .resolucao .col-4 {
+        flex-basis: 100%;
+        min-width: 100%;
+    }
+
+    .resolucao .col-2 h1 {
+        font-size: 27px;
+    }
+
+    .resolucao .rodape-col-3,
+    .resolucao .rodape-col-4 {
+        text-align: center;
+    }
+
+    .resolucao .col-4 p {
+        font-size: 24px;
+    }
+
+    .resolucao .novoMenu nav ul li a {
+        color: var(--cor-fonte);
+    }
+}
+.resolucao {
+    /* As regras padrão (caso queira manter) */
+  
+  
+  @media (max-width: 768px) {
+    .resolucao body {
+      background-color:var(--cor-padrao-hover), var(--cor-padrao);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .resolucao body {
+      font-size: 12px;
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .resolucao body {
+      padding: 10px;
+    }
+  }
+  
 }
