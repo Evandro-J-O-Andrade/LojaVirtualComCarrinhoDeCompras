@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
 
 * {
     margin: 0;
@@ -353,6 +352,8 @@ small {
     color: var(--cor-fonte);
     padding: 60px 0 20px;
     font-size: 14px;
+   
+    
 
 }
 
@@ -363,7 +364,7 @@ small {
 
 .rodape h3 {
     color: var(--cor-fonte);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 .rodape-col-1,
@@ -396,6 +397,36 @@ small {
     text-align: right;
 }
 
+
+.rodape-col-3 ul{
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+.rodape-col-3 ul li{
+    width: 15px;
+    min-width: 250px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    flex-basis: 12%;
+    text-align: right;   
+    margin: 0;
+    
+}
+.rodape-col-4 ul {
+    width: 15px;
+    min-width: 250px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    flex-basis: 12%;
+    text-align:right;
+    margin:0;
+
+    
+}
+.rodape-col-4 h3 {
+    margin-top:25px;
+}
 ul {
     list-style-type: none;
 }
@@ -418,16 +449,50 @@ ul {
     height: 1px;
     background: var(--cor-fonte);
     margin: 20px 0;
+    text-align: center;
 }
 
 .direitos {
     text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+
+   
+    
+}
+.direitos hr {
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+
+   
+    
+}
+.direitos .rodape-col-5{
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-end;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .menu-celular {
     width: 28px;
     margin-left: 20px;
     display: none;
+    
 
 }
 
@@ -481,7 +546,7 @@ ul {
 
 .ver-produtos .col-2 img {
     width: 100%;
-    padding: 0;
+    padding: 10px;
 }
 
 .ver-produtos #produtoImg {
@@ -554,7 +619,8 @@ justify-content: space-between;
     flex-basis: 24%;
     cursor: pointer;
 }
-@media only screen and (min-width: 100px) and (max-width:500px) {
+
+@media only screen and (min-width: 75px) and (max-width:500px) {
     .logo {
         width: 100%; /* Ajuste a largura da logo para telas menores */
         max-width: 200px; /* Defina um tamanho máximo, se necessário */
@@ -569,13 +635,13 @@ justify-content: space-between;
         overflow: hidden;
         transition: max-height 0.5s;
         min-width: 100%;
-        max-width: 0;
+        max-width: none;
     }
     .menu-ativo nav ul {
         max-height: 300px; /* Ajuste conforme necessário */
     }
 
-    @media only screen and(min-width:100px)and (max-width: 1000px) {
+    @media only screen and (min-width:100px) and (max-width: 1000px) {
 
         /* Ajustes específicos para telas menores */
         #MenuItens {
@@ -586,7 +652,8 @@ justify-content: space-between;
 
     #MenuItens {
         overflow: hidden;
-        transition: max-height 0.3s ease-in-out;
+        transition: max-height 0.5s ease-in-out;
+        background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
     }
 
     .menu-ativo nav ul {
@@ -613,18 +680,18 @@ justify-content: space-between;
         color: var(--cor-fonte);
 
     }
-}
 
-@media only screen and (min-width: 100px) and (max-width: 500px) {
 
+@media only screen and (min-width: 100px) and (max-width: 550px) {
+    .resolucao {
     /* Estilos para telas entre 100px e 500px */
     .logo {
         width: 100%; /* Ajuste a largura da logo para telas menores */
         max-width: 200px; /* Defina um tamanho máximo, se necessário */
     }
 }
-
-@media only screen and (min-width: 100px)and (max-width: 600px) {
+}
+@media only screen and (min-width: 100px) and (max-width: 600px) {
     .logo {
         width: 100%; /* Ajuste a largura da logo para telas menores */
         max-width: 200px; /* Defina um tamanho máximo, se necessário */
@@ -667,9 +734,35 @@ justify-content: space-between;
         color: var(--cor-fonte);
 
     }
+    .rodape-col-4 ul{
+        width: 15px;
+        min-width: 250px;
+        margin-bottom: 20px;
+        font-size: 25px;
+        flex-basis: 12%;
+        text-align:right;
+        
+    }
+    .rodape-col-3 ul{
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+    }
+    .rodape-col-3 ul li{
+        width: 15px;
+        min-width: 250px;
+        margin-bottom: 0px;
+        font-size: 15px;
+        flex-basis: 12%;
+        text-align: right;
+        
+    
+        
+    }
 }
 
 /*Esse resolução foi feita com classe pra utilização de codigo*/
+
 @media only screen and (min-width: 100px) and (max-width: 800px) {
     .resolucao .logo {
         width: 100%; /* Ajuste a largura da logo para telas menores */
@@ -739,7 +832,7 @@ justify-content: space-between;
 
 .resolucao .menu-ativo nav ul {
     max-width: 300px;
-    transition: max-height 0.3s ease-in-out;
+    transition: max-height 0.5s ease-in-out;
 }
 
 .resolucao nav ul li {
@@ -761,7 +854,7 @@ justify-content: space-between;
     color: var(--cor-fonte);
 }
 
-@media only screen and (max-width: 100px) and (min-width: 500px) {
+@media only screen and (max-width: 100px) and (min-width: 400px) {
     .resolucao nav ul {
         position: absolute;
         top: 70px;
@@ -803,7 +896,7 @@ justify-content: space-between;
     }
 }
 
-
+}
 
 
 .resolucao {
@@ -828,4 +921,7 @@ justify-content: space-between;
         }
     }
 
+}
+.footer{
+    margin-top: auto;
 }
