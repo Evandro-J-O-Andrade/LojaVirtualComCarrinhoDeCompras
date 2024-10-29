@@ -38,6 +38,7 @@ body {
     justify-content: center;
     /* Centraliza horizontalmente */
 }
+
 /*Ate aqui esta tudo ok com resposibilidade de sites*/
 .banner .linha {
 
@@ -57,6 +58,7 @@ body {
     /* Inclui o padding na largura total */
 
 }
+
 /*Incluindo conteudos no Container sem problemas aparentes*/
 .navbar {
     display: flex;
@@ -78,7 +80,7 @@ nav {
 }
 
 nav ul {
-    
+
     display: inline-block;
     list-style-type: none;
     width: 100%;
@@ -352,8 +354,8 @@ small {
     color: var(--cor-fonte);
     padding: 60px 0 20px;
     font-size: 14px;
-   
-    
+
+
 
 }
 
@@ -398,35 +400,51 @@ small {
 }
 
 
-.rodape-col-3 ul{
+.rodape-col-3 ul {
     padding: 0;
     margin: 0;
     list-style-type: none;
 }
-.rodape-col-3 ul li{
+
+.rodape-col-3 ul li {
     width: 15px;
     min-width: 250px;
     margin-bottom: 0px;
     font-size: 15px;
     flex-basis: 12%;
-    text-align: right;   
+    text-align: right;
     margin: 0;
-    
+
 }
+
 .rodape-col-4 ul {
     width: 15px;
     min-width: 250px;
     margin-bottom: 20px;
     font-size: 20px;
     flex-basis: 12%;
-    text-align:right;
-    margin:0;
+    text-align: right;
+    margin: 0;
 
-    
 }
+
+.rodape-col-4 ul li {
+    width: 15px;
+    min-width: 250px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    flex-basis: 12%;
+    text-align: right;
+    margin: 0;
+
+
+
+}
+
 .rodape-col-4 h3 {
-    margin-top:25px;
+    margin-top: 25px;
 }
+
 ul {
     list-style-type: none;
 }
@@ -458,30 +476,33 @@ ul {
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content:flex-end;
+    justify-content: flex-end;
 
-   
-    
+
+
 }
+
 .direitos hr {
     text-align: center;
     font-size: 14px;
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content:flex-end;
+    justify-content: flex-end;
 
-   
-    
+
+
 }
-.direitos .rodape-col-5{
+
+.direitos .rodape-col-5 {
     text-align: center;
     font-size: 14px;
     margin: 0;
     display: flex;
     flex-direction: column;
-    justify-content:flex-end;
+    justify-content: flex-end;
 }
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -492,7 +513,7 @@ ul {
     width: 28px;
     margin-left: 20px;
     display: none;
-    
+
 
 }
 
@@ -602,29 +623,33 @@ ul {
     cursor: pointer;
 }
 
-.ver-produtos .btn:hover{
+.ver-produtos .btn:hover {
     background-color: var(--cor-btn-hover);
 
 }
 
-.ver-produtos p{
+.ver-produtos p {
     font-size: 13px;
 }
 
-.img-linha{
-display: flex;
-justify-content: space-between;
+.img-linha {
+    display: flex;
+    justify-content: space-between;
 }
-.img-col{
+
+.img-col {
     flex-basis: 24%;
     cursor: pointer;
 }
 
 @media only screen and (min-width: 75px) and (max-width:500px) {
     .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
+        width: 100%;
+        /* Ajuste a largura da logo para telas menores */
+        max-width: 200px;
+        /* Defina um tamanho máximo, se necessário */
     }
+
     nav ul {
         position: absolute;
         top: 70px;
@@ -637,8 +662,10 @@ justify-content: space-between;
         min-width: 100%;
         max-width: none;
     }
+
     .menu-ativo nav ul {
-        max-height: 300px; /* Ajuste conforme necessário */
+        max-height: 300px;
+        /* Ajuste conforme necessário */
     }
 
     @media only screen and (min-width:100px) and (max-width: 1000px) {
@@ -653,7 +680,8 @@ justify-content: space-between;
     #MenuItens {
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
-        background-color: rgba(0, 0, 0, 0.5); /* Preto com 50% de transparência */
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Preto com 50% de transparência */
     }
 
     .menu-ativo nav ul {
@@ -682,219 +710,253 @@ justify-content: space-between;
     }
 
 
-@media only screen and (min-width: 100px) and (max-width: 550px) {
-    .resolucao {
-    /* Estilos para telas entre 100px e 500px */
-    .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-}
-}
-@media only screen and (min-width: 100px) and (max-width: 600px) {
-    .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-}
+    @media only screen and (min-width: 100px) and (max-width: 550px) {
+        .resolucao {
 
-/*Forçando o codigo pra que não perca resolução para celulares menores*/
-
-
-/*Fim do menu forçando*/
-
-@media only screen and (max-width:300) {
-    .linha {
-        text-align: center;
+            /* Estilos para telas entre 100px e 500px */
+            .logo {
+                width: 100%;
+                /* Ajuste a largura da logo para telas menores */
+                max-width: 200px;
+                /* Defina um tamanho máximo, se necessário */
+            }
+        }
     }
 
-    .col-2,
-    .col-3,
-    .col-4 {
-        flex-basis: 100%;
-        min-width: 100%;
+    @media only screen and (min-width: 100px) and (max-width: 600px) {
+        .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
     }
 
-    .col-2 h1 {
-        font-size: 27px;
+    /*Forçando o codigo pra que não perca resolução para celulares menores*/
+
+
+    /*Fim do menu forçando*/
+
+    @media only screen and (max-width:300) {
+        .linha {
+            text-align: center;
+        }
+
+        .col-2,
+        .col-3,
+        .col-4 {
+            flex-basis: 100%;
+            min-width: 100%;
+        }
+
+        .col-2 h1 {
+            font-size: 27px;
+        }
+
+        .rodape-col-3,
+        .rodape-col-4 {
+
+            text-align: center;
+
+        }
+
+        .col-4 p {
+            font-size: 24px;
+        }
+
+        .novoMenu nav ul li a {
+            color: var(--cor-fonte);
+
+        }
+
+        .rodape-col-4 ul {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 25px;
+            flex-basis: 12%;
+            text-align: right;
+
+        }
+
+        .rodape-col-4 ul li {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            flex-basis: 12%;
+            text-align: right;
+            margin: 0;
+
+
+
+        }
+
+        .rodape-col-3 ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .rodape-col-3 ul li {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 0px;
+            font-size: 15px;
+            flex-basis: 12%;
+            text-align: right;
+
+
+
+
+        }
+
+
     }
 
-    .rodape-col-3,
-    .rodape-col-4 {
+    /*Esse resolução foi feita com classe pra utilização de codigo*/
 
-        text-align: center;
+    @media only screen and (min-width: 100px) and (max-width: 800px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
 
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+            max-width: 0;
+        }
+
+        .resolucao .menu-ativo nav ul {
+            max-height: 300px;
+            /* Ajuste conforme necessário */
+        }
+
+        .resolucao nav ul li {
+            display: block;
+            /* Altere para bloco */
+            margin-top: 10px;
+            margin-right: 0;
+            /* Remova margem direita para menu em coluna */
+            margin-bottom: 10px;
+        }
     }
 
-    .col-4 p {
-        font-size: 24px;
+    @media only screen and (min-width: 100px) and (max-width: 740px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
     }
 
-    .novoMenu nav ul li a {
-        color: var(--cor-fonte);
+    @media only screen and (min-width: 100px) and (max-width: 600px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
 
-    }
-    .rodape-col-4 ul{
-        width: 15px;
-        min-width: 250px;
-        margin-bottom: 20px;
-        font-size: 25px;
-        flex-basis: 12%;
-        text-align:right;
-        
-    }
-    .rodape-col-3 ul{
-        padding: 0;
-        margin: 0;
-        list-style-type: none;
-    }
-    .rodape-col-3 ul li{
-        width: 15px;
-        min-width: 250px;
-        margin-bottom: 0px;
-        font-size: 15px;
-        flex-basis: 12%;
-        text-align: right;
-        
-    
-        
-    }
-}
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+        }
 
-/*Esse resolução foi feita com classe pra utilização de codigo*/
-
-@media only screen and (min-width: 100px) and (max-width: 800px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
-        max-width: 0;
-    }
-
-    .resolucao .menu-ativo nav ul {
-        max-height: 300px; /* Ajuste conforme necessário */
-    }
-
-    .resolucao nav ul li {
-        display: block; /* Altere para bloco */
-        margin-top: 10px;
-        margin-right: 0; /* Remova margem direita para menu em coluna */
-        margin-bottom: 10px;
-    }
-}
-
-@media only screen and (min-width: 100px) and (max-width: 740px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-}
-
-@media only screen and (min-width: 100px) and (max-width: 600px) {
-    .resolucao .logo {
-        width: 100%; /* Ajuste a largura da logo para telas menores */
-        max-width: 200px; /* Defina um tamanho máximo, se necessário */
-    }
-
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
-        overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
+        .resolucao #MenuItens {
+            width: 100%;
+            max-width: 100%;
+        }
     }
 
     .resolucao #MenuItens {
-        width: 100%;
-        max-width: 100%;
-    }
-}
-
-.resolucao #MenuItens {
-    overflow: hidden;
-    transition: max-height 0.3s ease-in-out;
-}
-
-.resolucao .menu-ativo nav ul {
-    max-width: 300px;
-    transition: max-height 0.5s ease-in-out;
-}
-
-.resolucao nav ul li {
-    display: block;
-    margin-top: 10px;
-    margin-right: 50px;
-    margin-bottom: 10px;
-}
-
-.resolucao nav ul li a {
-    color: var(--cor-fonte);
-}
-
-.resolucao .menu-celular {
-    display: block;
-}
-
-.resolucao .novoMenu nav ul li a {
-    color: var(--cor-fonte);
-}
-
-@media only screen and (max-width: 100px) and (min-width: 400px) {
-    .resolucao nav ul {
-        position: absolute;
-        top: 70px;
-        left: 0;
-        background: var(--cor-btn-fonte);
-        width: 100%;
-        height: auto;
         overflow: hidden;
-        transition: max-height 0.5s;
-        min-width: 100%;
+        transition: max-height 0.3s ease-in-out;
     }
 
-    .resolucao .linha {
-        text-align: center;
+    .resolucao .menu-ativo nav ul {
+        max-width: 300px;
+        transition: max-height 0.5s ease-in-out;
     }
 
-    .resolucao .col-2,
-    .resolucao .col-3,
-    .resolucao .col-4 {
-        flex-basis: 100%;
-        min-width: 100%;
+    .resolucao nav ul li {
+        display: block;
+        margin-top: 10px;
+        margin-right: 50px;
+        margin-bottom: 10px;
     }
 
-    .resolucao .col-2 h1 {
-        font-size: 27px;
+    .resolucao nav ul li a {
+        color: var(--cor-fonte);
     }
 
-    .resolucao .rodape-col-3,
-    .resolucao .rodape-col-4 {
-        text-align: center;
-    }
-
-    .resolucao .col-4 p {
-        font-size: 24px;
+    .resolucao .menu-celular {
+        display: block;
     }
 
     .resolucao .novoMenu nav ul li a {
         color: var(--cor-fonte);
     }
-}
+
+    @media only screen and (max-width: 100px) and (min-width: 400px) {
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+        }
+
+        .resolucao .linha {
+            text-align: center;
+        }
+
+        .resolucao .col-2,
+        .resolucao .col-3,
+        .resolucao .col-4 {
+            flex-basis: 100%;
+            min-width: 100%;
+        }
+
+        .resolucao .col-2 h1 {
+            font-size: 27px;
+        }
+
+        .resolucao .rodape-col-3,
+        .resolucao .rodape-col-4 {
+            text-align: center;
+        }
+
+        .resolucao .col-4 p {
+            font-size: 24px;
+        }
+
+        .resolucao .novoMenu nav ul li a {
+            color: var(--cor-fonte);
+        }
+    }
 
 }
 
@@ -921,7 +983,13 @@ justify-content: space-between;
         }
     }
 
+    @media (max-width: 600px) {
+        .rodape-col-4 ul li {
+            text-align: center;
+        }
+    }
 }
-.footer{
+
+.footer {
     margin-top: auto;
 }
