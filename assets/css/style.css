@@ -635,11 +635,147 @@ ul {
 .img-linha {
     display: flex;
     justify-content: space-between;
+    
 }
 
 .img-col {
-    flex-basis: 24%;
+    flex-basis: 25%;
     cursor: pointer;
+
+   
+}
+.teste-img {
+    display: flex; /* Define o container como flex */
+    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se não houver espaço */
+    justify-content: space-between;
+}
+
+.teste-img .img-col {
+    margin: 0; /* Ajustar a margem para reduzir o espaço ao redor do elemento */
+    padding: 15px; /* Espaço dentro do elemento */
+    flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    cursor: pointer;
+    font-size: 15px;
+    box-sizing: border-box; /* Inclui padding e margin no cálculo da largura */
+    overflow: hidden;
+}
+
+.teste-img .img-col img {
+    width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+    transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+}
+.teste-img .img-col:hover img {
+    transform: scale(1.1); /* Aumenta a imagem para 110% do seu tamanho original */
+}
+
+
+/*Carrinho de compras*/
+.carrinho-compras{
+    margin: 80px auto;
+}
+.carrinho-compras table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-carrinho{
+    display: flex;
+    flex-wrap: wrap;
+
+}
+
+th{
+    background-color: var(--cor-padrao);
+    color: var(--cor--fonte);
+    text-align: left;
+    font-weight: normal;
+    padding: 5px;
+}
+
+td{
+padding: 10px 5px;
+
+}
+
+ td input{
+    width: 40px;
+    height: 30px;
+    padding: 5px;
+ }
+
+td a{
+    color: var(--cor-padrao);
+    font-size: 12px;
+}
+
+td img{
+    width: 80px;
+    height: 80px ;
+    margin-right:  10px;
+}
+
+.valor-total{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.valor-total table{
+
+    border-top: 3px solid var(--cor-padrao);
+    width: 100%;
+    max-width: 445px;
+}
+
+td:last-child{
+    text-align: right;
+
+}
+
+th:last-child{
+    text-align: right;
+}
+/*Carrinho de compras*/
+
+@media  only screen and (min-width: 75px) and (max-width: 768px) {
+    .teste-img .img-col {
+        margin: 0; /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+    .teste-img .img-col img {
+        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px; /* Limita a largura máxima da imagem */
+        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+    }
+}
+@media only screen and (min-width: 75px) and(max-width: 768px) {
+    .teste-img .img-col {
+        margin: 0; /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+    .teste-img .img-col img {
+        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px; /* Limita a largura máxima da imagem */
+        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+    }
+}
+@media only screen and (min-width: 75px) and (max-width: 480px) {
+    .teste-img .img-col {
+        margin: 0; /* Ajustar a margem para dispositivos menores */
+        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+    .teste-img .img-col img {
+        margin: 0;
+        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px; /* Limita a largura máxima da imagem para dispositivos menores */
+        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+    }
+}
+
+@media only screen and (min-width: 75px) and (max-width: 320px) {
+    .teste-img .img-col {
+        margin: 0; /* Remove o espaçamento para dispositivos muito pequenos */
+        flex-basis: calc(25% - 10px); /* Cada item ocupa 100% do espaço disponível */
+    }
 }
 
 @media only screen and (min-width: 75px) and (max-width:500px) {
@@ -668,12 +804,15 @@ ul {
         /* Ajuste conforme necessário */
     }
 
-    @media only screen and (min-width:100px) and (max-width: 1000px) {
+    @media only screen and (min-width:100px) and (max-width: 1080px) {
 
         /* Ajustes específicos para telas menores */
         #MenuItens {
             width: 100%;
             max-width: 100%;
+        }
+        .info-carrinho p{
+            display: none;
         }
     }
 
@@ -708,7 +847,15 @@ ul {
         color: var(--cor-fonte);
 
     }
-
+    .teste-img .img-col {
+        margin: 0; /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+    .teste-img .img-col img {
+        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px; /* Limita a largura máxima da imagem */
+        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+    }
 
     @media only screen and (min-width: 100px) and (max-width: 550px) {
         .resolucao {
@@ -721,6 +868,15 @@ ul {
                 /* Defina um tamanho máximo, se necessário */
             }
         }
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
     }
 
     @media only screen and (min-width: 100px) and (max-width: 600px) {
@@ -729,6 +885,18 @@ ul {
             /* Ajuste a largura da logo para telas menores */
             max-width: 200px;
             /* Defina um tamanho máximo, se necessário */
+        }
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
+        .info-carrinho p{
+            display: none;
         }
     }
 
@@ -769,6 +937,17 @@ ul {
 
         }
 
+        .ver-produtos .col-2 {
+            margin: 20px 0;
+        }
+
+        .ver-produtos .linha{
+            text-align: left;
+        }
+        .ver-produtos h1{
+            font-size: 26px;
+            line-height: 26px;
+        }
         .rodape-col-4 ul {
             width: 15px;
             min-width: 250px;
@@ -811,7 +990,18 @@ ul {
 
         }
 
-
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
+        .info-carrinho p{
+            display: none;
+        }
     }
 
     /*Esse resolução foi feita com classe pra utilização de codigo*/
@@ -850,6 +1040,18 @@ ul {
             /* Remova margem direita para menu em coluna */
             margin-bottom: 10px;
         }
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
+        .info-carrinho p{
+            display: none;
+        }
     }
 
     @media only screen and (min-width: 100px) and (max-width: 740px) {
@@ -884,6 +1086,18 @@ ul {
         .resolucao #MenuItens {
             width: 100%;
             max-width: 100%;
+        }
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
+        .info-carrinho p{
+            display: none;
         }
     }
 
@@ -956,8 +1170,19 @@ ul {
         .resolucao .novoMenu nav ul li a {
             color: var(--cor-fonte);
         }
+        .teste-img .img-col {
+            margin: 0; /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(50% - 20px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+        .teste-img .img-col img {
+            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px; /* Limita a largura máxima da imagem */
+            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        }
     }
-
+    .info-carrinho p{
+        display: none;
+    }
 }
 
 
@@ -985,8 +1210,30 @@ ul {
 
     @media (max-width: 600px) {
         .rodape-col-4 ul li {
-            text-align: center;
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            flex-basis: 12%;
+            text-align: right;
+            margin: 0;
+        
         }
+        
+        .ver-produtos .col-2 {
+            margin: 20px 0;
+        }
+
+        .ver-produtos .linha{
+            text-align: left;
+        }
+        .ver-produtos h1{
+            font-size: 26px;
+            line-height: 26px;
+        }
+    }
+    .info-carrinho p{
+        display: none;
     }
 }
 
