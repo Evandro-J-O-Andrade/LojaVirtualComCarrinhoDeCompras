@@ -414,6 +414,7 @@ small {
     flex-basis: 12%;
     text-align: right;
     margin: 0;
+    
 
 }
 
@@ -679,8 +680,7 @@ ul {
 }
 
 .info-carrinho{
-    display: flex;
-    flex-wrap: wrap;
+    display: none; 
 
 }
 
@@ -695,35 +695,41 @@ th{
 td{
 padding: 10px 5px;
 
+
 }
 
- td input{
-    width: 40px;
+td input{
+    width: 50px;
     height: 30px;
-    padding: 5px;
- }
+    padding : 5px;
+    
+
+  }
 
 td a{
     color: var(--cor-padrao);
     font-size: 12px;
+    
 }
 
 td img{
-    width: 80px;
-    height: 80px ;
+    width: 100px;
+    height: 100px;
     margin-right:  10px;
 }
 
 .valor-total{
     display: flex;
     justify-content: flex-end;
+    
 }
 
 .valor-total table{
 
     border-top: 3px solid var(--cor-padrao);
     width: 100%;
-    max-width: 445px;
+    max-width: 600px;
+    font-size: 15px;
 }
 
 td:last-child{
