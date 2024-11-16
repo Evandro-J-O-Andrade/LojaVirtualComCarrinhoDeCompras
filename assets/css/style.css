@@ -742,6 +742,58 @@ th:last-child{
 }
 /*Carrinho de compras*/
 
+/*=============================== Minha Conta ==============================*/
+
+.minha-conta{
+    background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+    padding: 50px 0;
+
+}
+
+.formulario{
+    position: relative;
+    padding: 20px 0;
+    text-align: center;
+    width: 300px;
+    height: 400px;
+    margin: auto;
+    background-color:var(--cor-fonte);
+    box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.formulario samp{
+    display: inline;
+    width: 100px;
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--cor-fonte-corpo);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.bth-form{
+
+    display: inline-block;
+}
+
+.formulario form{
+    position: absolute;
+    top: 110px;
+    max-width: 300px;
+    padding: 0 20px;
+
+}
+.formulario form input{
+    width: 100px;
+    height: 40px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border:  1px solid var(--cor-padrao);
+    border-radius: 3px;
+}
+/*=============================== Fim minha conta ==============================*/
+/*=============================== Modo Celular==============================*/
 @media  only screen and (min-width: 75px) and (max-width: 768px) {
     .teste-img .img-col {
         margin: 0; /* Ajustar a margem para dispositivos médios */
