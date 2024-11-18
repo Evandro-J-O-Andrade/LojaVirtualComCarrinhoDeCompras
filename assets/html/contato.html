@@ -42,131 +42,33 @@
         <!-- Seção de categorias -->
     </div>
 
-    <div class="corpo-categorias">
-        <div class="linha linha2">
-            <h2>Listas de Produtos</h2>
-            <select name="" id="">
-                <option value="">Mais Comprados</option>
-                <option value="">Mais Classificados</option>
-                <option value="">Menor Preço</option>
-                <option value="">Maior Preço</option>
-            </select>
-        </div>
-        <div class="linha">
-            <div class="col-4">
-                <img src="/assets/img/produto-1.jpg" alt="Produto 1">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
+    <!--Inicio do Contato -->
+
+    <div class="minha-conta">
+        <div class="container">
+            <div class="linha">
+                <div class="col-2">
+                    <img src="/assets/img/banner-1.png" alt="" width="100%">
                 </div>
-                <p>R$110,00</p>
+                <div class="formulario">
+                    <samp>Entre em Contato</samp>
+                    <form id="formContato">
+                        <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
+                        <input type="email" id="email" name="email" placeholder="Seu E-mail" required>
+                        <textarea id="mensagem" name="mensagem" placeholder="Sua Mensagem" required></textarea>
+                        <button type="submit" class="bth-form">Enviar</button>
+                    </form>
+                </div>
             </div>
 
-            <div class="col-4">
-                <img src="/assets/img/produto-2.jpg" alt="Produto 2">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$150,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-3.jpg" alt="Produto 3">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$90,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-4.jpg" alt="Produto 4">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$120,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-5.jpg" alt="Produto 5">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$110,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-6.jpg" alt="Produto 6">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$140,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-7.jpg" alt="Produto 7">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$130,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-8.jpg" alt="Produto 8">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$115,00</p>
-            </div>
-        </div>
-
-        <div class="paginacao">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>&#8594;</span>
 
         </div>
     </div>
+
+
+
+
+    <!--Fim  do Contato -->
 
     <!-- Rodapé -->
     <footer class="rodape">
@@ -224,8 +126,9 @@
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
     <script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
-    <script src="/assets/js/app.js"> </script>
-    <script src="/assets/js/responsive.js"></script>
+    <script src="/assets/js/app.js" defer> </script>
+    <script src="/assets/js/responsive.js" defer></script>
+    <script src="/assets/js/contato.js" defer></script>
 </body>
 
 </html>

@@ -793,7 +793,233 @@ th:last-child{
     border:  1px solid var(--cor-padrao);
     border-radius: 3px;
 }
+
+.formulario form .btn{
+    width: 100%;
+    margin: 10px 0;
+    border: nome;
+    
+}
 /*=============================== Fim minha conta ==============================*/
+/*=============================== Inicio Pagina da Empesa ==============================*/
+/* Estilo geral */
+.missao-visao-valores {
+    background-color: #f9f9f9;
+    padding: 40px 0;
+    text-align: center;
+}
+
+.missao-visao-valores h2 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+}
+
+.linha-campos {
+    display: flex;
+    justify-content: space-between; /* Espaço igual entre os containers */
+    gap: 20px; /* Espaço entre os containers */
+    flex-wrap: wrap; /* Permite quebrar para próxima linha em telas pequenas */
+}
+
+.campo {
+    flex: 1; /* Os containers ocupam tamanhos iguais */
+    min-width: 250px; /* Tamanho mínimo para cada campo */
+    max-width: 300px; /* Tamanho máximo para campos */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+}
+
+.campo h3 {
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.campo p, .campo ul {
+    color: #666;
+    line-height: 1.6;
+}
+
+.campo ul {
+    list-style: none;
+    padding: 0;
+}
+
+.campo ul li {
+    margin-bottom: 5px;
+}
+
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .linha-campos {
+        flex-direction: column; /* Empilha os campos verticalmente em telas pequenas */
+        align-items: center; /* Centraliza os campos */
+    }
+}
+
+/*=============================== Fim Pagina da Empresa ==============================*/
+/*=============================== Incio do contato da Empresa ==============================*/
+
+/* Estilo do background e container principal */
+.minha-conta {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));  /* Cor de fundo */
+    padding: 50px 0;
+}
+
+/* Estilo do formulário */
+.formulario {
+    position: relative;
+    padding: 20px 0;
+    text-align: center;
+    width: 300px;
+    height: 500px;  /* Ajustado para acomodar todos os campos */
+    margin: auto;
+    background-color: var(--cor-fonte);  /* Cor de fundo do formulário */
+    box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 10px;  /* Bordas arredondadas */
+}
+
+/* Título do formulário */
+.formulario samp {
+    display: inline;
+    width: 100px;
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--cor-fonte-corpo);
+    font-size: 18px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Estilo do formulário dentro do container */
+.formulario form {
+    position: absolute;
+    top: 110px;  /* Distância do topo */
+    width: 100%;  /* Usa toda a largura do container */
+    padding: 0 20px;
+}
+
+/* Estilo dos campos de input e textarea */
+.formulario form input,
+.formulario form textarea {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid var(--cor-padrao);  /* Cor da borda */
+    border-radius: 3px;
+    box-sizing: border-box;  /* Garante que padding não ultrapasse a largura total */
+}
+
+.formulario form textarea {
+    height: 120px;  /* Ajustado para dar mais espaço para a mensagem */
+    resize: none;  /* Desabilita o redimensionamento */
+}
+
+/* Estilo do botão de envio */
+.bth-form {
+    display: inline-block;
+    background-color: var(--cor-padrao);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.bth-form:hover {
+    background-color: var(--cor-padrao-hover);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .formulario {
+        width: 90%;  /* Faz o formulário ocupar 90% da largura da tela */
+        height: auto;  /* Ajusta a altura */
+    }
+}
+
+/*=============================== Fim do contato da Empresa ==============================*/
+/*=============================== Inicio do Eventos da Empresa ==============================*/
+
+/* Estilo para a seção de eventos */
+.eventos {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao)); /* Fundo com gradiente */
+    padding: 50px 0;
+}
+
+.eventos .container {
+    width: 100%;
+    max-width: 1200px; /* Largura máxima */
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Estilo para o título */
+.eventos h2 {
+    font-size: 2rem;
+    color: var(--cor-fonte-corpo);
+    margin-bottom: 20px;
+}
+
+/* Estilo para a galeria de imagens */
+.galeria-eventos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Estilo para as imagens dentro da galeria */
+.galeria-eventos img {
+    width: 100%; /* A largura vai ser 100% do seu container */
+    height: 200px; /* Altura fixa para as imagens */
+    object-fit: cover; /* Faz a imagem cobrir completamente o espaço */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efeito de hover nas imagens */
+.galeria-eventos img:hover {
+    transform: scale(1.05); /* Aumenta a imagem ligeiramente ao passar o mouse */
+}
+
+/* Responsividade: para telas menores */
+@media (max-width: 1024px) {
+    .galeria-eventos {
+        grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    .galeria-eventos {
+        grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas ainda menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .galeria-eventos {
+        grid-template-columns: 1fr; /* 1 coluna em telas muito pequenas */
+    }
+}
+
+
+
+/*=============================== Fim do Eventos da Empresa ==============================*/
+
+
+
+
+
 /*=============================== Modo Celular==============================*/
 @media  only screen and (min-width: 75px) and (max-width: 768px) {
     .teste-img .img-col {
