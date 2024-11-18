@@ -67,7 +67,7 @@ body {
 }
 
 .logo img {
-    width: 100%;
+    width: 33vh;
     /* Ajusta a largura da imagem para ocupar 100% do seu container */
     height: auto;
     /* Mantém a proporção da imagem */
@@ -457,7 +457,7 @@ ul {
 .app-logo img {
     width: 100%;
     /* Garante que a logo ocupe toda a largura do contêiner */
-    max-width: 140px;
+    max-width: 200px;
     /* Define um tamanho máximo para a logo */
     height: auto;
     /* Mantém a proporção da imagem */
