@@ -797,22 +797,23 @@ th:last-child{
 .formulario form .btn{
     width: 100%;
     margin: 10px 0;
-    border: nome;
+    border: nome; 
     
 }
 /*=============================== Fim minha conta ==============================*/
 /*=============================== Inicio Pagina da Empesa ==============================*/
 /* Estilo geral */
 .missao-visao-valores {
-    background-color: #f9f9f9;
+    background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
     padding: 40px 0;
     text-align: center;
 }
 
-.missao-visao-valores h2 {
+.missao-visao-valores h1 {
     margin-bottom: 30px;
     font-size: 2rem;
     color: #333;
+   
 }
 
 .linha-campos {
@@ -820,38 +821,94 @@ th:last-child{
     justify-content: space-between; /* Espaço igual entre os containers */
     gap: 20px; /* Espaço entre os containers */
     flex-wrap: wrap; /* Permite quebrar para próxima linha em telas pequenas */
+    
 }
 
 .campo {
     flex: 1; /* Os containers ocupam tamanhos iguais */
     min-width: 250px; /* Tamanho mínimo para cada campo */
-    max-width: 300px; /* Tamanho máximo para campos */
-    background: #fff;
+    max-width: 100%px; /* Tamanho máximo para campos */
+    background: var(--cor-fonte);
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: left;
+  
 }
 
-.campo h3 {
+.campo h1 {
     color: #555;
     margin-bottom: 10px;
+    text-align: center;
 }
 
 .campo p, .campo ul {
     color: #666;
     line-height: 1.6;
+    
 }
 
 .campo ul {
     list-style: none;
     padding: 0;
+    
 }
 
 .campo ul li {
     margin-bottom: 5px;
+    
+}
+/*============================Colocando Modal============================*/
+
+/* Estilizando o modal */
+.modal {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    z-index: 1000; /* Sempre acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Barra de rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
 }
 
+/* Imagem expandida */
+.modal-conteudo {
+    margin: auto;
+    display: block;
+    max-width: 80%; /* Limita a largura */
+    max-height: 80%; /* Limita a altura */
+    border-radius: 8px;
+}
+
+/* Texto descritivo abaixo da imagem */
+#descricao {
+    text-align: center;
+    color: white;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+/* Botão de fechar */
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fechar:hover,
+.fechar:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*============================Colocando Modal============================*/
 /* Estilo responsivo */
 @media (max-width: 768px) {
     .linha-campos {
@@ -954,6 +1011,7 @@ th:last-child{
 .eventos {
     background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao)); /* Fundo com gradiente */
     padding: 50px 0;
+    
 }
 
 .eventos .container {
@@ -970,6 +1028,34 @@ th:last-child{
     margin-bottom: 20px;
 }
 
+.evento .texto {
+    position:absolute;
+    bottom: 10px; /* Fica próximo à parte inferior da imagem */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    padding: 5px 10px;
+    border-radius: 4px; /* Bordas arredondadas para o fundo */
+    font-size: 14px;
+    font-weight: bold;
+    text-align:center;
+        
+   
+}
+
+.evento {
+    position: relative;
+    overflow: hidden;
+    text-align: center; /* Centraliza o texto no container */
+}
+
+.evento img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px; /* Bordas arredondadas para as imagens */
+}
 /* Estilo para a galeria de imagens */
 .galeria-eventos {
     display: grid;
@@ -990,7 +1076,7 @@ th:last-child{
 
 /* Efeito de hover nas imagens */
 .galeria-eventos img:hover {
-    transform: scale(1.05); /* Aumenta a imagem ligeiramente ao passar o mouse */
+    transform: scale(1.07); /* Aumenta a imagem ligeiramente ao passar o mouse */
 }
 
 /* Responsividade: para telas menores */
