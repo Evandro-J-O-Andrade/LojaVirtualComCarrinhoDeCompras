@@ -519,14 +519,28 @@ ul {
 
 }
 
+.novoMenu {
+    background: var(--cor-fonte);
+    /*background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));*/ /* Aqui se aplica a cor para todas as pagina como padrão do index*/
+    width: 100%;
+    /* Garante que o banner ocupe toda a largura da tela */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+  
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+
+    box-shadow: 0 2px 0 0 rgb(0, 0, 0, 0.1);
+}
+
 .novoMenu nav ul li a {
     color: var(--cor-btn-fonte);
 
 }
 
-.novoMenu {
-    box-shadow: 0 2px 0 0 rgb(0, 0, 0, 0.1);
-}
+
 
 .linha2 {
 
@@ -1079,6 +1093,118 @@ th:last-child{
     transform: scale(1.07); /* Aumenta a imagem ligeiramente ao passar o mouse */
 }
 
+
+/* Colocando icone de Whatsapp*/
+
+.whatsapp {
+    display: flex; /* Ativa o Flexbox */
+    flex-direction: column; /* Alinha os itens em coluna */
+    align-items: center; /* Centraliza horizontalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    text-align: center; /* Garante que o texto fique centralizado */
+    margin-top: 340px; /* Espaçamento entre o formulário e o WhatsApp */
+    
+}
+
+.whatsapp p {
+    font-size: 14px; /* Tamanho do texto */
+    color: #333; /* Cor do texto */
+    margin-bottom: 10px; /* Espaçamento entre o texto e o botão */
+    
+}
+
+.whatsapp a button {
+    background-color: #25D366; /* Cor do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove bordas */
+    padding: 10px 20px; /* Espaçamento interno */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer;
+    display: flex; /* Flex para alinhar ícone e texto */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    gap: 8px; /* Espaçamento entre o ícone e o texto */
+    transition: background-color 0.3s ease;
+    /* Seleciona o botão ou link do WhatsApp */
+    
+    
+ 
+   
+
+
+}
+
+.whatsapp a button:hover {
+    background-color: #1EBE57; /* Cor mais escura no hover */
+    
+}
+
+.whatsapp ion-icon {
+    font-size: 25px; /* Tamanho do ícone */
+    vertical-align: middle; /* Alinha o ícone */
+    
+}
+/* Colocando icone de Whatsapp*/
+
+/* Remove o sublinhado do link */
+/* Seleciona o link do WhatsApp */
+a[href*="wa.me"] {
+    text-decoration: none; /* Remove o sublinhado */
+    color: inherit; /* Herda a cor do texto ou defina a cor desejada */
+}
+
+/*Colocando agora botão para rolar a pagina de volta pra cima*/
+#btnTopo {
+    position: fixed; /* Fixa o botão na tela */
+    bottom: 20px; /* Distância da parte inferior */
+    right: 20px; /* Distância da lateral direita */
+    display: none; /* Invisível por padrão */
+    background-color: #25D366; /* Cor do botão */
+    color: white; /* Cor do ícone */
+    border: none; /* Remove a borda */
+    border-radius: 50%; /* Deixa o botão circular */
+    width: 50px; /* Largura do botão */
+    height: 50px; /* Altura do botão */
+    font-size: 24px; /* Tamanho do ícone */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
+    cursor: pointer; /* Mostra o ponteiro */
+    z-index: 1000; /* Garante que ele fique acima de outros elementos */
+    transition: opacity 0.3s ease-in-out; /* Animação suave de exibição */
+}
+
+#btnTopo:hover {
+    background-color: #1EBE57; /* Cor mais escura no hover */
+}
+
+/* Quando o botão deve aparecer */
+#btnTopo.show {
+    display: block;
+    opacity: 1; /* Faz o botão aparecer */
+}
+
+/* Estilos para telas pequenas (menores que 150px de largura) */
+@media (max-width: 150px) {
+    #btnTopo {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* Estilos para telas grandes (maiores que Full HD) */
+@media (min-width: 1920px) {
+    #btnTopo {
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+}
+/*Colocando agora botão para rolar a pagina de volta pra cima*/
 /* Responsividade: para telas menores */
 @media (max-width: 1024px) {
     .galeria-eventos {

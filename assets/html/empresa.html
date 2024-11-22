@@ -9,38 +9,43 @@
 </head>
 
 <body>
-
+    <div class="resolucao">
+        <!--Aqui vai verificar a resolução do dispositivo-->
+    </div>
     <!-- Banner principal da página -->
-    <div class="novoMenu">
-        <div class="container">
+    <div class="banner">
+        <div class="novoMenu">
 
-            <!-- Barra de navegação -->
-            <div class="navbar">
-                <div class="logo">
-                    <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+            <div class="container">
+
+                <!-- Barra de navegação -->
+                <div class="navbar">
+                    <div class="logo">
+                        <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+                    </div>
+
+                    <nav>
+                        <!-- Menu de navegação -->
+                        <ul id="MenuItens">
+                            <li><a href="/index.html" title="Início">Início</a></li>
+                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                            <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
+                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                        </ul>
+                    </nav>
+                    <a href="carrinho.html">
+                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                    </a>
+                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
-                <nav>
-                    <!-- Menu de navegação -->
-                    <ul id="MenuItens">
-                        <li><a href="/index.html" title="Início">Início</a></li>
-                        <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                        <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
-                        <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                        <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                    </ul>
-                </nav>
-                <a href="carrinho.html">
-                    <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                </a>
-                <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
+                <!-- Conteúdo principal do banner -->
+
             </div>
 
-            <!-- Conteúdo principal do banner -->
-
-        </div>
-
-        <!-- Seção de categorias -->
+        </div> <!-- Seção de categorias -->
 
     </div>
 
@@ -91,7 +96,60 @@
             </p>
         </div>
     </section>
+    <!-- Seção de Depoimentos -->
+    <div class="depoimentos">
+        <div class="corpo-categorias">
+            <div class="linha">
+                <div class="col-3">
+                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur nesciunt delectus ducimus
+                        non qui laboriosam impedit minima illo, excepturi deserunt sit et minus repellat ullam illum sed
+                        quos perferendis labore.</p>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <img src="/assets/img/cliente-1.png" alt="Cliente 1">
+                    <h3>Grasiely Machado</h3>
+                </div>
 
+                <div class="col-3">
+                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nesciunt magni et sed odio
+                        fugiat, nisi asperiores! Cumque eaque consectetur molestiae sapiente atque, error voluptatum
+                        sint culpa dignissimos temporibus perspiciatis.</p>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <img src="/assets/img/cliente-2.png" alt="Cliente 2">
+                    <h3>Mario Oliveira</h3>
+                </div>
+
+                <div class="col-3">
+                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus iste laboriosam dolore
+                        inventore qui, tempore aliquam obcaecati consequuntur sit fuga ratione vero quisquam
+                        necessitatibus ducimus odit hic magnam aspernatur.</p>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <img src="/assets/img/cliente-3.png" alt="Cliente 3">
+                    <h3>Ana Costa</h3>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Seção: Depoimentos -->
     <section class="depoimentos">
         <div class="container">
@@ -111,59 +169,6 @@
         <br>
     </section>
 
-    <!-- Seção: Eventos Realizados -->
-    <section class="eventos">
-        <div class="container">
-            <h2>Eventos Realizados</h2>
-    
-            <div class="galeria-eventos">
-                <div class="evento">
-                    <img src="/assets/img/evento1.jpeg" alt="Primeiro evento realizado no Hospital Guido Guida">
-                    <div class="texto">Primeiro evento realizado no Hospital Guido Guida</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/evento2.jpeg" alt="Dia de premiação do Círculo Rosa">
-                    <div class="texto">Dia de premiação do Círculo Rosa</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/evento3.jpeg" alt="Dia da Premiação das Globais Mary Kay">
-                    <div class="texto">Dia da Premiação das Globais Mary Kay</div>
-                </div>
-                <!-- Adicione os outros eventos da mesma forma -->
-                <div class="evento">
-                    <img src="/assets/img/evento5.jpeg" alt="Premiação das Globais Mary Kay">
-                    <div class="texto">Premiação das Globais Mary Kay</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/evento6.png" alt="Premiação da Estrela Safira">
-                    <div class="texto">Premiação da Estrela Safira</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/evento4.jpeg" alt="Premiação das Globais Mary kay">
-                    <div class="texto">Premiação das Globais Mary kay</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/grasicombaton.png" alt="Ensaio na sala Circulo Rosa">
-                    <div class="texto">Ensaio na sala Circulo Rosa</div>
-                </div>
-                <div class="evento">
-                    <img src="/assets/img/eventograsi4.jpeg" alt="Primeiro evento realizado no Hospital Guido Guida">
-                    <div class="texto">Primeiro evento realizado no Hospital Guido Guida</div>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-
-
-<!--Incio do modal  aqui vamos por as iamgens para ficar maior-->
-<div id="imagemModal" class="modal">
-    <span class="fechar">&times;</span>
-    <img class="modal-conteudo" id="imgExpandida">
-    <div id="descricao"></div>
-</div>
-
-<!--Fim do modal  aqui vamos por as iamgens para ficar maior-->
 
 
 
@@ -229,7 +234,9 @@
             <p class="direitos">&#169; 2024 Angel Cosméticos - Todos os direitos reservados</p> <!-- Copyright -->
         </div>
     </footer>
-
+    <button id="btnTopo" title="Voltar ao Topo">
+        <ion-icon name="arrow-up-outline"></ion-icon>
+    </button>
 
 
     <!-- Scripts -->
@@ -240,6 +247,7 @@
     <script src="/assets/js/app.js" defer> </script>
     <script src="/assets/js/responsive.js" defer></script>
     <script src="/assets/js/modal.js" defer></script>
+    <script src="/assets/js/btntop.js" defer></script>
 </body>
 
 </html>
