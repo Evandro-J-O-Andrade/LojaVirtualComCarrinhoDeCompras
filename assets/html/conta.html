@@ -9,40 +9,49 @@
 </head>
 
 <body>
-
+    <div class="resolucao">
+        <!--Aqui vai verificar a resolução do dispositivo-->
+    </div>
     <!-- Banner principal da página -->
-    <div class="novoMenu">
-        <div class="container">
+    <div class="banner">
+        <div class="novoMenu">
+            <div class="container">
 
-            <!-- Barra de navegação -->
-            <div class="navbar">
-                <div class="logo">
-                    <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+                <!-- Barra de navegação -->
+                <div class="navbar">
+                    <div class="logo">
+                        <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+                    </div>
+
+                    <nav>
+                        <!-- Menu de navegação -->
+                        <ul id="MenuItens">
+                            <li><a href="/index.html" title="Início">Início</a></li>
+                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                            <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
+                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                        </ul>
+                    </nav>
+                    <a href="carrinho.html">
+                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                    </a>
+                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
-                <nav>
-                    <!-- Menu de navegação -->
-                    <ul id="MenuItens">
-                        <li><a href="/index.html" title="Início">Início</a></li>
-                        <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                        <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                        <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
-                        <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                        <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                    </ul>
-                </nav>
-                <a href="carrinho.html">
-                    <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                </a>
-                <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
+                <!-- Conteúdo principal do banner -->
+
             </div>
-
-            <!-- Conteúdo principal do banner -->
-
         </div>
 
-
     </div>
+
+
+
+
+
+
     <!-- Seção de categorias -->
 
 
@@ -52,26 +61,34 @@
                 <div class="col-2">
                     <img src="/assets/img/logosemfundobaner.png" alt="" width="100%">
                 </div>
+
                 <div class="col-2">
-                    <div class="formulario">
-                        <div class="btn-form">
-                            <samp onclick="Entrar()">Entrar</samp>
-                            <samp onclick="Cadastro()">Cadastro</samp>
-                            <hr id="Indicador">
+                    <div class="container-cadatro">
+                        <div class="formulario">
+
+                            <div class="btn-form">
+                                <span onclick="Entrar()">Entrar</span>
+                                <span onclick="Cadastro()">Cadastro</span>
+                                <hr id="Indicador">
+                            </div>
+
+
+                            <form action="" method="post" id="EntrarPainel">
+                                <input type="email" ema="email" id="email" placeholder="E-mail de acesso">
+                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+                                <button type="submit" name="senEntrar" class="btn">Entrar</button>
+                                <a href="" title="">Esqueceu sua senha!</a>
+
+                            </form>
+
+
+                            <form action="" method="post" id="CadstroSite">
+                                <input type="text" name="nome" id="nome" placeholder="Nome completo">
+                                <input type="email" name="email" id="email" placeholder="E-mail de acesso">
+                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+                                <button type="submit" name="senCad" class="btn">Cadastre-se</button>
+                            </form>
                         </div>
-
-                        <form action="" method="post" id="EntrarPainel">
-                            <input type="email" name="email" id="" placeholder="E-mail de acesso">
-                            <input type="password" name="senha" id="" placeholder="Digite sua senha!">
-                            <button type="submit" name="senEntrar" class="btn">Entrar</button>
-                        </form>
-
-                        <form action="" method="post" id="CadstroSite">
-                            <input type="text" name="nome" id="" placeholder="Nome completo">
-                            <input type="email" name="email" id="" placeholder="E-mail de acesso">
-                            <input type="password" name="senha" id="" placeholder="Digite sua senha!">
-                            <button type="submit" name="senCad" class="btn">Cadastre-se</button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -141,6 +158,7 @@
     <script src="/assets/js/app.js" defer> </script>
     <script src="/assets/js/responsive.js" defer></script>
     <script src="/assets/js/btntop.js" defer></script>
+    <script src="/assets/js/cadastro.js" defer></script>
 
 
 
