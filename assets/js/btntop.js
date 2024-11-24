@@ -5,7 +5,7 @@ const btnTopo = document.getElementById("btnTopo");
 window.onscroll = function () {
     const scrollTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
 
-    if (document.documentElement.scrollTop > scrollTotal * 0.8) {
+    if (document.documentElement.scrollTop > scrollTotal * 0.6) {
         btnTopo.style.display = "block"; // Mostra o botão
     } else {
         btnTopo.style.display = "none"; // Esconde o botão

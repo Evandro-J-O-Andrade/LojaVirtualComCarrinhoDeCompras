@@ -125,7 +125,7 @@ p {
     height: auto;
     padding: 50px 0;
     margin-top: auto;
-    
+
 
 
 }
@@ -144,7 +144,7 @@ p {
 }
 
 .btn {
-    
+
     text-decoration: none;
     color: var(--cor-fonte);
     background: var(--cor-btn);
@@ -152,7 +152,7 @@ p {
     margin: 30px 0;
     border-radius: 30px;
     transition: background 0.5s;
-    
+
 
 
 }
@@ -418,7 +418,7 @@ small {
     flex-basis: 12%;
     text-align: right;
     margin: 0;
-    
+
 
 }
 
@@ -523,19 +523,21 @@ ul {
 }
 
 .novoMenu {
-    background: var(--cor-fonte);
-    /*background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));*/ /* Aqui se aplica a cor para todas as pagina como padrão do index*/
+
+    background-color: var(--cor-fonte);
+    /*background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));*/
     width: 100%;
     /* Garante que o banner ocupe toda a largura da tela */
     height: auto;
     /* Ajusta a altura automaticamente */
-  
+    min-height: 100px;
+    /* Define uma altura mínima para o banner */
+   
+    /* Para centralizar conteúdo, se necessário */
     align-items: center;
     /* Centraliza verticalmente */
     justify-content: center;
     /* Centraliza horizontalmente */
-
-    box-shadow: 0 2px 0 0 rgb(0, 0, 0, 0.1);
 }
 
 .novoMenu nav ul li a {
@@ -608,7 +610,7 @@ ul {
     font-weight: bold;
 }
 
-.ver-produtos select  {
+.ver-produtos select {
     display: block;
     margin-top: 20px;
     padding: 10px;
@@ -654,55 +656,67 @@ ul {
 .img-linha {
     display: flex;
     justify-content: space-between;
-    
+
 }
 
 .img-col {
     flex-basis: 25%;
     cursor: pointer;
 
-   
+
 }
+
 .teste-img {
-    display: flex; /* Define o container como flex */
-    flex-wrap: wrap; /* Permite que os itens se movam para a próxima linha se não houver espaço */
+    display: flex;
+    /* Define o container como flex */
+    flex-wrap: wrap;
+    /* Permite que os itens se movam para a próxima linha se não houver espaço */
     justify-content: space-between;
 }
 
 .teste-img .img-col {
-    margin: 0; /* Ajustar a margem para reduzir o espaço ao redor do elemento */
-    padding: 15px; /* Espaço dentro do elemento */
-    flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+    margin: 0;
+    /* Ajustar a margem para reduzir o espaço ao redor do elemento */
+    padding: 15px;
+    /* Espaço dentro do elemento */
+    flex-basis: calc(25% - 10px);
+    /* Cada item ocupa 25% do espaço disponível menos a margem */
     cursor: pointer;
     font-size: 15px;
-    box-sizing: border-box; /* Inclui padding e margin no cálculo da largura */
+    box-sizing: border-box;
+    /* Inclui padding e margin no cálculo da largura */
     overflow: hidden;
 }
 
 .teste-img .img-col img {
-    width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-    transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+    width: 100%;
+    /* Faz a imagem ocupar toda a largura do elemento */
+    transition: transform 0.5s;
+    /* Adiciona uma transição suave ao efeito */
 }
+
 .teste-img .img-col:hover img {
-    transform: scale(1.1); /* Aumenta a imagem para 110% do seu tamanho original */
+    transform: scale(1.1);
+    /* Aumenta a imagem para 110% do seu tamanho original */
 }
 
 
 /*Carrinho de compras*/
-.carrinho-compras{
+.carrinho-compras {
     margin: 80px auto;
 }
-.carrinho-compras table{
+
+.carrinho-compras table {
     width: 100%;
     border-collapse: collapse;
 }
 
-.info-carrinho{
-    display: none; 
+.info-carrinho {
+    display: none;
 
 }
 
-th{
+th {
     background-color: var(--cor-padrao);
     color: var(--cor--fonte);
     text-align: left;
@@ -710,39 +724,39 @@ th{
     padding: 5px;
 }
 
-td{
-padding: 10px 5px;
+td {
+    padding: 10px 5px;
 
 
 }
 
-td input{
+td input {
     width: 50px;
     height: 30px;
-    padding : 5px;
-    
+    padding: 5px;
 
-  }
 
-td a{
+}
+
+td a {
     color: var(--cor-padrao);
     font-size: 12px;
-    
+
 }
 
-td img{
+td img {
     width: 100px;
     height: 100px;
-    margin-right:  10px;
+    margin-right: 10px;
 }
 
-.valor-total{
+.valor-total {
     display: flex;
     justify-content: flex-end;
-    
+
 }
 
-.valor-total table{
+.valor-total table {
 
     border-top: 3px solid var(--cor-padrao);
     width: 100%;
@@ -750,21 +764,23 @@ td img{
     font-size: 15px;
 }
 
-td:last-child{
+td:last-child {
     text-align: right;
 
 }
 
-th:last-child{
+th:last-child {
     text-align: right;
 }
+
 /*Carrinho de compras*/
 
 /*=============================== Minha Conta ==============================*/
 
-.minha-conta{
-    background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+.minha-conta {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
     padding: 50px 0;
+    width: 100%;
 
 }
 
@@ -774,21 +790,24 @@ th:last-child{
     position: relative;
     padding: 20px 0;
     align-items: center;
-    text-align:center;
-    width: 500px;
-    height: 500px;  /* Ajustado para acomodar todos os campos */
+    text-align: center;
+    width: 350px;
+    height: 500px;
+    /* Ajustado para acomodar todos os campos */
     margin: auto;
-    background-color: var(--cor-fonte);  /* Cor de fundo do formulário */
+    background-color: var(--cor-fonte);
+    /* Cor de fundo do formulário */
     box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    border-radius: 10px;  /* Bordas arredondadas */
+    border-radius: 10px;
+    /* Bordas arredondadas */
 }
-/*
 
 
-*/
 
-.formulario span{
+
+
+.formulario span {
     display: inline-block;
     width: 100px;
     padding: 0 10px;
@@ -803,51 +822,122 @@ th:last-child{
     display: inline-block;
 
 }
+/*Formulario para cadastro*/
+/* Botões Entrar e Cadastro centralizados */
+.btn-form-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espaço entre os spans */
+    position: relative; /* Para posicionar o Indicador */
+    margin-bottom: 20px;
+}
 
-.formulario form{
+.btn-form-2 span {
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animação suave */
+    text-align: center;
+}
+
+
+
+/* Indicador de posição */
+#Indicador {
     position: absolute;
+    bottom: -5px;
+    height: 2px;
+    width: 80px;
+    background-color: #007BFF;
+    transition: transform 0.3s ease-in-out; /* Suavidade no movimento */
+}
+
+/* Formulários */
+form {
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+form input, form button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Contêiner do botão e texto "Esqueceu sua senha!" */
+
+
+.esqueceu {
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+    margin-top: 10px; /* Espaçamento acima */
+}
+
+.esqueceu-senha {
+    font-size: 14px;
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: underline; /* Para parecer um link */
+    text-align: center; /* Centraliza o texto caso haja quebra de linha */
+}
+
+/*Fim Formulario para cadastro*/
+
+.formulario form {
+    position: relative;
     top: 110px;
     max-width: 500px;
     padding: 0 20px;
     transition: transform 1s;
 
 }
-.formulario form input{
+
+.formulario form input {
     width: 100%;
     height: 0px;
     margin: 10px 0;
     padding: 0 10px;
-    border:  1px solid var(--cor-padrao);
+    border: 1px solid var(--cor-padrao);
     border-radius: 3px;
 
 }
-.formulario form input:focus{
-   outline: none;
+
+.formulario form input:focus {
+    outline: none;
 
 }
-.formulario form .btn{
+
+.formulario form .btn {
     width: 100%;
     margin: 10px 0;
-    border: nome; 
+    border: nome;
     border-radius: 4px;
     background-color: var(--cor-padrao);
     cursor: pointer;
-    
-}
-.formulario form .bth-form:hover{
-background-color: var(--cor-btn-hover);
 
 }
-.formulario form a{
-    
+
+.formulario form .bth-form:hover {
+    background-color: var(--cor-btn-hover);
+
+}
+
+.formulario form a {
+
     font-size: 20px;
     text-decoration: none;
     color: var(--cor-fonte-corpo);
     cursor: pointer;
 
-    
+
 
 }
+
 /* Estilizando o contêiner pai */
 
 /* Estilo do botão WhatsApp */
@@ -857,90 +947,139 @@ background-color: var(--cor-btn-hover);
     align-items: center;
     margin-top: 55px;
     padding: 10px 20px;
-    
-    background-color: #25d366; /* Cor do botão */
+
+    background-color: #25d366;
+    /* Cor do botão */
     color: #fff;
-    font-size: 16px; /* Tamanho da fonte */
+    font-size: 16px;
+    /* Tamanho da fonte */
     border-radius: 5px;
-    width: 100%; /* Faz o botão ocupar toda a largura do seu contêiner */
+    width: 100%;
+    /* Faz o botão ocupar toda a largura do seu contêiner */
     max-width: 100%;
-    box-sizing: border-box; /* Garante que o padding não afete a largura total */
+    box-sizing: border-box;
+    /* Garante que o padding não afete a largura total */
 }
 
 
 
- /* Esconde o texto diretamente no botão */
-    .btn-whatsapp::before {
-        display: none;
-        content: ''; /* Não deixa o texto ser exibido */
-        visibility: hidden; /* Torna o texto invisível */
-    }
+/* Esconde o texto diretamente no botão */
+.btn-whatsapp::before {
+    content: '';
+    /* Não deixa o texto ser exibido */
+    visibility: hidden;
+    /* Torna o texto invisível */
+}
 
-    .btn-whatsapp {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+.btn-whatsapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 /* Media Query para telas menores que 700px (Mobile) */
 @media (max-width: 700px) {
     .btn-whatsapp {
-        font-size: 14px; /* Ajusta o tamanho da fonte */
-        padding: 10px 15px; /* Ajusta o padding */
+        font-size: 14px;
+        /* Ajusta o tamanho da fonte */
+        padding: 10px 15px;
+        /* Ajusta o padding */
     }
 
     /* Esconde o texto e deixa apenas o ícone visível */
     .btn-whatsapp span {
-        display: none; /* Esconde o texto em telas pequenas */
+        display: none;
+        /* Esconde o texto em telas pequenas */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
     }
 }
 
 /* Media Query para telas menores que 700px (Mobile) */
 @media (max-width: 700px) {
     .btn-whatsapp {
-        width: 100%; /* O botão vai ocupar 100% da largura do seu contêiner */
-        margin-top: 55px; /* Menos espaço acima do botão */
-        padding: 10px 15px; /* Ajusta o padding para que o botão fique proporcional */
-        font-size: 20px; /* Reduz o tamanho da fonte em telas menores */
+        width: 100%;
+        /* O botão vai ocupar 100% da largura do seu contêiner */
+        margin-top: 55px;
+        /* Menos espaço acima do botão */
+        padding: 10px 15px;
+        /* Ajusta o padding para que o botão fique proporcional */
+        font-size: 20px;
+        /* Reduz o tamanho da fonte em telas menores */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
     }
 }
 
 /* Media Query para telas menores que 500px (Muito pequeno) */
 @media (max-width: 500px) {
     .btn-whatsapp {
-        font-size: 12px; /* Ajuste de fonte para telas muito pequenas */
-        padding: 10px 10px; /* Ajuste do padding para otimizar o botão */
+        font-size: 12px;
+        /* Ajuste de fonte para telas muito pequenas */
+        padding: 10px 10px;
+        /* Ajuste do padding para otimizar o botão */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
     }
 }
 
 /* Media Query para telas menores que 700px (Mobile) */
 @media (max-width: 700px) {
     .btn-whatsapp {
-        font-size: 14px; /* Ajusta o tamanho da fonte */
-        padding: 10px 15px; /* Ajusta o padding */
+        font-size: 14px;
+        /* Ajusta o tamanho da fonte */
+        padding: 10px 15px;
+        /* Ajusta o padding */
     }
 
     /* Esconde o texto e deixa apenas o ícone visível */
     .btn-whatsapp {
-        flex-direction: column; /* Empilha ícone e texto verticalmente */
+        flex-direction: column;
+        /* Empilha ícone e texto verticalmente */
     }
 
     .btn-whatsapp ion-icon {
-        font-size: 20px; /* Ajusta o tamanho do ícone */
+        font-size: 20px;
+        /* Ajusta o tamanho do ícone */
     }
 
     .btn-whatsapp::after {
-        content: ''; /* Remove o texto */
-        display: none; /* Esconde o texto do botão */
+        content: '';
+        /* Remove o texto */
+        display: none;
+        /* Esconde o texto do botão */
     }
 
     .btn-whatsapp span {
-        display: none; /* Esconde o texto em telas pequenas */
+        display: none;
+        /* Esconde o texto em telas pequenas */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
     }
 }
 
 
-#Indicador{
+#Indicador {
     width: 100px;
     height: 3px;
     border: none;
@@ -949,11 +1088,12 @@ background-color: var(--cor-btn-hover);
     transform: translatex(100px);
     transition: transform 1s;
 }
+
 /*=============================== Fim minha conta ==============================*/
 /*=============================== Inicio Pagina da Empesa ==============================*/
 /* Estilo geral */
 .missao-visao-valores {
-    background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
     padding: 40px 0;
     text-align: center;
 }
@@ -962,27 +1102,33 @@ background-color: var(--cor-btn-hover);
     margin-bottom: 30px;
     font-size: 2rem;
     color: #333;
-   
+
 }
 
 .linha-campos {
     display: flex;
-    justify-content: space-between; /* Espaço igual entre os containers */
-    gap: 20px; /* Espaço entre os containers */
-    flex-wrap: wrap; /* Permite quebrar para próxima linha em telas pequenas */
-    
+    justify-content: space-between;
+    /* Espaço igual entre os containers */
+    gap: 20px;
+    /* Espaço entre os containers */
+    flex-wrap: wrap;
+    /* Permite quebrar para próxima linha em telas pequenas */
+
 }
 
 .campo {
-    flex: 1; /* Os containers ocupam tamanhos iguais */
-    min-width: 250px; /* Tamanho mínimo para cada campo */
-    max-width: 100%px; /* Tamanho máximo para campos */
+    flex: 1;
+    /* Os containers ocupam tamanhos iguais */
+    min-width: 250px;
+    /* Tamanho mínimo para cada campo */
+    max-width: 100%px;
+    /* Tamanho máximo para campos */
     background: var(--cor-fonte);
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: left;
-  
+
 }
 
 .campo h1 {
@@ -991,43 +1137,51 @@ background-color: var(--cor-btn-hover);
     text-align: center;
 }
 
-.campo p, .campo ul {
+.campo p,
+.campo ul {
     color: #666;
     line-height: 1.6;
-    
+
 }
 
 .campo ul {
     list-style: none;
     padding: 0;
-    
+
 }
 
 .campo ul li {
     margin-bottom: 5px;
-    
+
 }
+
 /*============================Colocando Modal============================*/
 
 /* Estilizando o modal */
 .modal {
-    display: none; /* Inicialmente oculto */
+    display: none;
+    /* Inicialmente oculto */
     position: fixed;
-    z-index: 1000; /* Sempre acima de outros elementos */
+    z-index: 1000;
+    /* Sempre acima de outros elementos */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    overflow: auto; /* Barra de rolagem se necessário */
-    background-color: rgba(0, 0, 0, 0.8); /* Fundo semitransparente */
+    overflow: auto;
+    /* Barra de rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Fundo semitransparente */
 }
 
 /* Imagem expandida */
 .modal-conteudo {
     margin: auto;
     display: block;
-    max-width: 80%; /* Limita a largura */
-    max-height: 80%; /* Limita a altura */
+    max-width: 80%;
+    /* Limita a largura */
+    max-height: 80%;
+    /* Limita a altura */
     border-radius: 8px;
 }
 
@@ -1061,8 +1215,10 @@ background-color: var(--cor-btn-hover);
 /* Estilo responsivo */
 @media (max-width: 768px) {
     .linha-campos {
-        flex-direction: column; /* Empilha os campos verticalmente em telas pequenas */
-        align-items: center; /* Centraliza os campos */
+        flex-direction: column;
+        /* Empilha os campos verticalmente em telas pequenas */
+        align-items: center;
+        /* Centraliza os campos */
     }
 }
 
@@ -1070,10 +1226,6 @@ background-color: var(--cor-btn-hover);
 /*=============================== Incio do contato da Empresa ==============================*/
 
 /* Estilo do background e container principal */
-.minha-conta {
-    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));  /* Cor de fundo */
-    padding: 50px 0;
-}
 
 /* Estilo do formulário */
 
@@ -1093,8 +1245,10 @@ background-color: var(--cor-btn-hover);
 /* Estilo do formulário dentro do container */
 .formulario form {
     position: absolute;
-    top: 110px;  /* Distância do topo */
-    width: 100%;  /* Usa toda a largura do container */
+    top: 110px;
+    /* Distância do topo */
+    width: 100%;
+    /* Usa toda a largura do container */
     padding: 0 20px;
 }
 
@@ -1105,14 +1259,18 @@ background-color: var(--cor-btn-hover);
     height: 40px;
     margin: 10px 0;
     padding: 0 10px;
-    border: 1px solid var(--cor-padrao);  /* Cor da borda */
+    border: 1px solid var(--cor-padrao);
+    /* Cor da borda */
     border-radius: 3px;
-    box-sizing: border-box;  /* Garante que padding não ultrapasse a largura total */
+    box-sizing: border-box;
+    /* Garante que padding não ultrapasse a largura total */
 }
 
 .formulario form textarea {
-    height: 120px;  /* Ajustado para dar mais espaço para a mensagem */
-    resize: none;  /* Desabilita o redimensionamento */
+    height: 120px;
+    /* Ajustado para dar mais espaço para a mensagem */
+    resize: none;
+    /* Desabilita o redimensionamento */
 }
 
 /* Estilo do botão de envio */
@@ -1136,8 +1294,10 @@ background-color: var(--cor-btn-hover);
 /* Responsividade */
 @media (max-width: 768px) {
     .formulario {
-        width: 90%;  /* Faz o formulário ocupar 90% da largura da tela */
-        height: auto;  /* Ajusta a altura */
+        width: 100%;
+        /* Faz o formulário ocupar 90% da largura da tela */
+        height: auto;
+        /* Ajusta a altura */
     }
 }
 
@@ -1146,14 +1306,16 @@ background-color: var(--cor-btn-hover);
 
 /* Estilo para a seção de eventos */
 .eventos {
-    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao)); /* Fundo com gradiente */
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    /* Fundo com gradiente */
     padding: 50px 0;
-    
+
 }
 
 .eventos .container {
     width: 100%;
-    max-width: 1200px; /* Largura máxima */
+    max-width: 1200px;
+    /* Largura máxima */
     margin: 0 auto;
     text-align: center;
 }
@@ -1166,46 +1328,56 @@ background-color: var(--cor-btn-hover);
 }
 
 .evento .texto {
-    position:absolute;
-    bottom: 10px; /* Fica próximo à parte inferior da imagem */
+    position: absolute;
+    bottom: 10px;
+    /* Fica próximo à parte inferior da imagem */
     left: 50%;
     transform: translateX(-50%);
     color: white;
-    background: rgba(0, 0, 0, 0.5); /* Fundo semitransparente */
+    background: rgba(0, 0, 0, 0.5);
+    /* Fundo semitransparente */
     padding: 5px 10px;
-    border-radius: 4px; /* Bordas arredondadas para o fundo */
+    border-radius: 4px;
+    /* Bordas arredondadas para o fundo */
     font-size: 14px;
     font-weight: bold;
-    text-align:center;
-        
-   
+    text-align: center;
+
+
 }
 
 .evento {
     position: relative;
     overflow: hidden;
-    text-align: center; /* Centraliza o texto no container */
+    text-align: center;
+    /* Centraliza o texto no container */
 }
 
 .evento img {
     width: 100%;
     height: auto;
     display: block;
-    border-radius: 8px; /* Bordas arredondadas para as imagens */
+    border-radius: 8px;
+    /* Bordas arredondadas para as imagens */
 }
+
 /* Estilo para a galeria de imagens */
 .galeria-eventos {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 colunas */
     gap: 20px;
     margin-top: 20px;
 }
 
 /* Estilo para as imagens dentro da galeria */
 .galeria-eventos img {
-    width: 100%; /* A largura vai ser 100% do seu container */
-    height: 200px; /* Altura fixa para as imagens */
-    object-fit: cover; /* Faz a imagem cobrir completamente o espaço */
+    width: 100%;
+    /* A largura vai ser 100% do seu container */
+    height: 200px;
+    /* Altura fixa para as imagens */
+    object-fit: cover;
+    /* Faz a imagem cobrir completamente o espaço */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
@@ -1213,112 +1385,165 @@ background-color: var(--cor-btn-hover);
 
 /* Efeito de hover nas imagens */
 .galeria-eventos img:hover {
-    transform: scale(1.07); /* Aumenta a imagem ligeiramente ao passar o mouse */
+    transform: scale(1.07);
+    /* Aumenta a imagem ligeiramente ao passar o mouse */
 }
+
 video {
     width: 100%;
     height: auto;
-    border: 5px solid #333; /* Borda em torno do vídeo */
-    border-radius: 10px; /* Bordas arredondadas */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    display: block; /* Remove espaços em branco em volta do vídeo */
-    margin: 20px auto; /* Centraliza o vídeo com margens automáticas */
-    max-width: 75%; /* Limita a largura máxima do vídeo */
-    object-fit: contain; /* O vídeo cobre toda a área do contêiner, mantendo a proporção */
-    
-    
+    border: 5px solid #333;
+    /* Borda em torno do vídeo */
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra suave */
+    display: block;
+    /* Remove espaços em branco em volta do vídeo */
+    margin: 20px auto;
+    /* Centraliza o vídeo com margens automáticas */
+    max-width: 75%;
+    /* Limita a largura máxima do vídeo */
+    object-fit: contain;
+    /* O vídeo cobre toda a área do contêiner, mantendo a proporção */
+
+
 }
+
 video:hover {
-    filter: brightness(90%); /* Aplica um efeito ao passar o mouse */
+    filter: brightness(90%);
+    /* Aplica um efeito ao passar o mouse */
 }
 
 /* Colocando icone de Whatsapp*/
 
 .whatsapp {
-    display: flex; /* Ativa o Flexbox */
-    flex-direction: column; /* Alinha os itens em coluna */
-    align-items: center; /* Centraliza horizontalmente */
-    justify-content: center; /* Centraliza verticalmente */
-    text-align: center; /* Garante que o texto fique centralizado */
-    margin-top: 340px; /* Espaçamento entre o formulário e o WhatsApp */
-    
+    display: flex;
+    /* Ativa o Flexbox */
+    flex-direction: column;
+    /* Alinha os itens em coluna */
+    align-items: center;
+    /* Centraliza horizontalmente */
+    justify-content: center;
+    /* Centraliza verticalmente */
+    text-align: center;
+    /* Garante que o texto fique centralizado */
+    margin-top: 340px;
+    /* Espaçamento entre o formulário e o WhatsApp */
+
 }
 
 .whatsapp p {
-    font-size: 14px; /* Tamanho do texto */
-    color: #333; /* Cor do texto */
-    margin-bottom: 10px; /* Espaçamento entre o texto e o botão */
-    
+    font-size: 14px;
+    /* Tamanho do texto */
+    color: #333;
+    /* Cor do texto */
+    margin-bottom: 10px;
+    /* Espaçamento entre o texto e o botão */
+
 }
 
 .whatsapp a button {
-    background-color: #25D366; /* Cor do botão */
-    color: white; /* Cor do texto */
-    border: none; /* Remove bordas */
-    padding: 10px 20px; /* Espaçamento interno */
-    border-radius: 5px; /* Bordas arredondadas */
-    font-size: 16px; /* Tamanho da fonte */
+    background-color: #25D366;
+    /* Cor do botão */
+    color: white;
+    /* Cor do texto */
+    border: none;
+    /* Remove bordas */
+    padding: 10px 20px;
+    /* Espaçamento interno */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 16px;
+    /* Tamanho da fonte */
     cursor: pointer;
-    display: flex; /* Flex para alinhar ícone e texto */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    gap: 8px; /* Espaçamento entre o ícone e o texto */
+    display: flex;
+    /* Flex para alinhar ícone e texto */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    gap: 8px;
+    /* Espaçamento entre o ícone e o texto */
     transition: background-color 0.3s ease;
     /* Seleciona o botão ou link do WhatsApp */
-    
-    
- 
-   
+
+
+
+
 
 
 }
 
 .whatsapp a button:hover {
-    background-color: #1EBE57; /* Cor mais escura no hover */
-    
+    background-color: #1EBE57;
+    /* Cor mais escura no hover */
+
 }
 
 .whatsapp ion-icon {
-    font-size: 25px; /* Tamanho do ícone */
-    vertical-align: middle; /* Alinha o ícone */
-    
+    font-size: 25px;
+    /* Tamanho do ícone */
+    vertical-align: middle;
+    /* Alinha o ícone */
+
 }
+
 /* Colocando icone de Whatsapp*/
 
 /* Remove o sublinhado do link */
 /* Seleciona o link do WhatsApp */
 a[href*="wa.me"] {
-    text-decoration: none; /* Remove o sublinhado */
-    color: inherit; /* Herda a cor do texto ou defina a cor desejada */
+    text-decoration: none;
+    /* Remove o sublinhado */
+    color: inherit;
+    /* Herda a cor do texto ou defina a cor desejada */
 }
 
 /*Colocando agora botão para rolar a pagina de volta pra cima*/
 #btnTopo {
-    position: fixed; /* Fixa o botão na tela */
-    bottom: 20px; /* Distância da parte inferior */
-    right: 20px; /* Distância da lateral direita */
-    display: none; /* Invisível por padrão */
-    background-color: #25D366; /* Cor do botão */
-    color: white; /* Cor do ícone */
-    border: none; /* Remove a borda */
-    border-radius: 50%; /* Deixa o botão circular */
-    width: 50px; /* Largura do botão */
-    height: 50px; /* Altura do botão */
-    font-size: 24px; /* Tamanho do ícone */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra */
-    cursor: pointer; /* Mostra o ponteiro */
-    z-index: 1000; /* Garante que ele fique acima de outros elementos */
-    transition: opacity 0.3s ease-in-out; /* Animação suave de exibição */
+    position: fixed;
+    /* Fixa o botão na tela */
+    bottom: 20px;
+    /* Distância da parte inferior */
+    right: 20px;
+    /* Distância da lateral direita */
+    display: none;
+    /* Invisível por padrão */
+    background-color: #25D366;
+    /* Cor do botão */
+    color: white;
+    /* Cor do ícone */
+    border: none;
+    /* Remove a borda */
+    border-radius: 50%;
+    /* Deixa o botão circular */
+    width: 50px;
+    /* Largura do botão */
+    height: 50px;
+    /* Altura do botão */
+    font-size: 24px;
+    /* Tamanho do ícone */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Sombra */
+    cursor: pointer;
+    /* Mostra o ponteiro */
+    z-index: 1000;
+    /* Garante que ele fique acima de outros elementos */
+    transition: opacity 0.3s ease-in-out;
+    /* Animação suave de exibição */
 }
 
 #btnTopo:hover {
-    background-color: #1EBE57; /* Cor mais escura no hover */
+    background-color: #1EBE57;
+    /* Cor mais escura no hover */
 }
 
 /* Quando o botão deve aparecer */
 #btnTopo.show {
     display: block;
-    opacity: 1; /* Faz o botão aparecer */
+    opacity: 1;
+    /* Faz o botão aparecer */
 }
 
 /* Estilos para telas pequenas (menores que 150px de largura) */
@@ -1342,23 +1567,27 @@ a[href*="wa.me"] {
         font-size: 28px;
     }
 }
+
 /*Colocando agora botão para rolar a pagina de volta pra cima*/
 /* Responsividade: para telas menores */
 @media (max-width: 1024px) {
     .galeria-eventos {
-        grid-template-columns: repeat(3, 1fr); /* 3 colunas em telas menores */
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 colunas em telas menores */
     }
 }
 
 @media (max-width: 768px) {
     .galeria-eventos {
-        grid-template-columns: repeat(2, 1fr); /* 2 colunas em telas ainda menores */
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 colunas em telas ainda menores */
     }
 }
 
 @media (max-width: 480px) {
     .galeria-eventos {
-        grid-template-columns: 1fr; /* 1 coluna em telas muito pequenas */
+        grid-template-columns: 1fr;
+        /* 1 coluna em telas muito pequenas */
     }
 }
 
@@ -1371,45 +1600,67 @@ a[href*="wa.me"] {
 
 
 /*=============================== Modo Celular==============================*/
-@media  only screen and (min-width: 75px) and (max-width: 768px) {
+@media only screen and (min-width: 75px) and (max-width: 768px) {
     .teste-img .img-col {
-        margin: 0; /* Ajustar a margem para dispositivos médios */
-        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
     }
+
     .teste-img .img-col img {
-        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-        max-width: 100px; /* Limita a largura máxima da imagem */
-        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
     }
 }
+
 @media only screen and (min-width: 75px) and(max-width: 768px) {
     .teste-img .img-col {
-        margin: 0; /* Ajustar a margem para dispositivos médios */
-        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
     }
+
     .teste-img .img-col img {
-        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-        max-width: 100px; /* Limita a largura máxima da imagem */
-        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
     }
 }
+
 @media only screen and (min-width: 75px) and (max-width: 480px) {
     .teste-img .img-col {
-        margin: 0; /* Ajustar a margem para dispositivos menores */
-        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        margin: 0;
+        /* Ajustar a margem para dispositivos menores */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
     }
+
     .teste-img .img-col img {
         margin: 0;
-        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-        max-width: 200px; /* Limita a largura máxima da imagem para dispositivos menores */
-        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px;
+        /* Limita a largura máxima da imagem para dispositivos menores */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
     }
 }
 
 @media only screen and (min-width: 75px) and (max-width: 320px) {
     .teste-img .img-col {
-        margin: 0; /* Remove o espaçamento para dispositivos muito pequenos */
-        flex-basis: calc(25% - 10px); /* Cada item ocupa 100% do espaço disponível */
+        margin: 0;
+        /* Remove o espaçamento para dispositivos muito pequenos */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 100% do espaço disponível */
     }
 }
 
@@ -1446,10 +1697,18 @@ a[href*="wa.me"] {
             width: 100%;
             max-width: 100%;
         }
-        .info-carrinho p{
+
+        .info-carrinho p {
             display: none;
         }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
+        }
     }
+
 
     #MenuItens {
         overflow: hidden;
@@ -1482,14 +1741,21 @@ a[href*="wa.me"] {
         color: var(--cor-fonte);
 
     }
+
     .teste-img .img-col {
-        margin: 0; /* Ajustar a margem para dispositivos médios */
-        flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
     }
+
     .teste-img .img-col img {
-        width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-        max-width: 200px; /* Limita a largura máxima da imagem */
-        transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
     }
 
     @media only screen and (min-width: 100px) and (max-width: 550px) {
@@ -1503,14 +1769,27 @@ a[href*="wa.me"] {
                 /* Defina um tamanho máximo, se necessário */
             }
         }
+
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1521,17 +1800,31 @@ a[href*="wa.me"] {
             max-width: 200px;
             /* Defina um tamanho máximo, se necessário */
         }
+
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
         }
-        .info-carrinho p{
+
+        .info-carrinho p {
             display: none;
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1576,13 +1869,15 @@ a[href*="wa.me"] {
             margin: 20px 0;
         }
 
-        .ver-produtos .linha{
+        .ver-produtos .linha {
             text-align: left;
         }
-        .ver-produtos h1{
+
+        .ver-produtos h1 {
             font-size: 26px;
             line-height: 26px;
         }
+
         .rodape-col-4 ul {
             width: 15px;
             min-width: 250px;
@@ -1626,16 +1921,29 @@ a[href*="wa.me"] {
         }
 
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
         }
-        .info-carrinho p{
+
+        .info-carrinho p {
             display: none;
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1675,17 +1983,31 @@ a[href*="wa.me"] {
             /* Remova margem direita para menu em coluna */
             margin-bottom: 10px;
         }
+
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
         }
-        .info-carrinho p{
+
+        .info-carrinho p {
             display: none;
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1695,6 +2017,12 @@ a[href*="wa.me"] {
             /* Ajuste a largura da logo para telas menores */
             max-width: 200px;
             /* Defina um tamanho máximo, se necessário */
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1722,17 +2050,31 @@ a[href*="wa.me"] {
             width: 100%;
             max-width: 100%;
         }
+
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(25% - 10px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
         }
-        .info-carrinho p{
+
+        .info-carrinho p {
             display: none;
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
 
@@ -1805,18 +2147,39 @@ a[href*="wa.me"] {
         .resolucao .novoMenu nav ul li a {
             color: var(--cor-fonte);
         }
+
         .teste-img .img-col {
-            margin: 0; /* Ajustar a margem para dispositivos médios */
-            flex-basis: calc(50% - 20px); /* Cada item ocupa 25% do espaço disponível menos a margem */
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(50% - 20px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
         }
+
         .teste-img .img-col img {
-            width: 100%; /* Faz a imagem ocupar toda a largura do elemento */
-            max-width: 200px; /* Limita a largura máxima da imagem */
-            transition: transform 0.5s; /* Adiciona uma transição suave ao efeito */
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+        .minha-conta{
+            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+        
         }
     }
-    .info-carrinho p{
+
+    .info-carrinho p {
         display: none;
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
     }
 }
 
@@ -1852,22 +2215,24 @@ a[href*="wa.me"] {
             flex-basis: 12%;
             text-align: right;
             margin: 0;
-        
+
         }
-        
+
         .ver-produtos .col-2 {
             margin: 20px 0;
         }
 
-        .ver-produtos .linha{
+        .ver-produtos .linha {
             text-align: left;
         }
-        .ver-produtos h1{
+
+        .ver-produtos h1 {
             font-size: 26px;
             line-height: 26px;
         }
     }
-    .info-carrinho p{
+
+    .info-carrinho p {
         display: none;
     }
 }

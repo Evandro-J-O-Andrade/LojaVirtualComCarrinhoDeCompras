@@ -65,31 +65,44 @@
                 <div class="col-2">
                     <div class="container-cadatro">
                         <div class="formulario">
-
-                            <div class="btn-form">
-                                <span onclick="Entrar()">Entrar</span>
-                                <span onclick="Cadastro()">Cadastro</span>
+                            <!-- Botões Entrar e Cadastro -->
+                            <div class="btn-form-2">
+                                <span id="btnEntrar" class="btn-entrar" onclick="Entrar()">Entrar</span>
+                                <span id="btnCadastro" class="btn-cadastro" onclick="Cadastro()">Cadastro</span>
                                 <hr id="Indicador">
                             </div>
 
-
-                            <form action="" method="post" id="EntrarPainel">
-                                <input type="email" ema="email" id="email" placeholder="E-mail de acesso">
+                            <!-- Formulário de Entrar -->
+                            <form action="Entrar" method="post" id="EntrarPainel">
+                                <input type="email" name="email" id="email" placeholder="E-mail de acesso">
                                 <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
                                 <button type="submit" name="senEntrar" class="btn">Entrar</button>
-                                <a href="" title="">Esqueceu sua senha!</a>
-
+                                <div class="esqueceu">
+                                    <span class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua senha!</span>
+    
+                                </div>
                             </form>
+                            
 
-
-                            <form action="" method="post" id="CadstroSite">
+                            <!-- Formulário de Cadastro -->
+                            <form action="" method="post" id="CadastroSite" style="display: none;">
                                 <input type="text" name="nome" id="nome" placeholder="Nome completo">
                                 <input type="email" name="email" id="email" placeholder="E-mail de acesso">
                                 <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
                                 <button type="submit" name="senCad" class="btn">Cadastre-se</button>
                             </form>
+
+                            <!-- Formulário de Recuperação -->
+                            <form action="" method="post" id="RecuperarSenha" style="display: none;">
+                                <input type="email" name="emailRecuperar" id="emailRecuperar"
+                                    placeholder="Digite seu e-mail para recuperação">
+                                <button type="submit" name="senRecuperar" class="btn">Enviar Recuperação
+
+                                </button>
+                            </form>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -149,17 +162,17 @@
 
 
     <!-- Scripts -->
-    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js">
-    </script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
     <script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
-    <script src="/assets/js/login.js" defer></script>
     <script src="/assets/js/app.js" defer> </script>
     <script src="/assets/js/responsive.js" defer></script>
     <script src="/assets/js/btntop.js" defer></script>
+    <script src="/assets/js/modal.js" defer></script>
     <script src="/assets/js/cadastro.js" defer></script>
-
+    <script src="/assets/js/contato.js" defer></script>
+    <script src="/assets/js/login.js" defer></script>
 
 
 

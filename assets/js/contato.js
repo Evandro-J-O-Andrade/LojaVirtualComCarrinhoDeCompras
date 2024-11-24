@@ -42,6 +42,7 @@ document.getElementById('formContato').addEventListener('submit', function(e) {
     
 
 // Seleciona o elemento pai e o span
+// Seleciona o elemento pai e o span
 const btnForm = document.querySelector('.btn-form');
 const spanElement = btnForm.querySelector('span');
 
@@ -57,6 +58,22 @@ spanElement.style.display = 'inline';
 // Aplica os estilos no span
 
 spanElement.style.whiteSpace = 'nowrap'; // Evita quebra de linha
+
+
+    
+
+// Aplica os estilos no elemento pai
+
+
+
+
+// Aplica os estilos no span (apenas para garantir)
+
+spanElement.style.display = 'inline';
+
+// Aplica os estilos no span
+
+
 
 
     

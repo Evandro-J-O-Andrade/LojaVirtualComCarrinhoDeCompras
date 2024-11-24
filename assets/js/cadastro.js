@@ -1,3 +1,4 @@
+
 var EntrarPainel= document.getElementById("EntrarPainel");
 var CadastroSite= document.getElementById("CadastroSite");
 var Indicador= document.getElementById("Indicador");
@@ -19,7 +20,60 @@ function Entrar() {
     document.getElementById("CadstroSite").style.display = "none";
 
     // Alterar estilo do indicador para o botão 'Entrar'
-    document.getElementById("Indicador").style.transform = "translateX(300px)";  // Ajuste conforme o layout
+    document.getElementById("Indicador").style.transform = "translateX(-60px)";  // Ajuste conforme o layout
 }
-   
+  
+// Elementos principais
+var EntrarPainel = document.getElementById("EntrarPainel");
+var CadastroSite = document.getElementById("CadastroSite");
+var RecuperarSenhaForm = document.getElementById("RecuperarSenha");
+var Indicador = document.getElementById("Indicador");
+var EsqueceuSenha = document.querySelector(".esqueceu-senha");
+var BtnEntrar = document.getElementById("btnEntrar");
+var BtnCadastro = document.getElementById("btnCadastro");
 
+function Cadastro() {
+    EntrarPainel.style.display = "none";
+    CadastroSite.style.display = "block";
+    RecuperarSenhaForm.style.display = "none";
+
+    // Movimenta o Indicador
+    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
+
+    // Reseta textos dos botões
+    BtnEntrar.textContent = "Entrar";
+    BtnCadastro.textContent = "Cadastro";
+
+    // Esconde o span "Esqueceu sua senha!"
+    EsqueceuSenha.style.display = "none";
+}
+
+function Entrar() {
+    EntrarPainel.style.display = "block";
+    CadastroSite.style.display = "none";
+    RecuperarSenhaForm.style.display = "none";
+
+    // Movimenta o Indicador
+    document.getElementById("Indicador").style.transform = "translateX(-60px)";  // Ajuste conforme o layout
+    // Reseta textos dos botões
+    BtnEntrar.textContent = "Entrar";
+    BtnCadastro.textContent = "Cadastro";
+
+    // Exibe novamente o span "Esqueceu sua senha!"
+    EsqueceuSenha.style.display = "block";
+}
+
+function RecuperarSenha() {
+    EntrarPainel.style.display = "none";
+    CadastroSite.style.display = "none";
+    RecuperarSenhaForm.style.display = "block";
+
+    // Movimenta o Indicador
+    document.getElementById("Indicador").style.transform = "translateX(0px)";  // Ajuste conforme o layout
+    // Altera os spans para "Recuperar Conta!"
+    BtnEntrar.textContent = "Entrar";
+    BtnCadastro.textContent = "Cadastro";
+
+    // Esconde o span "Esqueceu sua senha!"
+    EsqueceuSenha.style.display = "none";
+}
