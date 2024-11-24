@@ -144,7 +144,7 @@ p {
 }
 
 .btn {
-    display: flex;
+    
     text-decoration: none;
     color: var(--cor-fonte);
     background: var(--cor-btn);
