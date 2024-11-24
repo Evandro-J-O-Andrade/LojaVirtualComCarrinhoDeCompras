@@ -839,6 +839,7 @@ background-color: var(--cor-btn-hover);
 
 }
 .formulario form a{
+    
     font-size: 20px;
     text-decoration: none;
     color: var(--cor-fonte-corpo);
@@ -849,7 +850,94 @@ background-color: var(--cor-btn-hover);
 }
 /* Estilizando o contêiner pai */
 
+/* Estilo do botão WhatsApp */
+.btn-whatsapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 55px;
+    padding: 10px 20px;
+    
+    background-color: #25d366; /* Cor do botão */
+    color: #fff;
+    font-size: 16px; /* Tamanho da fonte */
+    border-radius: 5px;
+    width: 100%; /* Faz o botão ocupar toda a largura do seu contêiner */
+    max-width: 100%;
+    box-sizing: border-box; /* Garante que o padding não afete a largura total */
+}
 
+
+
+ /* Esconde o texto diretamente no botão */
+    .btn-whatsapp::before {
+        display: none;
+        content: ''; /* Não deixa o texto ser exibido */
+        visibility: hidden; /* Torna o texto invisível */
+    }
+
+    .btn-whatsapp {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        font-size: 14px; /* Ajusta o tamanho da fonte */
+        padding: 10px 15px; /* Ajusta o padding */
+    }
+
+    /* Esconde o texto e deixa apenas o ícone visível */
+    .btn-whatsapp span {
+        display: none; /* Esconde o texto em telas pequenas */
+    }
+}
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        width: 100%; /* O botão vai ocupar 100% da largura do seu contêiner */
+        margin-top: 55px; /* Menos espaço acima do botão */
+        padding: 10px 15px; /* Ajusta o padding para que o botão fique proporcional */
+        font-size: 20px; /* Reduz o tamanho da fonte em telas menores */
+    }
+}
+
+/* Media Query para telas menores que 500px (Muito pequeno) */
+@media (max-width: 500px) {
+    .btn-whatsapp {
+        font-size: 12px; /* Ajuste de fonte para telas muito pequenas */
+        padding: 10px 10px; /* Ajuste do padding para otimizar o botão */
+    }
+}
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        font-size: 14px; /* Ajusta o tamanho da fonte */
+        padding: 10px 15px; /* Ajusta o padding */
+    }
+
+    /* Esconde o texto e deixa apenas o ícone visível */
+    .btn-whatsapp {
+        flex-direction: column; /* Empilha ícone e texto verticalmente */
+    }
+
+    .btn-whatsapp ion-icon {
+        font-size: 20px; /* Ajusta o tamanho do ícone */
+    }
+
+    .btn-whatsapp::after {
+        content: ''; /* Remove o texto */
+        display: none; /* Esconde o texto do botão */
+    }
+
+    .btn-whatsapp span {
+        display: none; /* Esconde o texto em telas pequenas */
+    }
+}
 
 
 #Indicador{

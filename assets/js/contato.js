@@ -34,3 +34,35 @@ document.getElementById('formContato').addEventListener('submit', function(e) {
         alert('Houve um erro ao enviar a mensagem.');
     });
 });
+
+
+
+
+ 
+    
+
+// Seleciona o elemento pai e o span
+const btnForm = document.querySelector('.btn-form');
+const spanElement = btnForm.querySelector('span');
+
+// Aplica os estilos no elemento pai
+
+
+
+
+// Aplica os estilos no span (apenas para garantir)
+
+spanElement.style.display = 'inline';
+
+// Aplica os estilos no span
+
+spanElement.style.whiteSpace = 'nowrap'; // Evita quebra de linha
+
+
+    
+
+
+
+
+
+
