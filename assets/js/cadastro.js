@@ -9,7 +9,7 @@ function Cadastro() {
     document.getElementById("CadstroSite").style.display = "block";
 
     // Alterar estilo do indicador para o botão 'Cadastro'
-    document.getElementById("Indicador").style.transform = "translateX(0px)";  // Ajuste conforme o layout
+    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
 
    
 }
@@ -20,7 +20,7 @@ function Entrar() {
     document.getElementById("CadstroSite").style.display = "none";
 
     // Alterar estilo do indicador para o botão 'Entrar'
-    document.getElementById("Indicador").style.transform = "translateX(-60px)";  // Ajuste conforme o layout
+    document.getElementById("Indicador").style.transform = "translateX(-65px)";  // Ajuste conforme o layout
 }
   
 // Elementos principais
@@ -54,7 +54,7 @@ function Entrar() {
     RecuperarSenhaForm.style.display = "none";
 
     // Movimenta o Indicador
-    document.getElementById("Indicador").style.transform = "translateX(-60px)";  // Ajuste conforme o layout
+    document.getElementById("Indicador").style.transform = "translateX(-65px)";  // Ajuste conforme o layout
     // Reseta textos dos botões
     BtnEntrar.textContent = "Entrar";
     BtnCadastro.textContent = "Cadastro";
@@ -69,7 +69,7 @@ function RecuperarSenha() {
     RecuperarSenhaForm.style.display = "block";
 
     // Movimenta o Indicador
-    document.getElementById("Indicador").style.transform = "translateX(0px)";  // Ajuste conforme o layout
+    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
     // Altera os spans para "Recuperar Conta!"
     BtnEntrar.textContent = "Entrar";
     BtnCadastro.textContent = "Cadastro";

@@ -807,6 +807,7 @@ th:last-child {
 
 
 
+
 .formulario span {
     display: inline-block;
     width: 100px;
@@ -846,44 +847,61 @@ th:last-child {
 /* Indicador de posição */
 #Indicador {
     position: absolute;
+
     bottom: -5px;
     height: 2px;
     width: 80px;
-    background-color: #007BFF;
+   
+  
     transition: transform 0.3s ease-in-out; /* Suavidade no movimento */
 }
 
 /* Formulários */
-form {
+#EntrarPainel form {
     max-width: 400px;
     margin: auto;
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
-form input, form button {
+#EntrarPainel input, #EntrarPainel button {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
     font-size: 16px;
+    gap: 20px;
 }
 
 /* Contêiner do botão e texto "Esqueceu sua senha!" */
 
 
-.esqueceu {
+#EntrarPainel .esqueceu {
     display: flex; /* Ativa o Flexbox */
     justify-content: center; /* Centraliza horizontalmente */
     align-items: center; /* Centraliza verticalmente */
     margin-top: 10px; /* Espaçamento acima */
+    gap: 20px;
+}
+
+.esqueceu {
+    display: flex;
+    justify-content: center; /* Alinha horizontalmente ao centro */
+    align-items: center;    /* Alinha verticalmente ao centro */
+    margin-top: 10px;       /* Espaçamento entre os campos acima */
 }
 
 .esqueceu-senha {
-    font-size: 14px;
-    color: #007BFF;
-    cursor: pointer;
-    text-decoration: underline; /* Para parecer um link */
-    text-align: center; /* Centraliza o texto caso haja quebra de linha */
+    background: none;       /* Remove o fundo do botão */
+    border: none;           /* Remove a borda */
+    color: var(black);         /* Cor do texto */
+    font-size: 14px;        /* Tamanho do texto */
+    cursor: pointer;        /* Ponteiro no hover */
+    text-decoration: none; /* Sublinhado para parecer um link */
+}
+
+.esqueceu-senha:hover {
+    color: blue ;      /* Cor mais escura ao passar o mouse */
 }
 
 /*Fim Formulario para cadastro*/
