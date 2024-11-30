@@ -17,7 +17,7 @@ function Cadastro() {
 function Entrar() {
     // Exibe o formulário de login e oculta o de cadastro
     document.getElementById("EntrarPainel").style.display = "block";
-    document.getElementById("CadstroSite").style.display = "none";
+    document.getElementById("CadastroSite").style.display = "none";
 
     // Alterar estilo do indicador para o botão 'Entrar'
     document.getElementById("Indicador").style.transform = "translateX(-65px)";  // Ajuste conforme o layout

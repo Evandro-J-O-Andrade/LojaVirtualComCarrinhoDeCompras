@@ -806,8 +806,6 @@ th:last-child {
 
 
 
-
-
 .formulario span {
     display: inline-block;
     width: 100px;
@@ -955,6 +953,12 @@ th:last-child {
 
 
 }
+/*Formulario do Cadastro */
+
+
+
+/*Formulario do Cadastro */
+
 
 /* Estilizando o contêiner pai */
 
@@ -1316,6 +1320,33 @@ th:last-child {
         /* Faz o formulário ocupar 90% da largura da tela */
         height: auto;
         /* Ajusta a altura */
+    }
+}
+
+@media (max-width: 768px) {
+    .formulario-2 {
+        width: 100%;
+        /* Faz o formulário ocupar 90% da largura da tela */
+        height: auto;
+        /* Ajusta a altura */
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .btn-form-2 span {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    #EntrarPainel input,
+    #CadastroSite input,
+    #RecuperarSenha input,
+    #EntrarPainel button,
+    #CadastroSite button,
+    #RecuperarSenha button {
+        font-size: 14px;
+        padding: 8px;
     }
 }
 

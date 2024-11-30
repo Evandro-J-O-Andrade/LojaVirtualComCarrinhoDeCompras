@@ -1,0 +1,291 @@
+.formulario-2 {
+    position: relative;
+    padding: 20px 0;
+    align-items: center;
+    text-align: center;
+    width: 300px;
+    height: 500px;
+    /* Ajustado para acomodar todos os campos */
+    margin: auto;
+    background-color: var(--cor-fonte);
+    /* Cor de fundo do formulário */
+    box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.formulario-2 span {
+    display: inline-block;
+    width: 100px;
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--cor-fonte-corpo);
+    cursor: pointer;
+}
+
+
+.bth-form {
+
+    display: inline-block;
+
+}
+/*Formulario para cadastro*/
+/* Botões Entrar e Cadastro centralizados */
+.btn-form-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* Espaço entre os spans */
+    position: relative; /* Para posicionar o Indicador */
+    margin-bottom: 20px;
+}
+
+.btn-form-2 span {
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Animação suave */
+    text-align: center;
+}
+
+
+.formulario-2 form {
+    position: relative;
+    top: 10px;
+    max-width: 500px;
+    padding: 0 20px;
+    transition: transform 1s;
+
+}
+
+.formulario-2 form input {
+    width: 100%;
+    height: 0px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid var(--cor-padrao);
+    border-radius: 3px;
+
+}
+
+.formulario-2 form input:focus {
+    outline: none;
+
+}
+
+.formulario-2 form .btn {
+    width: 100%;
+    margin: 10px 0;
+    border: nome;
+    border-radius: 4px;
+    background-color: var(--cor-padrao);
+    cursor: pointer;
+
+}
+
+.formulario-2 form .bth-form:hover {
+    background-color: var(--cor-btn-hover);
+
+}
+
+.formulario-2 form a {
+
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--cor-fonte-corpo);
+    cursor: pointer;
+
+
+
+}
+
+
+
+
+
+/* Estilização para os botões "Entrar" e "Cadastro" */
+.btn-form-2 span {
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    color: var(--cor-padrao);
+    border: 2px solid var(--cor-padrao);
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+    cursor: pointer;
+}
+
+.btn-form-2 span:hover {
+    background-color: var(--cor-padrao);
+    color: var(--cor-fonte);
+}
+
+#Indicador {
+    width: 45%;
+    height: 3px;
+    background-color: var(--cor-padrao);
+    position: absolute;
+    bottom: -10px;
+    left: 25%; /* Centraliza o indicador */
+    
+}
+
+/* Formulário de Entrar */
+#EntrarPainel input,
+#CadastroSite input,
+#RecuperarSenha input {
+    height: 40px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid var(--cor-padrao);
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+#EntrarPainel button,
+#CadastroSite button,
+#RecuperarSenha button {
+    height: 40px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--cor-fonte);
+    background-color: var(--cor-padrao);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    
+}
+
+#EntrarPainel button:hover,
+#CadastroSite button:hover,
+#RecuperarSenha button:hover {
+    background-color: var(--cor-btn-hover);
+}
+
+
+@media (max-width: 768px) {
+    .formulario {
+        width: 90%; /* Reduz a largura para caber em telas menores */
+        padding: 15px;
+    }
+}
+
+
+@media only screen and (min-width: 75px) and (max-width: 768px) {
+    .formulario-2 {
+        position: relative;
+        padding: 20px 0;
+        align-items: center;
+        text-align: center;
+        width: 90%; /* Ajusta o tamanho para caber melhor em telas menores */
+        height: auto; /* Ajuste de altura para telas pequenas */
+        margin: auto;
+        background-color: var(--cor-fonte);
+        box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .formulario-2 form {
+        position: relative;
+        top: 10px;
+        max-width: 100%; /* Ajuste para caber melhor na tela */
+        padding: 0 20px;
+    }
+
+    .formulario-2 form input {
+        width: 100%; /* Garante que os campos de input ocupem 100% da largura disponível */
+        height: 40px;
+        margin: 10px 0;
+        padding: 0 10px;
+        border: 1px solid var(--cor-padrao);
+        border-radius: 3px;
+    }
+
+    .formulario-2 form .btn {
+        width: 100%;
+        margin: 10px 0;
+        border: nome;
+        border-radius: 4px;
+        background-color: var(--cor-padrao);
+        cursor: pointer;
+    }
+
+    .formulario-2 form .btn:hover {
+        background-color: var(--cor-btn-hover);
+    }
+
+    .formulario-2 .btn-form-2 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .btn-form-2 span {
+        font-size: 14px;
+        font-weight: bold;
+        padding: 10px 20px;
+        color: var(--cor-padrao);
+        border: 2px solid var(--cor-padrao);
+        border-radius: 5px;
+        transition: background-color 0.3s, color 0.3s;
+        cursor: pointer;
+    }
+
+    .btn-form-2 span:hover {
+        background-color: var(--cor-padrao);
+        color: var(--cor-fonte);
+    }
+
+    #Indicador {
+        width: 45%;
+        height: 3px;
+        background-color: var(--cor-padrao);
+        position: absolute;
+        bottom: -10px;
+        left: 25%; /* Centraliza o indicador */
+    }
+
+    /* Ajusta os campos de entrada e botões */
+    #EntrarPainel input,
+    #CadastroSite input,
+    #RecuperarSenha input {
+        height: 40px;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: 1px solid var(--cor-padrao);
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    #EntrarPainel button,
+    #CadastroSite button,
+    #RecuperarSenha button {
+        height: 40px;
+        margin-top: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--cor-fonte);
+        background-color: var(--cor-padrao);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    #EntrarPainel button:hover,
+    #CadastroSite button:hover,
+    #RecuperarSenha button:hover {
+        background-color: var(--cor-btn-hover);
+    }
+}
