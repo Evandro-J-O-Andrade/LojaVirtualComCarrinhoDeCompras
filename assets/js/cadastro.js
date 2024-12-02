@@ -140,3 +140,5 @@ BtnCadastro.addEventListener("click", function() {
     document.getElementById("Indicador").style.display = "block"; 
     // Realize outras ações relacionadas ao botão Cadastrar
 });
+
+
