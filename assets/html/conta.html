@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Angel Cosméticos -- Consultora Grasiely Machado --</title>
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
-<link rel="stylesheet" href="/assets/css/cadastro.css">
+    <link rel="stylesheet" href="/assets/css/cadastro.css">
     <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
@@ -80,18 +80,35 @@
                                 <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
                                 <button type="submit" name="senEntrar" class="btn">Entrar</button>
                                 <div class="esqueceu">
-                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua senha?</button>
+                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua
+                                        senha?</button>
                                 </div>
                             </form>
-                            
+
 
                             <!-- Formulário de Cadastro -->
                             <form action="" method="post" id="CadastroSite" style="display: none;">
                                 <input type="text" name="nome" id="nome" placeholder="Nome completo">
                                 <input type="email" name="email" id="email" placeholder="E-mail de acesso">
-                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+
+                                <div class="senha-container">
+                                    <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+                                    <span id="toggleSenha" class="icone"
+                                        onclick="alternarVisibilidadeSenha()">👁️</span>
+                                </div>
+
+                                <div class="senha-container">
+                                    <input type="password" name="confirmaSenha" id="confirmaSenha"
+                                        placeholder="Confirme sua senha!">
+                                    <span id="toggleConfirmaSenha" class="icone"
+                                        onclick="alternarVisibilidadeConfirmaSenha()">👁️</span>
+                                </div>
+
+                                <span id="erroSenha" style="display: none; color: red;">As senhas não coincidem!</span>
+
                                 <button type="submit" name="senCad" class="btn">Cadastre-se</button>
                             </form>
+
 
                             <!-- Formulário de Recuperação -->
                             <form action="" method="post" id="RecuperarSenha" style="display: none;">

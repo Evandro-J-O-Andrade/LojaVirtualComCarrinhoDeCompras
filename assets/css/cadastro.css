@@ -131,8 +131,11 @@
     position: absolute;
     bottom: -10px;
     left: 25%; /* Centraliza o indicador */
+    display: none; /* Inicialmente escondido */
+
     
 }
+
 
 /* Formulário de Entrar */
 #EntrarPainel input,
@@ -289,3 +292,24 @@
         background-color: var(--cor-btn-hover);
     }
 }
+
+
+.senha-container {
+    position: relative;
+}
+
+.senha-container input {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.senha-container .icone {
+    position: absolute;
+    right: -25px;  /* Ajustado para ficar mais à direita */
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 1;  /* Garante que o ícone esteja acima do campo de texto */
+}
+

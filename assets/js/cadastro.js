@@ -1,28 +1,3 @@
-
-var EntrarPainel= document.getElementById("EntrarPainel");
-var CadastroSite= document.getElementById("CadastroSite");
-var Indicador= document.getElementById("Indicador");
-
-function Cadastro() {
-    // Exibe o formulário de cadastro e oculta o de login
-    document.getElementById("EntrarPainel").style.display = "none";
-    document.getElementById("CadstroSite").style.display = "block";
-
-    // Alterar estilo do indicador para o botão 'Cadastro'
-    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
-
-   
-}
-
-function Entrar() {
-    // Exibe o formulário de login e oculta o de cadastro
-    document.getElementById("EntrarPainel").style.display = "block";
-    document.getElementById("CadastroSite").style.display = "none";
-
-    // Alterar estilo do indicador para o botão 'Entrar'
-    document.getElementById("Indicador").style.transform = "translateX(-65px)";  // Ajuste conforme o layout
-}
-  
 // Elementos principais
 var EntrarPainel = document.getElementById("EntrarPainel");
 var CadastroSite = document.getElementById("CadastroSite");
@@ -32,48 +7,136 @@ var EsqueceuSenha = document.querySelector(".esqueceu-senha");
 var BtnEntrar = document.getElementById("btnEntrar");
 var BtnCadastro = document.getElementById("btnCadastro");
 
+// Mensagens de erro
+var erroCampos = document.getElementById('erroCampos'); // Para campos vazios
+var erroSenha = document.getElementById('erroSenha');   // Para senhas não coincidirem
+
+// Função para exibir o formulário de cadastro
 function Cadastro() {
     EntrarPainel.style.display = "none";
     CadastroSite.style.display = "block";
     RecuperarSenhaForm.style.display = "none";
 
-    // Movimenta o Indicador
-    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
+    Indicador.style.transform = "translateX(65px)";  // Ajuste conforme o layout
 
-    // Reseta textos dos botões
     BtnEntrar.textContent = "Entrar";
     BtnCadastro.textContent = "Cadastro";
 
-    // Esconde o span "Esqueceu sua senha!"
     EsqueceuSenha.style.display = "none";
 }
 
+// Função para exibir o formulário de login
 function Entrar() {
     EntrarPainel.style.display = "block";
     CadastroSite.style.display = "none";
     RecuperarSenhaForm.style.display = "none";
 
-    // Movimenta o Indicador
-    document.getElementById("Indicador").style.transform = "translateX(-65px)";  // Ajuste conforme o layout
-    // Reseta textos dos botões
+    Indicador.style.transform = "translateX(-55px)";  // Ajuste conforme o layout
+
     BtnEntrar.textContent = "Entrar";
     BtnCadastro.textContent = "Cadastro";
 
-    // Exibe novamente o span "Esqueceu sua senha!"
     EsqueceuSenha.style.display = "block";
 }
 
+// Função para exibir o formulário de recuperação de senha
 function RecuperarSenha() {
     EntrarPainel.style.display = "none";
     CadastroSite.style.display = "none";
     RecuperarSenhaForm.style.display = "block";
 
-    // Movimenta o Indicador
-    document.getElementById("Indicador").style.transform = "translateX(65px)";  // Ajuste conforme o layout
-    // Altera os spans para "Recuperar Conta!"
+    Indicador.style.transform = "translateX(65px)";  // Ajuste conforme o layout
+
     BtnEntrar.textContent = "Entrar";
     BtnCadastro.textContent = "Cadastro";
 
-    // Esconde o span "Esqueceu sua senha!"
     EsqueceuSenha.style.display = "none";
 }
+
+// Validação ao clicar no botão "Cadastrar"
+document.getElementById('btnCadastro').addEventListener('click', function(event) {
+    const senha = document.getElementById('senha').value.trim();
+    const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
+    
+    // Validação de campos preenchidos
+    var camposPreenchidos = true;
+    var campos = [senha, confirmaSenha];
+
+    for (var i = 0; i < campos.length; i++) {
+        if (campos[i] === "") {
+            camposPreenchidos = false;
+            break;  // Se algum campo estiver vazio, não envia o formulário
+        }
+    }
+
+    // Exibe mensagem se algum campo estiver vazio
+    if (!camposPreenchidos) {
+        erroCampos.style.display = "inline";
+        erroCampos.textContent = "Todos os campos devem ser preenchidos.";
+        event.preventDefault(); // Impede o envio do formulário
+        return;
+    } else {
+        erroCampos.style.display = "none";
+    }
+
+    // Validação de senhas
+    if (senha !== confirmaSenha) {
+        erroSenha.style.display = "inline";
+        erroSenha.textContent = "As senhas não coincidem.";
+        event.preventDefault(); // Impede o envio do formulário
+    } else {
+        erroSenha.style.display = "none";
+    }
+});
+
+// Validação dinâmica ao digitar as senhas
+function validarSenhas() {
+    const senha = document.getElementById('senha').value.trim();
+    const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
+    const erroSenha = document.getElementById('erroSenha');
+
+    // Verifica se as senhas coincidem
+    if (senha !== confirmaSenha) {
+        erroSenha.style.display = "inline";  // Exibe a mensagem de erro
+    } else {
+        erroSenha.style.display = "none";  // Se as senhas forem iguais, esconde a mensagem
+    }
+}
+
+// Alternar visibilidade da senha
+function alternarVisibilidadeSenha() {
+    const senhaInput = document.getElementById('senha');
+    const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    senhaInput.setAttribute('type', tipo);
+
+    const toggleSenha = document.getElementById('toggleSenha');
+    toggleSenha.textContent = tipo === 'password' ? '👁️' : '🙈';  // Altera o ícone
+}
+
+// Alternar visibilidade da confirmação de senha
+function alternarVisibilidadeConfirmaSenha() {
+    const confirmaSenhaInput = document.getElementById('confirmaSenha');
+    const tipo = confirmaSenhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
+    confirmaSenhaInput.setAttribute('type', tipo);
+
+    const toggleConfirmaSenha = document.getElementById('toggleConfirmaSenha');
+    toggleConfirmaSenha.textContent = tipo === 'password' ? '👁️' : '🙈';  // Altera o ícone
+}
+
+// Adiciona evento para validação dinâmica ao digitar
+document.getElementById('senha').addEventListener('input', validarSenhas);
+document.getElementById('confirmaSenha').addEventListener('input', validarSenhas);
+
+// Função para exibir o indicador (hr) quando clicar em "Entrar"
+BtnEntrar.addEventListener("click", function() {
+    // Exibir o hr
+    document.getElementById("Indicador").style.display = "block"; 
+    // Realize outras ações relacionadas ao botão Entrar
+});
+
+// Função para exibir o indicador (hr) quando clicar em "Cadastrar"
+BtnCadastro.addEventListener("click", function() {
+    // Exibir o hr
+    document.getElementById("Indicador").style.display = "block"; 
+    // Realize outras ações relacionadas ao botão Cadastrar
+});
