@@ -74,37 +74,36 @@
                                 <hr id="Indicador">
                             </div>
 
-                            <!-- Formulário de Entrar -->
-                            <form action="Entrar" method="post" id="EntrarPainel">
-                                <input type="email" name="email" id="email" placeholder="E-mail de acesso">
-                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+                            <form action="login.php" method="post" id="EntrarPainel">
+                                <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
+                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!" required>
                                 <button type="submit" name="senEntrar" class="btn">Entrar</button>
                                 <div class="esqueceu">
-                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua
-                                        senha?</button>
+                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua senha?</button>
                                 </div>
                             </form>
+                            
 
-
-                            <!-- Formulário de Cadastro -->
-                            <form action="" method="post" id="CadastroSite" style="display: none;">
-                                <input type="text" name="nome" id="nome" placeholder="Nome completo">
-                                <input type="email" name="email" id="email" placeholder="E-mail de acesso">
+                            <form action="cadastrar_usuario.php" method="post" id="CadastroSite" style="display: none;">
+                                <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
+                                <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
 
                                 <div class="senha-container">
-                                    <input type="password" name="senha" id="senha" placeholder="Digite sua senha!">
+                                    <input type="password" name="senha" id="senhaCad" placeholder="Digite sua senha!"
+                                        required>
                                     <span id="toggleSenha" class="icone"
                                         onclick="alternarVisibilidadeSenha()">👁️</span>
                                 </div>
 
                                 <div class="senha-container">
                                     <input type="password" name="confirmaSenha" id="confirmaSenha"
-                                        placeholder="Confirme sua senha!">
+                                        placeholder="Confirme sua senha!" required>
                                     <span id="toggleConfirmaSenha" class="icone"
                                         onclick="alternarVisibilidadeConfirmaSenha()">👁️</span>
                                 </div>
 
                                 <span id="erroSenha" style="display: none; color: red;">As senhas não coincidem!</span>
+                                <span id="sucessoMensagem" style="display: none; color: green;"></span>
 
                                 <button type="submit" name="senCad" class="btn">Cadastre-se</button>
                             </form>
