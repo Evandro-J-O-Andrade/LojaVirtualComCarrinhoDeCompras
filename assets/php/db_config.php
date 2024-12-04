@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost"; // Substitua pelo IP/URL do servidor quando subir
 $username = "root"; // Seu usuário MySQL
-$password = ""; // Sua senha MySQL
+$password = "root"; // Sua senha MySQL
 $dbname = "angelcosmeticos"; // Nome do banco de dados
 
 // Criar conexão
