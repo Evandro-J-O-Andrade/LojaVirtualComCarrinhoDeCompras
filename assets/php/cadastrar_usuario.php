@@ -1,5 +1,5 @@
 <?php
-require 'db_config.php'; // Arquivo de configuração do banco
+require 'conexao.php'; // Arquivo de configuração do banco
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Sanitização básica dos dados
