@@ -1,5 +1,5 @@
 <?php
-require 'db_config.php';
+require 'conexao.php';
 
 // Função para cadastrar um novo usuário
 function cadastrarUsuario($nome, $email, $senha) {
