@@ -1,5 +1,5 @@
 <?php
-require 'db_config.php';
+require 'conexao.php';
 
 // Adicionar produto
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
