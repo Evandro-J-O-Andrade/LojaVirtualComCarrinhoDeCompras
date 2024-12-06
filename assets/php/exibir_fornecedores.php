@@ -1,5 +1,5 @@
 <?php
-require 'db_config.php';
+require 'conexao.php';
 
 // Adicionar fornecedor
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -9,15 +9,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $telefone_fornecedor = $_POST['telefone_fornecedor'];
     $email_fornecedor = $_POST['email_fornecedor'];
 
-    $sql = "INSERT INTO fornecedores (nome_fornecedor, cnpj, endereco_fornecedor, telefone_fornecedor, email_fornecedor) 
-            VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sssss", $nome_fornecedor, $cnpj, $endereco_fornecedor, $telefone_fornecedor, $email_fornecedor);
-
-    if ($stmt->execute()) {
-        echo "Fornecedor cadastrado com sucesso!";
+    // Validar CNPJ e e-mail (Exemplo básico de validação)
+    if (!preg_match('/^\d{14}$/', $cnpj)) {
+        echo "CNPJ inválido. O CNPJ deve ter 14 dígitos.";
+    } elseif (!filter_var($email_fornecedor, FILTER_VALIDATE_EMAIL)) {
+        echo "E-mail inválido. Por favor, insira um e-mail válido.";
     } else {
-        echo "Erro ao cadastrar fornecedor: " . $stmt->error;
+        // Prevenir injeção de SQL com prepared statements
+        $sql = "INSERT INTO fornecedores (nome_fornecedor, cnpj, endereco_fornecedor, telefone_fornecedor, email_fornecedor) 
+                VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("sssss", $nome_fornecedor, $cnpj, $endereco_fornecedor, $telefone_fornecedor, $email_fornecedor);
+
+        if ($stmt->execute()) {
+            echo "Fornecedor cadastrado com sucesso!";
+        } else {
+            echo "Erro ao cadastrar fornecedor: " . $stmt->error;
+        }
     }
 }
 
@@ -49,12 +57,12 @@ $result = $conn->query($sql_list);
     </tr>
     <?php while ($fornecedor = $result->fetch_assoc()): ?>
     <tr>
-        <td><?= $fornecedor['id_fornecedor'] ?></td>
-        <td><?= $fornecedor['nome_fornecedor'] ?></td>
-        <td><?= $fornecedor['cnpj'] ?></td>
-        <td><?= $fornecedor['endereco_fornecedor'] ?></td>
-        <td><?= $fornecedor['telefone_fornecedor'] ?></td>
-        <td><?= $fornecedor['email_fornecedor'] ?></td>
+        <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
+        <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
+        <td><?= htmlspecialchars($fornecedor['cnpj']) ?></td>
+        <td><?= htmlspecialchars($fornecedor['endereco_fornecedor']) ?></td>
+        <td><?= htmlspecialchars($fornecedor['telefone_fornecedor']) ?></td>
+        <td><?= htmlspecialchars($fornecedor['email_fornecedor']) ?></td>
     </tr>
     <?php endwhile; ?>
 </table>

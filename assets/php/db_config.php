@@ -1,14 +1,19 @@
 <?php
-$servername = "localhost"; // Substitua pelo IP/URL do servidor quando subir
-$username = "root"; // Seu usuário MySQL
-$password = ""; // Sua senha MySQL
-$dbname = "angelcosmeticos"; // Nome do banco de dados
+$servername = "localhost";
+$username = "root";
+$password = "root";
+$dbname = "angelcosmeticos";
 
-// Criar conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
+try {
+    // Criando a conexão
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Verificar conexão
-if ($conn->connect_error) {
-    die("Erro ao conectar: " . $conn->connect_error);
+    // Verificando a conexão
+    if ($conn->connect_error) {
+        throw new Exception("Connection failed: " . $conn->connect_error);
+    }
+    echo "Conexão bem-sucedida ao banco de dados!";
+} catch (Exception $e) {
+    echo "Erro: " . $e->getMessage();
 }
 ?>

@@ -1,5 +1,7 @@
 <?php
-require 'db_config.php';
+require 'conexao.php';
+
+
 
 // Adicionar produto
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -11,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $sql = "INSERT INTO produtos (nome_produto, descricao_produto, preco, quantidade_estoque) 
             VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ssdi", $nome_produto, $descricao_produto, $preco, $quantidade_estoque);
+    $stmt->bind_param("ssd", $nome_produto, $descricao_produto, $preco, $quantidade_estoque);
 
     if ($stmt->execute()) {
         echo "Produto cadastrado com sucesso!";

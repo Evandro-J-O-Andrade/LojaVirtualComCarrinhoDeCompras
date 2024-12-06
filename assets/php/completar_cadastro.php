@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-require 'db_config.php';
+require 'conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $endereco = $_POST['endereco'];

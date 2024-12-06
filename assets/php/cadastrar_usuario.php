@@ -1,54 +1,44 @@
 <?php
-require 'db_config.php'; // Arquivo de configuração do banco
-
+// Inclui a conexão com o banco de dados e as funções de cadastro
+require 'conexao.php';
+// Verifica se o formulário foi submetido via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Sanitização básica dos dados
-    $nome = htmlspecialchars(trim($_POST['nome']));
-    $email = filter_var($_POST['email'], FILTER_SANITIZE_EMAIL);
+    // Recebe os dados do formulário
+    $nome = trim($_POST['nome']);   // Remover espaços extras
+    $email = trim($_POST['email']); // Remover espaços extras
     $senha = $_POST['senha'];
-    $cpf = htmlspecialchars(trim($_POST['cpf']));
-    $rg = htmlspecialchars(trim($_POST['rg']));
+    $confirmaSenha = $_POST['confirmaSenha'];
 
-    // Validação dos campos
-    if (empty($nome) || empty($email) || empty($senha) || empty($cpf) || empty($rg)) {
-        echo "Todos os campos são obrigatórios.";
+    // Verifica se as senhas coincidem
+    if ($senha !== $confirmaSenha) {
+        echo "As senhas não coincidem!";
         exit;
     }
 
+    // Verifica se os campos estão preenchidos corretamente
+    if (empty($nome) || empty($email) || empty($senha) || empty($confirmaSenha)) {
+        echo "Todos os campos são obrigatórios!";
+        exit;
+    }
+
+    // Valida o formato do email
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo "E-mail inválido.";
+        echo "E-mail inválido!";
         exit;
     }
 
-    if (strlen($senha) < 6) {
-        echo "A senha deve ter pelo menos 6 caracteres.";
+    // Chama a função de cadastro, passando os dados
+    $resultado = cadastrarUsuario($nome, $email, $senha);
+
+    // Verifica o resultado do cadastro
+    if ($resultado === true) {
+        echo "Cadastro realizado com sucesso!";
+        // Redireciona para a página de login ou outra página de sua escolha
+        header("Location: login.php");
         exit;
-    }
-
-    // Hash seguro para a senha
-    $senha_hashed = password_hash($senha, PASSWORD_DEFAULT);
-
-    // Prepara e executa a consulta
-    $sql = "INSERT INTO usuarios (nome, email, senha, cpf, rg) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-
-    if (!$stmt) {
-        echo "Erro na preparação da consulta: " . $conn->error;
-        exit;
-    }
-
-    $stmt->bind_param("sssss", $nome, $email, $senha_hashed, $cpf, $rg);
-
-    if ($stmt->execute()) {
-        echo "Usuário cadastrado com sucesso!";
     } else {
-        echo "Erro ao cadastrar: " . $stmt->error;
+        echo $resultado; // Exibe o erro caso haja algum
     }
-
-    // Fecha o statement
-    $stmt->close();
 }
-
-// Fecha a conexão
-$conn->close();
 ?>
+

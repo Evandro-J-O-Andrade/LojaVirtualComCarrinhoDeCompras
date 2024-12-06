@@ -1,5 +1,5 @@
 <?php
-require 'db_config.php';
+require 'conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id_produto = $_POST['id_produto'];

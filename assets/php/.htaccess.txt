@@ -1,0 +1,16 @@
+# Habilitar reescrita de URLs
+RewriteEngine On
+
+# Redirecionar de HTTP para HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Garantir que o servidor aceite requisições POST
+<Limit POST>
+  Require all granted
+</Limit>
+
+# Evitar acesso direto a arquivos PHP, se necessário (remova se não for desejado)
+# <Files "*.php">
+#   Deny from all
+# </Files>

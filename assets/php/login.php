@@ -1,5 +1,4 @@
 <?php
-include 'conexao.php'; // Conexão com o banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Captura os dados do formulário

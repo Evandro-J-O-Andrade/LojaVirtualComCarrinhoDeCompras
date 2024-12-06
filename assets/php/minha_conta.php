@@ -1,21 +1,36 @@
 <?php
+// Inicia a sessão
 session_start();
-if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php");
+
+// Inclui a conexão com o banco de dados e as funções
+
+// Verifica se o usuário já está logado
+if (isset($_SESSION['usuario_id'])) {
+    header('Location: dashboard.php'); // Se estiver logado, redireciona para o painel
     exit;
 }
 
-require 'db_config.php';
+// Verifica se o formulário de login foi enviado
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Recebe os dados do formulário
+    $email = $_POST['email'];
+    $senha = $_POST['senha'];
 
-$usuario_id = $_SESSION['usuario_id'];
+    // Verifica o login
+    $usuario = verificarLogin($email, $senha);
 
-$sql = "SELECT nome, email FROM usuarios WHERE id = ?";
-$stmt = $conn->prepare($sql);
-$stmt->bind_param("i", $usuario_id);
-$stmt->execute();
-$result = $stmt->get_result();
-$user = $result->fetch_assoc();
+    if (is_array($usuario)) {
+        // Login bem-sucedido, armazena os dados do usuário na sessão
+        $_SESSION['usuario_id'] = $usuario['id']; // ID do usuário
+        $_SESSION['usuario_nome'] = $usuario['nome']; // Nome do usuário
+        $_SESSION['usuario_email'] = $usuario['email']; // Email do usuário
+
+        // Redireciona para a página principal ou painel
+        header('Location: dashboard.php');
+        exit;
+    } else {
+        // Caso o login falhe
+        $erroLogin = $usuario; // A mensagem de erro será armazenada aqui
+    }
+}
 ?>
-<h1>Bem-vindo, <?= $user['nome'] ?>!</h1>
-<p>Email: <?= $user['email'] ?></p>
-<a href="completar_cadastro.php">Completar Cadastro</a>
