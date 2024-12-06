@@ -1,7 +1,7 @@
 <?php
 // Incluir a conexão com o banco de dados
 
-require 'conexao.php';
+include 'conexao.php';
 
 // Verificar se o formulário foi submetido
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

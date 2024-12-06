@@ -1,5 +1,5 @@
 <?php
-
+require "conexao.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Captura os dados do formulário
     $email = $_POST['email'];

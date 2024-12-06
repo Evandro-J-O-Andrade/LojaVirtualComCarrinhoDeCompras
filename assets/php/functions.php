@@ -27,7 +27,37 @@ function cadastrarUsuario($nome, $email, $senha) {
     // Fecha o statement após a execução
     $stmt->close();
 }
+// functions.php
 
+function inserirDadosAdicionais($conn, $usuario_id, $endereco, $telefone, $idade, $cidade, $estado) {
+    $sql = "INSERT INTO dados_adicionais (usuario_id, endereco, telefone, idade, cidade, estado) 
+            VALUES (?, ?, ?, ?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ississ", $usuario_id, $endereco, $telefone, $idade, $cidade, $estado);
+    $stmt->execute();
+}
+// Incluir a conexão com o banco de dados
+include('config.php');
+
+// Incluir as funções
+include('functions.php');
+
+// Verificar se o formulário foi enviado
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Obter os dados do formulário
+    $usuario_id = $_SESSION['usuario_id']; // ou recuperar o ID do usuário logado
+    $endereco = $_POST['endereco'];
+    $telefone = $_POST['telefone'];
+    $idade = $_POST['idade'];
+    $cidade = $_POST['cidade'];
+    $estado = $_POST['estado'];
+
+    // Chamar a função para inserir os dados adicionais
+    inserirDadosAdicionais($conn, $usuario_id, $endereco, $telefone, $idade, $cidade, $estado);
+
+    // Redirecionar ou exibir uma mensagem de sucesso
+    echo "Dados cadastrados com sucesso!";
+}
 // Função para verificar o login
 function verificarLogin($email, $senha) {
     global $conn;

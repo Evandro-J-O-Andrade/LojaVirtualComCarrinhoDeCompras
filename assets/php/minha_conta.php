@@ -3,7 +3,7 @@
 session_start();
 
 // Inclui a conexão com o banco de dados e as funções
-
+require "conexao.php";
 // Verifica se o usuário já está logado
 if (isset($_SESSION['usuario_id'])) {
     header('Location: dashboard.php'); // Se estiver logado, redireciona para o painel

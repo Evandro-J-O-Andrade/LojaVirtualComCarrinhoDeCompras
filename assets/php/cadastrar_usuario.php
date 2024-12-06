@@ -1,6 +1,6 @@
 <?php
 // Inclui a conexão com o banco de dados e as funções de cadastro
-require 'conexao.php';
+include 'conexao.php';
 // Verifica se o formulário foi submetido via POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Recebe os dados do formulário
@@ -8,6 +8,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = trim($_POST['email']); // Remover espaços extras
     $senha = $_POST['senha'];
     $confirmaSenha = $_POST['confirmaSenha'];
+
+
+    // Inserir dados básicos de login
+$sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("sss", $nome, $email, $senha);
+$stmt->execute();
+
 
     // Verifica se as senhas coincidem
     if ($senha !== $confirmaSenha) {
@@ -27,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES ('$nome', '$email', '$senha')";
     // Chama a função de cadastro, passando os dados
     $resultado = cadastrarUsuario($nome, $email, $senha);
 
@@ -40,5 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo $resultado; // Exibe o erro caso haja algum
     }
 }
+
 ?>
 
