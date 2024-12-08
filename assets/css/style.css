@@ -773,7 +773,79 @@ th:last-child {
     text-align: right;
 }
 
+.cep-input {
+    margin-top: 15px;
+    text-align: right; /* Alinhado à direita */
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cep-input label {
+    font-weight: bold;
+    color: var(--cor-fonte);
+}
+
+.cep-input input {
+    width: 150px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid var(--cor-padrao);
+    border-radius: 4px;
+}
+
+.cep-input button {
+    background-color: var(--cor-padrao);
+    color: var(--cor-fonte);
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.cep-input button:hover {
+    background-color: #005f99;
+}
+
 /*Carrinho de compras*/
+/* Estilo global para botões 
+.btn {
+    display: inline-block;
+    background-color: #4CAF50;  Cor de fundo 
+    color: white; /* Cor do texto 
+    padding: 10px 20px; /* Espaçamento interno
+    font-size: 16px; /* Tamanho da fonte 
+    border: none; /* Sem bordas 
+    border-radius: 5px; /* Bordas arredondadas 
+    text-align: center; /* Alinhar texto ao centro 
+    cursor: pointer; /* Cursor ao passar o mouse 
+    transition: background-color 0.3s ease, transform 0.2s ease; Animação suave 
+}
+
+/* Efeito ao passar o mouse 
+.btn:hover {
+    background-color: #45a049; /* Cor ao passar o mouse 
+    transform: scale(1.05); /* Leve aumento 
+}
+
+/* Botão em estado ativo (pressionado) 
+.btn:active {
+    background-color: #3e8e41;
+    transform: scale(0.95); /* Leve redução 
+}
+
+/* Responsividade - Ajustar tamanho do botão em telas pequenas 
+@media (max-width: 768px) {
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/*Teste produtos de compras*/
 
 /*=============================== Minha Conta ==============================*/
 

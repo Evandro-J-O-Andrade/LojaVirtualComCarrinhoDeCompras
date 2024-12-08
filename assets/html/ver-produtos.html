@@ -32,7 +32,7 @@
                             <li><a href="/index.html" title="Início">Início</a></li>
                             <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
                             <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
+                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
                             <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
                             <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
                         </ul>
@@ -83,19 +83,22 @@
                 <p>Blusa de frio manga longa meletinho</p>
                 <h1>Compre com desconto</h1>
                 <h4>R$500</h4>
-                <form action="" method="post">
+                <form action="" method="post" id="formAdicionarCarrinho">
                     <select name="Tamanho" id="Tamanho">
                         <option value="">Tamanho</option>
-                        <option value="">P</option>
-                        <option value="">M</option>
-                        <option value="">G</option>
-                        <option value="">GG</option>
-                        <option value="">XG</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                        <option value="XG">XG</option>
                     </select>
-                    <input type="number" name="" id="" value="1">
-                    <button type="submit" class="btn">Adicionar o Carrinho</button>
-
+                    <input type="number" name="quantidade" id="quantidade" value="0" min="1">
+                    <button type="submit" class="btn">Adicionar ao Carrinho</button>
                 </form>
+                
+                <!-- Opcional: Área para mostrar feedback de sucesso -->
+                <div id="Produto adicionado com sucesso!"></div>
+                
                 <h3>Descrição do Produto:</h3>
 
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in
@@ -104,27 +107,27 @@
                     molestiae accusamus in.</p>
 
                 <div class="img-col">
-                    <img src="/assets/img/galeria-1.jpg" alt="#" width="100%" class="protudoMiniatura">
+                    <img src="/assets/img/galeria-1.jpg" alt="Angel Cosmeticos" width="100%" class="protudoMiniatura">
                 </div>
 
             </div>
             <div class="teste-img">
                 <div class="img-col">
-                    <img src="/assets/img/galeria-2.jpg" alt="#" width="100%" class="protudoMiniatura">
+                    <img src="/assets/img/galeria-2.jpg" alt="#AngelCosmeticos" width="100%" class="protudoMiniatura">
                 </div>
 
 
                 <div class="img-col">
-                    <img src="/assets/img/galeria-3.jpg" alt="#" width="100%" class="protudoMiniatura">
+                    <img src="/assets/img/galeria-3.jpg" alt="AngelCosmeticos" width="100%" class="protudoMiniatura">
                 </div>
 
 
                 <div class="img-col">
-                    <img src="/assets/img/galeria-4.jpg" alt="#" width="100%" class="protudoMiniatura">
+                    <img src="/assets/img/galeria-4.jpg" alt="Angel Cosmeticos" width="100%" class="protudoMiniatura">
                 </div>
 
                 <div class="img-col">
-                    <img src="/assets/img/galeria-5.jpg" alt="#" width="100%" class="protudoMiniatura">
+                    <img src="/assets/img/galeria-5.jpg" alt="AngelCosmeticos" width="100%" class="protudoMiniatura">
                 </div>
 
             </div>
@@ -323,6 +326,7 @@
     <script src="/assets/js/cadastro.js" defer></script>
     <script src="/assets/js/contato.js" defer></script>
     <script src="/assets/js/login.js" defer></script>
+    <script src="/assets/js/carrinho_evento_adicionar_produto.js" defer></script>
 </body>
 
 </html>

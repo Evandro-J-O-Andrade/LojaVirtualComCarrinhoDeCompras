@@ -33,7 +33,7 @@
                             <li><a href="/index.html" title="Início">Início</a></li>
                             <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
                             <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Empresa</a></li>
+                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
                             <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
                             <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
                         </ul>
@@ -56,7 +56,8 @@
     <!--Incio do corpo de codigo Carrinho -->
 
     <div class="corpo-categorias carrinho-compras">
-        <!--Incio das Tabelas-->
+
+        <!-- Tabelas -->
         <table>
             <tr>
                 <th>Produto</th>
@@ -64,91 +65,113 @@
                 <th>Valor</th>
             </tr>
 
-            <!-----------------------------Itens de  compras-------------------->
             <tr>
                 <td>
-                    <div class="info-carrinho"></div>
                     <img src="/assets/img/carrinho-1.jpg" alt="Carrinho de compra">
                     <div>
-                        <p>Produtos</p>
-                        <small>Valor R$ 550</small>
-                        <br>
-                        <a href="#" title=""> Remover</a>
+                        <p>Produto 1</p>
+                        <small>Valor unitário: R$ 550.00</small>
+                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
                     </div>
                 </td>
                 <td>
-                    <form action="" method="post">
-                        <input type="number" name="" id="" value="1">
-                    </form>
+                    <input type="number" class="quantidade" value="0" min="0" data-preco="550">
                 </td>
-                <td>R$ 550</td>
+                <td class="subtotal">R$ 0.00</td>
             </tr>
 
             <tr>
                 <td>
-                    <div class="info-carrinho"></div>
                     <img src="/assets/img/carrinho-2.jpg" alt="Carrinho de compra">
                     <div>
-                        <p>Produtos</p>
-                        <small>Valor R$ 550</small>
-                        <br>
-                        <a href="#" title=""> Remover</a>
+                        <p>Produto 2</p>
+                        <small>Valor unitário: R$ 300.00</small>
+                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
                     </div>
                 </td>
                 <td>
-                    <form action="" method="post">
-                        <input type="number" name="" id="" value="1">
-                    </form>
+                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
                 </td>
-                <td>R$ 550</td>
+                <td class="subtotal">R$ 0.00</td>
             </tr>
-
+            <tr>
+                <td>
+                    <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                    <div>
+                        <p>Produto 3</p>
+                        <small>Valor unitário: R$ 300.00</small>
+                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                </td>
+                <td class="subtotal">R$ 0.00</td>
+            </tr>
 
             <tr>
                 <td>
-                    <div class="info-carrinho"></div>
                     <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
                     <div>
-                        <p>Produtos</p>
-                        <small>Valor R$ 550</small>
-                        <br>
-                        <a href="#" title=""> Remover</a>
+                        <p>Produto 4</p>
+                        <small>Valor unitário: R$ 300.00</small>
+                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
                     </div>
                 </td>
                 <td>
-                    <form action="" method="post">
-                        <input type="number" name="" id="" value="1">
-                    </form>
+                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
                 </td>
-                <td>R$ 550</td>
+                <td class="subtotal">R$ 0.00</td>
             </tr>
 
-            <!-------------------------Fim de intes de compra---------------->
+            <tr>
+                <td>
+                    <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                    <div>
+                        <p>Produto 5</p>
+                        <small>Valor unitário: R$ 300.00</small>
+                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                    </div>
+                </td>
+                <td>
+                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                </td>
+                <td class="subtotal">R$ 0.00</td>
+            </tr>
         </table>
-        <!---------------------------Fim das tabelas------------------------------>
+
         <div class="valor-total">
             <table>
                 <tr>
                     <td>Sub-Total</td>
-                    <td>R$ 500</td>
+                    <td id="subtotal-geral">R$ 0.00</td>
                 </tr>
-
                 <tr>
                     <td>Frete</td>
-                    <td>R$ 50</td>
+                    <td id="frete">R$ 0.00</td>
                 </tr>
-
                 <tr>
                     <td>Total</td>
-                    <td>R$ 550</td>
+                    <td id="total-geral">R$ 0.00</td>
                 </tr>
             </table>
         </div>
-        <!---------------------------Inicia das tabelas--------------------------->
-        <!---------------------------Fim das tabelas------------------------------>
+
+
+        
+        <!-- Campo para CEP -->
+        <div class="cep-input">
+            <label for="cep">Informe seu CEP:</label>
+            <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9">
+            <button onclick="calcularFrete()">Calcular Frete</button>
+            <p id="endereco"></p> <!-- Mostra o endereço (opcional) -->
+        </div>
+        <div id="carrinho-vazio">
+            <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
+        </div>
+
 
     </div>
-
 
     <!--Fim do corpo de codigo Carrinho -->
 
@@ -229,17 +252,20 @@
         <ion-icon name="arrow-up-outline"></ion-icon>
     </button>
 
-  <!-- Scripts -->
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
-  <script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
-  <script src="/assets/js/app.js" defer> </script>
-  <script src="/assets/js/responsive.js" defer></script>
-  <script src="/assets/js/btntop.js" defer></script>
-  <script src="/assets/js/modal.js" defer></script>
-  <script src="/assets/js/cadastro.js" defer></script>
-  <script src="/assets/js/contato.js" defer></script>
-  <script src="/assets/js/login.js" defer></script>
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+    <script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
+    <script src="/assets/js/app.js" defer> </script>
+    <script src="/assets/js/responsive.js" defer></script>
+    <script src="/assets/js/btntop.js" defer></script>
+    <script src="/assets/js/modal.js" defer></script>
+    <script src="/assets/js/cadastro.js" defer></script>
+    <script src="/assets/js/contato.js" defer></script>
+    <script src="/assets/js/login.js" defer></script>
+    <script src="/assets/js/carrinho.js" defer></script>
+    <script src="/assets/js/carrinho_evento_adicionar_produto.js" defer></script>
+    <script src="/assets/js/listaDeProduto.js" defer></script>
 
 </html>
