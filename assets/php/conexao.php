@@ -1,19 +1,15 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "angelcosmeticos";
+$host = 'localhost'; // Altere para o seu servidor
+$dbname = 'angelcosmeticos'; // Altere para o nome do seu banco de dados
+$username = 'root'; // Altere para o seu usuário
+$password = 'root'; // Altere para a senha do seu banco de dados
 
 try {
-    // Criando a conexão
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Verificando a conexão
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
-    }
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
     echo "Conexão bem-sucedida ao banco de dados!";
-} catch (Exception $e) {
-    echo "Erro: " . $e->getMessage();
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    echo "Erro de conexão: " . $e->getMessage();
+    exit;
 }
 ?>

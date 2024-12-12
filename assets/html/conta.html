@@ -75,16 +75,21 @@
                             </div>
 
                             <form action="/assets/php/login.php" method="post" id="EntrarPainel">
-                                <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
-                                <input type="password" name="senha" id="senha" placeholder="Digite sua senha!" required>
+                                <input type="email" name="email_login" id="email_login" placeholder="E-mail de acesso"
+                                    required>
+                                <input type="password" name="senha_login" id="senha_login"
+                                    placeholder="Digite sua senha!" required>
                                 <button type="submit" name="senEntrar" class="btn">Entrar</button>
                                 <div class="esqueceu">
-                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua senha?</button>
+                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua
+                                        senha?</button>
                                 </div>
                             </form>
-                            
 
-                            <form action="/assets/php/cadastrar_usuario.php" method="post" id="CadastroSite" style="display: none;">
+
+
+                     <form action="/assets/php/cadastrar_usuario.php" method="post"         id="CadastroSite"
+                                style="display: none;">
                                 <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
                                 <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
 
@@ -110,7 +115,8 @@
 
 
                             <!-- Formulário de Recuperação -->
-                            <form action="/assets/php/recuperar_senha.php" method="post" id="RecuperarSenha" style="display: none;">
+                            <form action="/assets/php/recuperar_senha.php" method="post" id="RecuperarSenha"
+                                style="display: none;">
                                 <input type="email" name="emailRecuperar" id="emailRecuperar"
                                     placeholder="Digite seu e-mail para recuperação">
                                 <button type="submit" name="senRecuperar" class="btn">Enviar Recuperação

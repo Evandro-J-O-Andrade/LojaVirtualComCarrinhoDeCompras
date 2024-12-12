@@ -1,6 +1,6 @@
 <?php
 // Inclui a conexão com o banco de dados
-
+require 'conexao.php';
 
 
 

@@ -124,6 +124,7 @@ p {
     max-width: 100%;
     height: auto;
     padding: 50px 0;
+    border-radius: 7%;
     margin-top: auto;
 
 
@@ -1506,7 +1507,7 @@ th:last-child {
 
 /* Efeito de hover nas imagens */
 .galeria-eventos img:hover {
-    transform: scale(1.07);
+    transform: scale(1.15);
     /* Aumenta a imagem ligeiramente ao passar o mouse */
 }
 
@@ -2360,4 +2361,104 @@ a[href*="wa.me"] {
 
 .footer {
     margin-top: auto;
+}
+
+
+.call-to-action {
+    text-align: center;
+    
+    border-radius: 10px;
+   
+    margin: 20px;
+}
+
+.call-to-action h1 {
+    font-size: 2.5em;
+    color: #e91e63; /* Cor vibrante e chamativa */
+    margin-bottom: 20px;
+}
+
+.call-to-action h1 span {
+    color: #c2185b; /* Destaque em tom sofisticado */
+}
+
+.call-to-action p {
+    font-size: 1.2em;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.call-to-action .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #e91e63; /* Cor vibrante */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.call-to-action .btn:hover {
+    background-color: #c2185b; /* Destaque no hover */
+}
+
+
+/* Container do modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal img {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.seta-esquerda, .seta-direita {
+    position: absolute;
+    top: 50%;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.seta-esquerda {
+    left: 10px;
+}
+
+.seta-direita {
+    right: 10px;
+}
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fechar:hover,
+.seta-esquerda:hover,
+.seta-direita:hover {
+    color: #bbb;
+    text-decoration: none;
 }

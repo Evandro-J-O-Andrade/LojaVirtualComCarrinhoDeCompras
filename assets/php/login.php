@@ -1,12 +1,15 @@
 <?php
 require "conexao.php";
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Captura os dados do formulário
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-    // Exibir dados recebidos para depuração
+
+    // Exibir dados recebidos para depuração (remover em produção)
     echo "E-mail: $email<br>";
     echo "Senha: $senha<br>";
+
     // Verifica se o usuário já existe no banco de dados
     $sql = "SELECT id, senha FROM usuarios WHERE email = ?";
     $stmt = $conn->prepare($sql);
@@ -27,9 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Senha incorreta!";
         }
     } else {
-        // Usuário não encontrado, então cria um novo usuário
-        // Antes de inserir, recomenda-se fazer a senha ser mais segura
-        $senhaHash = password_hash($senha, PASSWORD_DEFAULT); // Criptografa a senha
+        // Caso o usuário não exista, insira um novo registro
+        // Verifica se o e-mail já está registrado (dupla verificação)
+        echo "Usuário não encontrado. Criando um novo registro.<br>";
+
+        // Criptografa a senha para segurança
+        $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
         // SQL para inserir o novo usuário
         $sql_insert = "INSERT INTO usuarios (email, senha) VALUES (?, ?)";
@@ -37,8 +43,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt_insert->bind_param("ss", $email, $senhaHash); // 'ss' indica que são dois parâmetros tipo string
 
         if ($stmt_insert->execute()) {
+            // Sucesso no cadastro
             echo "Novo registro criado com sucesso!";
+
+            // Redirecionar para login ou outra página, se necessário
+            header("Location: login.php");
+            exit; // Garantir que o script pare após o redirecionamento
         } else {
+            // Erro ao criar o registro
             echo "Erro ao criar o registro: " . $stmt_insert->error;
         }
 
