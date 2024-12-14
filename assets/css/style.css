@@ -2462,3 +2462,18 @@ a[href*="wa.me"] {
     color: #bbb;
     text-decoration: none;
 }
+
+
+/* mdoda e maquiagem*/
+
+.cuidados{
+    justify-content: space-between;
+    text-align: center;
+    color: var(--cor-btn-fonte);
+   
+}
+
+ .col-3 .cuidados-img{
+   height: 337px;
+   width: 100%;
+}
