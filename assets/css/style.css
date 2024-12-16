@@ -2474,6 +2474,159 @@ a[href*="wa.me"] {
 }
 
  .col-3 .cuidados-img{
-   height: 337px;
+    height: 337px;
    width: 100%;
+   object-fit: cover;
+   object-position: center;
+}
+
+/* Fundo principal glamuroso */
+section.historia {
+    background: linear-gradient(to bottom right, #fce4ec, #ffffff);
+    background-size: cover;
+    background-attachment: fixed; /* Efeito de parallax */
+    padding: 70px 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 5px solid #e91e63; /* Linha de cor viva */
+    border-bottom: 5px solid #e91e63;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Brilho de fundo extra glamuroso */
+section.historia::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5), transparent);
+    z-index: 1;
+    pointer-events: none;
+    animation: sparkle 6s infinite;
+}
+
+/* Animação de brilho */
+@keyframes sparkle {
+    0%, 100% {
+        transform: translate(-10%, -10%);
+    }
+    50% {
+        transform: translate(10%, 10%);
+    }
+}
+
+/* Container centralizado */
+.historia .container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2; /* Para ficar acima do efeito de brilho */
+    padding: 0 30px;
+}
+
+/* Título com sombra */
+.historia h2 {
+    font-size: 3rem;
+    color: #d81b60; /* Rosa vibrante */
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-shadow: 0px 4px 6px rgba(216, 27, 96, 0.3);
+    position: relative;
+}
+
+/* Subtítulo com detalhe dourado */
+.historia .subtitulo {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
+    color: #6e6e6e;
+    margin-bottom: 30px;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.historia .subtitulo::before,
+.historia .subtitulo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, #d4af37, transparent);
+}
+
+.historia .subtitulo::before {
+    left: -70px;
+}
+
+.historia .subtitulo::after {
+    right: -70px;
+}
+
+/* Texto com animação de entrada */
+.historia p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #4f4f4f;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeIn 1.2s ease-out forwards;
+}
+
+.historia p:nth-of-type(1) {
+    animation-delay: 0.5s;
+}
+
+.historia p:nth-of-type(2) {
+    animation-delay: 0.8s;
+}
+
+/* Botão glamouroso */
+.btn-explorar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: linear-gradient(to right, #e91e63, #ff4081);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-explorar:hover {
+    background: linear-gradient(to right, #ff4081, #e91e63);
+    box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+    transform: scale(1.1);
+}
+
+/* Keyframes para o fadeIn */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.mapa iframe {
+    border: none;
+    width: 100%;
+    height: 400px;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
