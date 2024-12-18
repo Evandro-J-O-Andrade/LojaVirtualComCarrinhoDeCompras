@@ -20,8 +20,8 @@
     <meta name="author" content="Grasiely da Silva Machado">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Android -->
-        <link rel="icon" sizes="192x192" href="android-icon.png">
+    <!-- Android -->
+    <link rel="icon" sizes="192x192" href="android-icon.png">
     <link rel="icon" href="favicon.png" type="image/jpeg">
     <link rel="icon" href="/assets/img/ChamdaSite.jpeg" alt="Angel Cosmeticos" type="image/x-icon">
     <title>Angel Cosméticos | Consultora Grasiely Machado MK</title>
@@ -36,168 +36,169 @@
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
-    <!-- Banner principal da página -->
-    <div class="banner">
+    <main>
         <!-- Banner principal da página -->
-        <div class="novoMenu">
-            <div class="container">
+        <div class="banner">
+            <!-- Banner principal da página -->
+            <div class="novoMenu">
+                <div class="container">
 
-                <!-- Barra de navegação -->
-                <div class="navbar">
+                    <!-- Barra de navegação -->
+                    <div class="navbar">
 
-                    <div class="logo">
-                        <img src="/assets/img/Carrinhofull1.png" alt="Angel Cosméticos">
+                        <div class="logo">
+                            <img src="/assets/img/Carrinhofull1.png" alt="Angel Cosméticos">
+                        </div>
+
+                        <nav>
+                            <!-- Menu de navegação -->
+                            <ul id="MenuItens">
+                                <li><a href="/index.html" title="Início">Início</a></li>
+                                <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                                <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                                <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
+                                <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                                <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                            </ul>
+                        </nav>
+                        <a href="/assets/html/carrinho.html" title="compras">
+                            <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                        </a>
+                        <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                     </div>
 
-                    <nav>
-                        <!-- Menu de navegação -->
-                        <ul id="MenuItens">
-                            <li><a href="/index.html" title="Início">Início</a></li>
-                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
-                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                        </ul>
-                    </nav>
-                    <a href="/assets/html/carrinho.html" title="compras">
-                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                    </a>
-                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
+                    <!-- Conteúdo principal do banner -->
+
                 </div>
 
-                <!-- Conteúdo principal do banner -->
+            </div> <!-- Seção de categorias -->
 
-            </div>
-
-        </div> <!-- Seção de categorias -->
-
-    </div>
+        </div>
 
 
-    <!--Incio do corpo de codigo Carrinho -->
+        <!--Incio do corpo de codigo Carrinho -->
 
-    <div class="corpo-categorias carrinho-compras">
+        <div class="corpo-categorias carrinho-compras">
 
-        <!-- Tabelas -->
-        <table>
-            <tr>
-                <th>Produto</th>
-                <th>Quantidade</th>
-                <th>Valor</th>
-            </tr>
-
-            <tr>
-                <td>
-                    <img src="/assets/img/carrinho-1.jpg" alt="Carrinho de compra">
-                    <div>
-                        <p>Produto 1</p>
-                        <small>Valor unitário: R$ 550.00</small>
-                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="quantidade" value="0" min="0" data-preco="550">
-                </td>
-                <td class="subtotal">R$ 0.00</td>
-            </tr>
-
-            <tr>
-                <td>
-                    <img src="/assets/img/carrinho-2.jpg" alt="Carrinho de compra">
-                    <div>
-                        <p>Produto 2</p>
-                        <small>Valor unitário: R$ 300.00</small>
-                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
-                </td>
-                <td class="subtotal">R$ 0.00</td>
-            </tr>
-            <tr>
-                <td>
-                    <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
-                    <div>
-                        <p>Produto 3</p>
-                        <small>Valor unitário: R$ 300.00</small>
-                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
-                </td>
-                <td class="subtotal">R$ 0.00</td>
-            </tr>
-
-            <tr>
-                <td>
-                    <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
-                    <div>
-                        <p>Produto 4</p>
-                        <small>Valor unitário: R$ 300.00</small>
-                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
-                </td>
-                <td class="subtotal">R$ 0.00</td>
-            </tr>
-
-            <tr>
-                <td>
-                    <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
-                    <div>
-                        <p>Produto 5</p>
-                        <small>Valor unitário: R$ 300.00</small>
-                        <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
-                    </div>
-                </td>
-                <td>
-                    <input type="number" class="quantidade" value="0" min="0" data-preco="300">
-                </td>
-                <td class="subtotal">R$ 0.00</td>
-            </tr>
-        </table>
-
-        <div class="valor-total">
+            <!-- Tabelas -->
             <table>
                 <tr>
-                    <td>Sub-Total</td>
-                    <td id="subtotal-geral">R$ 0.00</td>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Valor</th>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-1.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 1</p>
+                            <small>Valor unitário: R$ 550.00</small>
+                            <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="550">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-2.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 2</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
                 </tr>
                 <tr>
-                    <td>Frete</td>
-                    <td id="frete">R$ 0.00</td>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 3</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
                 </tr>
+
                 <tr>
-                    <td>Total</td>
-                    <td id="total-geral">R$ 0.00</td>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 4</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 5</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="#" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
                 </tr>
             </table>
+
+            <div class="valor-total">
+                <table>
+                    <tr>
+                        <td>Sub-Total</td>
+                        <td id="subtotal-geral">R$ 0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Frete</td>
+                        <td id="frete">R$ 0.00</td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td id="total-geral">R$ 0.00</td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+            <!-- Campo para CEP -->
+            <div class="cep-input">
+                <label for="cep">Informe seu CEP:</label>
+                <p id="endereco"></p> <!-- Mostra o endereço (opcional) -->
+                <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9">
+
+                <button onclick="calcularFrete()">Calcular Frete</button>
+
+            </div>
+            <br>
+            <div id="carrinho-vazio">
+                <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
+            </div>
+
+
         </div>
-
-
-
-        <!-- Campo para CEP -->
-        <div class="cep-input">
-            <label for="cep">Informe seu CEP:</label>
-            <p id="endereco"></p> <!-- Mostra o endereço (opcional) -->
-            <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9">
-
-            <button onclick="calcularFrete()">Calcular Frete</button>
-
-        </div>
-        <br>
-        <div id="carrinho-vazio">
-            <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
-        </div>
-
-
-    </div>
-
+    </main>
     <!--Fim do corpo de codigo Carrinho -->
 
 

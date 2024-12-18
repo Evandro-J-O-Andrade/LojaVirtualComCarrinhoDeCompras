@@ -390,18 +390,21 @@ small {
 .rodape-col-2 {
     flex: 1;
     text-align: center;
+    
 
 }
 
 .rodape-col-2 img {
     width: 180px;
     margin-bottom: 20px;
+    
 }
 
 .rodape-col-3,
 .rodape-col-4 {
     flex-basis: 12%;
     text-align: right;
+    
 }
 
 
@@ -409,6 +412,11 @@ small {
     padding: 0;
     margin: 0;
     list-style-type: none;
+    
+    
+}
+.contato{
+text-decoration: none;
 }
 
 .rodape-col-3 ul li {
@@ -419,6 +427,7 @@ small {
     flex-basis: 12%;
     text-align: right;
     margin: 0;
+    
 
 
 }
@@ -533,7 +542,7 @@ ul {
     /* Ajusta a altura automaticamente */
     min-height: 100px;
     /* Define uma altura mínima para o banner */
-   
+
     /* Para centralizar conteúdo, se necessário */
     align-items: center;
     /* Centraliza verticalmente */
@@ -776,7 +785,8 @@ th:last-child {
 
 .cep-input {
     margin-top: 15px;
-    text-align: right; /* Alinhado à direita */
+    text-align: right;
+    /* Alinhado à direita */
     font-size: 14px;
     display: flex;
     justify-content: flex-end;
@@ -894,14 +904,17 @@ th:last-child {
     display: inline-block;
 
 }
+
 /*Formulario para cadastro*/
 /* Botões Entrar e Cadastro centralizados */
 .btn-form-2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px; /* Espaço entre os spans */
-    position: relative; /* Para posicionar o Indicador */
+    gap: 20px;
+    /* Espaço entre os spans */
+    position: relative;
+    /* Para posicionar o Indicador */
     margin-bottom: 20px;
 }
 
@@ -909,7 +922,8 @@ th:last-child {
     font-size: 10px;
     font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease; /* Animação suave */
+    transition: all 0.3s ease;
+    /* Animação suave */
     text-align: center;
 }
 
@@ -922,9 +936,10 @@ th:last-child {
     bottom: -5px;
     height: 2px;
     width: 80px;
-   
-  
-    transition: transform 0.3s ease-in-out; /* Suavidade no movimento */
+
+
+    transition: transform 0.3s ease-in-out;
+    /* Suavidade no movimento */
 }
 
 /* Formulários */
@@ -936,7 +951,8 @@ th:last-child {
     gap: 20px;
 }
 
-#EntrarPainel input, #EntrarPainel button {
+#EntrarPainel input,
+#EntrarPainel button {
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
@@ -948,31 +964,45 @@ th:last-child {
 
 
 #EntrarPainel .esqueceu {
-    display: flex; /* Ativa o Flexbox */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
-    margin-top: 10px; /* Espaçamento acima */
+    display: flex;
+    /* Ativa o Flexbox */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+    margin-top: 10px;
+    /* Espaçamento acima */
     gap: 20px;
 }
 
 .esqueceu {
     display: flex;
-    justify-content: center; /* Alinha horizontalmente ao centro */
-    align-items: center;    /* Alinha verticalmente ao centro */
-    margin-top: 10px;       /* Espaçamento entre os campos acima */
+    justify-content: center;
+    /* Alinha horizontalmente ao centro */
+    align-items: center;
+    /* Alinha verticalmente ao centro */
+    margin-top: 10px;
+    /* Espaçamento entre os campos acima */
 }
 
 .esqueceu-senha {
-    background: none;       /* Remove o fundo do botão */
-    border: none;           /* Remove a borda */
-    color: var(black);         /* Cor do texto */
-    font-size: 14px;        /* Tamanho do texto */
-    cursor: pointer;        /* Ponteiro no hover */
-    text-decoration: none; /* Sublinhado para parecer um link */
+    background: none;
+    /* Remove o fundo do botão */
+    border: none;
+    /* Remove a borda */
+    color: var(black);
+    /* Cor do texto */
+    font-size: 14px;
+    /* Tamanho do texto */
+    cursor: pointer;
+    /* Ponteiro no hover */
+    text-decoration: none;
+    /* Sublinhado para parecer um link */
 }
 
 .esqueceu-senha:hover {
-    color: blue ;      /* Cor mais escura ao passar o mouse */
+    color: blue;
+    /* Cor mais escura ao passar o mouse */
 }
 
 /*Fim Formulario para cadastro*/
@@ -1026,6 +1056,7 @@ th:last-child {
 
 
 }
+
 /*Formulario do Cadastro */
 
 
@@ -1273,9 +1304,9 @@ th:last-child {
 .modal-conteudo {
     margin: auto;
     display: block;
-    max-width: 80%;
+    max-width: 100%;
     /* Limita a largura */
-    max-height: 80%;
+    max-height: 100%;
     /* Limita a altura */
     border-radius: 8px;
 }
@@ -1488,12 +1519,13 @@ th:last-child {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     /* 4 colunas */
-    gap: 20px;
+    gap: 15px;
     margin-top: 20px;
 }
 
 /* Estilo para as imagens dentro da galeria */
 .galeria-eventos img {
+    align-items: center;
     width: 100%;
     /* A largura vai ser 100% do seu container */
     height: 200px;
@@ -1823,11 +1855,12 @@ a[href*="wa.me"] {
         .info-carrinho p {
             display: none;
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
 
@@ -1907,11 +1940,12 @@ a[href*="wa.me"] {
             transition: transform 0.5s;
             /* Adiciona uma transição suave ao efeito */
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
 
@@ -1942,11 +1976,12 @@ a[href*="wa.me"] {
         .info-carrinho p {
             display: none;
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
 
@@ -2036,6 +2071,7 @@ a[href*="wa.me"] {
             font-size: 15px;
             flex-basis: 12%;
             text-align: right;
+            
 
 
 
@@ -2061,11 +2097,12 @@ a[href*="wa.me"] {
         .info-carrinho p {
             display: none;
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
 
@@ -2125,11 +2162,12 @@ a[href*="wa.me"] {
         .info-carrinho p {
             display: none;
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
 
@@ -2140,13 +2178,170 @@ a[href*="wa.me"] {
             max-width: 200px;
             /* Defina um tamanho máximo, se necessário */
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
     }
+
+    /* Subtítulo com detalhe dourado */
+    .historia .subtitulo {
+        font-size: 1.5rem;
+        font-family: 'Lora', serif;
+        color: #6e6e6e;
+        margin-bottom: 30px;
+        font-style: italic;
+        position: relative;
+        display: inline-block;
+        padding: 0 20px;
+    }
+
+    .historia .subtitulo::before,
+    .historia .subtitulo::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, #d4af37, transparent);
+    }
+
+    .historia .subtitulo::before {
+        left: -70px;
+    }
+
+    .historia .subtitulo::after {
+        right: -70px;
+    }
+
+    /* Texto com animação de entrada */
+    .historia p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #4f4f4f;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    .historia p:nth-of-type(1) {
+        animation-delay: 0.5s;
+    }
+
+    .historia p:nth-of-type(2) {
+        animation-delay: 0.8s;
+    }
+
+    /* Botão glamouroso */
+    .btn-explorar {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(to right, #e91e63, #ff4081);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-explorar:hover {
+        background: linear-gradient(to right, #ff4081, #e91e63);
+        box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Keyframes para o fadeIn */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+ /* Certifique-se de que a seção .mapa ocupe o espaço central */
+.mapa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;  /* Largura total */
+    height: 100%; /* Ocupa a altura disponível */
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center; /* Centraliza o texto */
+    background-color: white; /* Cor de fundo opcional */
+}
+
+/* Título */
+.mapa h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Descrição do mapa */
+.mapa-descricao p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+/* CSS opcional */
+#map {
+    width: 100%;  /* Largura total */
+    height: 450px;  /* Altura fixa ou pode ser ajustada conforme necessário */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    #map {
+        height: 300px; /* Ajuste da altura para telas menores */
+    }
+}
+.cuidados {
+    text-decoration: none !important; /* Remove o sublinhado com prioridade */
+    color: #333; /* Ajuste a cor do link */
+}
+
+.cuidados:hover {
+    color: #007BFF; /* Cor ao passar o mouse */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .mapa h2 {
+        font-size: 1.6rem;
+    }
+
+    .mapa-descricao p {
+        font-size: 1rem;
+    }
+
+    .mapa-embed iframe {
+        height: 300px;
+    }
+}
+
+/* Ajustes para o iframe do mapa */
+.mapa-embed iframe {
+    width: 100%;
+    max-width: 800px; /* Limita o tamanho máximo */
+    height: 450px;
+    border: none;
+    margin-top: 20px;
+}
 
     @media only screen and (min-width: 100px) and (max-width: 600px) {
         .resolucao .logo {
@@ -2192,12 +2387,107 @@ a[href*="wa.me"] {
         .info-carrinho p {
             display: none;
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
     }
 
     .resolucao #MenuItens {
@@ -2285,12 +2575,107 @@ a[href*="wa.me"] {
             transition: transform 0.5s;
             /* Adiciona uma transição suave ao efeito */
         }
-        .minha-conta{
-            background: radial-gradient(var(--cor-padrao-hover),var(--cor-padrao));
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
             padding: 50px 0;
             width: 100%;
-        
+
         }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
     }
 
     .info-carrinho p {
@@ -2352,6 +2737,100 @@ a[href*="wa.me"] {
             font-size: 26px;
             line-height: 26px;
         }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
     }
 
     .info-carrinho p {
@@ -2366,20 +2845,22 @@ a[href*="wa.me"] {
 
 .call-to-action {
     text-align: center;
-    
+
     border-radius: 10px;
-   
+
     margin: 20px;
 }
 
 .call-to-action h1 {
     font-size: 2.5em;
-    color: #e91e63; /* Cor vibrante e chamativa */
+    color: #e91e63;
+    /* Cor vibrante e chamativa */
     margin-bottom: 20px;
 }
 
 .call-to-action h1 span {
-    color: #c2185b; /* Destaque em tom sofisticado */
+    color: #c2185b;
+    /* Destaque em tom sofisticado */
 }
 
 .call-to-action p {
@@ -2394,7 +2875,8 @@ a[href*="wa.me"] {
     padding: 10px 20px;
     font-size: 1em;
     color: #fff;
-    background-color: #e91e63; /* Cor vibrante */
+    background-color: #e91e63;
+    /* Cor vibrante */
     border: none;
     border-radius: 5px;
     text-decoration: none;
@@ -2402,7 +2884,8 @@ a[href*="wa.me"] {
 }
 
 .call-to-action .btn:hover {
-    background-color: #c2185b; /* Destaque no hover */
+    background-color: #c2185b;
+    /* Destaque no hover */
 }
 
 
@@ -2427,7 +2910,8 @@ a[href*="wa.me"] {
     max-height: 80%;
 }
 
-.seta-esquerda, .seta-direita {
+.seta-esquerda,
+.seta-direita {
     position: absolute;
     top: 50%;
     color: white;
@@ -2466,29 +2950,31 @@ a[href*="wa.me"] {
 
 /* mdoda e maquiagem*/
 
-.cuidados{
+.cuidados {
     justify-content: space-between;
     text-align: center;
     color: var(--cor-btn-fonte);
-   
+
 }
 
- .col-3 .cuidados-img{
+.col-3 .cuidados-img {
     height: 337px;
-   width: 100%;
-   object-fit: cover;
-   object-position: center;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
 }
 
 /* Fundo principal glamuroso */
 section.historia {
     background: linear-gradient(to bottom right, #fce4ec, #ffffff);
     background-size: cover;
-    background-attachment: fixed; /* Efeito de parallax */
+    background-attachment: fixed;
+    /* Efeito de parallax */
     padding: 70px 0;
     position: relative;
     overflow: hidden;
-    border-top: 5px solid #e91e63; /* Linha de cor viva */
+    border-top: 5px solid #e91e63;
+    /* Linha de cor viva */
     border-bottom: 5px solid #e91e63;
     box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
 }
@@ -2509,9 +2995,12 @@ section.historia::before {
 
 /* Animação de brilho */
 @keyframes sparkle {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translate(-10%, -10%);
     }
+
     50% {
         transform: translate(10%, 10%);
     }
@@ -2523,14 +3012,16 @@ section.historia::before {
     margin: 0 auto;
     text-align: center;
     position: relative;
-    z-index: 2; /* Para ficar acima do efeito de brilho */
+    z-index: 2;
+    /* Para ficar acima do efeito de brilho */
     padding: 0 30px;
 }
 
 /* Título com sombra */
 .historia h2 {
     font-size: 3rem;
-    color: #d81b60; /* Rosa vibrante */
+    color: #d81b60;
+    /* Rosa vibrante */
     font-family: 'Playfair Display', serif;
     text-transform: uppercase;
     font-weight: 700;
@@ -2617,11 +3108,13 @@ section.historia::before {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
+
 .mapa iframe {
     border: none;
     width: 100%;
@@ -2629,4 +3122,98 @@ section.historia::before {
     max-width: 100%;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (min-width: 350px) and (max-width: 1024px) {
+    /* Subtítulo com detalhe dourado */
+    .historia .subtitulo {
+        font-size: 1.5rem;
+        font-family: 'Lora', serif;
+        color: #6e6e6e;
+        margin-bottom: 30px;
+        font-style: italic;
+        position: relative;
+        display: inline-block;
+        padding: 0 20px;
+    }
+
+    .historia .subtitulo::before,
+    .historia .subtitulo::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, #d4af37, transparent);
+    }
+
+    .historia .subtitulo::before {
+        left: -70px;
+    }
+
+    .historia .subtitulo::after {
+        right: -70px;
+    }
+
+    /* Texto com animação de entrada */
+    .historia p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #4f4f4f;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    .historia p:nth-of-type(1) {
+        animation-delay: 0.5s;
+    }
+
+    .historia p:nth-of-type(2) {
+        animation-delay: 0.8s;
+    }
+
+    /* Botão glamouroso */
+    .btn-explorar {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(to right, #e91e63, #ff4081);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-explorar:hover {
+        background: linear-gradient(to right, #ff4081, #e91e63);
+        box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Keyframes para o fadeIn */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .mapa iframe {
+        border: none;
+        width: 100%;
+        height: 400px;
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
 }

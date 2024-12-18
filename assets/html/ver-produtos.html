@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -21,8 +20,8 @@
     <meta name="author" content="Grasiely da Silva Machado">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Android -->
-        <link rel="icon" sizes="192x192" href="android-icon.png">
+    <!-- Android -->
+    <link rel="icon" sizes="192x192" href="android-icon.png">
     <link rel="icon" href="favicon.png" type="image/jpeg">
     <link rel="icon" href="/assets/img/ChamdaSite.jpeg" alt="Angel Cosmeticos" type="image/x-icon">
     <title>Angel Cosméticos | Consultora Grasiely Machado MK</title>
@@ -37,248 +36,254 @@
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
-    <div class="banner">
-        <!-- Banner principal da página -->
-        <div class="novoMenu">
-            <div class="container">
+    <main>
+        <div class="banner">
+            <!-- Banner principal da página -->
+            <div class="novoMenu">
+                <div class="container">
 
-                <!-- Barra de navegação -->
-                <div class="navbar">
-                    <div class="logo">
-                        <img src="/assets/img/logo2semfundo2.png" alt="Angel Cosméticos">
+                    <!-- Barra de navegação -->
+                    <div class="navbar">
+                        <div class="logo">
+                            <img src="/assets/img/logo2semfundo2.png" alt="Angel Cosméticos">
+                        </div>
+
+                        <nav>
+                            <!-- Menu de navegação -->
+                            <ul id="MenuItens">
+                                <li><a href="/index.html" title="Início">Início</a></li>
+                                <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                                <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                                <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
+                                <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                                <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                            </ul>
+                        </nav>
+                        <a href="carrinho.html">
+                            <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                        </a>
+                        <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                     </div>
-
-                    <nav>
-                        <!-- Menu de navegação -->
-                        <ul id="MenuItens">
-                            <li><a href="/index.html" title="Início">Início</a></li>
-                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
-                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                        </ul>
-                    </nav>
-                    <a href="carrinho.html">
-                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                    </a>
-                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Seção de categorias -->
-    <div class="corpo-categorias ver-produtos">
-        <div class="linha">
-
-            <div class="col-2">
-                <img src="/assets/img/galeria-1.jpg" alt="#" id="produtoImg">
-                <div class="img-linha">
-                    <div class="img-col">
-                        <img src="/assets/img/galeria-1.jpg" alt="#" width="100%" class="protudoMiniatura">
-                    </div>
-
-
-
-                    <div class="img-col">
-                        <img src="/assets/img/galeria-2.jpg" alt="#" width="100%" class="protudoMiniatura">
-                    </div>
-
-                    <div class="img-col">
-                        <img src="/assets/img/galeria-3.jpg" alt="#" width="100%" class="protudoMiniatura">
-                    </div>
-
-                    <div class="img-col">
-                        <img src="/assets/img/galeria-4.jpg" alt="#" width="100%" class="protudoMiniatura">
-                    </div>
-
-                    <div class="img-col">
-                        <img src="/assets/img/galeria-5.jpg" alt="#" width="100%" class="protudoMiniatura">
-                    </div>
-
-                </div>
-
-
-            </div>
-
-            <div class="col-2">
-                <p>Blusa de frio manga longa meletinho</p>
-                <h1>Compre com desconto</h1>
-                <h4>R$500</h4>
-                <form action="" method="post" id="formAdicionarCarrinho">
-                    <select name="Tamanho" id="Tamanho">
-                        <option value="">Tamanho</option>
-                        <option value="P">P</option>
-                        <option value="M">M</option>
-                        <option value="G">G</option>
-                        <option value="GG">GG</option>
-                        <option value="XG">XG</option>
-                    </select>
-                    <input type="number" name="quantidade" id="quantidade" value="0" min="1">
-                    <button type="submit" class="btn">Adicionar ao Carrinho</button>
-                </form>
-                
-                <!-- Opcional: Área para mostrar feedback de sucesso -->
-                <div id="Produto adicionado com sucesso!"></div>
-                
-                <h3>Descrição do Produto:</h3>
-
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in
-                    molestiae
-                    magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga
-                    molestiae accusamus in.</p>
-
-                <div class="img-col">
-                    <img src="/assets/img/galeria-1.jpg" alt="Angel Cosmeticos" width="100%" class="protudoMiniatura">
-                </div>
-
-            </div>
-            <div class="teste-img">
-                <div class="img-col">
-                    <img src="/assets/img/galeria-2.jpg" alt="#AngelCosmeticos" width="100%" class="protudoMiniatura">
-                </div>
-
-
-                <div class="img-col">
-                    <img src="/assets/img/galeria-3.jpg" alt="AngelCosmeticos" width="100%" class="protudoMiniatura">
-                </div>
-
-
-                <div class="img-col">
-                    <img src="/assets/img/galeria-4.jpg" alt="Angel Cosmeticos" width="100%" class="protudoMiniatura">
-                </div>
-
-                <div class="img-col">
-                    <img src="/assets/img/galeria-5.jpg" alt="AngelCosmeticos" width="100%" class="protudoMiniatura">
-                </div>
-
-            </div>
-            <!-- Seção de categorias -->
-        </div>
-
-        <div class="corpo-categorias">
-            <div class="linha linha2">
-                <h2>Produto Relacionados</h2>
-                <p>Veja Mais</p>
-            </div>
+        <!-- Seção de categorias -->
+        <div class="corpo-categorias ver-produtos">
             <div class="linha">
-                <div class="col-4">
-                    <img src="/assets/img/produto-1.jpg" alt="Produto 1">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
+
+                <div class="col-2">
+                    <img src="/assets/img/galeria-1.jpg" alt="#" id="produtoImg">
+                    <div class="img-linha">
+                        <div class="img-col">
+                            <img src="/assets/img/galeria-1.jpg" alt="#" width="100%" class="protudoMiniatura">
+                        </div>
+
+
+
+                        <div class="img-col">
+                            <img src="/assets/img/galeria-2.jpg" alt="#" width="100%" class="protudoMiniatura">
+                        </div>
+
+                        <div class="img-col">
+                            <img src="/assets/img/galeria-3.jpg" alt="#" width="100%" class="protudoMiniatura">
+                        </div>
+
+                        <div class="img-col">
+                            <img src="/assets/img/galeria-4.jpg" alt="#" width="100%" class="protudoMiniatura">
+                        </div>
+
+                        <div class="img-col">
+                            <img src="/assets/img/galeria-5.jpg" alt="#" width="100%" class="protudoMiniatura">
+                        </div>
+
                     </div>
-                    <p>R$110,00</p>
+
+
                 </div>
 
-                <div class="col-4">
-                    <img src="/assets/img/produto-2.jpg" alt="Produto 2">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
+                <div class="col-2">
+                    <p>Blusa de frio manga longa meletinho</p>
+                    <h1>Compre com desconto</h1>
+                    <h4>R$500</h4>
+                    <form action="" method="post" id="formAdicionarCarrinho">
+                        <select name="Tamanho" id="Tamanho">
+                            <option value="">Tamanho</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
+                            <option value="XG">XG</option>
+                        </select>
+                        <input type="number" name="quantidade" id="quantidade" value="0" min="1">
+                        <button type="submit" class="btn">Adicionar ao Carrinho</button>
+                    </form>
+
+                    <!-- Opcional: Área para mostrar feedback de sucesso -->
+                    <div id="Produto adicionado com sucesso!"></div>
+
+                    <h3>Descrição do Produto:</h3>
+
+                    <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in
+                        molestiae
+                        magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga
+                        molestiae accusamus in.</p>
+
+                    <div class="img-col">
+                        <img src="/assets/img/galeria-1.jpg" alt="Angel Cosmeticos" width="100%"
+                            class="protudoMiniatura">
                     </div>
-                    <p>R$150,00</p>
+
+                </div>
+                <div class="teste-img">
+                    <div class="img-col">
+                        <img src="/assets/img/galeria-2.jpg" alt="#AngelCosmeticos" width="100%"
+                            class="protudoMiniatura">
+                    </div>
+
+
+                    <div class="img-col">
+                        <img src="/assets/img/galeria-3.jpg" alt="AngelCosmeticos" width="100%"
+                            class="protudoMiniatura">
+                    </div>
+
+
+                    <div class="img-col">
+                        <img src="/assets/img/galeria-4.jpg" alt="Angel Cosmeticos" width="100%"
+                            class="protudoMiniatura">
+                    </div>
+
+                    <div class="img-col">
+                        <img src="/assets/img/galeria-5.jpg" alt="AngelCosmeticos" width="100%"
+                            class="protudoMiniatura">
+                    </div>
+
+                </div>
+                <!-- Seção de categorias -->
+            </div>
+
+            <div class="corpo-categorias">
+                <div class="linha linha2">
+                    <h2>Produto Relacionados</h2>
+                    <p>Veja Mais</p>
+                </div>
+                <div class="linha">
+                    <div class="col-4">
+                        <img src="/assets/img/produto-1.jpg" alt="Produto 1">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$110,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-2.jpg" alt="Produto 2">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$150,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-3.jpg" alt="Produto 3">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$90,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-4.jpg" alt="Produto 4">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$120,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-5.jpg" alt="Produto 5">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$110,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-6.jpg" alt="Produto 6">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$140,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-7.jpg" alt="Produto 7">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$130,00</p>
+                    </div>
+
+                    <div class="col-4">
+                        <img src="/assets/img/produto-8.jpg" alt="Produto 8">
+                        <h4>Valor Produtos</h4>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <p>R$115,00</p>
+                    </div>
                 </div>
 
-                <div class="col-4">
-                    <img src="/assets/img/produto-3.jpg" alt="Produto 3">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$90,00</p>
-                </div>
 
-                <div class="col-4">
-                    <img src="/assets/img/produto-4.jpg" alt="Produto 4">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$120,00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="/assets/img/produto-5.jpg" alt="Produto 5">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$110,00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="/assets/img/produto-6.jpg" alt="Produto 6">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$140,00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="/assets/img/produto-7.jpg" alt="Produto 7">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$130,00</p>
-                </div>
-
-                <div class="col-4">
-                    <img src="/assets/img/produto-8.jpg" alt="Produto 8">
-                    <h4>Valor Produtos</h4>
-                    <div class="classificacao">
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                        <ion-icon name="star"></ion-icon>
-                    </div>
-                    <p>R$115,00</p>
-                </div>
             </div>
 
 
         </div>
 
 
-    </div>
 
 
 
 
-
-
-
+    </main>
 
 
     <!-- Rodapé -->

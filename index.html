@@ -35,235 +35,95 @@
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
-    <!-- Banner principal da página -->
-    <div class="banner">
-        <div class="container">
+    <main>
+        <!-- Banner principal da página -->
+        <div class="banner">
+            <div class="container">
 
-            <!-- Barra de navegação -->
-            <div class="navbar">
-                <div class="logo">
-                    <img src="/assets/img/logosemfundo3.png" alt="Angel Cosméticos">
+                <!-- Barra de navegação -->
+                <div class="navbar">
+                    <div class="logo">
+                        <img src="/assets/img/logosemfundo3.png" alt="Angel Cosméticos">
+                    </div>
+
+                    <nav>
+                        <!-- Menu de navegação -->
+                        <ul id="MenuItens">
+                            <li><a href="/index.html" title="Início">Início</a></li>
+                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
+                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                        </ul>
+                    </nav>
+                    <a href="/assets/html/carrinho.html">
+                        <img src="/assets/img/carrinho.png" alt="Carrinho de compras" width="30px" height="30px">
+                    </a>
+                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
-                <nav>
-                    <!-- Menu de navegação -->
-                    <ul id="MenuItens">
-                        <li><a href="/index.html" title="Início">Início</a></li>
-                        <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                        <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                        <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
-                        <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                        <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                    </ul>
-                </nav>
-                <a href="/assets/html/carrinho.html">
-                    <img src="/assets/img/carrinho.png" alt="Carrinho de compras" width="30px" height="30px">
-                </a>
-                <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
-            </div>
+                <!-- Conteúdo principal do banner -->
+                <div class="linha">
+                    <div class="col-2">
+                        <section class="call-to-action">
+                            <h1>Transforme Sua Beleza com <span> a Angel Cosméticos</span>!</h1>
+                            <p>
+                                Descubra o poder dos produtos Mary Kay, uma linha criada para realçar sua beleza natural
+                                e oferecer os cuidados que você merece. Qualidade, sofisticação e resultados incríveis
+                                esperam por você!
+                            </p>
+                            <br>
+                            <a href="https://loja.marykay.com.br/?utm_source=site-corp&utm_medium=referral&utm_campaign=site-corp_referral_botao-comprar_compre-online"
+                            target="_blank" class="btn">Saiba mais sobre Mary kay &#8594;</a>
+                        </section>
 
-            <!-- Conteúdo principal do banner -->
-            <div class="linha">
-                <div class="col-2">
-                    <section class="call-to-action">
-                        <h1>Transforme Sua Beleza com <span> a Angel Cosméticos</span>!</h1>
-                        <p>
-                            Descubra o poder dos produtos Mary Kay, uma linha criada para realçar sua beleza natural
-                            e oferecer os cuidados que você merece. Qualidade, sofisticação e resultados incríveis
-                            esperam por você!
-                        </p>
+                    </div>
+
+                    <div class="col-2">
+                        <img src="/assets/img/grasicombaton.png" alt="Angel Cosmeticos Banner">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de categorias -->
+        <div class="categorias">
+            <div class="corpo-categorias">
+                <div class="linha">
+                    <div class="col-3">
+                        <h3 class="cuidados">Sua Maquiagem</h3>
                         <br>
-                        <a href="https://www.marykay.com.br/" class="btn">Saiba mais sobre Mary kay &#8594;</a>
-                    </section>
+                        <img src="/assets/img/categoria-1-1.jpg" alt="Categoria 1" class="cuidados-img">
+                    </div>
 
-                </div>
+                    <div class="col-3">
+                        <h3 class="cuidados">Sua Moda</h3>
+                        <br>
+                        <img src="/assets/img/categoria-3-3.jpg" alt="Categoria 2" class="cuidados-img">
+                    </div>
 
-                <div class="col-2">
-                    <img src="/assets/img/grasicombaton.png" alt="Angel Cosmeticos Banner">
+                    <div class="col-3">
+                        <h3><a href="/assets/pdf/Cartilha Skincare_17x22cm - SETEMBRO 2024 - WEB - 04 SET 2024.pdf" target="_blank" class="cuidados">Seu cuidados com a pele</a></h3>
+
+                        <br>
+                        <img src="/assets/img/categoria-3-3-1.jpg" alt="Angel Cosmeticos Cuidado com a pele" class="cuidados-img">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Seção de categorias -->
-    <div class="categorias">
+        <!-- Seção de Produtos em Destaque -->
         <div class="corpo-categorias">
+            <h2 class="titulo">Produtos em Destaque</h2>
+
             <div class="linha">
-                <div class="col-3">
-                    <h3 class="cuidados">Sua Maquiagem</h3>
-                    <br>
-                    <img  src="/assets/img/categoria-1-1.jpg"  alt="Categoria 1" class="cuidados-img">
-                </div>
+                <div class="col-4">
 
-                <div class="col-3">
-                    <h3 class="cuidados">Sua Moda</h3>
-                    <br>
-                    <img  src="/assets/img/categoria-3-3.jpg" alt="Categoria 2" class="cuidados-img">
-                </div>
-
-                <div class="col-3">
-                    <h3 class="cuidados">Seu cuidados com a pele</h3>
-                    <br>
-                    <img  src="/assets/img/categoria-3-3-1.jpg" alt="Categoria 3" class="cuidados-img">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seção de Produtos em Destaque -->
-    <div class="corpo-categorias">
-        <h2 class="titulo">Produtos em Destaque</h2>
-
-        <div class="linha">
-            <div class="col-4">
-
-                <a href="/assets/html/ver-produtos.html" title="AngelCosmeticos">
-                    <img src="/assets/img/produto-1.jpg" alt="Produto 1">
-                </a>
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$110,00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
-                    <img src="/assets/img/produto-2.jpg" alt="Produto 2">
-                </a>
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$150,00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
-                    <img src="/assets/img/produto-3.jpg" alt="Produto 3">
-                </a>
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$90,00</p>
-            </div>
-
-            <div class="col-4">
-                <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
-                    <img src="/assets/img/produto-4.jpg" alt="Produto 4">
-                </a>
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$120,00</p>
-            </div>
-        </div>
-
-        <h2 class="titulo">Novos Produtos</h2>
-
-        <div class="linha">
-            <div class="col-4">
-                <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
-                    <img src="/assets/img/produto-5.jpg" alt="Produto 5">
-                </a>
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$110,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-6.jpg" alt="Produto 6">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$140,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-7.jpg" alt="Produto 7">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$130,00</p>
-            </div>
-
-            <div class="col-4">
-                <img src="/assets/img/produto-8.jpg" alt="Produto 8">
-                <h4>Valor Produtos</h4>
-                <div class="classificacao">
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                    <ion-icon name="star"></ion-icon>
-                </div>
-                <p>R$200,00</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seção de Ofertas -->
-    <div class="ofertas">
-        <div class="corpo-categorias">
-            <div class="linha">
-                <div class="col-2">
-                    <img src="/assets/img/produto-16-Photoroom.png" alt="Oferta Especial" class="ofertas-img">
-                </div>
-                <div class="col-2">
-                    <p>Produto exclusivo</p>
-                    <h1>Angel Cosméticos Produtos!</h1>
-                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo laboriosam blanditiis
-                        illum, maxime, omnis aliquam nulla ab saepe perspiciatis vel suscipit modi non alias quidem, at
-                        laudantium autem ducimus nostrum!</small>
-                    <br><br><a href="/assets/html/produtos.html" class="btn">Comprar Agora &#8594;</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Seção de Depoimentos -->
-    <div class="depoimentos">
-        <div class="corpo-categorias">
-            <div class="linha">
-                <div class="col-3">
-                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur nesciunt delectus ducimus
-                        non qui laboriosam impedit minima illo, excepturi deserunt sit et minus repellat ullam illum sed
-                        quos perferendis labore.</p>
+                    <a href="/assets/html/ver-produtos.html" title="AngelCosmeticos">
+                        <img src="/assets/img/produto-1.jpg" alt="Produto 1">
+                    </a>
+                    <h4>Valor Produtos</h4>
                     <div class="classificacao">
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
@@ -271,15 +131,14 @@
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                     </div>
-                    <img src="/assets/img/cliente-1.png" alt="Cliente 1">
-                    <h3>Grasiely Machado</h3>
+                    <p>R$110,00</p>
                 </div>
 
-                <div class="col-3">
-                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nesciunt magni et sed odio
-                        fugiat, nisi asperiores! Cumque eaque consectetur molestiae sapiente atque, error voluptatum
-                        sint culpa dignissimos temporibus perspiciatis.</p>
+                <div class="col-4">
+                    <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
+                        <img src="/assets/img/produto-2.jpg" alt="Produto 2">
+                    </a>
+                    <h4>Valor Produtos</h4>
                     <div class="classificacao">
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
@@ -287,15 +146,14 @@
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                     </div>
-                    <img src="/assets/img/cliente-2.png" alt="Cliente 2">
-                    <h3>Mario Oliveira</h3>
+                    <p>R$150,00</p>
                 </div>
 
-                <div class="col-3">
-                    <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus iste laboriosam dolore
-                        inventore qui, tempore aliquam obcaecati consequuntur sit fuga ratione vero quisquam
-                        necessitatibus ducimus odit hic magnam aspernatur.</p>
+                <div class="col-4">
+                    <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
+                        <img src="/assets/img/produto-3.jpg" alt="Produto 3">
+                    </a>
+                    <h4>Valor Produtos</h4>
                     <div class="classificacao">
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
@@ -303,33 +161,183 @@
                         <ion-icon name="star"></ion-icon>
                         <ion-icon name="star"></ion-icon>
                     </div>
-                    <img src="/assets/img/cliente-3.png" alt="Cliente 3">
-                    <h3>Ana Costa</h3>
+                    <p>R$90,00</p>
+                </div>
+
+                <div class="col-4">
+                    <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
+                        <img src="/assets/img/produto-4.jpg" alt="Produto 4">
+                    </a>
+                    <h4>Valor Produtos</h4>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <p>R$120,00</p>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="marcas">
-        <div class="corpo-categorias">
+
+            <h2 class="titulo">Novos Produtos</h2>
+
             <div class="linha">
-                <div class="col-5">
-                    <img src="/assets/img/marca-1.png" alt="marca-1">
+                <div class="col-4">
+                    <a href="/assets/html/ver-produtos.html" title="Angel Cosmeticos">
+                        <img src="/assets/img/produto-5.jpg" alt="Produto 5">
+                    </a>
+                    <h4>Valor Produtos</h4>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <p>R$110,00</p>
                 </div>
-                <div class="col-5">
-                    <img src="/assets/img/marca-2.png" alt="marca-2">
+
+                <div class="col-4">
+                    <img src="/assets/img/produto-6.jpg" alt="Produto 6">
+                    <h4>Valor Produtos</h4>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <p>R$140,00</p>
                 </div>
-                <div class="col-5">
-                    <img src="/assets/img/marca-3.png" alt="marca-3">
+
+                <div class="col-4">
+                    <img src="/assets/img/produto-7.jpg" alt="Produto 7">
+                    <h4>Valor Produtos</h4>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <p>R$130,00</p>
                 </div>
-                <div class="col-5">
-                    <img src="/assets/img/marca-4.png" alt="marca-4">
-                </div>
-                <div class="col-5">
-                    <img src="/assets/img/marca-5.png" alt="marca-5">
+
+                <div class="col-4">
+                    <img src="/assets/img/produto-8.jpg" alt="Produto 8">
+                    <h4>Valor Produtos</h4>
+                    <div class="classificacao">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                    </div>
+                    <p>R$200,00</p>
                 </div>
             </div>
         </div>
-    </div>
+
+        <!-- Seção de Ofertas -->
+        <div class="ofertas">
+            <div class="corpo-categorias">
+                <div class="linha">
+                    <div class="col-2">
+                        <img src="/assets/img/produto-16-Photoroom.png" alt="Oferta Especial" class="ofertas-img">
+                    </div>
+                    <div class="col-2">
+                        <p>Produto exclusivo</p>
+                        <h1>Angel Cosméticos Produtos!</h1>
+                        <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Explicabo laboriosam blanditiis
+                            illum, maxime, omnis aliquam nulla ab saepe perspiciatis vel suscipit modi non alias quidem,
+                            at
+                            laudantium autem ducimus nostrum!</small>
+                        <br><br><a href="/assets/html/produtos.html" class="btn">Comprar Agora &#8594;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Seção de Depoimentos -->
+        <div class="depoimentos">
+            <div class="corpo-categorias">
+                <div class="linha">
+                    <div class="col-3">
+                        <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur nesciunt delectus
+                            ducimus
+                            non qui laboriosam impedit minima illo, excepturi deserunt sit et minus repellat ullam illum
+                            sed
+                            quos perferendis labore.</p>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <img src="/assets/img/cliente-1.png" alt="Cliente 1">
+                        <h3>Grasiely Machado</h3>
+                    </div>
+
+                    <div class="col-3">
+                        <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit nesciunt magni et sed
+                            odio
+                            fugiat, nisi asperiores! Cumque eaque consectetur molestiae sapiente atque, error voluptatum
+                            sint culpa dignissimos temporibus perspiciatis.</p>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <img src="/assets/img/cliente-2.png" alt="Cliente 2">
+                        <h3>Mario Oliveira</h3>
+                    </div>
+
+                    <div class="col-3">
+                        <ion-icon name="ribbon" class="depoimentos-icone"></ion-icon>
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ex doloribus iste laboriosam dolore
+                            inventore qui, tempore aliquam obcaecati consequuntur sit fuga ratione vero quisquam
+                            necessitatibus ducimus odit hic magnam aspernatur.</p>
+                        <div class="classificacao">
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                            <ion-icon name="star"></ion-icon>
+                        </div>
+                        <img src="/assets/img/cliente-3.png" alt="Cliente 3">
+                        <h3>Ana Costa</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="marcas">
+            <div class="corpo-categorias">
+                <div class="linha">
+                    <div class="col-5">
+                        <img src="/assets/img/marca-1.png" alt="marca-1">
+                    </div>
+                    <div class="col-5">
+                        <img src="/assets/img/marca-2.png" alt="marca-2">
+                    </div>
+                    <div class="col-5">
+                        <img src="/assets/img/marca-3.png" alt="marca-3">
+                    </div>
+                    <div class="col-5">
+                        <img src="/assets/img/marca-4.png" alt="marca-4">
+                    </div>
+                    <div class="col-5">
+                        <img src="/assets/img/marca-5.png" alt="marca-5">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <!-- Rodapé -->
     <footer class="rodape">
         <div class="container">
@@ -354,10 +362,12 @@
                 <div class="rodape-col-3">
                     <h3>Mais Informações</h3>
                     <ul>
+                        <li>Política de Privacidade</li>
+                        <li>Onde Nos Encontrar</li>
                         <li>Cupons</li>
                         <li>Blog</li>
-                        <li>Política de Privacidade</li>
-                        <li>Contatos</li>
+                        <li ><a  href="/assets/html/contato.html" class="contato">Contatos</a ></li>
+
                     </ul>
                 </div>
 
@@ -365,7 +375,7 @@
                     <h3>Redes Sociais:</h3>
                     <ul>
                         <li><a href="#"><ion-icon name="logo-facebook"></ion-icon></a></li>
-                        <li><a href="#"><ion-icon name="logo-instagram"></ion-icon></a></li>
+                        <li><a href="https://instagram.com/angel.cosmeticos.grasi?igsh=NWswbW02YWs1dzZr"><ion-icon name="logo-instagram"></ion-icon></a></li>
                         <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
                         <li><a href="#"><ion-icon name="logo-youtube"></ion-icon></a></li>
                     </ul>

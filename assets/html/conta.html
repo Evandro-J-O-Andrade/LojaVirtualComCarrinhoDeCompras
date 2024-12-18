@@ -20,8 +20,8 @@
     <meta name="author" content="Grasiely da Silva Machado">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Android -->
-        <link rel="icon" sizes="192x192" href="android-icon.png">
+    <!-- Android -->
+    <link rel="icon" sizes="192x192" href="android-icon.png">
     <link rel="icon" href="favicon.png" type="image/jpeg">
     <link rel="icon" href="/assets/img/ChamdaSite.jpeg" alt="Angel Cosmeticos" type="image/x-icon">
     <title>Angel Cosméticos | Consultora Grasiely Machado MK</title>
@@ -36,122 +36,127 @@
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
-    <!-- Banner principal da página -->
-    <div class="banner">
-        <div class="novoMenu">
-            <div class="container">
+    <main>
+        <!-- Banner principal da página -->
+        <div class="banner">
+            <div class="novoMenu">
+                <div class="container">
 
-                <!-- Barra de navegação -->
-                <div class="navbar">
-                    <div class="logo">
-                        <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
-                    </div>
-
-                    <nav>
-                        <!-- Menu de navegação -->
-                        <ul id="MenuItens">
-                            <li><a href="/index.html" title="Início">Início</a></li>
-                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
-                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                        </ul>
-                    </nav>
-                    <a href="carrinho.html">
-                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                    </a>
-                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
-                </div>
-
-                <!-- Conteúdo principal do banner -->
-
-            </div>
-        </div>
-
-    </div>
-
-
-
-
-
-
-    <!-- Seção de categorias -->
-
-
-    <div class="minha-conta">
-        <div class="container">
-            <div class="linha">
-                <div class="col-2">
-                    <img src="/assets/img/logosemfundobaner.png" alt="" width="100%">
-                </div>
-
-                <div class="col-2">
-                    <div class="container-cadastro">
-                        <div class="formulario-2">
-                            <!-- Botões Entrar e Cadastro -->
-                            <div class="btn-form-2">
-                                <span id="btnEntrar" class="btn-entrar" onclick="Entrar()">Entrar</span>
-                                <span id="btnCadastro" class="btn-cadastro" onclick="Cadastro()">Cadastro</span>
-                                <hr id="Indicador">
-                            </div>
-
-                            <form action="/assets/php/login.php" method="post" id="EntrarPainel">
-                                <input type="email" name="email_login" id="email_login" placeholder="E-mail de acesso"
-                                    required>
-                                <input type="password" name="senha_login" id="senha_login"
-                                    placeholder="Digite sua senha!" required>
-                                <button type="submit" name="senEntrar" class="btn">Entrar</button>
-                                <div class="esqueceu">
-                                    <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu sua
-                                        senha?</button>
-                                </div>
-                            </form>
-
-
-
-                     <form action="/assets/php/cadastrar_usuario.php" method="post"         id="CadastroSite"
-                                style="display: none;">
-                                <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
-                                <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
-
-                                <div class="senha-container">
-                                    <input type="password" name="senha" id="senhaCad" placeholder="Digite sua senha!"
-                                        required>
-                                    <span id="toggleSenha" class="icone"
-                                        onclick="alternarVisibilidadeSenha()">👁️</span>
-                                </div>
-
-                                <div class="senha-container">
-                                    <input type="password" name="confirmaSenha" id="confirmaSenha"
-                                        placeholder="Confirme sua senha!" required>
-                                    <span id="toggleConfirmaSenha" class="icone"
-                                        onclick="alternarVisibilidadeConfirmaSenha()">👁️</span>
-                                </div>
-
-                                <span id="erroSenha" style="display: none; color: red;">As senhas não coincidem!</span>
-                                <span id="sucessoMensagem" style="display: none; color: green;"></span>
-
-                                <button type="submit" name="senCad" class="btn">Cadastre-se</button>
-                            </form>
-
-
-                            <!-- Formulário de Recuperação -->
-                            <form action="/assets/php/recuperar_senha.php" method="post" id="RecuperarSenha"
-                                style="display: none;">
-                                <input type="email" name="emailRecuperar" id="emailRecuperar"
-                                    placeholder="Digite seu e-mail para recuperação">
-                                <button type="submit" name="senRecuperar" class="btn">Enviar Recuperação
-
-                                </button>
-                            </form>
+                    <!-- Barra de navegação -->
+                    <div class="navbar">
+                        <div class="logo">
+                            <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
                         </div>
+
+                        <nav>
+                            <!-- Menu de navegação -->
+                            <ul id="MenuItens">
+                                <li><a href="/index.html" title="Início">Início</a></li>
+                                <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                                <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                                <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
+                                <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                                <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                            </ul>
+                        </nav>
+                        <a href="carrinho.html">
+                            <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                        </a>
+                        <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                     </div>
+
+                    <!-- Conteúdo principal do banner -->
 
                 </div>
             </div>
+
         </div>
-    </div>
+
+
+
+
+
+
+        <!-- Seção de categorias -->
+
+
+        <div class="minha-conta">
+            <div class="container">
+                <div class="linha">
+                    <div class="col-2">
+                        <img src="/assets/img/logosemfundobaner.png" alt="" width="100%">
+                    </div>
+
+                    <div class="col-2">
+                        <div class="container-cadastro">
+                            <div class="formulario-2">
+                                <!-- Botões Entrar e Cadastro -->
+                                <div class="btn-form-2">
+                                    <span id="btnEntrar" class="btn-entrar" onclick="Entrar()">Entrar</span>
+                                    <span id="btnCadastro" class="btn-cadastro" onclick="Cadastro()">Cadastro</span>
+                                    <hr id="Indicador">
+                                </div>
+
+                                <form action="/assets/php/login.php" method="post" id="EntrarPainel">
+                                    <input type="email" name="email_login" id="email_login"
+                                        placeholder="E-mail de acesso" required>
+                                    <input type="password" name="senha_login" id="senha_login"
+                                        placeholder="Digite sua senha!" required>
+                                    <button type="submit" name="senEntrar" class="btn">Entrar</button>
+                                    <div class="esqueceu">
+                                        <button type="button" class="esqueceu-senha" onclick="RecuperarSenha()">Esqueceu
+                                            sua
+                                            senha?</button>
+                                    </div>
+                                </form>
+
+
+
+                                <form action="/assets/php/cadastrar_usuario.php" method="post" id="CadastroSite"
+                                    style="display: none;">
+                                    <input type="text" name="nome" id="nome" placeholder="Nome completo" required>
+                                    <input type="email" name="email" id="email" placeholder="E-mail de acesso" required>
+
+                                    <div class="senha-container">
+                                        <input type="password" name="senha" id="senhaCad"
+                                            placeholder="Digite sua senha!" required>
+                                        <span id="toggleSenha" class="icone"
+                                            onclick="alternarVisibilidadeSenha()">👁️</span>
+                                    </div>
+
+                                    <div class="senha-container">
+                                        <input type="password" name="confirmaSenha" id="confirmaSenha"
+                                            placeholder="Confirme sua senha!" required>
+                                        <span id="toggleConfirmaSenha" class="icone"
+                                            onclick="alternarVisibilidadeConfirmaSenha()">👁️</span>
+                                    </div>
+
+                                    <span id="erroSenha" style="display: none; color: red;">As senhas não
+                                        coincidem!</span>
+                                    <span id="sucessoMensagem" style="display: none; color: green;"></span>
+
+                                    <button type="submit" name="senCad" class="btn">Cadastre-se</button>
+                                </form>
+
+
+                                <!-- Formulário de Recuperação -->
+                                <form action="/assets/php/recuperar_senha.php" method="post" id="RecuperarSenha"
+                                    style="display: none;">
+                                    <input type="email" name="emailRecuperar" id="emailRecuperar"
+                                        placeholder="Digite seu e-mail para recuperação">
+                                    <button type="submit" name="senRecuperar" class="btn">Enviar Recuperação
+
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
     <!-- Rodapé -->
     <footer class="rodape">
         <div class="container">

@@ -1,0 +1,272 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-padrao: #ff523b;
+    --cor-padrao-hover: #f3b2e5;
+    --cor-fonte: #fff;
+    --cor-fonte-p: #555;
+    --cor-btn: #563434;
+    --cor-btn-hover: #15ff00;
+    --cor-btn-fonte: #000;
+    --cor-fonte-corpo: #555;
+    --cor-fonte-corpo-leve: #777;
+}
+
+body {
+
+    font-family: 'Poppins', sans-serif;
+}
+
+.banner {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    width: 100%;
+    /* Garante que o banner ocupe toda a largura da tela */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+    min-height: 100px;
+    /* Define uma altura mínima para o banner */
+    display: flex;
+    /* Para centralizar conteúdo, se necessário */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+}
+
+/*Ate aqui esta tudo ok com resposibilidade de sites*/
+.banner .linha {
+
+    margin-top: 70px;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%;
+    /* Certifique-se de que a largura não exceda 100% */
+    margin: 0 auto;
+    /* Centraliza o container */
+    padding: 0 15px;
+    /* Adiciona padding, se necessário */
+    box-sizing: border-box;
+    /* Inclui o padding na largura total */
+
+}
+
+
+/* Cabeçalho */
+header {
+    text-align: center;
+    background:radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    color:var(--cor-btn-fonte);
+    padding: 200px 10px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+}
+
+/* Área principal */
+main.catalogos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Cada item do catálogo */
+.catalogo-item {
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    text-align: center;
+    padding: 15px;
+    transition: transform 0.2s;
+    
+    margin-bottom: 20px;
+}
+
+.catalogo-item:hover {
+    transform: translateY(-5px);
+}
+
+/* Ícones dos catálogos */
+.catalogo-item img {
+    width: 250px;   /* Define a largura fixa */
+    height: 250px;  /* Define a altura fixa */
+    object-fit: cover; /* Faz a imagem preencher o espaço sem distorcer */
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+
+.catalogo-item a {
+    text-decoration: none;
+    color: #333;
+}
+
+.catalogo-item a:hover {
+    color: #6c63ff;
+}
+
+.download-btn {
+    background-color: #4CAF50; /* Cor verde */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.download-btn:hover {
+    background-color: #45a049; /* Cor mais escura no hover */
+}
+/* Estilos gerais para a mensagem de download */
+.download-message {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Inicialmente escondida */
+    text-align: center;
+    z-index: 9999;
+}
+
+/* Estilos do botão de cancelar */
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Responsivo para telas menores que 350px */
+@media only screen and (min-width: 350px) {
+    .download-message {
+        width: 80%;
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .cancel-btn {
+        font-size: 10px;
+        padding: 4px 8px;
+    }
+}
+
+/* Responsivo para telas maiores que 1920px (Full HD) */
+@media only screen and (min-width: 1921px) {
+    .download-message {
+        width: 30%;
+        font-size: 16px;
+        padding: 20px;
+    }
+
+    .cancel-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+}
+@media only screen and (min-width: 75px) and (max-width: 768px) {
+    .download-message {
+        width: 90%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        font-size: 14px;  /* Fonte um pouco maior para facilitar a leitura */
+        padding: 12px;  /* Reduzido um pouco o padding */
+    }
+
+    .cancel-btn {
+        font-size: 12px;  /* Tamanho da fonte reduzido para melhor adequação */
+        padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
+    }
+
+    .catalogo-item {
+        margin-bottom: 15px;  /* Adiciona um espaçamento inferior para separação */
+    }
+
+    /* Ajusta a largura das imagens dentro dos itens do catálogo */
+    .catalogo-item img {
+        width: 100%;  /* A imagem ocupa 100% da largura do container */
+        height: auto;  /* Mantém a proporção da imagem */
+    }
+}
+
+
+/* Estilos gerais para a mensagem de download */
+.download-message {
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #f0f0f0;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Inicialmente escondida */
+    text-align: center;
+    z-index: 9999;
+}
+
+/* Estilos do botão de cancelar */
+.cancel-btn {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin-top: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
+}
+
+/* Responsivo para telas entre 75px e 768px */
+@media only screen and (min-width: 75px) and (max-width: 768px) {
+    .download-message {
+        width: 90%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        font-size: 14px;  /* Fonte um pouco maior para facilitar a leitura */
+        padding: 12px;  /* Reduzido um pouco o padding */
+    }
+
+    .cancel-btn {
+        font-size: 12px;  /* Tamanho da fonte reduzido para melhor adequação */
+        padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
+    }
+
+    .catalogo-item {
+        margin-bottom: 15px;  /* Adiciona um espaçamento inferior para separação */
+    }
+
+    /* Ajusta a largura das imagens dentro dos itens do catálogo */
+    .catalogo-item img {
+        width: 100%;  /* A imagem ocupa 100% da largura do container */
+        height: auto;  /* Mantém a proporção da imagem */
+    }
+}

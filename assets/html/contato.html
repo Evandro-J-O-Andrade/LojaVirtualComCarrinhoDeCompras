@@ -20,8 +20,8 @@
     <meta name="author" content="Grasiely da Silva Machado">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Android -->
-        <link rel="icon" sizes="192x192" href="android-icon.png">
+    <!-- Android -->
+    <link rel="icon" sizes="192x192" href="android-icon.png">
     <link rel="icon" href="favicon.png" type="image/jpeg">
     <link rel="icon" href="/assets/img/ChamdaSite.jpeg" alt="Angel Cosmeticos" type="image/x-icon">
     <title>Angel Cosméticos | Consultora Grasiely Machado MK</title>
@@ -31,92 +31,95 @@
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
     <meta name="google-site-verification" content="p9mFqdpGS6hjijzxKVGAhM-3X6lsOLqhGLST1TZE1OI" />
 </head>
+
 <body>
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
-    <!-- Banner principal da página -->
-    <div class="banner">
-        <div class="novoMenu">
-            <div class="container">
+    <main>
+        <!-- Banner principal da página -->
+        <div class="banner">
+            <div class="novoMenu">
+                <div class="container">
 
-                <!-- Barra de navegação -->
-                <div class="navbar">
-                    <div class="logo">
-                        <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+                    <!-- Barra de navegação -->
+                    <div class="navbar">
+                        <div class="logo">
+                            <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosméticos">
+                        </div>
+
+                        <nav>
+                            <!-- Menu de navegação -->
+                            <ul id="MenuItens">
+                                <li><a href="/index.html" title="Início">Início</a></li>
+                                <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
+                                <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
+                                <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
+                                <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
+                                <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                            </ul>
+                        </nav>
+
+                        <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                        <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                     </div>
 
-                    <nav>
-                        <!-- Menu de navegação -->
-                        <ul id="MenuItens">
-                            <li><a href="/index.html" title="Início">Início</a></li>
-                            <li><a href="/assets/html/produtos.html" title="Produtos">Produtos</a></li>
-                            <li> <a href="/assets/html/eventos.html" title="Eventos">Eventos</a></li>
-                            <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
-                            <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
-                            <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
-                        </ul>
-                    </nav>
+                    <!-- Conteúdo principal do banner -->
 
-                    <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
-                    <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
-                <!-- Conteúdo principal do banner -->
+            </div><!-- Seção de categorias -->
+        </div>
 
-            </div>
+        <!--Inicio do Contato -->
 
-        </div><!-- Seção de categorias -->
-    </div>
+        <div class="minha-conta">
+            <div class="container">
+                <div class="linha">
+                    <div class="col-2">
+                        <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosmeticos Grasiely Machado MK "
+                            width="100%">
+                    </div>
 
-    <!--Inicio do Contato -->
+                    <div class="col-2">
+                        <div class="container-cadastro">
 
-    <div class="minha-conta">
-        <div class="container">
-            <div class="linha">
-                <div class="col-2">
-                    <img src="/assets/img/logosemfundobaner.png" alt="Angel Cosmeticos Grasiely Machado MK " width="100%">
-                </div>
+                            <div class="formulario">
 
-                <div class="col-2">
-                    <div class="container-cadastro">
-
-                        <div class="formulario">
-
-                            <div class="btn-form">
-                                <span>Entre em Contato</span>
-                                <form id="formContato">
-                                    <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
-                                    <input type="email" id="email" name="email" placeholder="Seu E-mail" required>
-                                    <textarea id="mensagem" name="mensagem" placeholder="Sua Mensagem"
-                                        required></textarea>
-                                    <button type="submit" class="bth-form">Enviar</button>
-                                </form>
-                                <!-- Div para o WhatsApp -->
-                                <div class="whatsapp">
-                                    <a href="https://wa.me/5511963205776?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20produtos!"
-                                        target="_blank">
-                                        <button id="btn-whatsapp" type="submit" class="btn-whatsapp">
-                                            <ion-icon name="logo-whatsapp"></ion-icon>
-                                            Fale conosco no WhatsApp
-                                        </button>
-                                    </a>
+                                <div class="btn-form">
+                                    <span>Entre em Contato</span>
+                                    <form id="formContato">
+                                        <input type="text" id="nome" name="nome" placeholder="Seu Nome" required>
+                                        <input type="email" id="email" name="email" placeholder="Seu E-mail" required>
+                                        <textarea id="mensagem" name="mensagem" placeholder="Sua Mensagem"
+                                            required></textarea>
+                                        <button type="submit" class="bth-form">Enviar</button>
+                                    </form>
+                                    <!-- Div para o WhatsApp -->
+                                    <div class="whatsapp">
+                                        <a href="https://wa.me/5511963205776?text=Olá,%20gostaria%20de%20saber%20mais%20sobre%20os%20produtos!"
+                                            target="_blank">
+                                            <button id="btn-whatsapp" type="submit" class="btn-whatsapp">
+                                                <ion-icon name="logo-whatsapp"></ion-icon>
+                                                Fale conosco no WhatsApp
+                                            </button>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
+
+                </div>
 
             </div>
 
         </div>
 
-    </div>
 
-
-    <!--Fim  do Contato -->
-
+        <!--Fim  do Contato -->
+    </main>
     <!-- Rodapé -->
     <footer class="rodape">
         <div class="container">
@@ -171,18 +174,18 @@
     <button id="btnTopo" title="Voltar ao Topo">
         <ion-icon name="arrow-up-outline"></ion-icon>
     </button>
-<!-- Scripts -->
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
-<script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
-<script src="/assets/js/app.js" defer> </script>
-<script src="/assets/js/responsive.js" defer></script>
-<script src="/assets/js/btntop.js" defer></script>
-<script src="/assets/js/modal.js" defer></script>
-<script src="/assets/js/cadastro.js" defer></script>
-<script src="/assets/js/contato.js" defer></script>
-<script src="/assets/js/login.js" defer></script>
+    <!-- Scripts -->
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/ionicons@5.5.2/dist/ionicons.js"></script>
+    <script src="https://code.ionicframework.com/ionicons/2.0.1/js/ionicons.min.js"></script>
+    <script src="/assets/js/app.js" defer> </script>
+    <script src="/assets/js/responsive.js" defer></script>
+    <script src="/assets/js/btntop.js" defer></script>
+    <script src="/assets/js/modal.js" defer></script>
+    <script src="/assets/js/cadastro.js" defer></script>
+    <script src="/assets/js/contato.js" defer></script>
+    <script src="/assets/js/login.js" defer></script>
 </body>
 
 </html>
