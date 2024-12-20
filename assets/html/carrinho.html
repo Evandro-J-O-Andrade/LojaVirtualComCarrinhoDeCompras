@@ -91,11 +91,83 @@
                     <!-- Produtos serão adicionados dinamicamente aqui -->
                 </tbody>
 
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-1.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 1</p>
+                            <small>Valor unitário: R$ 550.00</small>
+                            <br><a href="javascript:void(0);" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="550">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-2.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 2</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="javascript:void(0);" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 3</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="javascript:void(0);" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 4</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="javascript:void(0);" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <img src="/assets/img/carrinho-3.jpg" alt="Carrinho de compra">
+                        <div>
+                            <p>Produto 5</p>
+                            <small>Valor unitário: R$ 300.00</small>
+                            <br><a href="javascript:void(0);" title="Remover" onclick="removerProduto(this)">Remover</a>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" class="quantidade" value="0" min="0" data-preco="300">
+                    </td>
+                    <td class="subtotal">R$ 0.00</td>
+                </tr>
+                <tbody id="tabelaCarrinho">
+                    <!-- Os produtos serão adicionados dinamicamente aqui -->
+                </tbody>
             </table>
-            <div class="linha" id="produtos-lista">
-                <!-- Os produtos serão renderizados dinamicamente aqui -->
-            </div>
-            <div id="lista-produtos"></div>
 
             <div class="valor-total">
                 <table>
@@ -129,7 +201,10 @@
             <div id="carrinho-vazio">
                 <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
             </div>
-           
+            <div class="linha" id="produtos-lista">
+                <!-- Os produtos serão renderizados dinamicamente aqui -->
+            </div>
+
         </div>
     </main>
     <!--Fim do corpo de codigo Carrinho -->
@@ -225,7 +300,4 @@
     <script src="/assets/js/login.js" defer></script>
     <script src="/assets/js/carrinho.js" defer></script>
     <script src="/assets/js/carrinho_evento_adicionar_produto.js" defer></script>
-    <script src="/assets/js/carrinhoproduto.js" defer></script>
-    
-    
 </html>
