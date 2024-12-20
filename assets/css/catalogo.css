@@ -138,6 +138,7 @@ main.catalogos {
 }
 /* Estilos gerais para a mensagem de download */
 .download-message {
+    width: 20%;
     position: fixed;
     top: 20%;
     left: 50%;
@@ -149,6 +150,7 @@ main.catalogos {
     display: none; /* Inicialmente escondida */
     text-align: center;
     z-index: 9999;
+    
 }
 
 /* Estilos do botão de cancelar */
@@ -165,37 +167,35 @@ main.catalogos {
 .cancel-btn:hover {
     background-color: #c0392b;
 }
-
-/* Responsivo para telas menores que 350px */
-@media only screen and (min-width: 350px) {
+/* Responsivo para telas entre 75px e 768px */
+@media only screen and (min-width: 75px) and (max-width: 785px) {
     .download-message {
-        width: 80%;
-        font-size: 12px;
-        padding: 10px;
+        width: 35%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        font-size: 12px;  /* Fonte um pouco maior para facilitar a leitura */
+        padding: 12px;  /* Reduzido um pouco o padding */
     }
 
     .cancel-btn {
-        font-size: 10px;
-        padding: 4px 8px;
+        font-size: 12px;  /* Tamanho da fonte reduzido para melhor adequação */
+        padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
+    }
+
+    .catalogo-item {
+        margin-bottom: 15px;  /* Adiciona um espaçamento inferior para separação */
+    }
+
+    /* Ajusta a largura das imagens dentro dos itens do catálogo */
+    .catalogo-item img {
+        width: 100%;  /* A imagem ocupa 100% da largura do container */
+        height: auto;  /* Mantém a proporção da imagem */
     }
 }
+
 
 /* Responsivo para telas maiores que 1920px (Full HD) */
 @media only screen and (min-width: 1921px) {
     .download-message {
-        width: 30%;
-        font-size: 16px;
-        padding: 20px;
-    }
-
-    .cancel-btn {
-        font-size: 14px;
-        padding: 8px 12px;
-    }
-}
-@media only screen and (min-width: 75px) and (max-width: 768px) {
-    .download-message {
-        width: 90%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        width: 35%;  /* Largura da mensagem ajustada para dispositivos móveis */
         font-size: 14px;  /* Fonte um pouco maior para facilitar a leitura */
         padding: 12px;  /* Reduzido um pouco o padding */
     }
@@ -205,53 +205,14 @@ main.catalogos {
         padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
     }
 
-    .catalogo-item {
-        margin-bottom: 15px;  /* Adiciona um espaçamento inferior para separação */
-    }
-
-    /* Ajusta a largura das imagens dentro dos itens do catálogo */
-    .catalogo-item img {
-        width: 100%;  /* A imagem ocupa 100% da largura do container */
-        height: auto;  /* Mantém a proporção da imagem */
-    }
-}
-
-
-/* Estilos gerais para a mensagem de download */
-.download-message {
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f0f0f0;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    display: none; /* Inicialmente escondida */
-    text-align: center;
-    z-index: 9999;
-}
-
-/* Estilos do botão de cancelar */
-.cancel-btn {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    margin-top: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.cancel-btn:hover {
-    background-color: #c0392b;
+   
 }
 
 /* Responsivo para telas entre 75px e 768px */
-@media only screen and (min-width: 75px) and (max-width: 768px) {
+@media only screen and (min-width: 901px) and (max-width:1773px) {
     .download-message {
-        width: 90%;  /* Largura da mensagem ajustada para dispositivos móveis */
-        font-size: 14px;  /* Fonte um pouco maior para facilitar a leitura */
+        width: 35%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        font-size: 12px;  /* Fonte um pouco maior para facilitar a leitura */
         padding: 12px;  /* Reduzido um pouco o padding */
     }
 
@@ -259,14 +220,18 @@ main.catalogos {
         font-size: 12px;  /* Tamanho da fonte reduzido para melhor adequação */
         padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
     }
+    
+}
 
-    .catalogo-item {
-        margin-bottom: 15px;  /* Adiciona um espaçamento inferior para separação */
+@media only screen and (min-width: 786px) and (max-width: 900px) {
+    .download-message {
+        width: 35%;  /* Largura da mensagem ajustada para dispositivos móveis */
+        font-size: 12px;  /* Fonte um pouco maior para facilitar a leitura */
+        padding: 12px;  /* Reduzido um pouco o padding */
     }
 
-    /* Ajusta a largura das imagens dentro dos itens do catálogo */
-    .catalogo-item img {
-        width: 100%;  /* A imagem ocupa 100% da largura do container */
-        height: auto;  /* Mantém a proporção da imagem */
+    .cancel-btn {
+        font-size: 12px;  /* Tamanho da fonte reduzido para melhor adequação */
+        padding: 6px 12px;  /* Ajuste no padding para ficar proporcional */
     }
 }

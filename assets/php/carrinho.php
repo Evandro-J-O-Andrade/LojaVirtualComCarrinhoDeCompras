@@ -27,7 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$produto_nome, $preco, $quantidade, $usuario_id]);
     }
+ // Inserir dados no banco de dados
+ $stmt = $pdo->prepare("INSERT INTO carrinho (produto_id, quantidade, usuario_id) VALUES (?, ?, ?)");
+ $stmt->execute([$produtoId, $quantidade, $usuarioId]);
 
+ echo "Produto adicionado ao carrinho!";
     echo json_encode(["status" => "sucesso"]);
 }
 ?>

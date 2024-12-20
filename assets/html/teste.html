@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <script src="carrinho.js" defer></script>
+</head>
+<body>
+    <h1>Carrinho de Compras</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaCarrinho">
+            <!-- Os produtos serão adicionados dinamicamente aqui -->
+        </tbody>
+    </table>
+
+    <p><strong>Subtotal: </strong><span id="subtotal-geral">R$ 0,00</span></p>
+    <p><strong>Frete: </strong><span id="frete">R$ 0,00</span></p>
+    <p><strong>Total: </strong><span id="total-geral">R$ 0,00</span></p>
+
+    <label for="cep">Digite o CEP para calcular o frete:</label>
+    <input type="text" id="cep" placeholder="Digite o CEP">
+    <button onclick="calcularFrete()">Calcular Frete</button>
+</body>
+
+
+<script src="/assets/js/produtos.js" defer></script>
+    <script src="/assets/js/carrinho.js" defer></script>
+    <script src="/assets/js/carrinhopoduto.js"></script>
+    <script src="../js/listaDeProduto.js"></script>
+</html>
