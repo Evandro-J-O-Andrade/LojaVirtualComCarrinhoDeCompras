@@ -52,44 +52,7 @@ document.addEventListener("DOMContentLoaded", () => {
         totalGeral.textContent = `R$ ${(subtotal + freteValor).toFixed(2)}`;
     }
 
-    // Função para calcular o frete com base no CEP
-    function calcularFrete() {
-        const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
-
-        if (cep.length !== 8) {
-            alert("Por favor, insira um CEP válido!");
-            return 0;
-        }
-
-        // Faz uma consulta na API ViaCEP
-        fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.erro) {
-                    alert("CEP inválido! Tente novamente.");
-                    return 0;
-                }
-
-                // Exibe o endereço (opcional)
-                enderecoSpan.textContent = `Endereço: ${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
-
-                // Calcula o frete com base na região (exemplo simplificado)
-                if (data.uf === "SP" || data.uf === "RJ") {
-                    frete = 20.00; // Sudeste
-                } else if (data.uf === "RS" || data.uf === "SC" || data.uf === "PR") {
-                    frete = 30.00; // Sul
-                } else {
-                    frete = 50.00; // Demais regiões
-                }
-
-                // Atualiza o valor do frete e o total
-                return frete;
-            })
-            .catch((error) => {
-                alert("Erro ao buscar o CEP. Tente novamente.");
-                console.error("Erro na API ViaCEP:", error);
-            });
-    }
+   
 
     // Atualiza os valores ao alterar a quantidade
     tabelaCarrinho.addEventListener("change", function (e) {
@@ -141,4 +104,25 @@ function atualizarTotais() {
         const total = subtotal + frete;
         document.getElementById("total-geral").textContent = `R$ ${total.toFixed(2)}`;
     }
+}
+// Função para adicionar o produto ao carrinho
+function adicionarCarrinho(id) {
+    // Captura os dados do produto do HTML com base no ID
+    let produtoElemento = document.getElementById(id);
+    let nome = produtoElemento.querySelector(".produto-nome").innerText;
+    let preco = parseFloat(produtoElemento.querySelector(".produto-preco").innerText);
+
+    // Manipula o carrinho no localStorage
+    let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+    let produto = carrinho.find(item => item.id === id);
+
+    if (produto) {
+        produto.quantidade += 1; // Se o produto já estiver no carrinho, aumenta a quantidade
+    } else {
+        carrinho.push({ id, nome, preco, quantidade: 1 });
+    }
+
+    // Atualiza o localStorage com o novo carrinho
+    localStorage.setItem("carrinho", JSON.stringify(carrinho));
+    alert(`${nome} adicionado ao carrinho!`);
 }

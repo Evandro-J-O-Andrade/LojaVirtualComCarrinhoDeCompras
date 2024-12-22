@@ -1,0 +1,24 @@
+.carrinho-container {
+    position: relative;
+    display: inline-block;
+}
+
+#iconeCarrinho {
+    width: 50px; /* Ajuste o tamanho conforme necessário */
+    height: auto;
+}
+
+.alerta {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: red;
+    color: white;
+    font-size: 18px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bold;
+    display: none; /* Inicialmente, a exclamação estará oculta */
+}

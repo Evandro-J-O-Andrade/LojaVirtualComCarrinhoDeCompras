@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
     <link rel="stylesheet" href="/assets/css/cadastro.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/carrinho.css">
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
     <meta name="google-site-verification" content="p9mFqdpGS6hjijzxKVGAhM-3X6lsOLqhGLST1TZE1OI" />
 </head>
@@ -59,12 +60,16 @@
                             <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
                         </ul>
                     </nav>
-                    <a href="/assets/html/carrinho.html" title="compras">
+                    <a href="/assets/html/carrinho.html" title="compras" id="linkCarrinho">
                         <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
+                        <!-- Elemento para a exclamação -->
+                        <span id="exclamacaoCarrinho" style="display: none; position: absolute; top: -5px; right: -5px; color: red; font-size: 20px;">!</span>
                     </a>
+                    
                     <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
+                
                 <!-- Conteúdo principal do banner -->
 
             </div>
@@ -161,8 +166,10 @@
     <script src="/assets/js/cadastro.js" defer></script>
     <script src="/assets/js/contato.js" defer></script>
     <script src="/assets/js/login.js" defer></script>
-    <script src="/assets/js/produtos.js" defer></script>
-   
+    <script src="/assets/js/produtos.js"></script>
+    <script src="/assets/js/listaDeProduto.js"></script>
+    <script src="/assets/js/carrinho_evento_adicionar_produto.js"></script>
+  
 
     
 </body>

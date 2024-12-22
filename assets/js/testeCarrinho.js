@@ -63,9 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Função para adicionar o produto ao carrinho
     function adicionarAoCarrinho(id, nome, preco) {
-        // Exibir o alerta de sucesso
-        alert(`${nome} foi adicionado ao carrinho!`);
-
         // Obter o carrinho do localStorage ou criar um novo array
         let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
@@ -83,13 +80,16 @@ document.addEventListener("DOMContentLoaded", function() {
         // Salvar o carrinho atualizado no localStorage
         localStorage.setItem('carrinho', JSON.stringify(carrinho));
 
-        // Mostrar a exclamação no carrinho por 3 segundos
-        const alertaCarrinho = document.getElementById("alertaCarrinho");
-        alertaCarrinho.style.display = "inline"; // Mostrar a exclamação
-
+        // Exibir mensagem de sucesso
+        const mensagem = document.createElement('span');
+        mensagem.innerText = `${nome} foi adicionado ao carrinho!`;
+        mensagem.style.color = 'green';
+        document.body.appendChild(mensagem);
+        
+        // Redirecionar para a página do carrinho após 2 segundos
         setTimeout(function() {
-            alertaCarrinho.style.display = "none"; // Esconder após 3 segundos
-        }, 3000);
+            window.location.href = '../html/carrinho.html';
+        }, 2000);
     }
 
     // Função para atualizar a tabela do carrinho

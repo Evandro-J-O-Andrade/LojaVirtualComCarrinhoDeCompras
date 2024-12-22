@@ -6,14 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const enderecoSpan = document.getElementById("endereco");
     let frete = 0; // Valor inicial do frete
 
-    
     // Atualiza os subtotais e totais
     function atualizarTotais() {
         let subtotal = 0;
 
         // Para cada produto, calcular o subtotal
         document.querySelectorAll(".quantidade").forEach((input) => {
-            
             const preco = parseFloat(input.dataset.preco); // Preço do produto
             const quantidade = parseInt(input.value) || 0; // Quantidade do produto (ou 0 se não houver valor)
 
@@ -44,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
 
         if (cep.length !== 8) {
-            alert("Por favor, insira um CEP válido!");
+           
             return;
         }
 
@@ -134,4 +132,3 @@ function atualizarTotais() {
         document.getElementById("total-geral").textContent = `R$ ${total.toFixed(2)}`;
     }
 }
-
