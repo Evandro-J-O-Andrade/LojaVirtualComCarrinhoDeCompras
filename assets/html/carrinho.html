@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
     <link rel="stylesheet" href="/assets/css/cadastro.css">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/carrinho.css">
     <link rel="stylesheet" href="https://unpkg.com/ionicons@7.1.0/dist/css/ionicons.min.css">
     <meta name="google-site-verification" content="p9mFqdpGS6hjijzxKVGAhM-3X6lsOLqhGLST1TZE1OI" />
 </head>
@@ -121,14 +122,22 @@
                 <button onclick="calcularFrete()">Calcular Frete</button>
 
             </div>
+            <div id="resumo">
+                <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
+                <p id="frete" style="color: green; display: none;">Frete Grátis aplicado!</p>
+            </div>
+            <button id="btnFinalizar" onclick="finalizarCompra()">Finalizar Compra</button>
             <br>
+            <div class="cep-input">
+           
+            
             <div id="carrinho-vazio">
                 <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
             </div>
             <div class="linha" id="produtos-lista">
                 <!-- Os produtos serão renderizados dinamicamente aqui -->
             </div>
-
+</div>
         </div>
     </main>
     <!--Fim do corpo de codigo Carrinho -->
@@ -224,7 +233,7 @@
     <script src="/assets/js/login.js" defer></script>
     <script src="/assets/js/carrinho.js" defer></script>
     <script src="/assets/js/carrinho_evento_adicionar_produto.js"></script>
-    <script src="/assets/js/carrinho.js"></script>
     <script src="/assets/js/carrinhopoduto.js"></script>
     <script src="../js/listaDeProduto.js"></script>
+    <!--<script src="/assets/js/finalizarcompra.js"></script>-->
 </html>

@@ -4,7 +4,8 @@
 }
 
 #iconeCarrinho {
-    width: 50px; /* Ajuste o tamanho conforme necessário */
+    width: 50px;
+    /* Ajuste o tamanho conforme necessário */
     height: auto;
 }
 
@@ -20,5 +21,50 @@
     text-align: center;
     border-radius: 50%;
     font-weight: bold;
-    display: none; /* Inicialmente, a exclamação estará oculta */
+    display: none;
+    /* Inicialmente, a exclamação estará oculta */
+}
+
+
+
+#carrinho {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#lista-produtos {
+    list-style: none;
+    padding: 0;
+}
+
+#lista-produtos li {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+#resumo {
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: end;
+}
+
+#btnFinalizar {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #fff;
+    background: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#btnFinalizar:hover {
+    background: #218838;
 }
