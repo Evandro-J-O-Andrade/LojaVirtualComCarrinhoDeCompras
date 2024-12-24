@@ -38,7 +38,46 @@ document.addEventListener("DOMContentLoaded", () => {
         resumoTotal.textContent = (subtotal + frete).toFixed(2); // Atualiza o total no resumo
     }
 
-    // Calcula o frete com base no CEP usando a API ViaCEP
+    // Verifica se o carrinho tem produtos
+    function carrinhoVazio() {
+        let produtosNoCarrinho = 0;
+
+        document.querySelectorAll(".quantidade").forEach((input) => {
+            const quantidade = parseInt(input.value) || 0;
+            produtosNoCarrinho += quantidade;
+        });
+
+        return produtosNoCarrinho === 0; // Retorna true se o carrinho está vazio
+    }
+
+    // Gerar PDF
+    function gerarPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const tabela = document.getElementById("tabela-resumo");
+        doc.autoTable({ html: tabela });
+        doc.save("resumo-compra.pdf");
+    }
+
+    // Gerar Excel
+    function gerarExcel() {
+        const tabela = document.getElementById("tabela-resumo");
+        const wb = XLSX.utils.table_to_book(tabela);
+        XLSX.writeFile(wb, "resumo-compra.xlsx");
+    }
+
+    // Imprimir o resumo
+    function imprimirCompra() {
+        const conteudoImprimir = document.getElementById("resumo-compra").outerHTML;
+        const janela = window.open('', '', 'height=500, width=800');
+        janela.document.write('<html><head><title>Nota Fiscal</title></head><body>');
+        janela.document.write(conteudoImprimir);
+        janela.document.write('</body></html>');
+        janela.document.close();
+        janela.print();
+    }
+
+    // Funções de CEP e Finalização da Compra
     function calcularFrete() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
 
@@ -74,29 +113,29 @@ document.addEventListener("DOMContentLoaded", () => {
                 console.error("Erro na API ViaCEP:", error);
             });
 
-            cepInput.addEventListener("input", () => {
-                if (cepInput.value.trim() === "") {
-                    enderecoSpan.textContent = ""; // Limpa o endereço
-                    frete = 0; // Zera o frete
-                    freteSpan.textContent = `R$ 0,00`; // Atualiza o valor do frete
-                    atualizarTotais(); // Atualiza os totais
-                }
-            });
+        cepInput.addEventListener("input", () => {
+            if (cepInput.value.trim() === "") {
+                enderecoSpan.textContent = ""; // Limpa o endereço
+                frete = 0; // Zera o frete
+                freteSpan.textContent = `R$ 0,00`; // Atualiza o valor do frete
+                atualizarTotais(); // Atualiza os totais
+            }
+        });
     }
 
-    // Finalizar Compra
     function finalizarCompra() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
         const total = parseFloat(totalGeral.textContent.replace("R$", "").trim()) || 0;
 
-        // Verifica se o CEP foi preenchido
-        if (cep.length !== 8) {
-            alert("Por favor, insira um CEP válido antes de finalizar a compra.");
+        // Verifica se o carrinho está vazio
+        if (carrinhoVazio()) {
+            alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
             return;
         }
 
-        if (total === 0) {
-            alert("Seu carrinho está vazio.");
+        // Verifica se o CEP foi preenchido
+        if (cep.length !== 8) {
+            alert("Por favor, insira um CEP válido antes de finalizar a compra.");
             return;
         }
 
@@ -106,6 +145,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Expõe funções ao escopo global para uso no HTML
     window.calcularFrete = calcularFrete;
     window.finalizarCompra = finalizarCompra;
+    window.gerarPDF = gerarPDF;
+    window.gerarExcel = gerarExcel;
+    window.imprimirCompra = imprimirCompra;
 
     // Atualiza os valores iniciais
     atualizarTotais();

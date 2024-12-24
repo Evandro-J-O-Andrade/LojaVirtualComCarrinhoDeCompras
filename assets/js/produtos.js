@@ -112,6 +112,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    function atualizarQuantidadeCarrinho() {
+        const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        let quantidadeTotal = 0;
+        carrinho.forEach(item => quantidadeTotal += item.quantidade);
+        document.getElementById('quantidade-carrinho').textContent = quantidadeTotal;
+    }
+    
+    // Chame esta função dentro de adicionarAoCarrinho e atualizarCarrinho
+    
     // Chamar a função de renderização ao carregar a página
     renderizarProdutos(produtos);
 

@@ -1,41 +1,129 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho de Compras</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="/assets/css/catalogo.css">
-    <link rel="stylesheet" href="/assets/css/cadastro.css">
-    
-<body>
-    <h1>Carrinho de Compras</h1>
+    <!-- jsPDF para gerar PDFs -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-    <table>
+<!-- XLSX para exportar para Excel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <title>Checkout</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resumo da Compra</h1>
+    <table id="tabelaCheckout">
         <thead>
             <tr>
-                <th>Produto</th>
+                <th>Descrição</th>
+                <th>Preço Unitário</th>
                 <th>Quantidade</th>
                 <th>Subtotal</th>
             </tr>
         </thead>
-        <tbody id="tabelaCarrinho">
-            <!-- Os produtos serão adicionados dinamicamente aqui -->
+        <tbody id="tabelaCheckout">
+
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">Total</td>
+                <td id="total"></td>
+            </tr>
+        </tfoot>
+    </table>
+    <p>Nota Fiscal: <span id="notaFiscal"></span></p>
+    <button id="gerarPDF">Gerar PDF</button>
+    <button id="gerarBoleto">Gerar Boleto</button>
+    <button id="pagarPix">Pagar com Pix</button>
+
+    <table id="tabelacarrinho">
+        <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Preço Unitário</th>
+                <th>Quantidade</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Linhas geradas dinamicamente -->
         </tbody>
     </table>
+    <tbody id="tabelaCarrinho">
+        <!-- Os produtos serão adicionados dinamicamente aqui -->
+    </tbody>
+</body>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const dadosCompra = JSON.parse(localStorage.getItem("dadosCompra"));
 
-    
+        if (!dadosCompra) {
+            alert("Nenhuma compra encontrada.");
+            return;
+        }
 
-    
-    <p><strong>Subtotal: </strong><span id="subtotal-geral">R$ 0,00</span></p>
-    <p><strong>Frete: </strong><span id="frete">R$ 0,00</span></p>
-    <p><strong>Total: </strong><span id="total-geral">R$ 0,00</span></p>
+        // Preenche a tabela
+        const tbody = document.querySelector("#tabelaCheckout tbody");
+        dadosCompra.produtos.forEach((produto) => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+                <td>${produto.descricao}</td>
+                <td>R$ ${produto.precoUnitario.toFixed(2)}</td>
+                <td>${produto.quantidade}</td>
+                <td>R$ ${produto.subtotal.toFixed(2)}</td>
+            `;
+            tbody.appendChild(row);
+        });
 
-    
+        // Exibe total e nota fiscal
+        document.getElementById("total").textContent = `R$ ${dadosCompra.total.toFixed(2)}`;
+        document.getElementById("notaFiscal").textContent = dadosCompra.notaFiscal;
 
+        // Funções de ação
+        document.getElementById("gerarPDF").addEventListener("click", () => {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.text("Resumo da Compra", 10, 10);
+            doc.text(`Nota Fiscal: ${dadosCompra.notaFiscal}`, 10, 20);
+            let posY = 30;
+            dadosCompra.produtos.forEach((produto) => {
+                doc.text(
+                    `${produto.descricao} - R$ ${produto.precoUnitario.toFixed(2)} x ${produto.quantidade} = R$ ${produto.subtotal.toFixed(2)}`,
+                    10,
+                    posY
+                );
+                posY += 10;
+            });
+            doc.text(`Total: R$ ${dadosCompra.total.toFixed(2)}`, 10, posY + 10);
+            doc.save("resumo-compra.pdf");
+        });
 
-<script src="/assets/js/produtos.js"></script>
-    <script src="/assets/js/carrinho.js"></script>
-    <script src="/assets/js/carrinhopoduto.js"></script>
-    <script src="../js/listaDeProduto.js"></script>
+        document.getElementById("gerarBoleto").addEventListener("click", () => {
+            alert("Aqui você implementaria a lógica para gerar um boleto.");
+        });
+
+        document.getElementById("pagarPix").addEventListener("click", () => {
+            alert("Aqui você implementaria a integração com a API do Mercado Pago.");
+        });
+    });
+</script>
 </html>
