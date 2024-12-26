@@ -6,8 +6,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const enderecoSpan = document.getElementById("endereco");
     const resumoTotal = document.getElementById("total"); // Referência ao span de total no resumo
     let frete = 0; // Valor inicial do frete
-    const limiteFreteGratis = 300; // Valor para aplicar frete grátis
+    const limiteFreteGratis = 350; // Valor para aplicar frete grátis
 
+    let isCepValidated = false; // Estado para controle da validação do CEP
+    let isPurchaseFinalized = false; // Estado para controle da finalização da compra
+
+    
     // Atualiza os subtotais e totais
     function atualizarTotais() {
         let subtotal = 0;
@@ -59,24 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         doc.save("resumo-compra.pdf");
     }
 
-    // Gerar Excel
-    function gerarExcel() {
-        const tabela = document.getElementById("tabela-resumo");
-        const wb = XLSX.utils.table_to_book(tabela);
-        XLSX.writeFile(wb, "resumo-compra.xlsx");
-    }
-
-    // Imprimir o resumo
-    function imprimirCompra() {
-        const conteudoImprimir = document.getElementById("resumo-compra").outerHTML;
-        const janela = window.open('', '', 'height=500, width=800');
-        janela.document.write('<html><head><title>Nota Fiscal</title></head><body>');
-        janela.document.write(conteudoImprimir);
-        janela.document.write('</body></html>');
-        janela.document.close();
-        janela.print();
-    }
-
     // Funções de CEP e Finalização da Compra
     function calcularFrete() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
@@ -91,6 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then((data) => {
                 if (data.erro) {
                     alert("CEP inválido! Tente novamente.");
+                    isCepValidated = false;
                     return;
                 }
 
@@ -106,24 +93,22 @@ document.addEventListener("DOMContentLoaded", () => {
                     frete = 50.00; // Demais regiões
                 }
 
+                isCepValidated = true; // Marca o CEP como validado
                 atualizarTotais(); // Atualiza os valores totais com o novo frete
             })
             .catch((error) => {
                 alert("Erro ao buscar o CEP. Tente novamente.");
                 console.error("Erro na API ViaCEP:", error);
+                isCepValidated = false;
             });
-
-        cepInput.addEventListener("input", () => {
-            if (cepInput.value.trim() === "") {
-                enderecoSpan.textContent = ""; // Limpa o endereço
-                frete = 0; // Zera o frete
-                freteSpan.textContent = `R$ 0,00`; // Atualiza o valor do frete
-                atualizarTotais(); // Atualiza os totais
-            }
-        });
     }
 
     function finalizarCompra() {
+        if (isPurchaseFinalized) {
+            alert("A compra já foi finalizada. Inicie uma nova compra para continuar.");
+            return;
+        }
+
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
         const total = parseFloat(totalGeral.textContent.replace("R$", "").trim()) || 0;
 
@@ -133,27 +118,34 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        // Verifica se o CEP foi preenchido
-        if (cep.length !== 8) {
-            alert("Por favor, insira um CEP válido antes de finalizar a compra.");
+        // Verifica se o CEP foi validado
+        if (!isCepValidated) {
+            alert("Por favor, insira e valide um CEP antes de finalizar a compra.");
             return;
         }
 
+        isPurchaseFinalized = true; // Marca a compra como finalizada
+        gerarPDF(); // Gera o PDF da nota fiscal
         alert(`Compra finalizada com sucesso! Total: R$ ${total.toFixed(2)}`);
     }
+
+    // Bloqueia alterações nas quantidades após finalização
+    document.querySelectorAll(".quantidade").forEach((input) => {
+        input.addEventListener("input", () => {
+            if (isPurchaseFinalized) {
+                alert("A compra já foi finalizada. Inicie uma nova compra para modificar.");
+                input.value = input.defaultValue; // Reverte para o valor original
+                return;
+            }
+            atualizarTotais();
+        });
+    });
 
     // Expõe funções ao escopo global para uso no HTML
     window.calcularFrete = calcularFrete;
     window.finalizarCompra = finalizarCompra;
     window.gerarPDF = gerarPDF;
-    window.gerarExcel = gerarExcel;
-    window.imprimirCompra = imprimirCompra;
 
     // Atualiza os valores iniciais
     atualizarTotais();
-
-    // Atualiza os valores ao alterar a quantidade
-    document.querySelectorAll(".quantidade").forEach((input) => {
-        input.addEventListener("input", atualizarTotais);
-    });
 });

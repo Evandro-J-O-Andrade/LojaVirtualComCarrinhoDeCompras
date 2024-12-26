@@ -88,7 +88,7 @@
                     <th>Quantidade</th>
                     <th>Valor</th>
                 </tr>
-               
+
                 <tbody id="tabelaCarrinho">
                     <!-- Os produtos serão adicionados dinamicamente aqui -->
                 </tbody>
@@ -109,9 +109,9 @@
                         <td id="total-geral">R$ 0.00</td>
                     </tr>
                 </table>
-               
+
             </div>
- 
+
 
 
 
@@ -128,18 +128,18 @@
                 <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
                 <p id="frete" style="color: green; display: none;">Frete Grátis aplicado!</p>
             </div>
-             <button id="btnFinalizar" onclick="finalizarCompra()">Finalizar Compra</button>
+            <button id="btnFinalizar" onclick="finalizarCompra()">Finalizar Compra</button>
             <br>
             <div class="cep-input">
-           
-            
-            <div id="carrinho-vazio">
-                <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
+
+
+                <div id="carrinho-vazio">
+                    <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
+                </div>
+                <div class="linha" id="produtos-lista">
+                    <!-- Os produtos serão renderizados dinamicamente aqui -->
+                </div>
             </div>
-            <div class="linha" id="produtos-lista">
-                <!-- Os produtos serão renderizados dinamicamente aqui -->
-            </div>
-</div>
         </div>
     </main>
     <!--Fim do corpo de codigo Carrinho -->
@@ -237,4 +237,8 @@
     <script src="/assets/js/carrinho_evento_adicionar_produto.js"></script>
     <script src="/assets/js/carrinhopoduto.js"></script>
     <script src="../js/listaDeProduto.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+
 </html>
