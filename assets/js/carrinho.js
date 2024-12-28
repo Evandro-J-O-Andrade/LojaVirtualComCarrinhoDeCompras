@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let isCepValidated = false; // Estado para controle da validação do CEP
     let isPurchaseFinalized = false; // Estado para controle da finalização da compra
 
-    
     // Atualiza os subtotais e totais
     function atualizarTotais() {
         let subtotal = 0;
@@ -127,8 +126,10 @@ document.addEventListener("DOMContentLoaded", () => {
         isPurchaseFinalized = true; // Marca a compra como finalizada
         gerarPDF(); // Gera o PDF da nota fiscal
         alert(`Compra finalizada com sucesso! Total: R$ ${total.toFixed(2)}`);
+        
     }
 
+    
     // Bloqueia alterações nas quantidades após finalização
     document.querySelectorAll(".quantidade").forEach((input) => {
         input.addEventListener("input", () => {

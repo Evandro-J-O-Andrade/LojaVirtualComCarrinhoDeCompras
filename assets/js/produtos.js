@@ -1,13 +1,26 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     const produtos = [
-        { id: 1, nome: "Produto 1", imagem: "/assets/img/produto-1.jpg", preco: 110, classificacao: 5 },
-        { id: 2, nome: "Produto 2", imagem: "/assets/img/produto-2.jpg", preco: 150, classificacao: 4 },
-        { id: 3, nome: "Produto 3", imagem: "/assets/img/produto-3.jpg", preco: 90, classificacao: 3 },
-        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-4.jpg", preco: 120, classificacao: 5 },
-        { id: 5, nome: "Produto 5", imagem: "/assets/img/produto-5.jpg", preco: 110, classificacao: 4 },
-        { id: 6, nome: "Produto 6", imagem: "/assets/img/produto-6.jpg", preco: 140, classificacao: 5 },
-        { id: 7, nome: "Produto 7", imagem: "/assets/img/produto-7.jpg", preco: 130, classificacao: 4 },
-        { id: 8, nome: "Produto 8", imagem: "/assets/img/produto-8.jpg", preco: 115, classificacao: 3 }
+        { id: 1, nome: "Produto 1 em Promoção", imagem: "/assets/img/produto-1.jpg", preco: 110, classificacao: 5, promocao: true, novidade: false, estoque: 10 },
+        { id: 2, nome: "Produto 2", imagem: "/assets/img/produto-2.jpg", preco: 150, classificacao: 4, promocao: false, novidade: true, estoque: 0 },
+        { id: 3, nome: "Produto 3", imagem: "/assets/img/produto-3.jpg", preco: 90, classificacao: 3, promocao: false, novidade: false, estoque: 5 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-4.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 1, nome: "Produto 1", imagem: "/assets/img/produto-5.jpg", preco: 110, classificacao: 5, promocao: true, novidade: false, estoque: 10 },
+        { id: 2, nome: "Produto 2", imagem: "/assets/img/produto-6.jpg", preco: 150, classificacao: 4, promocao: false, novidade: true, estoque: 0 },
+        { id: 3, nome: "Produto 3", imagem: "/assets/img/produto-7.jpg", preco: 90, classificacao: 3, promocao: false, novidade: false, estoque: 5 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-8.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 1, nome: "Produto 1", imagem: "/assets/img/produto-9.jpg", preco: 110, classificacao: 5, promocao: true, novidade: false, estoque: 10 },
+        { id: 2, nome: "Produto 2", imagem: "/assets/img/produto-10.jpg", preco: 150, classificacao: 4, promocao: false, novidade: true, estoque: 0 },
+        { id: 3, nome: "Produto 3", imagem: "/assets/img/produto-11.jpg", preco: 90, classificacao: 3, promocao: false, novidade: false, estoque: 5 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-12.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-13.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-14.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-15.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-16.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-17.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-18.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-19.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 4, nome: "Produto 4", imagem: "/assets/img/produto-23.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        // Adicione mais produtos conforme necessário...
     ];
 
     const produtosLista = document.getElementById("produtos-lista");
@@ -31,10 +44,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     <button type="button" class="btn">Adicionar ao Carrinho</button>
                 </form>
             `;
-            
+
             // Associar o evento de clique ao botão dentro do produto
             const btnAdicionar = produtoDiv.querySelector('button');
-            btnAdicionar.addEventListener('click', function(event) {
+            btnAdicionar.addEventListener('click', function (event) {
                 event.preventDefault(); // Impedir o envio do formulário
                 adicionarAoCarrinho(produto.id, produto.nome, produto.preco);
             });
@@ -49,17 +62,29 @@ document.addEventListener("DOMContentLoaded", function() {
         let produtosFiltrados = [...produtos];
 
         if (filtro === "mais-comprados") {
-            produtosFiltrados.sort((a, b) => b.preco - a.preco); // Exemplo, ordenando por preço
+            produtosFiltrados.sort((a, b) => b.preco - a.preco); // Exemplo: Ordenar por preço
         } else if (filtro === "mais-classificados") {
             produtosFiltrados.sort((a, b) => b.classificacao - a.classificacao);
         } else if (filtro === "menor-preco") {
             produtosFiltrados.sort((a, b) => a.preco - b.preco);
         } else if (filtro === "maior-preco") {
             produtosFiltrados.sort((a, b) => b.preco - a.preco);
-        }
+        } else if (filtro === "em-promocao") {
+            produtosFiltrados = produtosFiltrados.filter(produto => produto.promocao);
+        } else if (filtro === "novidade") {
+            produtosFiltrados = produtosFiltrados.filter(produto => produto.novidade);
+        } else if (filtro === "em-estoque") {
+            produtosFiltrados = produtosFiltrados.filter(produto => produto.estoque > 0);
 
+        } else if (filtro === "por-nome") {
+            produtosFiltrados.sort((a, b) => a.nome.localeCompare(b.nome)); // Ordenar por nome
+        } else if (filtro === "ordem-padrao") {
+            // Filtro padrão com ID
+            produtosFiltrados.sort((a, b) => a.id - b.id); // Ordena por ID ou qualquer outra lógica numérica
+        }
         renderizarProdutos(produtosFiltrados);
     }
+
 
     // Função para adicionar o produto ao carrinho
     function adicionarAoCarrinho(id, nome, preco) {
@@ -87,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const alertaCarrinho = document.getElementById("alertaCarrinho");
         alertaCarrinho.style.display = "inline"; // Mostrar a exclamação
 
-        setTimeout(function() {
+        setTimeout(function () {
             alertaCarrinho.style.display = "none"; // Esconder após 3 segundos
         }, 3000);
     }
@@ -118,14 +143,18 @@ document.addEventListener("DOMContentLoaded", function() {
         carrinho.forEach(item => quantidadeTotal += item.quantidade);
         document.getElementById('quantidade-carrinho').textContent = quantidadeTotal;
     }
-    
+
     // Chame esta função dentro de adicionarAoCarrinho e atualizarCarrinho
-    
+
     // Chamar a função de renderização ao carregar a página
     renderizarProdutos(produtos);
 
     // Atualizar os produtos ao mudar o filtro
-    filtroSelect.addEventListener("change", aplicarFiltro);
+    // filtroSelect.addEventListener("change", aplicarFiltro);
+    filtroSelect.addEventListener("change", function () {
+        produtosExibidos = 0; // Resetar contagem de produtos exibidos
+        aplicarFiltro();
+    });
 
     // Chamar a função para atualizar o carrinho quando a página carregar
     atualizarCarrinho();

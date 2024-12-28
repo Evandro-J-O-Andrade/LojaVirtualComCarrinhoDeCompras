@@ -63,13 +63,14 @@
                     <a href="/assets/html/carrinho.html" title="compras" id="linkCarrinho">
                         <img src="/assets/img/carrinho2.png" alt="Carrinho de compras" width="30px" height="30px">
                         <!-- Elemento para a exclamação -->
-                        <span id="exclamacaoCarrinho" style="display: none; position: absolute; top: -5px; right: -5px; color: red; font-size: 20px;">!</span>
+                        <span id="exclamacaoCarrinho"
+                            style="display: none; position: absolute; top: -5px; right: -5px; color: red; font-size: 20px;">!</span>
                     </a>
-                    
+
                     <img src="/assets/img/menu.png" alt="MenuItens" class="menu-celular" onclick="menucelular()">
                 </div>
 
-                
+
                 <!-- Conteúdo principal do banner -->
 
             </div>
@@ -85,20 +86,27 @@
                 <option value="mais-classificados">Mais Classificados</option>
                 <option value="menor-preco">Menor Preço</option>
                 <option value="maior-preco">Maior Preço</option>
+                <option value="em-promocao">Em Promoção</option>
+                <option value="novidade">Novidade</option>
+                <option value="em-estoque">Em Estoque</option>
+                <option value="por-nome">Nome do produto</option>
+                <option value="ordem-padrao">Inicio</option>
             </select>
         </div>
-    
+
         <div class="linha" id="produtos-lista">
             <div class="produto" data-id="1"></div>
             <!-- Os produtos serão renderizados dinamicamente aqui -->
         </div>
-
+        <div class="scroll-container">
+      
+        </div>
         <div id="lista-produtos"></div>
 
     </div>
+
+   
     
-
-
     </main>
     <!-- Rodapé -->
     <footer class="rodape">
@@ -169,9 +177,9 @@
     <script src="/assets/js/produtos.js"></script>
     <script src="/assets/js/listaDeProduto.js"></script>
     <script src="/assets/js/carrinho_evento_adicionar_produto.js"></script>
-  
 
-    
+
+
 </body>
 
 </html>
