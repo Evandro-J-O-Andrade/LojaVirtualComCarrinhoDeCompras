@@ -85,8 +85,8 @@
             <table>
                 <tr>
                     <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Valor</th>
+                    <th>Quantidade</th>                   
+                    <th>ValorTotal</th>
                 </tr>
 
                 <tbody id="tabelaCarrinho">
@@ -119,14 +119,15 @@
             <div class="cep-input">
                 <label for="cep">Informe seu CEP:</label>
                 <p id="endereco"></p> <!-- Mostra o endereço (opcional) -->
-                <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="9">
+                <input type="text" id="cep" placeholder="Digite seu CEP" maxlength="8">
 
                 <button onclick="calcularFrete()">Calcular Frete</button>
 
             </div>
+            
             <div id="resumo">
                 <p><strong>Total:</strong> R$ <span id="total">0.00</span></p>
-                <p id="frete" style="color: green; display: none;">Frete Grátis aplicado!</p>
+                <p id="frete" style="color: green; display: none;">Frete Grátis aplica!</p>
             </div>
             <button id="btnFinalizar" onclick="finalizarCompra()">Finalizar Compra</button>
             <br>
@@ -136,6 +137,10 @@
                 <div id="carrinho-vazio">
                     <a href="/assets/html/ver-produtos.html">Descrição do produto!</a>
                 </div>
+                <button id="btnGerarPDF" onclick="gerarPDF()">Gerar PDF</button>        
+                <button onclick="gerarNotaFiscalPDF()">Gerar Nota Fiscal</button>
+
+
                 <div class="linha" id="produtos-lista">
                     <!-- Os produtos serão renderizados dinamicamente aqui -->
                 </div>
@@ -237,8 +242,8 @@
     <script src="/assets/js/carrinho_evento_adicionar_produto.js"></script>
     <script src="/assets/js/carrinhopoduto.js"></script>
     <script src="../js/listaDeProduto.js"></script>
+    <script src="/assets/js/resumoCompraPdf.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
-
-
+    
 </html>

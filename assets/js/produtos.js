@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     // Função para adicionar o produto ao carrinho
-    function adicionarAoCarrinho(id, nome, preco) {
+    function adicionarAoCarrinho(id, nome, preco,) {
         // Exibir o alerta de sucesso
         alert(`${nome} foi adicionado ao carrinho!`);
 
