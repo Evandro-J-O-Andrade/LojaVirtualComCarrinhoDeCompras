@@ -59,62 +59,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return produtosNoCarrinho === 0; // Retorna true se o carrinho está vazio
     }
-
     function gerarPDF() {
-        // Capturando os dados da tabela
-        const tabelaCarrinho = document.querySelector("#tabelaCarrinho");
-        const linhas = tabelaCarrinho.querySelectorAll("tr");
-        const produtos = [];
-
-        // Loop para capturar os dados dos produtos
-        linhas.forEach((linha) => {
-            const colunas = linha.querySelectorAll("td");
-            if (colunas.length === 3) {
-                produtos.push([
-                    colunas[0].textContent.trim(), // Produto
-                    colunas[1].textContent.trim(), // Quantidade
-                    colunas[2].textContent.trim(), // Valor
-                ]);
-            }
-        });
-
-        // Capturando valores gerais
-        const subtotal = document.getElementById("subtotal-geral").textContent.trim();
-        const frete = document.getElementById("frete").textContent.trim();
-        const total = document.getElementById("total-geral").textContent.trim();
-        const resumoTotal = document.getElementById("total").textContent.trim();
-
-        // Criando o documento PDF
-        const { jsPDF } = window.jspdf;
-        const doc = new jsPDF();
-
-        // Adicionando o título
-        doc.setFontSize(16);
-        doc.text("Resumo do Carrinho de Compras", 105, 20, { align: "center" });
-
-        // Adicionando tabela com os produtos
-        doc.autoTable({
-            head: [["Produto", "Quantidade", "Valor"]],
-            body: produtos,
-            startY: 30,
-        });
-
-        // Adicionando informações de valores totais
-        const posY = doc.previousAutoTable.finalY + 10;
-        doc.setFontSize(12);
-        doc.text(`Sub-Total: ${subtotal}`, 14, posY);
-        doc.text(`Frete: ${frete}`, 14, posY + 7);
-        doc.text(`Total Geral: ${total}`, 14, posY + 14);
-
-        // Salvando o PDF
-        doc.save("Resumo-Carrinho.pdf");
-    } try {
-      
-    } catch (error) {
-        console.error("Erro ao gerar o PDF:", error);
-        alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
+        try {
+            // Capturando os dados da tabela
+            const tabelaCarrinho = document.querySelector("#tabelaCarrinho");
+            const linhas = tabelaCarrinho.querySelectorAll("tr");
+            const produtos = [];
+    
+            // Loop para capturar os dados dos produtos
+            linhas.forEach((linha) => {
+                const colunas = linha.querySelectorAll("td");
+                if (colunas.length === 3) {
+                    const nomeProduto = colunas[0].querySelector('p').textContent.trim(); // Nome do produto
+                    const quantidade = colunas[1].querySelector('input').value.trim(); // Quantidade
+                    const valorUnitario = colunas[1].querySelector('input').dataset.preco; // Valor unitário
+                    const subtotalProduto = (parseFloat(valorUnitario) * parseInt(quantidade)).toFixed(2); // Subtotal
+    
+                    produtos.push([
+                        nomeProduto,
+                        quantidade,
+                        `R$ ${parseFloat(valorUnitario).toFixed(2).replace('.', ',')}`, // Valor unitário
+                        `R$ ${subtotalProduto.replace('.', ',')}` // Subtotal
+                    ]);
+                }
+            });
+    
+            // Capturando valores gerais
+            const subtotal = document.getElementById("subtotal-geral").textContent.trim();
+            const frete = document.getElementById("frete").textContent.trim();
+            const total = document.getElementById("total-geral").textContent.trim();
+    
+            // Criando o documento PDF
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+    
+            // Adicionando o título
+            doc.setFontSize(16);
+            doc.text("Resumo do Carrinho de Compras", 105, 20, { align: "center" });
+    
+            // Texto de agradecimento (colocado logo abaixo do título)
+            doc.setFontSize(14);
+            doc.text("Angel Cosméticos agradece a sua preferencia por comprar conosco!.", 105, 30, { align: "center" });
+            doc.text("Sua compra será processada para o envio!!.", 105, 40, { align: "center" });
+    
+            // Adicionando a tabela de produtos ao PDF
+            doc.autoTable({
+                head: [["Descrição", "Quantidade", "Valor Unitário", "Total"]],
+                body: produtos,
+                startY: 45, // Ajuste para começar abaixo do texto de agradecimento
+                theme: "grid",
+                headStyles: { fillColor: [22, 160, 133] },
+                bodyStyles: { fontSize: 10 },
+            });
+    
+            // Adicionando informações de valores totais
+            const posY = doc.previousAutoTable.finalY + 10;
+            doc.setFontSize(12);
+            doc.text(`Sub-Total: ${subtotal}`, 14, posY);
+            doc.text(`Frete: ${frete}`, 14, posY + 7);
+            doc.text(`Total Geral: ${total}`, 14, posY + 14);
+    
+            // Salvando o PDF
+            doc.save("Resumo-Carrinho.pdf");
+        } catch (error) {
+            console.error("Erro ao gerar o PDF:", error);
+            alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
+        }
     }
-
+    
+    
+    
     // Funções de CEP e Finalização da Compra
     function calcularFrete() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
@@ -138,11 +152,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Calcula o frete com base na região
                 if (data.uf === "SP" || data.uf === "RJ") {
-                    frete = 20.00; // Sudeste
+                    frete = 30.00; // Sudeste
                 } else if (data.uf === "RS" || data.uf === "SC" || data.uf === "PR") {
-                    frete = 30.00; // Sul
+                    frete = 50.00; // Sul
                 } else {
-                    frete = 50.00; // Demais regiões
+                    frete = 70.00; // Demais regiões
                 }
 
                 isCepValidated = true; // Marca o CEP como validado
@@ -177,39 +191,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    
     function finalizarCompra() {
         if (isPurchaseFinalized) {
             alert("A compra já foi finalizada. Inicie uma nova compra para continuar.");
             return;
         }
-
+    
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
         const total = parseFloat(totalGeral.textContent.replace("R$", "").trim()) || 0;
-
+    
         // Verifica se o carrinho está vazio
         if (carrinhoVazio()) {
             alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
             return;
         }
-
+    
         // Verifica se o CEP foi validado
         if (!isCepValidated) {
             alert("Por favor, insira e valide um CEP antes de finalizar a compra.");
             return;
         }
-
-
-        isPurchaseFinalized = true; // Marca a compra como finalizada
-        gerarPDF(); // Gera o PDF da nota fiscal
+    
+        // Marca a compra como finalizada
+        isPurchaseFinalized = true;
         alert(`Compra finalizada com sucesso! Total: R$ ${total.toFixed(2)}`);
-
+    
+        // Exibe o botão de gerar PDF/Nota Fiscal após a finalização
+        document.getElementById("btnGerarPDF").style.display = "inline-block";  // Exibe o botão do PDF
+        document.getElementById("btnGerarNotaFiscal").style.display = "inline-block";  // Exibe o botão da Nota Fiscal
+    
         // Desabilita os campos de quantidade
         document.querySelectorAll(".quantidade").forEach((input) => {
             input.disabled = true; // Desabilita o campo
         });
+    
         mostrarMensagemFinalizada();
-
     }
+    
 
 
     // Atualiza quando o campo de CEP é limpo ou alterado

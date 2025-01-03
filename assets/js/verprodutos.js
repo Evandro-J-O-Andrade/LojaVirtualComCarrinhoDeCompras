@@ -1,5 +1,84 @@
-/*document.addEventListener("DOMContentLoaded", function () {
-    
+document.addEventListener("DOMContentLoaded", function () {
+    const produtos = [
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+    ];
 
     const container = document.querySelector(".corpo-categorias .linha");
 
@@ -132,4 +211,4 @@
     if (document.body.contains(document.getElementById('tabelaCarrinho'))) {
         exibirCarrinho();
     }
-});*/
+});

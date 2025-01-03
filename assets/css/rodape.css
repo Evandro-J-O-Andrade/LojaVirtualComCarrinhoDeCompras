@@ -1,0 +1,47 @@
+.texto-rodape {
+    font-size: 16px;
+    line-height: 1.8;
+    color: #f8f8f8; /* Cor suave para o texto */
+    text-align: center;
+    margin: 20px 0;
+    font-family: 'Arial', sans-serif; /* Fonte clássica e feminina */
+}
+
+.texto-rodape .destaque {
+    font-size: 18px;
+    font-weight: bold;
+    color: #d13d66; /* Cor chamativa e sofisticada */
+    text-transform: uppercase;
+}
+
+.texto-rodape strong {
+    color: #d13d66; /* Cor para realçar o nome da empresa */
+}
+
+.texto-rodape em {
+    font-style: italic;
+    color: #d13d66; /* Realce em itálico para destacar mensagens especiais */
+}
+
+.texto-rodape br {
+    margin-bottom: 10px;
+}
+
+/* Adicionando um toque sutil de sombra para o texto */
+.texto-rodape {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Em dispositivos móveis, o texto se ajusta para ficar mais compacto */
+@media (max-width: 768px) {
+    .texto-rodape {
+        font-size: 14px;
+        margin: 15px 10px;
+    }
+
+    .texto-rodape .destaque {
+        font-size: 16px;
+    }
+}
+
+

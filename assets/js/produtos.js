@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         setTimeout(function () {
             alertaCarrinho.style.display = "none"; // Esconder após 3 segundos
-        }, 3000);
+        }, 5000);
     }
 
     // Função para atualizar a tabela do carrinho
@@ -129,13 +129,15 @@ document.addEventListener("DOMContentLoaded", function () {
         carrinho.forEach(item => {
             const linha = document.createElement('tr');
             linha.innerHTML = `
-                <td>${item.nome}</td>
-                <td>R$${item.preco}</td>
-                <td>${item.quantidade}</td>
-            `;
+            <td>${item.nome}</td>
+            <td>${item.quantidade}</td>
+            <td>R$${item.unitario.toFixed(2)}</td>
+            <td>R$${(item.unitario * item.quantidade).toFixed(2)}</td>
+        `;
             tabelaCarrinho.appendChild(linha);
         });
     }
+
 
     function atualizarQuantidadeCarrinho() {
         const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];

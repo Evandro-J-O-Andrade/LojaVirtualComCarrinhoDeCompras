@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function calcularFrete() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
 
-        if (cep.length !== 8) {
+        if (cep.length !== 9) {
         
             return;
         }
@@ -60,11 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Calcula o frete com base na região (exemplo simplificado)
                 if (data.uf === "SP" || data.uf === "RJ") {
-                    frete = 20.00; // Sudeste
+                    frete = 30.00; // Sudeste
                 } else if (data.uf === "RS" || data.uf === "SC" || data.uf === "PR") {
-                    frete = 30.00; // Sul
+                    frete = 50.00; // Sul
                 } else {
-                    frete = 50.00; // Demais regiões
+                    frete = 70.00; // Demais regiões
                 }
 
                 // Atualiza o valor do frete e o total
