@@ -1,7 +1,9 @@
 <?php
-require 'conexao.php';
+// Incluindo a conexão com o banco de dados
+include_once 'conexao.php'; 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Captura dos dados do formulário
     $id_produto = $_POST['id_produto'];
     $quantidade = $_POST['quantidade'];
     $data_saida = date('Y-m-d H:i:s');
@@ -20,18 +22,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iis", $id_produto, $quantidade, $data_saida);
-        $stmt->execute();
+        
+        if ($stmt->execute()) {
+            // Atualizar estoque do produto
+            $sql_update = "UPDATE produtos SET quantidade_estoque = quantidade_estoque - ? WHERE id_produto = ?";
+            $stmt_update = $conn->prepare($sql_update);
+            $stmt_update->bind_param("ii", $quantidade, $id_produto);
+            $stmt_update->execute();
 
-        // Atualizar estoque do produto
-        $sql_update = "UPDATE produtos SET quantidade_estoque = quantidade_estoque - ? WHERE id_produto = ?";
-        $stmt_update = $conn->prepare($sql_update);
-        $stmt_update->bind_param("ii", $quantidade, $id_produto);
-        $stmt_update->execute();
-
-        echo "Saída registrada com sucesso!";
+            echo "Saída registrada com sucesso!";
+        } else {
+            echo "Erro ao registrar a saída de estoque: " . $stmt->error;
+        }
     } else {
         echo "Estoque insuficiente!";
     }
+
+    // Fechar as conexões
+    $stmt_check->close();
+    $stmt->close();
+    $stmt_update->close();
 }
 
 // Listar produtos para selecionar
@@ -44,7 +54,7 @@ $result_produtos = $conn->query($sql_produtos);
     <select name="id_produto" required>
         <option value="">Selecione o Produto</option>
         <?php while ($produto = $result_produtos->fetch_assoc()): ?>
-        <option value="<?= $produto['id_produto'] ?>"><?= $produto['nome_produto'] ?></option>
+        <option value="<?= htmlspecialchars($produto['id_produto']) ?>"><?= htmlspecialchars($produto['nome_produto']) ?></option>
         <?php endwhile; ?>
     </select>
     <input type="number" name="quantidade" placeholder="Quantidade" required>

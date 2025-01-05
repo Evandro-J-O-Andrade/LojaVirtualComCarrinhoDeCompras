@@ -1,5 +1,5 @@
 <?php
-require 'conexao.php';
+require 'conexao.php'; // Verifique se a conexão está sendo feita corretamente
 
 // Adicionar fornecedor
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -18,21 +18,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Prevenir injeção de SQL com prepared statements
         $sql = "INSERT INTO fornecedores (nome_fornecedor, cnpj, endereco_fornecedor, telefone_fornecedor, email_fornecedor) 
                 VALUES (?, ?, ?, ?, ?)";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssss", $nome_fornecedor, $cnpj, $endereco_fornecedor, $telefone_fornecedor, $email_fornecedor);
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindParam(1, $nome_fornecedor, PDO::PARAM_STR);
+        $stmt->bindParam(2, $cnpj, PDO::PARAM_STR);
+        $stmt->bindParam(3, $endereco_fornecedor, PDO::PARAM_STR);
+        $stmt->bindParam(4, $telefone_fornecedor, PDO::PARAM_STR);
+        $stmt->bindParam(5, $email_fornecedor, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
             echo "Fornecedor cadastrado com sucesso!";
         } else {
-            echo "Erro ao cadastrar fornecedor: " . $stmt->error;
+            echo "Erro ao cadastrar fornecedor: " . $stmt->errorInfo()[2];
         }
     }
 }
 
 // Listar fornecedores
 $sql_list = "SELECT * FROM fornecedores";
-$result = $conn->query($sql_list);
+$result = $pdo->query($sql_list);
+
+// Verificando se a consulta retornou dados
+if ($result) {
+    $fornecedores = $result->fetchAll(PDO::FETCH_ASSOC);
+} else {
+    $fornecedores = [];
+}
 ?>
+
 <h1>Gerenciamento de Fornecedores</h1>
 
 <!-- Formulário para adicionar fornecedor -->
@@ -55,14 +67,20 @@ $result = $conn->query($sql_list);
         <th>Telefone</th>
         <th>E-mail</th>
     </tr>
-    <?php while ($fornecedor = $result->fetch_assoc()): ?>
-    <tr>
-        <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
-        <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
-        <td><?= htmlspecialchars($fornecedor['cnpj']) ?></td>
-        <td><?= htmlspecialchars($fornecedor['endereco_fornecedor']) ?></td>
-        <td><?= htmlspecialchars($fornecedor['telefone_fornecedor']) ?></td>
-        <td><?= htmlspecialchars($fornecedor['email_fornecedor']) ?></td>
-    </tr>
-    <?php endwhile; ?>
+    <?php if (!empty($fornecedores)): ?>
+        <?php foreach ($fornecedores as $fornecedor): ?>
+            <tr>
+                <td><?= htmlspecialchars($fornecedor['id_fornecedor']) ?></td>
+                <td><?= htmlspecialchars($fornecedor['nome_fornecedor']) ?></td>
+                <td><?= htmlspecialchars($fornecedor['cnpj']) ?></td>
+                <td><?= htmlspecialchars($fornecedor['endereco_fornecedor']) ?></td>
+                <td><?= htmlspecialchars($fornecedor['telefone_fornecedor']) ?></td>
+                <td><?= htmlspecialchars($fornecedor['email_fornecedor']) ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="6">Nenhum fornecedor encontrado.</td>
+        </tr>
+    <?php endif; ?>
 </table>

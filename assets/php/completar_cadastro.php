@@ -5,7 +5,7 @@ if (!isset($_SESSION['usuario_id'])) {
     exit;
 }
 
-require 'conexao.php';
+require 'conexao.php'; // Arquivo para conexão com o banco de dados
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $endereco = $_POST['endereco'];
@@ -15,18 +15,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $estado = $_POST['estado'];
     $usuario_id = $_SESSION['usuario_id'];
 
+    // SQL com placeholders para segurança
     $sql = "INSERT INTO cadastro (usuario_id, endereco, telefone, idade, cidade, estado) 
             VALUES (?, ?, ?, ?, ?, ?)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("ississ", $usuario_id, $endereco, $telefone, $idade, $cidade, $estado);
+    
+    // Preparar a consulta
+    $stmt = $pdo->prepare($sql); // Usando PDO aqui
 
+    // Vincula os parâmetros
+    $stmt->bindParam(1, $usuario_id, PDO::PARAM_INT);
+    $stmt->bindParam(2, $endereco, PDO::PARAM_STR);
+    $stmt->bindParam(3, $telefone, PDO::PARAM_STR);
+    $stmt->bindParam(4, $idade, PDO::PARAM_INT);
+    $stmt->bindParam(5, $cidade, PDO::PARAM_STR);
+    $stmt->bindParam(6, $estado, PDO::PARAM_STR);
+
+    // Executa a consulta
     if ($stmt->execute()) {
         echo "Cadastro completado com sucesso!";
     } else {
-        echo "Erro ao completar cadastro: " . $stmt->error;
+        echo "Erro ao completar cadastro.";
     }
 }
 ?>
+
 <form method="POST">
     <input type="text" name="endereco" placeholder="Endereço" required>
     <input type="text" name="telefone" placeholder="Telefone" required>

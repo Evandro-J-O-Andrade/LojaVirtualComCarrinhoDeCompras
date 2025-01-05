@@ -1,64 +1,40 @@
 <?php
-
-require  "conexao.php";
-// Dados de conexão
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "angelcosmeticos";
-
-// Criando a conexão
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Verificando a conexão
-if ($conn->connect_error) {
-    die("Falha na conexão: " . $conn->connect_error);
-}
-
-
+// Incluir a conexão com o banco de dados
+require "conexao.php"; // Arquivo com a conexão PDO (não mais MySQLi)
 
 // Verificando se o formulário foi enviado
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Capturar dados do formulário
     $nome = $_POST['nome'];
     $preco = $_POST['preco'];
     $descricao = $_POST['descricao'];
-    $id_fornecedor = $_POST['id_fornecedor']; // Pegando o ID do fornecedor selecionado
+    $id_fornecedor = $_POST['id_fornecedor'];
 
     // Verificando se o id_fornecedor foi selecionado
     if (empty($id_fornecedor)) {
         echo "Erro: Você deve selecionar um fornecedor.";
     } else {
-        // Inserindo dados no banco
+        // Inserir produto no banco com prepared statement
         $sql = "INSERT INTO produtos (nome_produto, preco, descricao, id_fornecedor) 
-                VALUES ('$nome', '$preco', '$descricao', '$id_fornecedor')";
-
-        if ($conn->query($sql) === TRUE) {
+                VALUES (?, ?, ?, ?)";
+        
+        $stmt = $pdo->prepare($sql);
+        
+        // Vincular os parâmetros aos valores do formulário
+        $stmt->bindParam(1, $nome, PDO::PARAM_STR);
+        $stmt->bindParam(2, $preco, PDO::PARAM_STR);
+        $stmt->bindParam(3, $descricao, PDO::PARAM_STR);
+        $stmt->bindParam(4, $id_fornecedor, PDO::PARAM_INT);
+        
+        // Executar a consulta
+        if ($stmt->execute()) {
             echo "Produto adicionado com sucesso!";
         } else {
-            echo "Erro: " . $conn->error;
+            echo "Erro ao adicionar produto.";
         }
     }
 }
-
-$id_fornecedor = $_POST['id_fornecedor']; // Pegando o ID do fornecedor selecionado
-
-// Verificando se o id_fornecedor foi selecionado
-if (empty($id_fornecedor)) {
-    echo "Erro: Você deve selecionar um fornecedor.";
-} else {
-    // Inserindo dados no banco
-    $sql = "INSERT INTO produtos (nome_produto, preco, descricao, id_fornecedor) 
-            VALUES ('$nome', '$preco', '$descricao', '$id_fornecedor')";
-    if ($conn->query($sql) === TRUE) {
-        echo "Produto adicionado com sucesso!";
-    } else {
-        echo "Erro: " . $conn->error;
-    }
-}
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -85,12 +61,12 @@ if (empty($id_fornecedor)) {
             <?php
                 // Buscando fornecedores cadastrados no banco
                 $sql_fornecedores = "SELECT id, nome_fornecedor FROM fornecedores";
-                $result_fornecedores = $conn->query($sql_fornecedores);
+                $result_fornecedores = $pdo->query($sql_fornecedores);
 
                 // Verificando se existem fornecedores
-                if ($result_fornecedores->num_rows > 0) {
+                if ($result_fornecedores->rowCount() > 0) {
                     // Exibindo os fornecedores no select
-                    while($row = $result_fornecedores->fetch_assoc()) {
+                    while ($row = $result_fornecedores->fetch(PDO::FETCH_ASSOC)) {
                         echo "<option value='" . $row['id'] . "'>" . $row['nome_fornecedor'] . "</option>";
                     }
                 } else {

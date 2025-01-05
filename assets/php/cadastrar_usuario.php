@@ -1,5 +1,5 @@
 <?php
-include_once'conexao.php'; // Arquivo para conexão com o banco de dados
+include_once 'conexao.php'; // Arquivo para conexão com o banco de dados
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nome = $_POST['nome'];
@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $confirmaSenha = $_POST['confirmaSenha'];
 
     // Validação de campos vazios
-    if  (empty($nome)|| empty($email) || empty($senha) || empty($confirmaSenha)) {
+    if (empty($nome) || empty($email) || empty($senha) || empty($confirmaSenha)) {
         echo "Por favor, preencha todos os campos.";
         exit;
     }
@@ -34,59 +34,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Hash da senha para segurança
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-   // Cria o hash da senha
-   $senha_hash = password_hash($senha, PASSWORD_BCRYPT);
+    // Prepara a consulta SQL para inserção no banco de dados
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    $stmt = $pdo->prepare($sql);
 
-   // Prepara a consulta SQL para inserção no banco de dados
-   $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
-   $stmt = $conn->prepare($sql);
+    if ($stmt === false) {
+        echo "Erro na preparação da consulta: " . $pdo->errorInfo()[2];
+        exit;
+    }
 
-   if ($stmt === false) {
-       echo "Erro na preparação da consulta: " . $conn->error;
-       exit;
-   }
+    // Vincula os parâmetros
+    $stmt->bindParam(1, $nome);
+    $stmt->bindParam(2, $email);
+    $stmt->bindParam(3, $senhaHash);
 
-   // Vincula os parâmetros
-   $stmt->bind_param("sss", $nome, $email, $senha_hash);
+    // Executa a consulta
+    if ($stmt->execute()) {
+        // Redirecionar o usuário para a página de complemento de cadastro
+        session_start();
+        $_SESSION['nome_usuario'] = $nome;
+        $_SESSION['email_usuario'] = $email;
 
-   // Executa a consulta
-   if ($stmt->execute()) {
-       echo "Usuário cadastrado com sucesso!";
-   } else {
-       echo "Erro ao cadastrar usuário: " . $stmt->error;
-   }
-
-   // Fecha o statement
-   $stmt->close();
+        header("Location: cadastro_completo.php");
+        exit;
+    } else {
+        echo "Erro ao cadastrar usuário.";
+    }
 }
 ?>
-
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Teste Cadastro</title>
-</head>
-<body>
-
-   <h2>Formulário de Cadastro</h2>
-
-   <form method="POST" action="cadastro_usuario.php">
-       <label for="nome">Nome:</label>
-       <input type="text" id="nome" name="nome" required><br><br>
-
-       <label for="email">E-mail:</label>
-       <input type="email" id="email" name="email" required><br><br>
-
-       <label for="senha">Senha:</label>
-       <input type="password" id="senha" name="senha" required><br><br>
-
-       <label for="confirmaSenha">Confirme a Senha:</label>
-       <input type="password" id="confirmaSenha" name="confirmaSenha" required><br><br>
-
-       <button type="submit">Cadastrar</button>
-   </form>
-
-</body>
-</html>

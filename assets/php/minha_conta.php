@@ -1,36 +1,42 @@
 <?php
-// Inicia a sessão
 session_start();
 
-// Inclui a conexão com o banco de dados e as funções
-require "conexao.php";
-// Verifica se o usuário já está logado
-if (isset($_SESSION['usuario_id'])) {
-    header('Location: dashboard.php'); // Se estiver logado, redireciona para o painel
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    header('Location: login.php'); // Se não estiver logado, redireciona para a página de login
     exit;
 }
 
-// Verifica se o formulário de login foi enviado
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Recebe os dados do formulário
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
+// Obtém os dados do usuário logado
+$usuario_nome = $_SESSION['usuario_nome'];
+$usuario_email = $_SESSION['usuario_email'];
 
-    // Verifica o login
-    $usuario = verificarLogin($email, $senha);
-
-    if (is_array($usuario)) {
-        // Login bem-sucedido, armazena os dados do usuário na sessão
-        $_SESSION['usuario_id'] = $usuario['id']; // ID do usuário
-        $_SESSION['usuario_nome'] = $usuario['nome']; // Nome do usuário
-        $_SESSION['usuario_email'] = $usuario['email']; // Email do usuário
-
-        // Redireciona para a página principal ou painel
-        header('Location: dashboard.php');
-        exit;
-    } else {
-        // Caso o login falhe
-        $erroLogin = $usuario; // A mensagem de erro será armazenada aqui
-    }
+// Verifica se o botão de logout foi clicado
+if (isset($_POST['logout'])) {
+    // Finaliza a sessão e redireciona para a página de login
+    session_unset();
+    session_destroy();
+    header('Location: login.php');
+    exit;
 }
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Conta</title>
+</head>
+<body>
+
+<h1>Bem-vindo, <?= $usuario_nome ?>!</h1>
+<p>Seu e-mail: <?= $usuario_email ?></p>
+
+<!-- Formulário de logout -->
+<form method="POST">
+    <button type="submit" name="logout">Sair</button>
+</form>
+
+</body>
+</html>
