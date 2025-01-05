@@ -3,10 +3,10 @@
 session_start();
 
 // Inclui a conexão com o banco de dados
-require "conexao.php"; // Verifique se o caminho está correto para o arquivo de conexão
+include_once "conexao.php"; // Verifique se o caminho está correto para o arquivo de conexão
 
 // Inclui as funções (se estiverem em um arquivo separado, como funcoes.php)
-require "function.php"; // Certifique-se de incluir a função verificarLoginOuCadastro()
+include_once"function.php"; // Certifique-se de incluir a função verificarLoginOuCadastro()
 
 // Verifica se o usuário já está logado
 if (isset($_SESSION['usuario_id'])) {
