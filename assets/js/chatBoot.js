@@ -108,3 +108,23 @@ function appendMessage(message, sender) {
   chatbotBody.appendChild(p);
   chatbotBody.scrollTop = chatbotBody.scrollHeight; // Rola para o fundo
 }
+
+const chatbotbutton = document.getElementById(".chatbot-button");
+// Mostra ou esconde o botão dependendo da rolagem
+window.onscroll = function () {
+    const scrollTotal = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+
+    if (document.documentElement.scrollTop > scrollTotal * 0.3) {
+        btnTopo.style.display = "block"; // Mostra o botão
+    } else {
+        btnTopo.style.display = "none"; // Esconde o botão
+    }
+};
+
+// Rola suavemente para o topo ao clicar no botão
+btnTopo.addEventListener("click", function () {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+    });
+});
