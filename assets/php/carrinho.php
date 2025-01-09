@@ -1,37 +1,49 @@
-
 <?php
 session_start();
-require_once("conexao.php"); // Conectar ao banco de dados
+require_once("conexao.php"); // Conexão com o banco de dados
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $produto_nome = $_POST['produto_nome'];
-    $preco = $_POST['preco'];
-    $quantidade = $_POST['quantidade'];
-    $usuario_id = $_SESSION['usuario_id']; // Supondo que o usuário esteja logado e tenha um ID na sessão
+// Verifica se o usuário está logado
+if (!isset($_SESSION['usuario_id'])) {
+    echo json_encode(['error' => 'Usuário não está logado']);
+    exit;
+}
 
-    // Verifica se o produto já existe no carrinho
+// Captura os dados enviados pelo JavaScript (JSON)
+$dadosCarrinho = json_decode(file_get_contents('php://input'), true);
+
+// Valida os dados
+if (empty($dadosCarrinho)) {
+    echo json_encode(['error' => 'Carrinho vazio ou dados inválidos']);
+    exit;
+}
+
+$usuario_id = $_SESSION['usuario_id']; // ID do usuário logado
+
+// Insere os produtos no banco de dados
+foreach ($dadosCarrinho as $produto) {
+    $produtoNome = $produto['produto_nome'];
+    $preco = $produto['preco'];
+    $quantidade = $produto['quantidade'];
+
+    // Insere ou atualiza no carrinho
     $sql = "SELECT * FROM carrinho WHERE produto_nome = ? AND usuario_id = ?";
     $stmt = $pdo->prepare($sql);
-    $stmt->execute([$produto_nome, $usuario_id]);
+    $stmt->execute([$produtoNome, $usuario_id]);
 
     if ($stmt->rowCount() > 0) {
-        // Produto já existe, atualiza a quantidade
-        $produto = $stmt->fetch();
-        $nova_quantidade = $produto['quantidade'] + $quantidade;
+        $produtoExistente = $stmt->fetch();
+        $novaQuantidade = $produtoExistente['quantidade'] + $quantidade;
+
         $sql = "UPDATE carrinho SET quantidade = ? WHERE id = ?";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$nova_quantidade, $produto['id']]);
+        $stmt->execute([$novaQuantidade, $produtoExistente['id']]);
     } else {
-        // Produto não existe no carrinho, insere novo produto
         $sql = "INSERT INTO carrinho (produto_nome, preco, quantidade, usuario_id) VALUES (?, ?, ?, ?)";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$produto_nome, $preco, $quantidade, $usuario_id]);
+        $stmt->execute([$produtoNome, $preco, $quantidade, $usuario_id]);
     }
- // Inserir dados no banco de dados
- $stmt = $pdo->prepare("INSERT INTO carrinho (produto_id, quantidade, usuario_id) VALUES (?, ?, ?)");
- $stmt->execute([$produtoId, $quantidade, $usuarioId]);
-
- echo "Produto adicionado ao carrinho!";
-    echo json_encode(["status" => "sucesso"]);
 }
+
+// Retorna uma resposta de sucesso
+echo json_encode(['status' => 'sucesso', 'mensagem' => 'Compra finalizada e salva no banco de dados!']);
 ?>

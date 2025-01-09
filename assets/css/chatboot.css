@@ -1,0 +1,81 @@
+/* Estilos do botão fixo do chatbot */
+#chatbot-button {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background-color: #ff69b4;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    z-index: 1000;
+  }
+  
+  /* Estilos da janela do chatbot */
+  #chatbot-window {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 300px;
+    max-height: 450px; /* Limita a altura da janela a 300px */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    transition: bottom 0.3s ease;
+    overflow-y: auto; /* Habilita rolagem */
+  }
+  
+  #chatbot-header {
+    background-color: #ff69b4;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  #chatbot-logo {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+  
+  #chatbot-body {
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  
+  #chatbot-suggestions button {
+    margin: 5px;
+    padding: 10px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: inline-block; /* Deixa os botões em linha */
+  }
+  
+  #chatbot-suggestions button:hover {
+    background-color: #ff4c9e;
+  }
+  
+  #chatbot-input {
+    padding: 10px;
+    border: none;
+    border-radius: 0 0 10px 10px;
+    outline: none;
+    display: block;
+    width: 100%;
+  }
+  
