@@ -33,6 +33,8 @@
 </head>
 
 <body>
+
+    
     <div class="resolucao">
         <!--Aqui vai verificar a resolução do dispositivo-->
     </div>
@@ -56,6 +58,13 @@
                             <li><a href="/assets/html/empresa.html" title="Empresa">Sobre Nós</a></li>
                             <li><a href="/assets/html/contato.html" title="Contatos">Contatos</a></li>
                             <li><a href="/assets/html/conta.html" title="Minha Conta">Minha Conta</a></li>
+                              <!-- Se o usuário estiver logado, mostra o link de logout -->
+                              <?php if (isset($_SESSION['usuario_id'])): ?>
+                              <li>
+                                  <a href="/assets/php/logout.php">Logout</a> <!-- Redireciona para logout.php -->
+                              </li>
+                          <?php endif; ?>
+                          
                         </ul>
                     </nav>
                     <a href="/assets/html/carrinho.html">
@@ -338,6 +347,13 @@
                 </div>
             </div>
         </div>
+        <!-- Botão de Logout -->
+<form action="/assets/html/conta.html" method="POST" style="text-align: center;">
+    <button type="submit" style="padding: 10px 20px; background-color: #f44336; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">
+        Sair
+    </button>
+</form>
+
     </main>
     <!-- Rodapé -->
     <footer class="rodape">
@@ -405,7 +421,7 @@
         <ion-icon name="arrow-up-outline"></ion-icon>
     </button>
 
-
+    
     <!-- Scripts -->
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.em.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

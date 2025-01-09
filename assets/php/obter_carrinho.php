@@ -1,26 +1,30 @@
 <?php
-session_start();
+session_start(); // Inicia a sessão
 
+// Verifica se o usuário está logado
 if (!isset($_SESSION['usuario_id'])) {
-    echo json_encode(['error' => 'Usuário não está logado']);
-    exit;
+    echo json_encode(['error' => 'Usuário não está logado']); // Retorna um erro caso não esteja logado
+    exit; // Interrompe a execução do script
 }
 
 require_once("conexao.php"); // Conectar ao banco de dados
 
-$usuario_id = $_SESSION['usuario_id']; // Supondo que o usuário esteja logado e tenha um ID na sessão
+$usuario_id = $_SESSION['usuario_id']; // Obtém o ID do usuário da sessão
 
-// Busca os produtos no carrinho do usuário
+// Prepara a consulta para buscar os produtos no carrinho
 $sql = "SELECT * FROM carrinho WHERE usuario_id = ?";
 $stmt = $pdo->prepare($sql);
+
+// Executa a consulta
 $stmt->execute([$usuario_id]);
 
+// Fetch os dados do carrinho
 $carrinho = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Retorna uma resposta com os dados do carrinho ou uma mensagem
+// Retorna os dados do carrinho ou uma mensagem caso esteja vazio
 if (empty($carrinho)) {
-    echo json_encode(['message' => 'Carrinho vazio']);
+    echo json_encode(['message' => 'Carrinho vazio']); // Mensagem caso não haja itens no carrinho
 } else {
-    echo json_encode($carrinho);
+    echo json_encode(['carrinho' => $carrinho]); // Retorna os itens do carrinho em formato JSON
 }
 ?>

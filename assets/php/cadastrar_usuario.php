@@ -1,25 +1,33 @@
 <?php
-include_once 'conexao.php'; // Arquivo para conexão com o banco de dados
+// Inclui o arquivo de conexão com o banco de dados
+include_once 'conexao.php'; 
 
+// Inicia a sessão antes de qualquer saída
+session_start();
+
+// Verifica se o formulário foi enviado via POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $confirmaSenha = $_POST['confirmaSenha'];
+    // Captura os dados enviados pelo formulário
+    $nome = trim($_POST['nome']);
+    $email = trim($_POST['email']);
+    $senha = trim($_POST['senha']);
+    $confirmaSenha = trim($_POST['confirmaSenha']);
 
     // Validação de campos vazios
     if (empty($nome) || empty($email) || empty($senha) || empty($confirmaSenha)) {
-        echo "Por favor, preencha todos os campos.";
+        $_SESSION['erro'] = "Por favor, preencha todos os campos.";
+        header("Location: /assets/html/completarCadastro.html");
         exit;
     }
 
-    // Verificar se as senhas coincidem
+    // Verifica se as senhas coincidem
     if ($senha !== $confirmaSenha) {
-        echo "As senhas não coincidem.";
+        $_SESSION['erro'] = "As senhas não coincidem!";
+        header("Location: /assets/html/completarCadastro.html");
         exit;
     }
 
-    // Verificar se o e-mail já está registrado
+    // Verifica se o e-mail já está cadastrado
     $query = "SELECT * FROM usuarios WHERE email = :email LIMIT 1";
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(':email', $email);
@@ -27,38 +35,40 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if ($user) {
-        echo "Este e-mail já está registrado.";
+        $_SESSION['erro'] = "Este e-mail já está registrado.";
+        header("Location: /assets/html/completarCadastro.html");
         exit;
     }
 
-    // Hash da senha para segurança
+    // Criptografa a senha para maior segurança
     $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-    // Prepara a consulta SQL para inserção no banco de dados
-    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (?, ?, ?)";
+    // Insere os dados no banco de dados
+    $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)";
     $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':nome', $nome);
+    $stmt->bindParam(':email', $email);
+    $stmt->bindParam(':senha', $senhaHash);
 
-    if ($stmt === false) {
-        echo "Erro na preparação da consulta: " . $pdo->errorInfo()[2];
-        exit;
-    }
-
-    // Vincula os parâmetros
-    $stmt->bindParam(1, $nome);
-    $stmt->bindParam(2, $email);
-    $stmt->bindParam(3, $senhaHash);
-
-    // Executa a consulta
     if ($stmt->execute()) {
-        // Redirecionar o usuário para a página de complemento de cadastro
-        session_start();
-        $_SESSION['nome_usuario'] = $nome;
-        $_SESSION['email_usuario'] = $email;
+        // Armazena dados do usuário na sessão
+        $_SESSION['usuario_nome'] = $nome;
+        $_SESSION['usuario_email'] = $email;
 
-        header("Location: cadastro_completo.php");
+        // Armazena a mensagem de sucesso na sessão
+        $_SESSION['cadastro_sucesso'] = "Cadastro realizado com sucesso! Você está sendo redirecionado para finalizar o cadastro.";
+
+        // Redireciona para a página HTML de completar o cadastro
+        header("Location: /assets/html/completarCadastro.html");
         exit;
     } else {
-        echo "Erro ao cadastrar usuário.";
+        $_SESSION['erro'] = "Erro ao cadastrar o usuário. Tente novamente.";
+        header("Location: /assets/html/completarCadastro.html");
+        exit;
     }
+} else {
+    $_SESSION['erro'] = "Método de requisição inválido.";
+    header("Location: /assets/html/completarCadastro.html");
+    exit;
 }
 ?>

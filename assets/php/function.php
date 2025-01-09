@@ -48,3 +48,35 @@ function cadastrarUsuario($email, $senha, $pdo) {
         return false;
     }
 }
+
+function temProdutosNoCarrinho($usuario_id, $pdo) {
+    // Consulta se o usuário tem produtos no carrinho
+    $sql = "SELECT COUNT(*) FROM carrinho WHERE usuario_id = :usuario_id";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':usuario_id', $usuario_id);
+    $stmt->execute();
+    
+    // Retorna true se houver produtos, caso contrário retorna false
+    return $stmt->fetchColumn() > 0;
+}
+
+
+
+function exibirMensagem($tipo, $mensagem) {
+    // Tipos podem ser: 'sucesso', 'erro', 'info', etc.
+    $tipos = [
+        'sucesso' => 'background-color: #4CAF50; color: white;',
+        'erro' => 'background-color: #f44336; color: white;',
+        'info' => 'background-color: #2196F3; color: white;',
+        'aviso' => 'background-color: #ff9800; color: white;'
+    ];
+
+    // Estilo para a mensagem
+    $estilo = isset($tipos[$tipo]) ? $tipos[$tipo] : $tipos['info'];
+
+    echo "
+    <div style='padding: 10px; margin: 20px 0; text-align: center; font-size: 18px; border-radius: 5px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); {$estilo}'>
+        {$mensagem}
+    </div>";
+}
+?>
