@@ -177,10 +177,10 @@ document.addEventListener("DOMContentLoaded", () => {
         // Estilos para centralizar o span no fim da página
         span.style.position = "fixed"; // Fixa o span na tela
         span.style.left = "50%"; // Posiciona horizontalmente no centro
-        span.style.bottom = "115px"; // Posiciona 20px acima do final da página
+        span.style.bottom = "360px"; // Posiciona 20px acima do final da página
         span.style.transform = "translateX(-50%)"; // Ajusta para o centro exato horizontalmente
         span.style.color = "red"; // Cor do texto
-        span.style.fontSize = "18px"; // Tamanho da fonte
+        span.style.fontSize = "20px"; // Tamanho da fonte
         span.style.textAlign = "center"; // Alinha o texto no centro
 
         document.body.appendChild(span);
@@ -204,8 +204,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // Verifica se o carrinho está vazio
         if (carrinhoVazio()) {
             alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
+            // Você pode adicionar um estilo ou mensagem no carrinho, por exemplo
+            document.getElementById("carrinho-vazio-msg").style.display = "block";
             return;
         }
+        
     
         // Verifica se o CEP foi validado
         if (!isCepValidated) {
