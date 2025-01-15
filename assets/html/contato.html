@@ -120,7 +120,6 @@
         </div>
         <!-- Botão para abrir o chatbot -->
         <div id="chatbot-button" onclick="toggleChat()">💬</div>
-
         <!-- Janela do chatbot -->
         <div id="chatbot-window" style="display: none;" onclick="event.stopPropagation();">
             <div id="chatbot-header">
@@ -129,18 +128,16 @@
             </div>
             <div id="chatbot-body">
                 <!-- Mensagem inicial do chatbot -->
-                <p id="welcome-message">Olá, sou seu assistente virtual. Como posso te ajudar hoje?</p>
+                <p id="welcome-message">Olá, meu nome é Angel sou sua assistente virtual. Como posso te ajudar hoje?</p>
+                <div id= "chatbot-suggestions" style= display:none>
+                  
 
 
-
-                <div id="chatbot-suggestions">
-                    <button onclick="handleOption(1)">1 - Login</button>
-                    <button onclick="handleOption(2)">2 - Ver Carrinho</button>
-                    <button onclick="handleOption(3)">3 - Próximos Eventos</button>
                 </div>
             </div>
             <input type="text" id="chatbot-input" placeholder="Digite sua mensagem..." onkeypress="sendMessage(event)" />
         </div>
+
         <!--Fim  do Contato -->
     </main>
     <!-- Rodapé -->
