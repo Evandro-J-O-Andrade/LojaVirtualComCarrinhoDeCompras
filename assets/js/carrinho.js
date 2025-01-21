@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (produtosNoCarrinho) {
                 cartIcon.src = "/assets/img/carrinho!.png"; // Ícone com alerta (!)
             } else {
-                cartIcon.src = "/assets/img/carrinho.png"; // Ícone padrão do carrinho
+                cartIcon.src = "/assets/img/carrinho2.png"; // Ícone padrão do carrinho
             }
         });
     }
