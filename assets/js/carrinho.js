@@ -17,6 +17,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isCepValidated = false; // Estado para controle da validação do CEP
     let isPurchaseFinalized = false; // Estado para controle da finalização da compra
+    // Atualiza o ícone do carrinho com base no estado do carrinho
+    function atualizarIconeCarrinho() {
+        const produtosNoCarrinho = !carrinhoVazio(); // Verifica se o carrinho tem produtos
+        const cartIcons = document.querySelectorAll(".cart-icon");
+
+        cartIcons.forEach(cartIcon => {
+            if (produtosNoCarrinho) {
+                cartIcon.src = "/assets/img/carrinho!.png"; // Ícone com alerta (!)
+            } else {
+                cartIcon.src = "/assets/img/carrinho.png"; // Ícone padrão do carrinho
+            }
+        });
+    }
+
 
     // Atualiza os subtotais e totais
     function atualizarTotais() {
@@ -46,6 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Atualiza o total dentro do resumo
         resumoTotal.textContent = (subtotal + frete).toFixed(2); // Atualiza o total no resumo
+        atualizarIconeCarrinho();
     }
 
     // Verifica se o carrinho tem produtos
@@ -65,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const tabelaCarrinho = document.querySelector("#tabelaCarrinho");
             const linhas = tabelaCarrinho.querySelectorAll("tr");
             const produtos = [];
-    
+
             // Loop para capturar os dados dos produtos
             linhas.forEach((linha) => {
                 const colunas = linha.querySelectorAll("td");
@@ -74,7 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const quantidade = colunas[1].querySelector('input').value.trim(); // Quantidade
                     const valorUnitario = colunas[1].querySelector('input').dataset.preco; // Valor unitário
                     const subtotalProduto = (parseFloat(valorUnitario) * parseInt(quantidade)).toFixed(2); // Subtotal
-    
+
                     produtos.push([
                         nomeProduto,
                         quantidade,
@@ -83,25 +98,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     ]);
                 }
             });
-    
+
             // Capturando valores gerais
             const subtotal = document.getElementById("subtotal-geral").textContent.trim();
             const frete = document.getElementById("frete").textContent.trim();
             const total = document.getElementById("total-geral").textContent.trim();
-    
+
             // Criando o documento PDF
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-    
+
             // Adicionando o título
             doc.setFontSize(16);
             doc.text("Resumo do Carrinho de Compras", 105, 20, { align: "center" });
-    
+
             // Texto de agradecimento (colocado logo abaixo do título)
             doc.setFontSize(14);
             doc.text("Angel Cosméticos agradece a sua preferencia por comprar conosco!.", 105, 30, { align: "center" });
             doc.text("Sua compra será processada para o envio!!.", 105, 40, { align: "center" });
-    
+
             // Adicionando a tabela de produtos ao PDF
             doc.autoTable({
                 head: [["Descrição", "Quantidade", "Valor Unitário", "Total"]],
@@ -111,14 +126,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 headStyles: { fillColor: [22, 160, 133] },
                 bodyStyles: { fontSize: 10 },
             });
-    
+
             // Adicionando informações de valores totais
             const posY = doc.previousAutoTable.finalY + 10;
             doc.setFontSize(12);
             doc.text(`Sub-Total: ${subtotal}`, 14, posY);
             doc.text(`Frete: ${frete}`, 14, posY + 7);
             doc.text(`Total Geral: ${total}`, 14, posY + 14);
-    
+
             // Salvando o PDF
             doc.save("Resumo-Carrinho.pdf");
         } catch (error) {
@@ -126,9 +141,9 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Ocorreu um erro ao gerar o PDF. Verifique o console para mais detalhes.");
         }
     }
-    
-    
-    
+
+
+
     // Funções de CEP e Finalização da Compra
     function calcularFrete() {
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
@@ -191,16 +206,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    
+
     function finalizarCompra() {
         if (isPurchaseFinalized) {
             alert("A compra já foi finalizada. Inicie uma nova compra para continuar.");
             return;
         }
-    
+
         const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
         const total = parseFloat(totalGeral.textContent.replace("R$", "").trim()) || 0;
-    
+
         // Verifica se o carrinho está vazio
         if (carrinhoVazio()) {
             alert("Seu carrinho está vazio. Adicione produtos antes de finalizar a compra.");
@@ -208,30 +223,30 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("carrinho-vazio-msg").style.display = "block";
             return;
         }
-        
-    
+
+
         // Verifica se o CEP foi validado
         if (!isCepValidated) {
             alert("Por favor, insira e valide um CEP antes de finalizar a compra.");
             return;
         }
-    
+
         // Marca a compra como finalizada
         isPurchaseFinalized = true;
         alert(`Compra finalizada com sucesso! Total: R$ ${total.toFixed(2)}`);
-    
+
         // Exibe o botão de gerar PDF/Nota Fiscal após a finalização
         document.getElementById("btnGerarPDF").style.display = "inline-block";  // Exibe o botão do PDF
         document.getElementById("btnGerarNotaFiscal").style.display = "inline-block";  // Exibe o botão da Nota Fiscal
-    
+
         // Desabilita os campos de quantidade
         document.querySelectorAll(".quantidade").forEach((input) => {
             input.disabled = true; // Desabilita o campo
         });
-    
+
         mostrarMensagemFinalizada();
     }
-    
+
 
 
     // Atualiza quando o campo de CEP é limpo ou alterado
