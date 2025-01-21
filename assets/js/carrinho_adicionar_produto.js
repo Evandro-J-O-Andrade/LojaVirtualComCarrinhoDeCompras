@@ -1,9 +1,10 @@
 // Função para adicionar produto ao carrinho
-function adicionarProduto(nomeProduto, precoProduto) {
+function adicionarProduto(id, nomeProduto, precoProduto) {
     const quantidade = 1; // Defina a quantidade como 1 por padrão ou pegue de um campo de input
 
     // Cria um objeto com os dados para enviar via AJAX
     const dados = new FormData();
+    dados.append("produto_id",id);
     dados.append("produto_nome", nomeProduto);
     dados.append("preco", precoProduto);
     dados.append("quantidade", quantidade);

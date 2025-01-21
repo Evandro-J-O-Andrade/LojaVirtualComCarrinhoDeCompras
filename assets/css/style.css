@@ -3239,3 +3239,34 @@ section.historia::before {
 }
 
 
+.bnt-carrinho {
+    margin: 20px auto 15px auto; /* Centraliza o botão verticalmente e horizontalmente */
+    width: 100%; /* Ocupa toda a largura disponível */
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Regras para telas menores (mobile) */
+@media (max-width: 768px) {
+    .bnt-carrinho {
+        margin: 10px auto; /* Ajuste das margens */
+        padding: 0; /* Remove qualquer padding */
+    }
+}
+
+.bnt-volta-produto {
+    margin: 20px auto 15px auto; /* Centraliza o botão verticalmente e horizontalmente */
+    width: 100%; /* Ocupa toda a largura disponível */
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Regras para telas menores (mobile) */
+@media (max-width: 768px) {
+    .bnt-volta-produto {
+        margin: 10px auto; /* Ajuste das margens */
+        padding: 0; /* Remove qualquer padding */
+    }
+}

@@ -1,6 +1,63 @@
 document.addEventListener("DOMContentLoaded", function () {
     const produtos = [
         {
+            id: 1,
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Produto de alta qualidade, feito com mateiral de primeira Linha.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            id: 2,
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Produto em destaque!",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            id: 3,
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Melhor preço do mercado!",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            id: 4,
+            nome: "Blusa de frio manga longa meletinho",
+            preco: 500,
+            descricao: "Angel cosmeticos com a melhor qualidade do mercado!.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+        // Outros produtos podem ser adicionados aqui
+        {
+            id: 5,
             nome: "Blusa de frio manga longa meletinho",
             preco: 500,
             descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
@@ -14,58 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui
         {
-            nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
-            imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
-            ]
-        },
-        // Outros produtos podem ser adicionados aqui
-        {
-            nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
-            imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
-            ]
-        },
-        // Outros produtos podem ser adicionados aqui
-        {
-            nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
-            imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
-            ]
-        },
-        // Outros produtos podem ser adicionados aqui
-        {
-            nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
-            imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
-            ]
-        },
-        // Outros produtos podem ser adicionados aqui
-        {
+            id:6,
             nome: "Blusa de frio manga longa meletinho",
             preco: 500,
             descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
@@ -88,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // HTML do produto com imagens e botão
         produtoDiv.innerHTML = `
-            <img class="imagemProduto" src="${produto.imagens[0]}" alt="${produto.nome}" id="produtoImg">
+            <img class="imagemProduto" src="${produto.imagens[0]}" alt="${produto.id}" id="produtoImg">
             <div class="img-linha">
                 ${produto.imagens.map(imagem => `
                     <div class="img-col">
