@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
         { id: 17, nome: "Produto 17", imagem: "/assets/img/produto-17.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
         { id: 18, nome: "Produto 18", imagem: "/assets/img/produto-18.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
         { id: 19, nome: "Produto 19", imagem: "/assets/img/produto-19.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
-        { id: 20, nome: "Produto 20", imagem: "/assets/img/produto-20.jpg", preco: 120, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
+        { id: 20, nome: "TimeWise", imagem: "/assets/img/produto-20.jpg", preco: 276, classificacao: 5, promocao: true, novidade: true, estoque: 3 },
         // Adicione mais produtos conforme necessário...
     ];
 

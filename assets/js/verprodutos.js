@@ -3,8 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
         {
             id: 1,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Produto de alta qualidade, feito com mateiral de primeira Linha.",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -13,12 +19,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
         {
             id: 2,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Produto em destaque!",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -27,12 +39,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
         {
             id: 3,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Melhor preço do mercado!",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -41,12 +59,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
         {
-            id: 4,
+            id:4 ,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Angel cosmeticos com a melhor qualidade do mercado!.",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -55,12 +79,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
         {
             id: 5,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -69,12 +99,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
         {
-            id:6,
+            id: 6,
             nome: "Blusa de frio manga longa meletinho",
-            preco: 500,
-            descricao: "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Assumenda eius ipsum nam, in molestiae magni laborum iste incidunt. Iste saepe harum quisquam odio voluptatum ipsum facere fuga molestiae accusamus in.",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
                 "/assets/img/galeria-1.jpg",
                 "/assets/img/galeria-2.jpg",
@@ -83,7 +119,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
-        // Outros produtos podem ser adicionados aqui
+        // Outros produtos podem ser adicionados aqui...
+
     ];
 
     const container = document.querySelector(".corpo-categorias .linha");
@@ -92,27 +129,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const produtoDiv = document.createElement("div");
         produtoDiv.className = "col-2";
 
-        // HTML do produto com imagens e botão
+        // HTML do produto
         produtoDiv.innerHTML = `
             <img class="imagemProduto" src="${produto.imagens[0]}" alt="${produto.id}" id="produtoImg">
             <div class="img-linha">
                 ${produto.imagens.map(imagem => `
                     <div class="img-col">
-                        <img src="${imagem}" alt="${produto.nome}" width="100%" class="protudoMiniatura">
+                        <img src="${imagem}" alt="${produto.nome}" width="100%" class="produtoMiniatura">
                     </div>
                 `).join('')}
             </div>
             <p>${produto.nome}</p>
             <h1>Compre com desconto</h1>
-            <h4>R$${produto.preco.toFixed(2)}</h4>
             <form action="" method="post" id="formAdicionarCarrinho">
                 <select name="Tamanho" id="Tamanho">
                     <option value="">Tamanho</option>
-                    <option value="P">P</option>
-                    <option value="M">M</option>
-                    <option value="G">G</option>
-                    <option value="GG">GG</option>
-                    <option value="XG">XG</option>
+                    ${Object.keys(produto.precos).map(tamanho => `
+                        <option value="${tamanho}">${tamanho}</option>
+                    `).join('')}
                 </select>
                 <input type="number" name="quantidade" id="quantidade" value="1" min="1">
                 <button type="submit" class="btn">Adicionar ao Carrinho</button>
@@ -126,7 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Troca de imagem principal ao clicar na miniatura
         const produtoImg = produtoDiv.querySelector("#produtoImg");
-        const miniaturas = produtoDiv.querySelectorAll(".protudoMiniatura");
+        const miniaturas = produtoDiv.querySelectorAll(".produtoMiniatura");
 
         miniaturas.forEach(miniatura => {
             miniatura.addEventListener("click", function () {
@@ -143,8 +177,9 @@ document.addEventListener("DOMContentLoaded", function () {
             const tamanho = produtoDiv.querySelector("#Tamanho").value;
             const quantidade = parseInt(produtoDiv.querySelector("#quantidade").value);
             const nomeProduto = produto.nome;
-            const preco = produto.preco;
-            const imagemProduto = produtoImg.src;  // Aqui garantimos que pegamos a imagem correta
+            const preco = produto.precos[tamanho];
+            const imagemProduto = produtoImg.src;
+            const idProduto = produto.id;
 
             // Validação do tamanho e quantidade
             if (!tamanho) {
@@ -158,18 +193,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Cria o objeto do produto
             const produtoCarrinho = {
+                id: idProduto,
                 nome: nomeProduto,
                 preco: preco,
                 tamanho: tamanho,
                 quantidade: quantidade,
-                imagem: imagemProduto
+                imagem: imagemProduto,
+                total: preco * quantidade
             };
 
             // Recupera o carrinho do localStorage
             const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-            // Verifica se o produto já está no carrinho (não se importa com o tamanho)
-            const produtoExistente = carrinho.find(item => item.nome === produtoCarrinho.nome);
+            // Verifica se o produto já está no carrinho pelo ID e tamanho
+            const produtoExistente = carrinho.find(item => item.id === produtoCarrinho.id && item.tamanho === produtoCarrinho.tamanho);
 
             if (produtoExistente) {
                 // Incrementa a quantidade e atualiza o total
@@ -177,7 +214,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 produtoExistente.total = produtoExistente.preco * produtoExistente.quantidade;
             } else {
                 // Adiciona o produto ao carrinho
-                produtoCarrinho.total = produtoCarrinho.preco * produtoCarrinho.quantidade;
                 carrinho.push(produtoCarrinho);
             }
 
@@ -189,32 +225,4 @@ document.addEventListener("DOMContentLoaded", function () {
             window.location.href = "/assets/html/carrinho.html";
         });
     });
-
-    // Função para exibir os produtos do carrinho na página de carrinho
-    function exibirCarrinho() {
-        const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
-        const tabelaCarrinho = document.querySelector('#tabelaCarrinho'); // Referência ao tbody da tabela
-
-        tabelaCarrinho.innerHTML = ''; // Limpa a tabela antes de adicionar os novos produtos
-
-        carrinho.forEach(produto => {
-            const row = document.createElement('tr'); // Cria uma nova linha para o produto
-
-            // Adiciona as células na linha
-            row.innerHTML = `
-                <td><img src="${produto.imagem}" alt="${produto.nome}" class="imagem-produto" style="max-width: 100px;"></td>
-                <td>${produto.nome}</td>
-                <td>${produto.tamanho}</td>
-                <td>${produto.quantidade}</td>
-                <td>R$ ${produto.preco.toFixed(2)}</td>
-                <td>R$ ${produto.total.toFixed(2)}</td>
-            `;
-            tabelaCarrinho.appendChild(row);
-        });
-    }
-
-    // Chama a função para exibir o carrinho quando a página do carrinho for carregada
-    if (document.body.contains(document.getElementById('tabelaCarrinho'))) {
-        exibirCarrinho();
-    }
 });
