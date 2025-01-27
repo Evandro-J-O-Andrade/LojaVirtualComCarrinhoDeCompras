@@ -779,9 +779,7 @@ td:last-child {
 
 }
 
-th:last-child {
-    text-align: right;
-}
+
 
 .cep-input {
     margin-top: 15px;

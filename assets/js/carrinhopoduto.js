@@ -7,6 +7,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const enderecoSpan = document.getElementById("endereco");
     let frete = 0; // Valor inicial do frete
 
+    // Função para buscar a imagem do produto baseado no ID
+    function getImagemProduto(id) {
+        // Exemplo simples de verificação. Você pode adaptar isso para buscar as imagens de um banco de dados ou outro local.
+        let imagem = '';
+        
+        // Logica para determinar qual imagem será exibida com base no id
+        if (id === 1) {
+            imagem = '/assets/img/produto-1.jpg';  // Exemplo para id=1
+        } else if (id === 2) {
+            imagem = '/assets/img/produto-2.jpg';  // Exemplo para id=2
+        } else {
+            // Se não houver imagem correspondente, uma imagem padrão
+            imagem = '/assets/img/produto-default.jpg';
+        }
+
+        return imagem;
+    }
+
     // Função para atualizar o carrinho na página
     function atualizarCarrinho() {
         const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -20,9 +38,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const subtotalProduto = item.preco * item.quantidade;
             subtotal += subtotalProduto;
 
+            // Usando a função getImagemProduto para buscar a imagem baseada no id
+            const imagemProduto = getImagemProduto(item.id); // Pega a imagem com base no id do produto
+
             linha.innerHTML = `
                 <td>
-                    <img src="/assets/img/produto-${item.id}.jpg" alt="${item.nome}">
+                    <img src="${imagemProduto}" alt="${item.nome}"> <!-- Usando a imagem dinâmica -->
                     <div>
                         <p>${item.nome}</p>
                         <small>Valor unitário: R$${item.preco.toFixed(2)}</small>
@@ -51,8 +72,6 @@ document.addEventListener("DOMContentLoaded", () => {
         freteSpan.textContent = `R$ ${freteValor.toFixed(2)}`;
         totalGeral.textContent = `R$ ${(subtotal + freteValor).toFixed(2)}`;
     }
-
-   
 
     // Atualiza os valores ao alterar a quantidade
     tabelaCarrinho.addEventListener("change", function (e) {
@@ -105,6 +124,7 @@ function atualizarTotais() {
         document.getElementById("total-geral").textContent = `R$ ${total.toFixed(2)}`;
     }
 }
+
 // Função para adicionar o produto ao carrinho
 function adicionarCarrinho(id) {
     // Captura os dados do produto do HTML com base no ID
