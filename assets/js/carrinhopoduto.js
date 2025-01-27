@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             linha.innerHTML = `
                 <td>
-                    <img src="${item.id}" alt="${item.nome}"> <!-- Usando a imagem dinâmica -->
+                    <img src="${produto.id}" alt="${item.nome}"> <!-- Usando a imagem dinâmica -->
                     <div>
                         <p>${item.nome}</p>
                         <small>Valor unitário: R$${item.preco.toFixed(2)}</small>
