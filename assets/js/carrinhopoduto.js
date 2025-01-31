@@ -7,6 +7,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const enderecoSpan = document.getElementById("endereco");
     let frete = 0; // Valor inicial do frete
 
+    function getImagemProduto(id) {
+        // A partir do id, você gera dinamicamente o caminho da imagem.
+        // Assumindo que as imagens seguem esse padrão: produto-1.jpg, produto-2.jpg, etc.
+        let imagem = `/assets/img/produto-${id}.jpg`;
+    
+        // Retorna a imagem gerada com base no id
+        return imagem;
+    }
+
     // Função para atualizar o carrinho na página
     function atualizarCarrinho() {
         const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
@@ -20,9 +29,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const subtotalProduto = item.preco * item.quantidade;
             subtotal += subtotalProduto;
 
+            // Usando a função getImagemProduto para buscar a imagem baseada no id
+            const imagemProduto = getImagemProduto(item.id); // Pega a imagem com base no id do produto
+
             linha.innerHTML = `
                 <td>
-                    <img src="/assets/img/produto-${item.id}.jpg" alt="${item.nome}">
+                    <img src="${imagemProduto}" alt="${item.nome}"> <!-- Usando a imagem dinâmica -->
                     <div>
                         <p>${item.nome}</p>
                         <small>Valor unitário: R$${item.preco.toFixed(2)}</small>
@@ -51,8 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
         freteSpan.textContent = `R$ ${freteValor.toFixed(2)}`;
         totalGeral.textContent = `R$ ${(subtotal + freteValor).toFixed(2)}`;
     }
-
-   
 
     // Atualiza os valores ao alterar a quantidade
     tabelaCarrinho.addEventListener("change", function (e) {
@@ -105,6 +115,7 @@ function atualizarTotais() {
         document.getElementById("total-geral").textContent = `R$ ${total.toFixed(2)}`;
     }
 }
+
 // Função para adicionar o produto ao carrinho
 function adicionarCarrinho(id) {
     // Captura os dados do produto do HTML com base no ID
