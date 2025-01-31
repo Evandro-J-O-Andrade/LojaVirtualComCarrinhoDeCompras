@@ -777,6 +777,12 @@ td img {
 td:last-child {
     text-align: right;
 
+tr td:last-child,
+tr th:last-child {
+    text-align: right; /* Alinha o último item da linha à direita */
+}
+
+
 }
 
 
