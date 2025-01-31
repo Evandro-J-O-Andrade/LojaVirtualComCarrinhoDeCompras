@@ -1,7 +1,8 @@
+
 document.addEventListener("DOMContentLoaded", function () {
     const produtos = [
         {
-            id: 1,
+            produtoId: 1,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui...
         {
-            id: 2,
+            produtoId: 2,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui...
         {
-            id: 3,
+            produtoId: 3,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -61,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui...
         {
-            id:4 ,
+            produtoId: 4,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -81,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui...
         {
-            id: 5,
+            produtoId: 5,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -101,7 +102,7 @@ document.addEventListener("DOMContentLoaded", function () {
         },
         // Outros produtos podem ser adicionados aqui...
         {
-            id: 6,
+            produtoId: 6,
             nome: "Blusa de frio manga longa meletinho",
             precos: {
                 P: 450,
@@ -123,6 +124,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     ];
 
+    const tbody = document.querySelector("tbody");
+
+    imagens.forEach((imgSrc) => {
+        const tr = document.createElement("tr");
+        const td = document.createElement("td");
+        const th = document.createElement("th"); // Corrigido aqui
+        const img = document.createElement("img");
+        img.src = imgSrc;
+        img.alt = "produtoMiniatura"; // Corrigido o texto no alt
+        th.appendChild(img);
+        td.appendChild(img);
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+    });
+
+
     const container = document.querySelector(".corpo-categorias .linha");
 
     produtos.forEach(produto => {
@@ -131,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // HTML do produto
         produtoDiv.innerHTML = `
-            <img class="imagemProduto" src="${produto.imagens[0]}" alt="${produto.id}" id="produtoImg">
+            <img class="imagemProduto" src="${produto.imagens[0]}" alt="${produto.produtoId}" id="produtoImg">
             <div class="img-linha">
                 ${produto.imagens.map(imagem => `
                     <div class="img-col">
@@ -179,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const nomeProduto = produto.nome;
             const preco = produto.precos[tamanho];
             const imagemProduto = produtoImg.src;
-            const idProduto = produto.id;
+            const produtoId = produto.produtoId;
 
             // Validação do tamanho e quantidade
             if (!tamanho) {
@@ -193,11 +210,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Cria o objeto do produto
             const produtoCarrinho = {
-                id: idProduto,
+                produtoId,
                 nome: nomeProduto,
-                preco: preco,
-                tamanho: tamanho,
-                quantidade: quantidade,
+                preco,
+                tamanho,
+                quantidade,
                 imagem: imagemProduto,
                 total: preco * quantidade
             };
@@ -206,7 +223,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
             // Verifica se o produto já está no carrinho pelo ID e tamanho
-            const produtoExistente = carrinho.find(item => item.id === produtoCarrinho.id && item.tamanho === produtoCarrinho.tamanho);
+            const produtoExistente = carrinho.find(item => item.produtoId === produtoCarrinho.produtoId && item.tamanho === produtoCarrinho.tamanho);
 
             if (produtoExistente) {
                 // Incrementa a quantidade e atualiza o total

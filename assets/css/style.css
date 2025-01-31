@@ -774,18 +774,16 @@ td img {
     font-size: 15px;
 }
 
+
+
 td:last-child {
     text-align: right;
 
-tr td:last-child,
-tr th:last-child {
-    text-align: right; /* Alinha o último item da linha à direita */
 }
 
-
+th:last-child {
+    text-align: right;
 }
-
-
 
 .cep-input {
     margin-top: 15px;
@@ -3274,3 +3272,5 @@ section.historia::before {
         padding: 0; /* Remove qualquer padding */
     }
 }
+
+
