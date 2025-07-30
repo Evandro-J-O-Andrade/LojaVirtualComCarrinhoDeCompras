@@ -1,5 +1,0 @@
-google-site-verification=Tgj5QVta_9lNocepoGNZpKVV_yujVsLcj8VZG3M6eSw
-https://angelcosmeticos.netlify.app/sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/produtos-sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/eventos-sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/contato-sitemaps.xml

@@ -1,0 +1,37 @@
+{
+  "name": "Angel Cosméticos",
+  
+
+  "short_name": "AngelCosméticos",
+  
+
+  "description": "Empoderamento das mulheres, venda de produtos Mary Kay.",
+  
+
+  "start_url": "./index.html",
+  
+
+  "display": "standalone",
+  
+
+  "background_color": "#0077b6",
+  
+
+  "theme_color": "#0077b6",
+ 
+
+  "icons": [
+    {
+      "src": "img/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+      
+    },
+    {
+      "src": "img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+      
+    }
+  ]
+}
