@@ -1,15 +1,4 @@
 {
-  "name": "lojavirtualcomcarrinhodecompras",
-  "version": "1.0.0",
-  "type": "module",         
-  "description": "Feito a loja virtual para a pagina da Angel Cosmeticos\r Acesse o site neste link https://angelcosmeticos.netlify.app/ site em construção!",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
