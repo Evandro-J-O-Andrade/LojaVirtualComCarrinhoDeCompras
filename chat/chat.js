@@ -1,27 +1,47 @@
 import express from 'express';
+import dotenv from 'dotenv';
+import { OpenAI } from 'openai';
+
+dotenv.config();
 const router = express.Router();
 
-router.post('/', (req, res) => {
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY
+});
+
+router.post('/', async (req, res) => {
   const mensagem = req.body.mensagem;
 
   if (!mensagem) {
     return res.status(400).json({ resposta: "Mensagem vazia recebida." });
   }
 
-  const msg = mensagem.toLowerCase();
-  let resposta = "Desculpe, não entendi sua solicitação.";
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo",
+      messages: [
+        {
+          role: "system",
+          content: `Você é assistente virtual da loja Angel Cosméticos. 
+Oferecemos produtos Mary Kay como maquiagens, cremes faciais, perfumes e cuidados com a pele. 
+Nossa consultora é a Grasiely Machado. 
+Ajude o cliente com simpatia, explique sobre os produtos, indique onde encontrar informações no site e convide para entrar em contato se necessário.`
+        },
+        {
+          role: "user",
+          content: mensagem
+        }
+      ],
+      temperature: 0.7
+    });
 
-  if (msg.includes("oi") || msg.includes("olá")) {
-    resposta = "Olá! Como posso te ajudar?";
-  } else if (msg.includes("produtos")) {
-    resposta = "Temos maquiagens, cuidados com a pele, perfumes e muito mais!";
-  } else if (msg.includes("consultora")) {
-    resposta = "Você pode falar diretamente com nossa consultora clicando em 'Contato'.";
-  } else if (msg.includes("fale com um atendente")) {
-    resposta = "Claro! Nossa equipe estará disponível em instantes. Ou fale agora pelo WhatsApp: https://wa.me/5511963205776";
+    const resposta = completion.choices[0].message.content;
+    res.json({ resposta });
+
+  } catch (error) {
+    console.error("Erro ao consultar o ChatGPT:", error);
+    res.status(500).json({ resposta: "Desculpe, houve um erro. Tente novamente mais tarde." });
   }
-
-  res.json({ resposta });
 });
 
 export default router;
