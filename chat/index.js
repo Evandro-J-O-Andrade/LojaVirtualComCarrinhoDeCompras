@@ -1,48 +1,74 @@
-import express from 'express';
-import cors from 'cors';
-import dotenv from 'dotenv';
-import { OpenAI } from 'openai';
+let inactivityTimer;
+const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutos
 
-// Carrega variáveis do .env
-dotenv.config();
+// Função para enviar a mensagem do usuário ao backend
+async function sendMessage(event) {
+  if (event.key === "Enter") {
+    const inputField = document.getElementById("chatbot-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
 
-// Inicializa OpenAI com a chave
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY, //    Certifique-se de definir a variável OPENAI_API_KEY no seu arquivo .env
-  baseURL: process.env.OPENAI_API_BASE_URL || 'https://api.openai.com/v1',
-  timeout: 10000, // Tempo limite de 10 segundos
-});
+    appendMessage(userMessage, "user");
+    inputField.value = "";
 
-const app = express();
-const port = process.env.PORT || 3000;
+    resetInactivityTimer();
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+    try {
+      const response = await fetch("https://angel-cosmeticos.onrender.com/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ pergunta: userMessage }) // <-- Corrigido para 'pergunta'
+      });
 
-// Rota de teste
-app.get('/', (req, res) => {
-  res.send('Servidor da Angel Cosméticos rodando 🚀');
-});
+      const data = await response.json();
 
-// Rota para chat com OpenAI
-app.post('/api/chat', async (req, res) => {
-  try {
-    const { mensagem } = req.body;
-
-    const resposta = await openai.chat.completions.create({
-      messages: [{ role: 'user', content: mensagem }],
-      model: 'gpt-3.5-turbo',
-    });
-
-    res.json({ resposta: resposta.choices[0].message.content });
-  } catch (error) {
-    console.error('Erro ao chamar OpenAI:', error.message);
-    res.status(500).json({ erro: 'Erro ao processar a requisição' });
+      if (data.resposta) {
+        appendMessage(data.resposta, "bot");
+      } else {
+        appendMessage("Desculpe, não entendi sua solicitação.", "bot");
+      }
+    } catch (error) {
+      appendMessage("Erro ao se conectar ao servidor.", "bot");
+      console.error("Erro:", error);
+    }
   }
-});
+}
 
-// Inicia o servidor
-app.listen(port, () => {
-  console.log(`Servidor rodando em http://localhost:${port}`);
-});
+// Função para adicionar mensagens ao corpo do chatbot
+function appendMessage(content, sender) {
+  const chatbotBody = document.getElementById("chatbot-body");
+  const messageElement = document.createElement("p");
+  messageElement.className = sender === "user" ? "user-message" : "bot-message";
+  messageElement.textContent = content;
+  chatbotBody.appendChild(messageElement);
+  chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
+
+// Função para abrir/fechar o chatbot
+function toggleChat() {
+  const chatbotWindow = document.getElementById("chatbot-window");
+  if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
+    chatbotWindow.style.display = "block";
+    resetInactivityTimer();
+  } else {
+    chatbotWindow.style.display = "none";
+    clearTimeout(inactivityTimer);
+  }
+}
+
+// Timer de inatividade
+function resetInactivityTimer() {
+  clearTimeout(inactivityTimer);
+  inactivityTimer = setTimeout(closeChatAfterInactivity, INACTIVITY_TIMEOUT);
+}
+
+// Fecha o chat após inatividade
+function closeChatAfterInactivity() {
+  const chatWindow = document.getElementById('chatbot-window');
+  chatWindow.style.display = 'none';
+  const chatbotBody = document.getElementById('chatbot-body');
+  chatbotBody.innerHTML = '';
+  console.log("Chat fechado por inatividade.");
+}
