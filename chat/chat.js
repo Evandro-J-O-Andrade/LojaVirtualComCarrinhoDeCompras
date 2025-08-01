@@ -18,14 +18,14 @@ router.post('/', async (req, res) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4",
       messages: [
         {
           role: "system",
-          content: `Você é assistente virtual da loja Angel Cosméticos. 
-Oferecemos produtos Mary Kay como maquiagens, cremes faciais, perfumes e cuidados com a pele. 
-Nossa consultora é a Grasiely Machado. 
-Ajude o cliente com simpatia, explique sobre os produtos, indique onde encontrar informações no site e convide para entrar em contato se necessário.`
+          content: `Oi! Você está falando com a assistente da Angel Cosméticos, sua parceira para beleza e cuidados pessoais! 
+Aqui você encontra maquiagens, cremes faciais, perfumes e muito mais da Mary Kay. 
+Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais. 
+Estou aqui para ajudar, viu?`
         },
         {
           role: "user",
@@ -35,12 +35,16 @@ Ajude o cliente com simpatia, explique sobre os produtos, indique onde encontrar
       temperature: 0.7
     });
 
-    const resposta = completion.choices[0].message.content;
-    res.json({ resposta });
+    if (completion.choices && completion.choices.length > 0) {
+      const resposta = completion.choices[0].message.content;
+      return res.json({ resposta });
+    } else {
+      return res.status(500).json({ resposta: "Não foi possível obter resposta do ChatGPT." });
+    }
 
   } catch (error) {
     console.error("Erro ao consultar o ChatGPT:", error);
-    res.status(500).json({ resposta: "Desculpe, houve um erro. Tente novamente mais tarde." });
+    return res.status(500).json({ resposta: "Desculpe, houve um erro. Tente novamente mais tarde." });
   }
 });
 
