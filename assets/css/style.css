@@ -3272,5 +3272,103 @@ section.historia::before {
         padding: 0; /* Remove qualquer padding */
     }
 }
+/* Botão fechar modal */
+#imagemModal button.fechar {
+  background: transparent;  /* Sem fundo */
+  border: none;             /* Sem borda */
+  color: #fff;              /* Cor branca */
+  font-size: 2.5rem;        /* Tamanho do "x" */
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s ease;
+}
 
+#imagemModal button.fechar:hover,
+#imagemModal button.fechar:focus {
+  color: #ff69b4;           /* Cor de destaque no hover/focus */
+  outline: none;
+}
 
+/* Botões de navegação do modal */
+#imagemModal button.navegar {
+  background: transparent;  /* Sem fundo */
+  border: none;             /* Sem borda */
+  color: #fff;              /* Cor branca */
+  font-size: 2.5rem;        /* Tamanho das setas */
+  cursor: pointer;
+  padding: 0 10px;
+  user-select: none;
+  transition: color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#imagemModal button.navegar:hover,
+#imagemModal button.navegar:focus {
+  color: #ff69b4;           /* Cor de destaque no hover/focus */
+  outline: none;
+}
+
+/* Posicionamento - você pode ajustar para ficar igual ao que tinha */
+#imagemModal button.esquerda {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+#imagemModal button.direita {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+@media (max-width: 600px) {
+  #imagemModal {
+    padding: 10px;
+  }
+
+  /* Aumenta o botão fechar no mobile */
+  #imagemModal button.fechar {
+    font-size: 3rem;     /* Tamanho maior pro toque */
+    top: 10px;
+    right: 10px;
+  }
+
+  /* Aumenta os botões de navegação no mobile */
+  #imagemModal button.navegar {
+    font-size: 3rem;     /* Tamanho maior pro toque */
+    padding: 0 12px;
+  }
+
+  /* Posiciona melhor os botões nas laterais */
+  #imagemModal button.esquerda {
+    left: 10px;
+  }
+
+  #imagemModal button.direita {
+    right: 10px;
+  }
+
+  /* Ajusta a imagem para ocupar toda a largura disponível */
+  #imagemModal .modal-conteudo {
+    max-width: 100%;
+    max-height: 70vh;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Ajuste da descrição */
+  #imagemModal #descricao {
+    font-size: 0.9rem;
+    padding: 10px 5px;
+    color: #fff;
+    text-align: center;
+  }
+}

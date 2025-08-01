@@ -1,0 +1,9 @@
+# Arquivo robots.txt - Permite que os buscadores rastreiem o site
+User-agent: *
+Allow: /
+
+# Link para o sitemap principal
+Sitemap: https://angelcosmeticos.netlify.app/sitemaps.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/produtos-sitemaps.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/eventos-sitemaps.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/contato-sitemaps.xml

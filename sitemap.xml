@@ -6,7 +6,7 @@
 
   <!-- Página inicial (home) -->
   <url>
-    <loc>https://angelcosmeticos.netlify.app/</loc> 
+    <loc>https://angelcosmeticos.netlify.app</loc> 
     <!-- URL da página -->
     <priority>1.0</priority> 
     <!-- Prioridade máxima de rastreamento -->
@@ -62,6 +62,6 @@
 
 google-site-verification=Tgj5QVta_9lNocepoGNZpKVV_yujVsLcj8VZG3M6eSw
 https://angelcosmeticos.netlify.app/sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/produtos-sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/eventos-sitemaps.xml
-https://angelcosmeticos.netlify.app/assets/html/contato-sitemaps.xml
+https://angelcosmeticos.netlify.app/assets/html/produtos-sitemap.xml
+https://angelcosmeticos.netlify.app/assets/html/eventos-sitemap.xml
+https://angelcosmeticos.netlify.app/assets/html/contato-sitemap.xml
