@@ -1,7 +1,10 @@
+const chatbotBody = document.getElementById("chatbot-body");
+if (!chatbotBody) return;
+
 let inactivityTimer;
 const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutos
 
-// Função para enviar a mensagem do usuário ao backend
+// Envia a mensagem do usuário ao backend ao pressionar Enter
 async function sendMessage(event) {
   if (event.key === "Enter") {
     const inputField = document.getElementById("chatbot-input");
@@ -16,10 +19,8 @@ async function sendMessage(event) {
     try {
       const response = await fetch("https://angel-cosmeticos.onrender.com/api/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ pergunta: userMessage }) // <-- Corrigido para 'pergunta'
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensagem: userMessage }) // envia "mensagem"
       });
 
       const data = await response.json();
@@ -36,7 +37,7 @@ async function sendMessage(event) {
   }
 }
 
-// Função para adicionar mensagens ao corpo do chatbot
+// Adiciona a mensagem no corpo do chatbot
 function appendMessage(content, sender) {
   const chatbotBody = document.getElementById("chatbot-body");
   const messageElement = document.createElement("p");
@@ -46,7 +47,7 @@ function appendMessage(content, sender) {
   chatbotBody.scrollTop = chatbotBody.scrollHeight;
 }
 
-// Função para abrir/fechar o chatbot
+// Abre ou fecha o chatbot
 function toggleChat() {
   const chatbotWindow = document.getElementById("chatbot-window");
   if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
@@ -58,7 +59,7 @@ function toggleChat() {
   }
 }
 
-// Timer de inatividade
+// Reseta o timer de inatividade
 function resetInactivityTimer() {
   clearTimeout(inactivityTimer);
   inactivityTimer = setTimeout(closeChatAfterInactivity, INACTIVITY_TIMEOUT);
@@ -72,3 +73,4 @@ function closeChatAfterInactivity() {
   chatbotBody.innerHTML = '';
   console.log("Chat fechado por inatividade.");
 }
+    

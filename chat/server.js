@@ -1,26 +1,20 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from 'express';
+import cors from 'cors';
+import chatRouter from './chat.js'; // Caminho certo se estiver na raiz
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-// Middlewares
+// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Importa a rota do chatbot
-const chatRoutes = require('./chat/chat');
+// Rotas
+app.use('/api/chat', chatRouter);
 
-// Usa a rota em /api/chat
-app.use('/api/chat', chatRoutes);
+// Servir arquivos estáticos (frontend)
+app.use(express.static('public')); // ou ajuste se sua pasta for assets
 
-// Rota básica de teste
-app.get('/', (req, res) => {
-  res.send('Servidor rodando com sucesso!');
-});
-
-// Inicia o servidor
-app.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
 });
