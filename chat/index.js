@@ -1,14 +1,15 @@
 // chat/index.js
 import express from 'express';
 import dotenv from 'dotenv';
-import { OpenAI } from 'openai';
+import OpenRouter from 'openrouter-sdk';
 
 dotenv.config();
 
 const router = express.Router();
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+const openrouter = new OpenRouter({
+  apiKey: process.env.OPENROUTER_API_KEY, // sua chave OpenRouter
+  // endpoint padrão já configurado pela SDK (https://openrouter.ai)
 });
 
 router.post('/', async (req, res) => {
@@ -19,8 +20,8 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // modelo atualizado
+    const completion = await openrouter.chat.completions.create({
+      model: "openai/gpt-3.5-turbo", // modelo suportado pelo OpenRouter
       messages: [
         {
           role: "system",
@@ -40,9 +41,9 @@ Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais. Es
     return res.json({ resposta });
 
   } catch (error) {
-    console.error("Erro ao consultar o ChatGPT:", error);
+    console.error("Erro ao consultar o OpenRouter:", error);
 
-    let mensagemErro = "Erro ao consultar o ChatGPT.";
+    let mensagemErro = "Erro ao consultar o chatbot.";
 
     if (error.response) {
       mensagemErro += ` Status: ${error.response.status} - ${JSON.stringify(error.response.data)}`;

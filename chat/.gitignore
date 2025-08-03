@@ -2,3 +2,4 @@ echo "node_modules/
 .env
 " > .gitignore
 chat/node_modules/
+node_modules
