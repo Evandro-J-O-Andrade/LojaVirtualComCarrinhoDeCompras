@@ -23,16 +23,19 @@ router.post('/', async (req, res) => {
       },
       body: JSON.stringify({
         model: "openai/gpt-3.5-turbo", // você pode testar com outro, como mistralai/mistral-7b-instruct
-        messages: [
-          {
-            role: "system",
-            content: `Oi! Você está falando com a assistente da Angel Cosméticos, sua parceira para beleza e cuidados pessoais.`
-          },
-          {
-            role: "user",
-            content: mensagem
-          }
-        ]
+     messages: [
+  {
+    role: "system",
+    content: `Você é Angel, a assistente virtual da Angel Cosméticos. A empresa vende produtos de beleza Mary Kay, como maquiagem, cuidados com a pele (skincare), perfumes e acessórios femininos. 
+    A loja é gerenciada por Grasiely Machado, consultora Mary Kay, e atende especialmente o público feminino.
+    Sempre que possível, seja simpática, educada e empática, ajudando a responder dúvidas sobre produtos, atendimento, promoções ou onde encontrar a loja.`
+  },
+  {
+    role: "user",
+    content: mensagem
+  }
+]
+
       })
     });
 
@@ -51,3 +54,17 @@ router.post('/', async (req, res) => {
 });
 
 export default router;
+function sendSuggestion(mensagem) {
+  appendMessage(mensagem, "user");
+  enviarMensagemAoBackend(mensagem);
+}
+
+window.caso1 = caso1;
+window.caso2 = caso2;
+window.caso3 = caso3;
+window.sendSuggestion = sendSuggestion; // se você estiver usando também
+// a função sendSuggestion
+window.toggleChat = toggleChat; // se você estiver usando também
+window.sendSuggestion = sendSuggestion;
+// se você estiver usando também
+window.enviarMensagemAoBackend = enviarMensagemAoBackend; // se você estiver usando também

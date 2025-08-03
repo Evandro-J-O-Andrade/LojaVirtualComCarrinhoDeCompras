@@ -92,3 +92,82 @@ function closeChatAfterInactivity() {
   chatbotBody.innerHTML = '';
   console.log("Chat fechado por inatividade.");
 }
+function appendMessage(content, sender) {
+  const chatbotBody = document.getElementById("chatbot-body");
+  const messageElement = document.createElement("p");
+  messageElement.className = sender === "user" ? "user-message" : "bot-message";
+  messageElement.textContent = content;
+  chatbotBody.appendChild(messageElement);
+  chatbotBody.scrollTop = chatbotBody.scrollHeight;
+}
+
+function esconderSugestoes() {
+  const sugestoes = document.getElementById("chatbot-suggestions");
+  if (sugestoes) {
+    sugestoes.style.display = "none";
+  }
+}
+
+function mostrarSugestoes() {
+  const sugestoes = document.getElementById("chatbot-suggestions");
+  if (sugestoes) {
+    sugestoes.style.display = "block";
+  }
+}
+
+// Quando usuário digitar ENTER
+async function sendMessage(event) {
+  if (event.key === "Enter") {
+    const inputField = document.getElementById("chatbot-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
+
+    appendMessage(userMessage, "user");
+    inputField.value = "";
+
+    esconderSugestoes(); // Oculta as sugestões
+
+    // Enviar mensagem para backend e esperar resposta
+    try {
+      const response = await fetch("https://angel-cosmeticos.onrender.com/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ mensagem: userMessage })
+      });
+      const data = await response.json();
+      appendMessage(data.resposta || "Desculpe, não entendi sua solicitação.", "bot");
+    } catch (error) {
+      appendMessage("Erro ao se conectar ao servidor.", "bot");
+      console.error("Erro:", error);
+    }
+  }
+}
+
+// Quando usuário clicar numa sugestão
+function sendSuggestion(text) {
+  appendMessage(text, "user");
+
+  esconderSugestoes(); // Oculta as sugestões
+
+  fetch("https://angel-cosmeticos.onrender.com/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mensagem: text })
+  })
+    .then(res => res.json())
+    .then(data => {
+      appendMessage(data.resposta || "Desculpe, sem resposta no momento.", "bot");
+    })
+    .catch(() => appendMessage("Erro ao se conectar ao servidor.", "bot"));
+}
+
+// Quando abrir o chat, mostrar sugestões
+function toggleChat() {
+  const chatbotWindow = document.getElementById("chatbot-window");
+  if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
+    chatbotWindow.style.display = "block";
+    mostrarSugestoes();
+  } else {
+    chatbotWindow.style.display = "none";
+  }
+}

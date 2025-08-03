@@ -73,3 +73,125 @@ function closeChatAfterInactivity() {
   chatbotBody.innerHTML = '';
   console.log("Chat fechado por inatividade.");
 }
+function caso1() {
+  const texto = "Quais são os produtos mais vendidos?";
+  appendMessage(texto, "user");
+  enviarMensagemAoBackend(texto);
+}
+
+function caso2() {
+  const texto = "Como faço para comprar os produtos?";
+  appendMessage(texto, "user");
+  enviarMensagemAoBackend(texto);
+}
+
+function caso3() {
+  const texto = "Quero agendar uma consultoria personalizada com a Grasiely.";
+  appendMessage(texto, "user");
+  enviarMensagemAoBackend(texto);
+}
+
+function enviarMensagemAoBackend(mensagem) {
+  resetInactivityTimer();
+  fetch("https://angel-cosmeticos.onrender.com/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ mensagem })
+  })
+    .then(res => res.json())
+    .then(data => {
+      appendMessage(data.resposta || "Desculpe, sem resposta no momento.", "bot");
+    })
+    .catch(() => appendMessage("Erro ao se conectar ao servidor.", "bot"));
+}
+function toggleChat() {
+  const chatbotWindow = document.getElementById("chatbot-window");
+  const suggestions = document.getElementById("chatbot-suggestions");
+
+  if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
+    chatbotWindow.style.display = "block";
+    if (suggestions) suggestions.style.display = "block"; // 👈 Mostra sugestões
+    resetInactivityTimer();
+  } else {
+    chatbotWindow.style.display = "none";
+    if (suggestions) suggestions.style.display = "none"; // 👈 Esconde sugestões
+    clearTimeout(inactivityTimer);
+  }
+}
+function sendMessage(event) {
+  if (event.key === "Enter") {
+    const inputField = document.getElementById("chatbot-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
+
+    appendMessage(userMessage, "user");
+    inputField.value = "";
+
+    esconderSugestoes(); // Esconde sugestões quando usuário digita
+
+    // Enviar para backend e tratar resposta...
+  }
+}
+
+function sendSuggestion(text) {
+  appendMessage(text, "user");
+
+  esconderSugestoes(); // Esconde sugestões quando usuário clica
+
+  // Enviar para backend e tratar resposta...
+}
+function esconderSugestoes() {
+  const suggestions = document.getElementById("chatbot-suggestions");
+  if (suggestions) suggestions.style.display = "none"; // Esconde sugestões
+}function sendMessage(event) {
+  if (event.key === "Enter") {
+    const inputField = document.getElementById("chatbot-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
+
+    appendMessage(userMessage, "user");
+    inputField.value = "";
+
+    esconderSugestoes(); // Esconde sugestões quando usuário digita
+
+    // Enviar para backend e tratar resposta...
+  }
+}
+
+function sendSuggestion(text) {
+  appendMessage(text, "user");
+
+  esconderSugestoes(); // Esconde sugestões quando usuário clica
+
+  // Enviar para backend e tratar resposta...
+}
+function esconderSugestoes() {
+  const suggestions = document.getElementById("chatbot-suggestions");
+  if (suggestions) suggestions.style.display = "none"; // Esconde sugestões
+}
+function sendMessage(event) {
+  if (event.key === "Enter") {
+    const inputField = document.getElementById("chatbot-input");
+    const userMessage = inputField.value.trim();
+    if (!userMessage) return;
+
+    appendMessage(userMessage, "user");
+    inputField.value = "";
+
+    esconderSugestoes(); // Esconde sugestões quando usuário digita
+
+    // Enviar para backend e tratar resposta...
+  }
+}
+
+function sendSuggestion(text) {
+  appendMessage(text, "user");
+
+  esconderSugestoes(); // Esconde sugestões quando usuário clica
+
+  // Enviar para backend e tratar resposta...
+}
+function esconderSugestoes() {
+  const suggestions = document.getElementById("chatbot-suggestions");
+  if (suggestions) suggestions.style.display = "none"; // Esconde sugestões
+}
