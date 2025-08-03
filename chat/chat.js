@@ -1,15 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import { OpenAI } from 'openai';
+import fetch from 'node-fetch';
 
 dotenv.config();
 
 const router = express.Router();
-
-const openai = new OpenAI({
-  apiKey: process.env.OPENROUTER_API_KEY,  // Use a key do OpenRouter
-  baseURL: 'https://openrouter.ai/api/v1', // Atenção: URL base do OpenRouter
-});
 
 router.post('/', async (req, res) => {
   const mensagem = req.body.mensagem;
@@ -19,36 +14,41 @@ router.post('/', async (req, res) => {
   }
 
   try {
-    const completion = await openai.chat.completions.create({
-      model: "gpt-4o-mini",  // Modelo disponível no OpenRouter
-      messages: [
-        {
-          role: "system",
-          content: `Oi! Você está falando com a assistente da Angel Cosméticos, sua parceira para beleza e cuidados pessoais. Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais.`,
-        },
-        {
-          role: "user",
-          content: mensagem,
-        },
-      ],
-      temperature: 0.7,
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        model: "openai/gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content: `Oi! Você está falando com a assistente da Angel Cosméticos, sua parceira para beleza e cuidados pessoais.`
+          },
+          {
+            role: "user",
+            content: mensagem
+          }
+        ]
+      })
     });
 
-    const resposta = completion.choices?.[0]?.message?.content;
-    return res.json({ resposta });
-
-  } catch (error) {
-    console.error("Erro ao consultar o OpenRouter:", error);
-
-    let mensagemErro = "Erro ao consultar o OpenRouter.";
-
-    if (error.response) {
-      mensagemErro += ` Status: ${error.response.status} - ${JSON.stringify(error.response.data)}`;
-    } else if (error.message) {
-      mensagemErro += ` Mensagem: ${error.message}`;
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error(`Erro na API OpenRouter: Status ${response.status} - ${errorText}`);
+      return res.status(response.status).json({ resposta: `Erro na API OpenRouter: ${response.status}` });
     }
 
-    return res.status(500).json({ resposta: mensagemErro });
+    const data = await response.json();
+    const resposta = data.choices?.[0]?.message?.content;
+
+    return res.json({ resposta: resposta || "Desculpe, sem resposta no momento." });
+
+  } catch (error) {
+    console.error("Erro ao consultar OpenRouter:", error);
+    return res.status(500).json({ resposta: "Erro ao consultar OpenRouter." });
   }
 });
 
