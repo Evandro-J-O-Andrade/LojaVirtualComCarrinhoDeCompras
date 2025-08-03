@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
 
   try {
     const completion = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "gpt-3.5-turbo", // modelo atualizado
       messages: [
         {
           role: "system",
@@ -44,7 +44,6 @@ Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais. Es
 
     let mensagemErro = "Erro ao consultar o ChatGPT.";
 
-    // Se o erro for um objeto de resposta da API OpenAI
     if (error.response) {
       mensagemErro += ` Status: ${error.response.status} - ${JSON.stringify(error.response.data)}`;
     } else if (error.message) {
