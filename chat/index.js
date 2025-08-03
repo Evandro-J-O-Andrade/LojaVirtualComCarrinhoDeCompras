@@ -41,7 +41,17 @@ Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais. Es
 
   } catch (error) {
     console.error("Erro ao consultar o ChatGPT:", error);
-    return res.status(500).json({ resposta: "Erro ao consultar o ChatGPT." });
+
+    let mensagemErro = "Erro ao consultar o ChatGPT.";
+
+    // Se o erro for um objeto de resposta da API OpenAI
+    if (error.response) {
+      mensagemErro += ` Status: ${error.response.status} - ${JSON.stringify(error.response.data)}`;
+    } else if (error.message) {
+      mensagemErro += ` Mensagem: ${error.message}`;
+    }
+
+    return res.status(500).json({ resposta: mensagemErro });
   }
 });
 
