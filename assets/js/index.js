@@ -1,6 +1,4 @@
 const chatbotBody = document.getElementById("chatbot-body");
-import dotenv from 'dotenv';
-dotenv.config();
 if (!chatbotBody) return;
 
 let inactivityTimer;
@@ -75,4 +73,3 @@ function closeChatAfterInactivity() {
   chatbotBody.innerHTML = '';
   console.log("Chat fechado por inatividade.");
 }
-    

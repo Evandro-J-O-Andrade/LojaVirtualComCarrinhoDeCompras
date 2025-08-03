@@ -1,7 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import chatRouter from './index.js';  // router na mesma pasta chat/
+import path from 'path'; // NOVO
+import chatRouter from './index.js';
 
 dotenv.config();
 
@@ -11,20 +12,20 @@ const port = process.env.PORT || 1000;
 app.use(cors());
 app.use(express.json());
 
+// API do chatbot
 app.use('/api/chat', chatRouter);
 
-// Como o server.js está dentro da pasta chat, para servir arquivos estáticos da pasta assets (que está na raiz),
-// precisamos ajustar o caminho para subir um nível: '../assets'
-app.use(express.static('../assets'));
+// Servir a pasta "assets" corretamente mesmo o server.js estando dentro de /chat
+app.use(express.static(path.join(process.cwd(), 'assets')));
 
-// Servir o index.html que está na raiz do projeto
+// Servir index.html da raiz
 app.get('/', (req, res) => {
-  res.sendFile(process.cwd() + '/index.html');
+  res.sendFile(path.join(process.cwd(), 'index.html'));
 });
 
-// Servir a página contato.html dentro de assets/html
+// Servir contato.html dentro de assets/html
 app.get('/contato', (req, res) => {
-  res.sendFile(process.cwd() + '/assets/html/contato.html');
+  res.sendFile(path.join(process.cwd(), 'assets/html/contato.html'));
 });
 
 app.listen(port, () => {
