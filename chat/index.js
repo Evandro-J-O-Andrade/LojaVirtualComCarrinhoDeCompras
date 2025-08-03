@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
+        model: "openai/gpt-3.5-turbo", // ou outro modelo compatível com sua conta
         messages: [
           {
             role: "system",
@@ -37,6 +37,8 @@ router.post('/', async (req, res) => {
     });
 
     const data = await response.json();
+    console.log("Resposta da OpenRouter:", data); // 👈 VERIFIQUE isso no console do Render
+
     const resposta = data.choices?.[0]?.message?.content;
 
     return res.json({ resposta: resposta || "Desculpe, sem resposta no momento." });
