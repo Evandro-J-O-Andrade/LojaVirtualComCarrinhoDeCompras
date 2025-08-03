@@ -1,5 +1,18 @@
-echo "node_modules/
-.env
-" > .gitignore
+# Ignora node_modules na raiz e na pasta chat/
+node_modules/
 chat/node_modules/
-node_modules
+
+# Ignora variáveis de ambiente sensíveis
+.env
+
+# Ignora logs
+*.log
+
+# Ignora pastas de cache
+.cache/
+dist/
+build/
+
+# Ignora arquivos temporários do sistema
+.DS_Store
+Thumbs.db
