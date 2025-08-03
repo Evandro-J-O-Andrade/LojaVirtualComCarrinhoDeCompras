@@ -28,7 +28,7 @@ async function sendMessage(event) {
       if (data.resposta) {
         appendMessage(data.resposta, "bot");
       } else {
-        appendMessage("Desculpe, não entendi sua solicitação.", "bot");
+        appendMessage("Teste de chat", "bot");
       }
     } catch (error) {
       appendMessage("Erro ao se conectar ao servidor.", "bot");

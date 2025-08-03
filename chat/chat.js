@@ -1,3 +1,4 @@
+// chat/chat.js ou chat/index.js
 import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
@@ -21,7 +22,7 @@ router.post('/', async (req, res) => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: "openai/gpt-3.5-turbo",
+        model: "openai/gpt-3.5-turbo", // você pode testar com outro, como mistralai/mistral-7b-instruct
         messages: [
           {
             role: "system",
@@ -35,13 +36,10 @@ router.post('/', async (req, res) => {
       })
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error(`Erro na API OpenRouter: Status ${response.status} - ${errorText}`);
-      return res.status(response.status).json({ resposta: `Erro na API OpenRouter: ${response.status}` });
-    }
-
+    // 💡 ADICIONE LOG PARA DEBUG
     const data = await response.json();
+    console.log("Resposta da OpenRouter:", data);
+
     const resposta = data.choices?.[0]?.message?.content;
 
     return res.json({ resposta: resposta || "Desculpe, sem resposta no momento." });
