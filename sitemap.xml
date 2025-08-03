@@ -16,6 +16,18 @@
 
   <!-- Página de produtos -->
   <url>
+    <loc>https://angelcosmeticos.netlify.app/</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://angelcosmeticos.netlify.app/index.html</loc>
+    <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  
+
+  <url>
     <loc>https://angelcosmeticos.netlify.app/assets/html/produtos.html</loc>
     <priority>0.9</priority>
     <changefreq>weekly</changefreq>
@@ -65,3 +77,6 @@ https://angelcosmeticos.netlify.app/sitemaps.xml
 https://angelcosmeticos.netlify.app/assets/html/produtos-sitemap.xml
 https://angelcosmeticos.netlify.app/assets/html/eventos-sitemap.xml
 https://angelcosmeticos.netlify.app/assets/html/contato-sitemap.xml
+https://angelcosmeticos.netlify.app/assets/html/empresa-sitemap.xml
+https://angelcosmeticos.netlify.app/assets/html/conta-sitemap.xml
+https://angelcosmeticos.netlify.app/assets/html/carrinho-sitemap.xml
