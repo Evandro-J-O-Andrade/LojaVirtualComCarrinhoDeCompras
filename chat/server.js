@@ -1,27 +1,25 @@
-import dotenv from 'dotenv';
-dotenv.config();
-
+// chat/server.js
 import express from 'express';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import chatRouter from './chat'; // Certifique-se que o caminho está correto
+import chatRouter from './index.js';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 1000;
 
-// Middleware para permitir requisições de qualquer origem (CORS)
 app.use(cors());
-
-// Middleware para interpretar JSON no corpo das requisições
 app.use(express.json());
 
-// Rotas da API para chatbot
+// API do chatbot
 app.use('/api/chat', chatRouter);
 
-// Servir arquivos estáticos (frontend)
-// Ajuste 'public' para o nome da sua pasta que contém arquivos HTML, CSS, JS, imagens, etc.
-app.use(express.static('assets'));
+// Servir arquivos estáticos
+app.use(express.static('../html'));      // página HTML
+app.use('/js', express.static('../js')); // scripts do navegador
+app.use('/assets', express.static('../assets')); // imagens, estilos, etc.
 
-// Inicia o servidor
 app.listen(port, () => {
   console.log(`Servidor rodando na porta ${port}`);
 });

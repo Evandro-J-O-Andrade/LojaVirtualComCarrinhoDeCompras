@@ -1,78 +1,48 @@
-const chatbotBody = document.getElementById("chatbot-body");
+// chat/index.js
+import express from 'express';
 import dotenv from 'dotenv';
+import { OpenAI } from 'openai';
+
 dotenv.config();
-if (!chatbotBody) return;
 
-let inactivityTimer;
-const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutos
+const router = express.Router();
 
-// Envia a mensagem do usuário ao backend ao pressionar Enter
-async function sendMessage(event) {
-  if (event.key === "Enter") {
-    const inputField = document.getElementById("chatbot-input");
-    const userMessage = inputField.value.trim();
-    if (!userMessage) return;
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-    appendMessage(userMessage, "user");
-    inputField.value = "";
+router.post('/', async (req, res) => {
+  const mensagem = req.body.mensagem;
 
-    resetInactivityTimer();
-
-    try {
-      const response = await fetch("https://angel-cosmeticos.onrender.com/api/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mensagem: userMessage }) // envia "mensagem"
-      });
-
-      const data = await response.json();
-
-      if (data.resposta) {
-        appendMessage(data.resposta, "bot");
-      } else {
-        appendMessage("Desculpe, não entendi sua solicitação.", "bot");
-      }
-    } catch (error) {
-      appendMessage("Erro ao se conectar ao servidor.", "bot");
-      console.error("Erro:", error);
-    }
+  if (!mensagem) {
+    return res.status(400).json({ resposta: "Mensagem vazia recebida." });
   }
-}
 
-// Adiciona a mensagem no corpo do chatbot
-function appendMessage(content, sender) {
-  const chatbotBody = document.getElementById("chatbot-body");
-  const messageElement = document.createElement("p");
-  messageElement.className = sender === "user" ? "user-message" : "bot-message";
-  messageElement.textContent = content;
-  chatbotBody.appendChild(messageElement);
-  chatbotBody.scrollTop = chatbotBody.scrollHeight;
-}
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        {
+          role: "system",
+          content: `Oi! Você está falando com a assistente da Angel Cosméticos, sua parceira para beleza e cuidados pessoais. 
+Aqui você encontra maquiagens, cremes faciais, perfumes e muito mais da Mary Kay. 
+Fale comigo para tirar dúvidas, conhecer promoções e receber dicas legais. Estou aqui para ajudar!`,
+        },
+        {
+          role: "user",
+          content: mensagem,
+        },
+      ],
+      temperature: 0.7,
+    });
 
-// Abre ou fecha o chatbot
-function toggleChat() {
-  const chatbotWindow = document.getElementById("chatbot-window");
-  if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
-    chatbotWindow.style.display = "block";
-    resetInactivityTimer();
-  } else {
-    chatbotWindow.style.display = "none";
-    clearTimeout(inactivityTimer);
+    const resposta = completion.choices?.[0]?.message?.content;
+    return res.json({ resposta });
+
+  } catch (error) {
+    console.error("Erro ao consultar o ChatGPT:", error);
+    return res.status(500).json({ resposta: "Erro ao consultar o ChatGPT." });
   }
-}
+});
 
-// Reseta o timer de inatividade
-function resetInactivityTimer() {
-  clearTimeout(inactivityTimer);
-  inactivityTimer = setTimeout(closeChatAfterInactivity, INACTIVITY_TIMEOUT);
-}
-
-// Fecha o chat após inatividade
-function closeChatAfterInactivity() {
-  const chatWindow = document.getElementById('chatbot-window');
-  chatWindow.style.display = 'none';
-  const chatbotBody = document.getElementById('chatbot-body');
-  chatbotBody.innerHTML = '';
-  console.log("Chat fechado por inatividade.");
-}
-    
+export default router;
