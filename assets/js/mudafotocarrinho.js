@@ -6,7 +6,7 @@ function atualizarIconeCarrinho() {
 
     cartIcons.forEach(cartIcon => {
         if (produtosNoCarrinho) {
-            cartIcon.src = "/assets/img/carrinho!.png"; // Ícone com alerta (!)
+            cartIcon.src = "/assets/img/carrinhocheio.png"; // Ícone com alerta (!)
         } else {
             cartIcon.src = "/assets/img/carrinho.png"; // Ícone padrão do carrinho
         }
@@ -17,7 +17,7 @@ function atualizarIconeCarrinho() {
     const cartIcon = document.getElementById(".cart-icon"); // Seleciona o ícone do carrinho
 
     if (cartIcon) {
-        cartIcon.src = produtosNoCarrinho ? "/assets/img/carrinho!.png" : "/assets/img/carrinho.png"; // Atualiza o ícone
+        cartIcon.src = produtosNoCarrinho ? "/assets/img/carrinhocheio.png" : "/assets/img/carrinho.png"; // Atualiza o ícone
     }
 }
 
