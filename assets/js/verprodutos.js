@@ -19,6 +19,64 @@ document.addEventListener("DOMContentLoaded", function () {
                 "/assets/img/galeria-5.jpg"
             ]
         },
+
+         {
+            "data-prodoutoid": 2,
+            nome: "Blusa de frio manga longa meletinho",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+         {
+            "data-prodoutoid": 3,
+            nome: "Blusa de frio manga longa meletinho",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
+         {
+            "data-prodoutoid": 4,
+            nome: "Blusa de frio manga longa meletinho",
+            precos: {
+                P: 450,
+                M: 500,
+                G: 550,
+                GG: 600,
+                XG: 650
+            },
+            descricao: "Produto de alta qualidade, feito com material de primeira linha.",
+            imagens: [
+                "/assets/img/galeria-1.jpg",
+                "/assets/img/galeria-2.jpg",
+                "/assets/img/galeria-3.jpg",
+                "/assets/img/galeria-4.jpg",
+                "/assets/img/galeria-5.jpg"
+            ]
+        },
         // Adicione os outros produtos aqui...
     ];
 

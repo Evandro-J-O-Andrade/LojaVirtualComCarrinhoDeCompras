@@ -1,109 +1,150 @@
+// Aguarda o carregamento completo do DOM antes de executar o script
 document.addEventListener("DOMContentLoaded", () => {
+    if (!window.fetch) {
+        console.error("Fetch API não é suportada neste navegador.");
+        alert("Seu navegador não suporta algumas funcionalidades deste site. Atualize seu navegador.");
+        return; // Impede execução do código se fetch não estiver disponível
+    }
+
+    // Elementos da página utilizados
     const subtotalGeral = document.getElementById("subtotal-geral");
     const totalGeral = document.getElementById("total-geral");
     const freteSpan = document.getElementById("frete");
     const cepInput = document.getElementById("cep");
     const enderecoSpan = document.getElementById("endereco");
-    let frete = 0; // Valor inicial do frete
+    const resumoTotal = document.getElementById("total");
 
-    // Atualiza os subtotais e totais
+    let frete = 0;                      // Valor inicial do frete
+    const limiteFreteGratis = 360;     // Limite para frete grátis
+    let isCepValidated = false;        // Controla se o CEP foi validado
+    let isPurchaseFinalized = false;   // Controla se a compra foi finalizada
+
+    // Atualiza o ícone do carrinho com base nos produtos
+    function atualizarIconeCarrinho() {
+        const produtosNoCarrinho = !carrinhoVazio();
+        const cartIcons = document.querySelectorAll(".cart-icon");
+
+        cartIcons.forEach(cartIcon => {
+            cartIcon.src = produtosNoCarrinho
+                ? "/assets/img/carrinhocheio.png"
+                : "/assets/img/carrinho2.png";
+        });
+    }
+
+    // Atualiza totais e frete
     function atualizarTotais() {
         let subtotal = 0;
 
-        // Para cada produto, calcular o subtotal
         document.querySelectorAll(".quantidade").forEach((input) => {
-            const preco = parseFloat(input.dataset.preco); // Preço do produto
-            const quantidade = parseInt(input.value) || 0; // Quantidade do produto (ou 0 se não houver valor)
-
+            const preco = parseFloat(input.dataset.preco);
+            const quantidade = parseInt(input.value) || 0;
             const subtotalProduto = preco * quantidade;
-            input.closest("tr").querySelector(".subtotal").textContent = `R$ ${subtotalProduto.toFixed(2)}`; // Atualiza o subtotal do produto
-            subtotal += subtotalProduto; // Soma ao subtotal geral
+
+            input.closest("tr").querySelector(".subtotal").textContent = `R$ ${subtotalProduto.toFixed(2)}`;
+            subtotal += subtotalProduto;
         });
 
-        // Se não houver nenhum produto no carrinho, zera o subtotal e o total
-        if (subtotal === 0) {
-            subtotalGeral.textContent = `R$ 0,00`;
-            totalGeral.textContent = `R$ 0,00`;
+        if (subtotal >= limiteFreteGratis) {
+            frete = 0;
+            freteSpan.textContent = "Parabéns você ganhou frete gratis!";
+            freteSpan.style.color = "green";
         } else {
-            // Atualiza o subtotal geral
-            subtotalGeral.textContent = `R$ ${subtotal.toFixed(2)}`;
-            // Atualiza o total geral (com frete)
-            totalGeral.textContent = `R$ ${(subtotal + frete).toFixed(2)}`;
+            freteSpan.textContent = `R$ ${frete.toFixed(2)}`;
+            freteSpan.style.color = ""; // cor padrão
         }
+
+        subtotalGeral.textContent = `R$ ${subtotal.toFixed(2)}`;
+        totalGeral.textContent = `R$ ${(subtotal + frete).toFixed(2)}`;
+        resumoTotal.textContent = (subtotal + frete).toFixed(2);
+
+        atualizarIconeCarrinho();
     }
 
-    // Atualiza os valores ao alterar a quantidade
-    document.querySelectorAll(".quantidade").forEach((input) => {
-        input.addEventListener("change", atualizarTotais);
-    });
+    // Verifica se o carrinho está vazio
+    function carrinhoVazio() {
+        let produtosNoCarrinho = 0;
+        document.querySelectorAll(".quantidade").forEach((input) => {
+            produtosNoCarrinho += parseInt(input.value) || 0;
+        });
+        return produtosNoCarrinho === 0;
+    }
 
-    // Calcula o frete com base no CEP usando a API ViaCEP
+    // Consulta o frete baseado no CEP
     function calcularFrete() {
-        const cep = cepInput.value.replace(/\D/g, ""); // Remove caracteres não numéricos
+        const cep = cepInput.value.replace(/\D/g, "");
 
-        if (cep.length !== 9) {
-        
-            return;
-        }
+        if (cep.length !== 8) return; // Não continua se o CEP for inválido
 
-        // Faz uma consulta na API ViaCEP
         fetch(`https://viacep.com.br/ws/${cep}/json/`)
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
                 if (data.erro) {
                     alert("CEP inválido! Tente novamente.");
+                    isCepValidated = false;
                     return;
                 }
 
-                // Exibe o endereço (opcional)
                 enderecoSpan.textContent = `Endereço: ${data.logradouro}, ${data.bairro}, ${data.localidade} - ${data.uf}`;
 
-                // Calcula o frete com base na região (exemplo simplificado)
-                if (data.uf === "SP" || data.uf === "RJ") {
-                    frete = 30.00; // Sudeste
-                } else if (data.uf === "RS" || data.uf === "SC" || data.uf === "PR") {
-                    frete = 50.00; // Sul
-                } else {
-                    frete = 70.00; // Demais regiões
-                }
+                if (["SP", "RJ"].includes(data.uf)) frete = 30.00;
+                else if (["RS", "SC", "PR"].includes(data.uf)) frete = 50.00;
+                else frete = 70.00;
 
-                // Atualiza o valor do frete e o total
-                freteSpan.textContent = `R$ ${frete.toFixed(2)}`;
+                isCepValidated = true;
                 atualizarTotais();
             })
-            .catch((error) => {
+            .catch(error => {
                 alert("Erro ao buscar o CEP. Tente novamente.");
                 console.error("Erro na API ViaCEP:", error);
+                isCepValidated = false;
             });
     }
 
-    // Expor a função para o botão no HTML
+    // Evento quando o campo perde o foco
+    cepInput.addEventListener("blur", () => {
+        const cep = cepInput.value.replace(/\D/g, "");
+
+        if (cep === "" || cep.length < 8) {
+            enderecoSpan.textContent = "";
+            frete = 0;
+            isCepValidated = false;
+            freteSpan.textContent = "Digite seu CEP para calcular o frete.";
+            freteSpan.style.color = "#d10000"; // vermelho
+            atualizarTotais();
+        } else {
+            calcularFrete();
+        }
+    });
+
+    // Atualiza totais ao digitar o CEP
+    cepInput.addEventListener("input", () => {
+        const cep = cepInput.value.replace(/\D/g, "");
+
+        if (cep === "") {
+            enderecoSpan.textContent = "";
+            frete = 0;
+            isCepValidated = false;
+            freteSpan.textContent = "Digite seu CEP para calcular o frete.";
+            freteSpan.style.color = "#d10000";
+            atualizarTotais();
+        }
+    });
+
+    // Atualiza totais ao alterar quantidade
+    document.querySelectorAll(".quantidade").forEach((input) => {
+        input.addEventListener("input", () => {
+            if (isPurchaseFinalized) {
+                alert("A compra já foi finalizada. Inicie uma nova compra para modificar.");
+                input.value = input.defaultValue;
+                return;
+            }
+            atualizarTotais();
+        });
+    });
+
+    // Atualiza totais na primeira execução
+    atualizarTotais();
+
+    // Expõe as funções globalmente se forem usadas no HTML
     window.calcularFrete = calcularFrete;
-
-    // Atualiza os valores iniciais
-    atualizarTotais();
 });
-
-// Função para remover produtos
-function removerProduto(botaoRemover) {
-    const linha = botaoRemover.closest("tr"); // Linha correspondente
-    const precoProduto = parseFloat(linha.querySelector("td:nth-child(3)").innerText.replace("R$", "").trim()); // Preço do produto
-    const quantidadeInput = linha.querySelector("input.quantidade"); // Campo de quantidade
-    let quantidade = parseInt(quantidadeInput.value); // Valor da quantidade
-
-    // Se a quantidade for maior que 1, diminui em 1
-    if (quantidade > 1) {
-        quantidade -= 1;
-        quantidadeInput.value = quantidade;
-
-        // Atualiza o subtotal do produto
-        const subtotalProduto = precoProduto * quantidade;
-        linha.querySelector(".subtotal").textContent = `R$ ${subtotalProduto.toFixed(2)}`;
-    } else {
-        // Se a quantidade for 1, remove a linha inteira
-        linha.remove();
-    }
-
-    // Atualiza os totais
-    atualizarTotais();
-}

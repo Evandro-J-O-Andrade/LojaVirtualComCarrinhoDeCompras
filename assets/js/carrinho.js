@@ -32,36 +32,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    // Atualiza os subtotais e totais
-    function atualizarTotais() {
-        let subtotal = 0;
+    // Atualiza os subtotais e totais// Atualiza os subtotais e totais
+function atualizarTotais() {
+    let subtotal = 0;
 
-        // Calcula o subtotal baseado nas quantidades
-        document.querySelectorAll(".quantidade").forEach((input) => {
-            const preco = parseFloat(input.dataset.preco);
-            const quantidade = parseInt(input.value) || 0;
+    // Calcula o subtotal baseado nas quantidades
+    document.querySelectorAll(".quantidade").forEach((input) => {
+        const preco = parseFloat(input.dataset.preco);
+        const quantidade = parseInt(input.value) || 0;
+        const subtotalProduto = preco * quantidade;
+        input.closest("tr").querySelector(".subtotal").textContent = `R$ ${subtotalProduto.toFixed(2)}`;
+        subtotal += subtotalProduto;
+    });
 
-            const subtotalProduto = preco * quantidade;
-            input.closest("tr").querySelector(".subtotal").textContent = `R$ ${subtotalProduto.toFixed(2)}`;
-            subtotal += subtotalProduto;
-        });
-
-        // Aplica frete grátis se o total atingir o limite
+    // Verifica se o CEP foi validado antes de exibir qualquer mensagem de frete
+    if (!isCepValidated) {
+        frete = 0; // Garante que o frete não será aplicado
+        freteSpan.textContent = "Digite seu CEP para calcular o frete.";
+        freteSpan.style.color = "red"; // Mensagem destacada
+    } else {
+        // Se o CEP foi validado, exibe frete grátis ou valor do frete
         if (subtotal >= limiteFreteGratis) {
-            frete = 0; // Zera o frete
-            freteSpan.textContent = "Parabéns você ganhou frete gratis!";
+            frete = 0;
+            freteSpan.textContent = "Parabéns você ganhou frete grátis!";
+            freteSpan.style.color = "green";
         } else {
             freteSpan.textContent = `R$ ${frete.toFixed(2)}`;
+            freteSpan.style.color = "inherit";
         }
-
-        // Atualiza os valores no subtotal, total e no resumo
-        subtotalGeral.textContent = `R$ ${subtotal.toFixed(2)}`;
-        totalGeral.textContent = `R$ ${(subtotal + frete).toFixed(2)}`;
-
-        // Atualiza o total dentro do resumo
-        resumoTotal.textContent = (subtotal + frete).toFixed(2); // Atualiza o total no resumo
-        atualizarIconeCarrinho();
     }
+
+    // Atualiza os valores no subtotal, total e no resumo
+    subtotalGeral.textContent = `R$ ${subtotal.toFixed(2)}`;
+    totalGeral.textContent = `R$ ${(subtotal + frete).toFixed(2)}`;
+    resumoTotal.textContent = (subtotal + frete).toFixed(2);
+
+    // Atualiza o ícone do carrinho
+    atualizarIconeCarrinho();
+}
 
     // Verifica se o carrinho tem produtos
     function carrinhoVazio() {
