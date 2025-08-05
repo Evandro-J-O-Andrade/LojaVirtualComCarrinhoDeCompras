@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const produtoDiv = document.createElement('div');
             produtoDiv.classList.add('col-4');
             produtoDiv.innerHTML = `
-                <img src="${produto.imagem}" alt="${produto.nome}">
+               <img src="${produto.imagem}" alt="${produto.nome} Mary Kay promoção cosmeticos">
                 <h4>${produto.nome}</h4>
                 <div class="classificacao">
                     ${'<ion-icon name="star"></ion-icon>'.repeat(produto.classificacao)}

@@ -58,13 +58,3 @@ function sendSuggestion(mensagem) {
   appendMessage(mensagem, "user");
   enviarMensagemAoBackend(mensagem);
 }
-
-window.caso1 = caso1;
-window.caso2 = caso2;
-window.caso3 = caso3;
-window.sendSuggestion = sendSuggestion; // se você estiver usando também
-// a função sendSuggestion
-window.toggleChat = toggleChat; // se você estiver usando também
-window.sendSuggestion = sendSuggestion;
-// se você estiver usando também
-window.enviarMensagemAoBackend = enviarMensagemAoBackend; // se você estiver usando também
