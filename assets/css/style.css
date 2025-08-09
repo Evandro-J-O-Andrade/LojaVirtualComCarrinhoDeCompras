@@ -7,6 +7,23 @@
 }
 
 :root {
+    --cor-primaria: #0077b6;           /* Define a cor azul principal usada no site */
+  --cor-secundaria: #90e0ef;         /* Define um azul claro para detalhes e destaques */
+  --cor-escura: #023e8a;             /* Azul escuro usado em banners e efeitos de degradê */
+  --cinza-claro: #e0e0e0;            /* Cinza claro para textos e fundos suaves */
+  --cinza-escuro: #d0d0d0;           /* Cinza um pouco mais escuro, usado como reserva */
+  --cinza-preto: #1a1a1a;            /* Cor escura usada como fundo geral da página */
+  --preto: #111111;                  /* Preto intenso para textos com maior destaque */
+  --branco: #ffffff;                 /* Branco puro, usado para fundos claros e textos */
+  --cor-primaria-escura: #004a75;   /* Azul escuro para efeitos hover nos botões */
+  --fonte-principal: 'Segoe UI', sans-serif; /* Fonte principal usada no site */
+  --cor-verde-agua: #40E0D0; /* Verde água para detalhes e destaques */
+  --cor-rosa-escuro: #e60073; /* Rosa escuro para destaques e links ativos */
+  --cor-laranja: #ff8c00; /* Laranja para botões e  destaques */
+  --cor-amarelo: #ffd700; /* Amarelo para destaques e botões */
+  --cor-roxo: #800080; /* Roxo para detalhes e destaques */   
+  --cor-verde: #06e60d; /* Verde para botões e destaques */
+  --fonte-principal: 'Segoe UI', sans-serif; /* Fonte principal do site */
     --cor-padrao: #ff523b;
     --cor-padrao-hover: #f3b2e5;
     --cor-fonte: #fff;
@@ -408,6 +425,7 @@ small {
 }
 
 
+
 .rodape-col-3 ul {
     padding: 0;
     margin: 0;
@@ -433,31 +451,42 @@ text-decoration: none;
 }
 
 .rodape-col-4 ul {
-    width: 15px;
+  
     min-width: 250px;
     margin-bottom: 20px;
     font-size: 20px;
     flex-basis: 12%;
     text-align: right;
     margin: 0;
+    padding: 0;
+    list-style: none;
 
 }
 
 .rodape-col-4 ul li {
     width: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
     min-width: 250px;
     margin-bottom: 20px;
     font-size: 20px;
     flex-basis: 12%;
     text-align: right;
     margin: 0;
+    gap:    10px;
 
 
 
 }
 
+
 .rodape-col-4 h3 {
-    margin-top: 25px;
+  margin-top: 0; /* remove margem superior para ficar grudado em cima */
+  margin-bottom: 15px; /* dá espaço para o social links */
+  font-size: 1.2rem;
+  transition: font-size 0.4s ease, margin-bottom 0.4s ease;
+  align-self: flex-end; /* alinha o h3 no lado direito da coluna */
 }
 
 ul {
@@ -1992,7 +2021,7 @@ a[href*="wa.me"] {
 
     /*Fim do menu forçando*/
 
-    @media only screen and (max-width:300) {
+    @media only screen and (max-width:300px) {
         .linha {
             text-align: center;
         }
@@ -3370,5 +3399,273 @@ section.historia::before {
     padding: 10px 5px;
     color: #fff;
     text-align: center;
+  }
+}
+/* === Responsividade para mobile === */
+@media (max-width: 400px) {
+  #chatbot-window {
+    width: 90vw;
+    right: 5vw;
+    bottom: 80px;
+    max-height: 60vh;
+  }
+  #chatbot-body {
+    max-height: 50vh;
+  }
+  #chatbot-button {
+    bottom: 80px;
+    right: 20px;
+    padding: 12px;
+  }
+}
+/* Mobile super pequeno (de 220px até 320px) */
+@media (max-width: 320px) {
+  #chatbot-window {
+    width: 90vw;
+    right: 5vw;
+    bottom: 60px;
+    max-height: 50vh;
+  }
+  #chatbot-body {
+    max-height: 40vh;
+  }
+  #chatbot-button {
+    bottom: 60px;
+    right: 15px;
+    padding: 10px;
+  }
+  #chatbot-input {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* Mobile pequeno (321px até 480px) */
+@media (min-width: 321px) and (max-width: 480px) {
+  #chatbot-window {
+    width: 85vw;
+    right: 7vw;
+    bottom: 70px;
+    max-height: 55vh;
+  }
+  #chatbot-body {
+    max-height: 45vh;
+  }
+  #chatbot-button {
+    bottom: 70px;
+    right: 20px;
+    padding: 12px;
+  }
+  #chatbot-input {
+    font-size: 13px;
+    padding: 11px;
+  }
+}
+
+/* Tablets e mobiles médios (481px até 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  #chatbot-window {
+    width: 350px;
+    right: 40px;
+    bottom: 80px;
+    max-height: 60vh;
+  }
+  #chatbot-body {
+    max-height: 50vh;
+  }
+  #chatbot-button {
+    bottom: 80px;
+    right: 30px;
+    padding: 13px;
+  }
+}
+
+/* Telas pequenas desktop (769px até 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #chatbot-window {
+    width: 370px;
+    right: 50px;
+    bottom: 90px;
+    max-height: 65vh;
+  }
+  #chatbot-body {
+    max-height: 55vh;
+  }
+  #chatbot-button {
+    bottom: 90px;
+    right: 35px;
+    padding: 14px;
+  }
+}
+
+/* Telas desktop médias (1025px até 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  #chatbot-window {
+    width: 400px;
+    right: 60px;
+    bottom: 100px;
+    max-height: 70vh;
+  }
+  #chatbot-body {
+    max-height: 60vh;
+  }
+  #chatbot-button {
+    bottom: 100px;
+    right: 40px;
+    padding: 15px;
+  }
+}
+
+/* Telas Full HD e maiores (1441px até 1920px e além) */
+@media (min-width: 1441px) {
+  #chatbot-window {
+    width: 420px;
+    right: 70px;
+    bottom: 110px;
+    max-height: 75vh;
+  }
+  #chatbot-body {
+    max-height: 65vh;
+  }
+  #chatbot-button {
+    bottom: 110px;
+    right: 50px;
+    padding: 16px;
+  }
+}
+.rodape-col-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Mantém no canto direito */
+  transition: align-items 0.4s ease;
+}
+
+.rodape-col-4 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: auto; /* Remove largura fixa */
+  transition: width 0.4s ease;
+}
+
+.social-links-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px; /* Espaçamento consistente entre os ícones */
+  transition: align-items 0.4s ease, gap 0.4s ease;
+}
+
+.social-links-vertical li {
+  margin: 0; /* margem removida pois o gap já cuida disso */
+}
+
+.social-links-vertical a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 
+    color 0.3s ease, 
+    transform 0.3s ease, 
+    font-size 0.4s ease;
+  outline-offset: 3px;
+  outline: none;
+}
+
+.social-links-vertical a:hover,
+.social-links-vertical a:focus-visible {
+  color: #00aaff;
+  transform: scale(1.05);
+  outline: 2px solid #00aaff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.social-links-vertical i {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 5px #00aaff);
+  transition: filter 0.3s ease, transform 0.3s ease, font-size 0.4s ease;
+}
+
+.social-links-vertical a:hover i,
+.social-links-vertical a:focus-visible i {
+  filter: drop-shadow(0 0 8px #00aaff);
+  transform: scale(1.2);
+}
+
+/* Media query gradual para telas menores que 700px */
+@media (max-width: 700px) {
+  .rodape-col-4 {
+    align-items: center; /* centraliza suavemente */
+  }
+
+  .social-links-vertical {
+    align-items: center;
+    gap: 12px; /* reduz um pouco o gap */
+  }
+
+  .social-links-vertical a {
+    font-size: 1.2rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.4rem;
+  }
+}
+
+/* Media query para telas menores que 500px */
+@media (max-width: 500px) {
+  .rodape-col-4 {
+    align-items: center;
+  }
+
+  .social-links-vertical {
+    gap: 8px; /* aumenta o gap para melhor toque em telas pequenas */
+  }
+
+  .social-links-vertical a {
+    font-size: 1.1rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.3rem;
+  }
+}
+
+/* Em telas muito pequenas (ex: celular até 350px) */
+@media (max-width: 350px) {
+  .social-links-vertical {
+    gap: 8px;
+  }
+
+  .social-links-vertical a {
+    font-size: 1rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 700px) {
+  .rodape-col-4 h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .rodape-col-4 h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .rodape-col-4 h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
   }
 }

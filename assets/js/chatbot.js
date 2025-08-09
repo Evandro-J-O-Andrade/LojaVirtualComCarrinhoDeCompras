@@ -3,91 +3,116 @@ let inactivityTimer;
 
 // Tempo limite para fechar o chat por inatividade (5 minutos)
 const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutos em milissegundos
+
 // Função para fechar chat ao clicar fora da janela do chatbot
 document.addEventListener('click', function(event) {
-  const chatWindow = document.getElementById('chatbot-window');
-  const botaoChat = document.getElementById('chatbot-button');
+  const chatWindow = document.getElementById('chatbot-window'); // Obtém a janela do chat
+  const botaoChat = document.getElementById('chatbot-button'); // Obtém o botão que abre o chat
 
   // Se o chat estiver aberto e o clique NÃO foi dentro do chat nem no botão do chat
   if (chatWindow.style.display === 'block' &&
-      !chatWindow.contains(event.target) &&
-      event.target !== botaoChat) {
+      !chatWindow.contains(event.target) && // Verifica se o clique não foi dentro do chat
+      event.target !== botaoChat) { // Verifica se o clique não foi no botão do chat
     chatWindow.style.display = 'none'; // Fecha a janela do chat
   }
 });
 
 // Função para abrir/fechar o chat (ligada ao botão)
 function toggleChat() {
-  const chatWindow = document.getElementById('chatbot-window');
-  if (chatWindow.style.display === 'block') {
-    chatWindow.style.display = 'none';
+  const chatWindow = document.getElementById('chatbot-window'); // Pega a janela do chat
+  if (chatWindow.style.display === 'block') { // Se o chat estiver aberto
+    chatWindow.style.display = 'none'; // Fecha o chat
   } else {
-    chatWindow.style.display = 'block';
-    scrollToBottom(); // Sempre que abrir, vai para o fim do chat
+    chatWindow.style.display = 'block'; // Abre o chat
+    scrollToBottom(); // Vai para o fim do chat ao abrir
+    mostrarSugestoes(); // Mostra as sugestões de perguntas
   }
+  resetInactivityTimer(); // Reset timer ao abrir/fechar
 }
+
+// Função que rola o scroll para a última mensagem de forma suave
+function scrollToBottom() {
+  const chatbotBody = document.getElementById('chatbot-body');
+
+  // Verifica se o scroll está perto do fim (ex: até 50px do final)
+  const distanciaDoFim = chatbotBody.scrollHeight - chatbotBody.scrollTop - chatbotBody.clientHeight;
+  
+  if (distanciaDoFim < 50) {
+    // Se o usuário está praticamente no final, rola suavemente para o fim
+    chatbotBody.scrollTo({
+      top: chatbotBody.scrollHeight,
+      behavior: 'smooth'
+    });
+  }
+  // Se não estiver no fim, não faz nada, respeitando o que o usuário está lendo
+}
+
 
 // Função para adicionar mensagem ao chat e rolar scroll para o fim
 function appendMessage(content, sender) {
   const chatbotBody = document.getElementById('chatbot-body');
+
+  // Distância do scroll até o fim
+  const distanciaDoFim = chatbotBody.scrollHeight - chatbotBody.scrollTop - chatbotBody.clientHeight;
+
+  // Se estiver longe do fim, significa que o usuário está lendo mensagens antigas
+  if (distanciaDoFim > 50) {
+    // Limpa o chat antes de adicionar a nova mensagem
+    chatbotBody.innerHTML = '';
+  }
+
+  // Cria a nova mensagem
   const messageElement = document.createElement('p');
   messageElement.className = sender === 'user' ? 'user-message' : 'bot-message';
   messageElement.textContent = content;
+
   chatbotBody.appendChild(messageElement);
 
-  // Rola o scroll para a última mensagem
-  scrollToBottom();
+  // Rola para o fim pra mostrar a mensagem nova
+  chatbotBody.scrollTo({
+    top: chatbotBody.scrollHeight,
+    behavior: 'smooth'
+  });
+
+  return messageElement;
 }
 
-// Função que rola o scroll para a última mensagem
-function scrollToBottom() {
-  const chatbotBody = document.getElementById('chatbot-body');
-  chatbotBody.scrollTop = chatbotBody.scrollHeight;
-}
 
 /**
  * Envia mensagem ao backend quando o usuário pressiona a tecla Enter no input do chat
  * @param {KeyboardEvent} event - Evento do teclado
  */
 async function sendMessage(event) {
-  // Verifica se a tecla pressionada foi Enter
-  if (event.key === "Enter") {
-    // Pega o campo de input do chat
-    const inputField = document.getElementById("chatbot-input");
-    
-    // Remove espaços em branco do texto digitado pelo usuário
-    const userMessage = inputField.value.trim();
-    
-    // Se o input estiver vazio, não faz nada
-    if (!userMessage) return;
+  if (event.key === "Enter") { // Só reage ao Enter
+    resetInactivityTimer();
 
-    // Adiciona a mensagem do usuário na tela do chat
-    appendMessage(userMessage, "user");
-    
-    // Limpa o campo de input para próxima mensagem
-    inputField.value = "";
+    const inputField = document.getElementById("chatbot-input"); // Input do usuário
+    const userMessage = inputField.value.trim(); // Texto digitado, sem espaços extras
+    if (!userMessage) return; // Não envia mensagem vazia
 
-    // Esconde sugestões de perguntas, pois o usuário digitou uma mensagem
-    esconderSugestoes();
+    appendMessage(userMessage, "user"); // Mostra mensagem do usuário no chat
+    inputField.value = ""; // Limpa input para próxima mensagem
+    esconderSugestoes(); // Esconde sugestões de perguntas
+
+    // Adiciona mensagem "Digitando..." enquanto espera resposta
+    const typingEl = appendMessage("Digitando...", "bot");
 
     try {
-      // Envia a mensagem para a API do backend via POST com JSON
+      // Envia mensagem para backend via POST
       const response = await fetch("https://angel-cosmeticos.onrender.com/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mensagem: userMessage })
       });
 
-      // Converte a resposta JSON do backend
-      const data = await response.json();
+      const data = await response.json(); // Recebe resposta JSON
 
-      // Adiciona a resposta do bot no chat, ou uma mensagem padrão caso não tenha resposta
+      typingEl.remove(); // Remove "Digitando..." do chat
       appendMessage(data.resposta || "Desculpe, não entendi sua solicitação.", "bot");
 
     } catch (error) {
-      // Se der erro na conexão, informa o usuário no chat
+      typingEl.remove();
       appendMessage("Erro ao se conectar ao servidor.", "bot");
-      // Também exibe o erro no console para debug
       console.error("Erro:", error);
     }
   }
@@ -98,69 +123,27 @@ async function sendMessage(event) {
  * @param {string} text - Texto da sugestão clicada
  */
 function sendSuggestion(text) {
-  // Adiciona a mensagem do usuário no chat
-  appendMessage(text, "user");
+  resetInactivityTimer();
 
-  // Esconde as sugestões após clique
-  esconderSugestoes();
+  appendMessage(text, "user"); // Mostra mensagem do usuário
+  esconderSugestoes(); // Esconde sugestões após clique
 
-  // Envia a mensagem para o backend
+  const typingEl = appendMessage("Digitando...", "bot");
+
   fetch("https://angel-cosmeticos.onrender.com/api/chat", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ mensagem: text })
   })
-    .then(res => res.json()) // Converte a resposta para JSON
+    .then(res => res.json())
     .then(data => {
-      // Adiciona resposta do bot ou mensagem padrão
+      typingEl.remove();
       appendMessage(data.resposta || "Desculpe, sem resposta no momento.", "bot");
     })
     .catch(() => {
-      // Se der erro na conexão, informa o usuário
+      typingEl.remove();
       appendMessage("Erro ao se conectar ao servidor.", "bot");
     });
-}
-
-/**
- * Adiciona uma mensagem (do usuário ou do bot) no corpo do chat e faz scroll automático
- * @param {string} content - Texto da mensagem
- * @param {string} sender - "user" para usuário, "bot" para respostas do bot
- */
-function appendMessage(content, sender) {
-  // Pega a div que contém as mensagens do chat
-  const chatbotBody = document.getElementById("chatbot-body");
-
-  // Cria um parágrafo novo para a mensagem
-  const messageElement = document.createElement("p");
-
-  // Define a classe CSS de acordo com quem enviou a mensagem (usuario ou bot)
-  messageElement.className = sender === "user" ? "user-message" : "bot-message";
-
-  // Define o texto da mensagem
-  messageElement.textContent = content;
-
-  // Adiciona a mensagem no final do corpo do chat
-  chatbotBody.appendChild(messageElement);
-
-  // Faz o scroll descer para a última mensagem (scroll automático)
-  chatbotBody.scrollTop = chatbotBody.scrollHeight;
-}
-
-/**
- * Alterna a visibilidade da janela do chatbot
- */
-function toggleChat() {
-  // Pega o elemento da janela do chat
-  const chatbotWindow = document.getElementById("chatbot-window");
-
-  // Se o chat estiver fechado ou oculto, abre ele e mostra sugestões
-  if (chatbotWindow.style.display === "none" || chatbotWindow.style.display === "") {
-    chatbotWindow.style.display = "block";
-    mostrarSugestoes();
-  } else {
-    // Se o chat estiver aberto, fecha ele
-    chatbotWindow.style.display = "none";
-  }
 }
 
 /**
@@ -187,36 +170,46 @@ function mostrarSugestoes() {
  * Reseta o timer de inatividade para fechar o chat
  */
 function resetInactivityTimer() {
-  // Limpa timer anterior, se existir
-  clearTimeout(inactivityTimer);
-
-  // Configura timer para fechar chat após tempo definido (5 minutos)
-  inactivityTimer = setTimeout(closeChatAfterInactivity, INACTIVITY_TIMEOUT);
+  clearTimeout(inactivityTimer); // Limpa timer antigo, se houver
+  inactivityTimer = setTimeout(closeChatAfterInactivity, INACTIVITY_TIMEOUT); // Define novo timer
 }
+
+// Espera o DOM carregar para garantir que o botão exista
+document.addEventListener('DOMContentLoaded', () => {
+  const btnFecharChat = document.getElementById('chatbot-close-btn');
+  if (btnFecharChat) {
+    btnFecharChat.addEventListener('click', function(event) {
+      event.stopPropagation(); // evita fechar por clique fora
+      toggleChat();             // chama a função que fecha ou abre o chat
+    });
+  }
+
+  // Resetar timer quando digitar no input
+  const inputField = document.getElementById('chatbot-input');
+  if (inputField) {
+    inputField.addEventListener('input', resetInactivityTimer);
+  }
+});
 
 /**
  * Fecha o chat após o período de inatividade
  */
 function closeChatAfterInactivity() {
-  // Pega a janela do chat
-  const chatWindow = document.getElementById('chatbot-window');
+  const chatWindow = document.getElementById('chatbot-window'); // Janela do chat
+  chatWindow.style.display = 'none'; // Fecha chat
 
-  // Oculta o chat
-  chatWindow.style.display = 'none';
-
-  // Limpa as mensagens do chat
   const chatbotBody = document.getElementById('chatbot-body');
-  chatbotBody.innerHTML = '';
+  chatbotBody.innerHTML = ''; // Limpa mensagens do chat
 
-  // Loga no console para controle
   console.log("Chat fechado por inatividade.");
 }
-window.addEventListener('scroll', () => {
-  const botaoChat = document.getElementById('chatbot-button');
-  const scrollTop = window.scrollY;
-  const docHeight = document.body.scrollHeight - window.innerHeight;
 
-  // Se rolou 50% ou mais da página, mostra o botão
+// Exibe ou oculta o botão do chatbot dependendo da posição do scroll da página
+window.addEventListener('scroll', () => {
+  const botaoChat = document.getElementById('chatbot-button'); // Botão do chat
+  const scrollTop = window.scrollY; // Posição vertical atual
+  const docHeight = document.body.scrollHeight - window.innerHeight; // Altura total da página visível
+
   if (scrollTop / docHeight >= 0.6) {
     botaoChat.style.display = 'block';
   } else {

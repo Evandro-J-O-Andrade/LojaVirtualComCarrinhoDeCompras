@@ -2,8 +2,8 @@
 #chatbot-button {
   display: none; /* Escondido por padrão */
   position: fixed;
-  bottom:80px;
-  right: 17px;
+  bottom: 100px;
+  right: 35px;
   background-color: #ffb6c1; /* Rosa claro suave */
   color: white;
   padding: 15px;
@@ -11,7 +11,7 @@
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   cursor: pointer;
   z-index: 1000;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 #chatbot-button:hover {
   background-color: #ff99b0;
@@ -32,26 +32,50 @@
   display: flex;
   flex-direction: column;
   z-index: 1000;
-  overflow: auto;
+  /* overflow removido para evitar barra dupla */
 }
 
 /* === Cabeçalho do chatbot === */
 #chatbot-header {
-  background-color: #ffb6c1;
+  position: sticky;
+  top: 0;
+  background-color: #ff69b4;
   color: white;
-  padding: 10px;
+  padding: 10px 15px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-radius: 15px 15px 0 0;
+  z-index: 100;
+  box-shadow: 0 3px 6px rgba(255, 105, 180, 0.4);
+  user-select: none;
 }
 
+/* Logo no header */
 #chatbot-logo {
   width: 32px;
   height: 32px;
   border-radius: 50%;
   margin-right: 8px;
+  object-fit: cover;
+}
+
+/* Botão fechar (X) */
+#chatbot-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+  padding: 0 6px;
+  line-height: 1;
+  user-select: none;
+}
+#chatbot-close-btn:hover {
+  color: #ffd6e2;
+  transform: scale(1.2);
 }
 
 /* === Corpo do chatbot (mensagens) === */
@@ -60,31 +84,57 @@
   flex-grow: 1;
   overflow-y: auto;
   background-color: #fffafc;
+  border-top: 1px solid #ffcce0;
+  border-bottom: 1px solid #ffcce0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  max-height: 400px;
+  scrollbar-width: thin;
+  scrollbar-color: #ff99b0 #ffe6f0;
+}
+/* Scrollbar Chrome, Edge, Safari */
+#chatbot-body::-webkit-scrollbar {
+  width: 8px;
+}
+#chatbot-body::-webkit-scrollbar-track {
+  background: #ffe6f0;
+  border-radius: 8px;
+}
+#chatbot-body::-webkit-scrollbar-thumb {
+  background-color: #ff69b4;
+  border-radius: 8px;
+  border: 2px solid #ffe6f0;
 }
 
-/* === Mensagem do usuário (à direita) === */
+/* === Mensagens === */
+/* Usuário (direita) */
 .user-message {
-  background-color: #ffe0eb;
-  color: #d63384;
+  background-color: #ffbbcc;
+  color: #70003c;
   border-radius: 20px 20px 0 20px;
   padding: 10px 14px;
   margin: 8px 0;
   align-self: flex-end;
   max-width: 80%;
   text-align: right;
+  box-shadow: 0 2px 6px rgba(183, 12, 78, 0.25);
+  word-wrap: break-word;
 }
 
-/* === Mensagem do chatbot (à esquerda) === */
+/* Chatbot (esquerda) */
 .bot-message {
   background-color: #ffffff;
-  color: #333;
-  border: 1px solid #ffd6e2;
+  color: #4a4a4a;
+  border: 1px solid #ffc2d1;
   border-radius: 20px 20px 20px 0;
   padding: 10px 14px;
   margin: 8px 0;
   align-self: flex-start;
   max-width: 80%;
   text-align: left;
+  box-shadow: 0 2px 6px rgba(255, 182, 193, 0.4);
+  word-wrap: break-word;
 }
 
 /* === Área de sugestões === */
@@ -95,10 +145,12 @@
   background-color: #fffafc;
   border-radius: 12px;
   border: 1px solid #ffcce0;
+  text-align: center;
 }
 
-/* === Botões de sugestão === */
-#chatbot-suggestions button {
+/* Botões de sugestão */
+#chatbot-suggestions button,
+.suggestion-button {
   margin: 5px 5px 0 0;
   padding: 8px 12px;
   background-color: #ffcce0;
@@ -107,9 +159,10 @@
   border-radius: 12px;
   font-size: 13px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.3s ease;
 }
-#chatbot-suggestions button:hover {
+#chatbot-suggestions button:hover,
+.suggestion-button:hover {
   background-color: #ffb6c1;
 }
 
@@ -124,26 +177,4 @@
   background-color: #fff;
   width: 100%;
   box-sizing: border-box;
-}
-#chatbot-suggestions {
-  display: none; /* mostra por padrão — opcionalmente pode esconder */
-  padding: 10px;
-  text-align: center;
-  background-color: #fff0f6;
-  border-top: 1px solid #ffe4ee;
-}
-
-.suggestion-button {
-  margin: 5px;
-  padding: 8px 12px;
-  background-color: #ff69b4;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.suggestion-button:hover {
-  background-color: #ff4c9e;
 }
