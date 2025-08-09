@@ -1,12 +1,53 @@
-# Arquivo robots.txt - Permite que os buscadores rastreiem o site
+# =========================================================
+# Angel Cosméticos - Regras para robôs de busca
+# Última atualização: 08/08/2025
+# =========================================================
+
+# Aplica para todos os robôs
 User-agent: *
+# Bloquear áreas restritas ou sensíveis
+Disallow: /admin/
+Disallow: /login/
+Disallow: /carrinho/
+Disallow: /minha-conta/
+Disallow: /checkout/
+Disallow: /wp-admin/          # Caso use WordPress
+Disallow: /*?add-to-cart=*    # Evita indexar URLs com carrinho
+Disallow: /*?orderby=*        # Evita páginas duplicadas por ordenação
+Disallow: /*?filter_*         # Evita URLs de filtros duplicados
+
+# Permitir o resto do site
 Allow: /
 
+# =========================================================
+# Regras específicas para Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /login/
+
+# =========================================================
+# Regras específicas para Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /login/
+
+# =========================================================
+# Regras específicas para Yandex
+User-agent: Yandex
+Allow: /
+Disallow: /admin/
+Disallow: /login/
+
+# =========================================================
+# Sitemap (fundamental para SEO)
+Sitemap: https://www.angelcosmeticos.com.br/sitemap.xml
 # Link para o sitemap principal
-Sitemap: https://angelcosmeticos.netlify.app/sitemaps.xml
-Sitemap: https://angelcosmeticos.netlify.app/assets/html/produtos-sitemaps.xml
-Sitemap: https://angelcosmeticos.netlify.app/assets/html/eventos-sitemaps.xml
-Sitemap: https://angelcosmeticos.netlify.app/assets/html/contato-sitemaps.xml
+Sitemap: https://angelcosmeticos.netlify.app/sitemap.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/produtos-sitemap.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/eventos-sitemap.xml
+Sitemap: https://angelcosmeticos.netlify.app/assets/html/contato-sitemap.xml
  https://angelcosmeticos.netlify.app/
  https://angelcosmeticos.netlify.app/assets/html/produtos
 https://angelcosmeticos.netlify.app/assets/html/eventos
