@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?> 
 <!-- Declaração do tipo de arquivo XML com codificação UTF-8 -->
 
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/   schemas/sitemap/0.9">
   <!-- Elemento principal que envolve todas as URLs -->
 
   <!-- Página inicial (home) -->
@@ -54,9 +54,7 @@
     <priority>0.8</priority>
   </url>
 
-</urlset>
-
-  <url>
+ <url>
     <loc>https://angelcosmeticos.netlify.app</loc> 
     <!-- URL da página -->
     <priority>1.0</priority> 
