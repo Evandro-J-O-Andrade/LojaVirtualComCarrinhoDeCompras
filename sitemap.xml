@@ -8,7 +8,7 @@
 
    <!-- Página inicial -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/</loc>
+    <loc>https://angelcosmeticos.netlify.app/</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -16,7 +16,7 @@
 
   <!-- Página Sobre -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/sobre</loc>
+    <loc>https://angelcosmeticos.netlify.app/sobre</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -24,7 +24,7 @@
 
   <!-- Página Produtos -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/produtos</loc>
+    <loc>https://angelcosmeticos.netlify.app/produtos</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -32,7 +32,7 @@
 
   <!-- Página Serviços -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/servicos</loc>
+    <loc>https://angelcosmeticos.netlify.app/servicos</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -40,7 +40,7 @@
 
   <!-- Página Contato -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/contato</loc>
+    <loc>https://angelcosmeticos.netlify.app/contato</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -48,7 +48,7 @@
 
   <!-- Página Blog (se existir) -->
   <url>
-    <loc>https://www.angelcosmeticos.com.br/blog</loc>
+    <loc>https://angelcosmeticos.netlify.app/blog</loc>
     <lastmod>2025-08-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
