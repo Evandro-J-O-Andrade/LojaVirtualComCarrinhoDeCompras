@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node chat/server.js",
+    "generate-sitemap": "node generate-sitemap.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
