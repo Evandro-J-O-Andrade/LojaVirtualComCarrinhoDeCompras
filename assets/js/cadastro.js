@@ -60,73 +60,90 @@ function RecuperarSenha() {
 
 // Validação dinâmica ao digitar as senhas
 function validarSenhas() {
-    const senha = document.getElementById('senhaCad').value.trim();
-    const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
+    const senhaInput = document.getElementById('senhaCad');
+    const confirmaSenhaInput = document.getElementById('confirmaSenha');
+    const erroSenhaElement = document.getElementById('erroSenha');
+    if (!senhaInput || !confirmaSenhaInput || !erroSenhaElement) return;
+
+    const senha = senhaInput.value.trim();
+    const confirmaSenha = confirmaSenhaInput.value.trim();
 
     // Verifica se as senhas coincidem
     if (senha !== confirmaSenha) {
-        erroSenha.style.display = "inline";  // Exibe a mensagem de erro
+        erroSenhaElement.style.display = "inline";  // Exibe a mensagem de erro
     } else {
-        erroSenha.style.display = "none";  // Se as senhas forem iguais, esconde a mensagem
+        erroSenhaElement.style.display = "none";  // Se as senhas forem iguais, esconde a mensagem
     }
 }
 
 // Alternar visibilidade da senha
 function alternarVisibilidadeSenha() {
     const senhaInput = document.getElementById('senhaCad');
+    const toggleSenha = document.getElementById('toggleSenha');
+    if (!senhaInput || !toggleSenha) return;
+
     const tipo = senhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
     senhaInput.setAttribute('type', tipo);
-
-    const toggleSenha = document.getElementById('toggleSenha');
     toggleSenha.textContent = tipo === 'password' ? '👁️' : '🙈';  // Altera o ícone
 }
 
 // Alternar visibilidade da confirmação de senha
 function alternarVisibilidadeConfirmaSenha() {
     const confirmaSenhaInput = document.getElementById('confirmaSenha');
+    const toggleConfirmaSenha = document.getElementById('toggleConfirmaSenha');
+    if (!confirmaSenhaInput || !toggleConfirmaSenha) return;
+
     const tipo = confirmaSenhaInput.getAttribute('type') === 'password' ? 'text' : 'password';
     confirmaSenhaInput.setAttribute('type', tipo);
-
-    const toggleConfirmaSenha = document.getElementById('toggleConfirmaSenha');
     toggleConfirmaSenha.textContent = tipo === 'password' ? '👁️' : '🙈';  // Altera o ícone
 }
 
 // Adiciona evento para validação dinâmica ao digitar
-document.getElementById('senhaCad').addEventListener('input', validarSenhas);
-document.getElementById('confirmaSenha').addEventListener('input', validarSenhas);
+const senhaCadInput = document.getElementById('senhaCad');
+const confirmaSenhaInput = document.getElementById('confirmaSenha');
+if (senhaCadInput) senhaCadInput.addEventListener('input', validarSenhas);
+if (confirmaSenhaInput) confirmaSenhaInput.addEventListener('input', validarSenhas);
 
 // Função para exibir a mensagem de sucesso
 function exibirSucesso(mensagem) {
-    sucessoMensagem.style.display = "inline";  // Exibe a mensagem de sucesso
-    sucessoMensagem.textContent = mensagem;
+    if (sucessoMensagem) {
+        sucessoMensagem.style.display = "inline";  // Exibe a mensagem de sucesso
+        sucessoMensagem.textContent = mensagem;
+    }
 }
 
 // Função para exibir o indicador (hr) quando clicar em "Entrar"
-BtnEntrar.addEventListener("click", function() {
-    // Exibir o hr
-    Indicador.style.display = "block"; 
+if (BtnEntrar) {
+    BtnEntrar.addEventListener("click", function() {
+        // Exibir o hr
+        if (Indicador) Indicador.style.display = "block";
 
-    // Chama a função de exibição do formulário de login
-    Entrar();
-});
+        // Chama a função de exibição do formulário de login
+        Entrar();
+    });
+}
 
 // Função para exibir o indicador (hr) quando clicar em "Cadastrar"
-BtnCadastro.addEventListener("click", function() {
-    // Exibir o hr
-    Indicador.style.display = "block"; 
+if (BtnCadastro) {
+    BtnCadastro.addEventListener("click", function() {
+        // Exibir o hr
+        if (Indicador) Indicador.style.display = "block";
 
-    // Chama a função de exibição do formulário de cadastro
-    Cadastro();
-});
+        // Chama a função de exibição do formulário de cadastro
+        Cadastro();
+    });
+}
 
 // Validação ao clicar no botão "Cadastrar"
-document.getElementById('btnCadastro').addEventListener('click', function(event) {
-    const senha = document.getElementById('senhaCad').value.trim();
-    const confirmaSenha = document.getElementById('confirmaSenha').value.trim();
-    const email = document.getElementById('email').value.trim(); // Captura o valor do campo de e-mail
-    // Validação de campos preenchidos
-    var camposPreenchidos = true;
-    var campos = [email, senha, confirmaSenha]; // Adiciona o campo de e-mail à validação
+const btnCadastroSubmit = document.getElementById('btnCadastro');
+if (btnCadastroSubmit) {
+    btnCadastroSubmit.addEventListener('click', function(event) {
+        const senha = document.getElementById('senhaCad')?.value.trim() || '';
+        const confirmaSenha = document.getElementById('confirmaSenha')?.value.trim() || '';
+        const email = document.getElementById('email')?.value.trim() || '';
+        // Validação de campos preenchidos
+        var camposPreenchidos = true;
+        var campos = [email, senha, confirmaSenha]; // Adiciona o campo de e-mail à validação
 
     for (var i = 0; i < campos.length; i++) {
         if (campos[i] === "") {
@@ -169,3 +186,4 @@ document.getElementById('btnCadastro').addEventListener('click', function(event)
     // Aqui você pode enviar o formulário para o servidor ou realizar outra ação desejada
     event.preventDefault(); // Não envia o formulário por enquanto
 });
+}

@@ -17,6 +17,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let isCepValidated = false; // Estado para controle da validação do CEP
     let isPurchaseFinalized = false; // Estado para controle da finalização da compra
+
+    if (!subtotalGeral || !totalGeral || !freteSpan || !cepInput || !enderecoSpan) {
+        return; // Esta página não contém os elementos do carrinho
+    }
+
     // Atualiza o ícone do carrinho com base no estado do carrinho
     function atualizarIconeCarrinho() {
         const produtosNoCarrinho = !carrinhoVazio(); // Verifica se o carrinho tem produtos

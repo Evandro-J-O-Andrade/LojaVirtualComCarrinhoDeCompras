@@ -1,5 +1,7 @@
-let imagens = document.querySelectorAll('.galeria-eventos img'); // Todas as imagens da galeria
-let indexImagemAtual = -1; // Inicializa com um valor inválido
+if (typeof imagens === 'undefined') {
+    var imagens = document.querySelectorAll('.galeria-eventos img'); // Todas as imagens da galeria
+}
+var indexImagemAtual = -1; // Inicializa com um valor inválido
 
 function abrirImagem(imagem) {
     const modal = document.getElementById('modal');

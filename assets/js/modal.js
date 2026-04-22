@@ -9,7 +9,10 @@ const imagens = Array.from(document.querySelectorAll(".galeria-eventos .evento i
 let imagemAtualIndex = 0;
 let ultimoFocoAntesModal;
 
-// Abre o modal com a imagem selecionada
+if (!modal || !imgExpandida || !descricao || !fechar || !anterior || !proximo || imagens.length === 0) {
+    // Não há galeria/modal nesta página atual
+} else {
+    // Abre o modal com a imagem selecionada
 imagens.forEach((img, index) => {
     img.addEventListener("click", () => {
         ultimoFocoAntesModal = document.activeElement; // salva foco anterior
@@ -67,3 +70,4 @@ document.addEventListener("keydown", (e) => {
         }
     }
 });
+}

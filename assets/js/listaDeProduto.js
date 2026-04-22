@@ -14,6 +14,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const enderecoSpan = document.getElementById("endereco");
     const resumoTotal = document.getElementById("total");
 
+    // Verifica se os elementos existem na página
+    if (!cepInput || !freteSpan || !enderecoSpan) {
+        return; // Sai se não houver elementos necessários
+    }
+
     let frete = 0;                      // Valor inicial do frete
     const limiteFreteGratis = 360;     // Limite para frete grátis
     let isCepValidated = false;        // Controla se o CEP foi validado

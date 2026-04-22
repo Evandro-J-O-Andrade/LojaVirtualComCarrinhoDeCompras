@@ -122,6 +122,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
         const tabelaCarrinho = document.getElementById('tabelaCarrinho');
 
+        if (!tabelaCarrinho) return;
+
         // Limpar a tabela
         tabelaCarrinho.innerHTML = '';
 
