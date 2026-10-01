@@ -1,0 +1,230 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background font-sans text-content antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-content;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img {
+    @apply max-w-full h-auto;
+  }
+
+  ::selection {
+    @apply bg-primary/20 text-primary;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Altura do header — fonte única. O header e o <main> leem daqui,
+     então nenhum dos dois precisa hardcodar o padding do outro. */
+  :root {
+    --header-h: 4rem;
+    --header-h-scrolled: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    :root {
+      --header-h: 5rem;
+      --header-h-scrolled: 4.5rem;
+    }
+  }
+
+  /* Acessibilidade: respeita a preferência do sistema em todo o app. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* ---------- Shell ---------- */
+  /* Páginas curtas preenchem a viewport; páginas longas crescem naturalmente. */
+  .app-shell {
+    @apply flex flex-col;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .app-shell__main {
+    flex: 1 0 auto;
+    padding-top: var(--header-h);
+  }
+
+  /* ---------- Layout ---------- */
+  .container-angel {
+    @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+  }
+
+  .section-angel {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+
+  .section-angel-tight {
+    @apply py-8 md:py-10 lg:py-12;
+  }
+
+  /* ---------- Tipografia ---------- */
+  .overline-angel {
+    @apply font-sans text-overline font-medium uppercase text-content-subtle;
+    text-transform: uppercase;
+  }
+
+  .title-display {
+    @apply font-display text-display font-semibold text-content;
+  }
+
+  .title-h1 {
+    @apply font-display text-h1 font-semibold text-content;
+  }
+
+  .title-h2 {
+    @apply font-display text-h2 font-semibold text-content;
+  }
+
+  .title-h3 {
+    @apply font-display text-h3 font-semibold text-content;
+  }
+
+  .body-angel {
+    @apply text-body text-content-muted;
+  }
+
+  .body-angel-lg {
+    @apply text-body-lg text-content-muted;
+  }
+
+  /* ---------- Superfícies ---------- */
+  .surface-card {
+    @apply rounded-2xl border border-border bg-surface shadow-sm;
+  }
+
+  .surface-veil {
+    @apply bg-background/85 backdrop-blur-sm;
+  }
+
+  /* ---------- Botões ---------- */
+  .btn-angel {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
+      font-medium leading-none text-primary-contrast
+      transition-all duration-300 ease-angel
+      focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+      focus-visible:ring-offset-background
+      disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-primary hover:shadow-glow hover:-translate-y-0.5;
+  }
+
+  .btn-angel-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary
+      px-6 py-3 font-medium leading-none text-primary
+      transition-all duration-300 ease-angel
+      focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+      focus-visible:ring-offset-background
+      disabled:pointer-events-none disabled:opacity-50;
+    @apply bg-transparent hover:bg-primary hover:text-primary-contrast hover:shadow-glow;
+  }
+
+  .btn-angel-subtle {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border
+      bg-surface px-6 py-3 font-medium leading-none text-content
+      transition-all duration-300 ease-angel
+      focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+      focus-visible:ring-offset-background
+      disabled:pointer-events-none disabled:opacity-50;
+    @apply hover:border-champagne hover:shadow-md;
+  }
+
+  .btn-angel-icon {
+    @apply inline-flex h-10 w-10 items-center justify-center rounded-full text-primary
+      transition-all duration-300 ease-angel
+      focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
+      focus-visible:ring-offset-background;
+    @apply bg-surface/80 hover:bg-surface hover:shadow-glow;
+  }
+
+  /* ---------- Formulário ---------- */
+  .field-angel {
+    @apply w-full rounded-lg border border-border bg-surface px-4 py-3
+      text-body text-content placeholder:text-content-subtle
+      transition-colors duration-200
+      focus:border-primary focus:outline-none
+      disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .label-angel {
+    @apply mb-1.5 block text-body-sm font-medium text-content;
+  }
+
+  /* ---------- Card ---------- */
+  .card-angel {
+    @apply overflow-hidden rounded-2xl bg-surface transition-all duration-300 ease-angel;
+    @apply hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  /* ---------- Estados ---------- */
+  .skeleton-angel {
+    @apply rounded-lg bg-surface-sunken;
+    background-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(232, 213, 196, 0.45) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+}
+
+@layer utilities {
+  .text-gradient-angel {
+    @apply bg-gradient-to-br from-primary to-champagne-dark bg-clip-text text-transparent;
+  }
+
+  /* Respeita reduced-motion também em utilitários de animação. */
+  @media (prefers-reduced-motion: reduce) {
+    .text-gradient-angel {
+      @apply bg-none text-primary;
+    }
+  }
+
+  .no-scroll {
+    overflow: hidden;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+}

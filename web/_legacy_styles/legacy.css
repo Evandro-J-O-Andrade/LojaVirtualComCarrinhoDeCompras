@@ -1,0 +1,3687 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --cor-primaria: #0077b6;           /* Define a cor azul principal usada no site */
+  --cor-secundaria: #90e0ef;         /* Define um azul claro para detalhes e destaques */
+  --cor-escura: #023e8a;             /* Azul escuro usado em banners e efeitos de degradê */
+  --cinza-claro: #e0e0e0;            /* Cinza claro para textos e fundos suaves */
+  --cinza-escuro: #d0d0d0;           /* Cinza um pouco mais escuro, usado como reserva */
+  --cinza-preto: #1a1a1a;            /* Cor escura usada como fundo geral da página */
+  --preto: #111111;                  /* Preto intenso para textos com maior destaque */
+  --branco: #ffffff;                 /* Branco puro, usado para fundos claros e textos */
+  --cor-primaria-escura: #004a75;   /* Azul escuro para efeitos hover nos botões */
+  --fonte-principal: 'Segoe UI', sans-serif; /* Fonte principal usada no site */
+  --cor-verde-agua: #40E0D0; /* Verde água para detalhes e destaques */
+  --cor-rosa-escuro: #e60073; /* Rosa escuro para destaques e links ativos */
+  --cor-laranja: #ff8c00; /* Laranja para botões e  destaques */
+  --cor-amarelo: #ffd700; /* Amarelo para destaques e botões */
+  --cor-roxo: #800080; /* Roxo para detalhes e destaques */   
+  --cor-verde: #06e60d; /* Verde para botões e destaques */
+  --fonte-principal: 'Segoe UI', sans-serif; /* Fonte principal do site */
+    --cor-padrao: #ff523b;
+    --cor-padrao-hover: #f3b2e5;
+    --cor-fonte: #fff;
+    --cor-fonte-p: #555;
+    --cor-btn: #563434;
+    --cor-btn-hover: #15ff00;
+    --cor-btn-fonte: #000;
+    --cor-fonte-corpo: #555;
+    --cor-fonte-corpo-leve: #777;
+}
+
+body {
+
+    font-family: 'Poppins', sans-serif;
+}
+
+.banner {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    width: 100%;
+    /* Garante que o banner ocupe toda a largura da tela */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+    min-height: 100px;
+    /* Define uma altura mínima para o banner */
+    display: flex;
+    /* Para centralizar conteúdo, se necessário */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+}
+
+/*Ate aqui esta tudo ok com resposibilidade de sites*/
+.banner .linha {
+
+    margin-top: 70px;
+}
+
+.container {
+    padding-left: 15px;
+    padding-right: 15px;
+    max-width: 100%;
+    /* Certifique-se de que a largura não exceda 100% */
+    margin: 0 auto;
+    /* Centraliza o container */
+    padding: 0 15px;
+    /* Adiciona padding, se necessário */
+    box-sizing: border-box;
+    /* Inclui o padding na largura total */
+
+}
+
+/*Incluindo conteudos no Container sem problemas aparentes*/
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.logo img {
+    width: 33vh;
+    /* Ajusta a largura da imagem para ocupar 100% do seu container */
+    height: auto;
+    /* Mantém a proporção da imagem */
+    object-fit: contain;
+}
+
+nav {
+    flex: 1;
+    text-align: right;
+}
+
+nav ul {
+
+    display: inline-block;
+    list-style-type: none;
+    width: 100%;
+
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: var(--cor-fonte);
+}
+
+.banner p {
+    color: var(--cor-fonte);
+
+}
+
+p {
+    color: var(--cor-fonte-p);
+
+}
+
+.linha {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.col-2 {
+    flex-basis: 50%;
+    min-width: 300px;
+}
+
+.col-2 img {
+    max-width: 100%;
+    height: auto;
+    padding: 50px 0;
+    border-radius: 7%;
+    margin-top: auto;
+
+
+
+}
+
+.col-2 h1 {
+
+    font-size: 50px;
+    line-height: 60px;
+    margin: 25px 0;
+
+}
+
+.col-2 p {
+    font-weight: 600;
+    color: var(--cor-btn-fonte);
+}
+
+.btn {
+
+    text-decoration: none;
+    color: var(--cor-fonte);
+    background: var(--cor-btn);
+    padding: 8px 30px;
+    margin: 30px 0;
+    border-radius: 30px;
+    transition: background 0.5s;
+
+
+
+}
+
+
+
+.btn:hover {
+    background: var(--cor-btn-hover);
+    color: var(--cor-btn-fonte);
+}
+
+.categorias {
+    margin: 70px 0;
+
+}
+
+.corpo-categorias {
+    max-width: 1080px;
+    margin: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+
+.col-3 {
+    flex-basis: 30%;
+    min-width: 250px;
+    margin-bottom: 30px;
+}
+
+.col-3 img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.col-4 {
+    flex-basis: 25%;
+    min-width: 200px;
+    padding: 10px;
+    margin-bottom: 50px;
+    transition: 0.5s;
+
+}
+
+.col-4:hover {
+    transform: scale(1.1);
+}
+
+.col-4 img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.titulo {
+    position: relative;
+    line-height: 80px;
+    margin: 0 auto 80px;
+    text-align: center;
+    color: var(--cor-fonte-corpo);
+
+
+}
+
+.titulo::after {
+    content: '';
+    background-color: var(--cor-padrao);
+    width: 80px;
+    height: 5px;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+h4 {
+    color: var(--cor-fonte-corpo);
+    font-weight: normal;
+
+}
+
+.col-4 p {
+    font-size: 14px;
+
+}
+
+.classificacao ion-icon {
+
+    color: var(--cor-padrao);
+}
+
+.ofertas {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    margin-top: 80px;
+    padding: 30px 0;
+
+}
+
+.col-2 .ofertas-img {
+    padding: 50px;
+
+}
+
+small {
+    color: var(--cor-btn-fonte);
+}
+
+.depoimentos {
+    padding-top: 100px;
+
+
+}
+
+.depoimentos .col-3 {
+    text-align: center;
+    padding: 40px 20px;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.5s;
+
+
+
+}
+
+.depoimentos .col-3:hover {
+
+    transform: scale(1.1);
+
+
+}
+
+.depoimentos .col-3 img {
+    width: 50px;
+    border-radius: 50%;
+    margin-top: 20px;
+    border: 2px solid var(--cor-padrao);
+
+
+}
+
+.depoimentos-icone {
+    font-size: 34px;
+    color: var(--cor-padrao);
+
+}
+
+.col-3 p {
+    font-size: 13px;
+    color: var(--cor-fonte-corpo-leve);
+    margin: 12px 0;
+
+}
+
+.depoimentos .col-3 h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cor-fonte-corpo);
+}
+
+
+.depoimentos-icone {
+    font-size: 34px;
+    color: var(--cor-padrao);
+}
+
+.col-3 p {
+    font-size: 13px;
+    color: var(--cor-fonte-corpo-leve);
+    margin: 12px 0;
+}
+
+.depoimentos .col-3 h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--cor-fonte-corpo-leve);
+
+}
+
+.marcas {
+    margin: 100px auto;
+
+}
+
+.col-5 {
+    width: 160px;
+}
+
+.col-5 img {
+    width: 150px;
+    cursor: pointer;
+    filter: grayscale(100%);
+}
+
+.col-5 img:hover {
+    filter: grayscale(0);
+
+}
+
+.rodape {
+    background: var(--cor-btn-fonte);
+    color: var(--cor-fonte);
+    padding: 60px 0 20px;
+    font-size: 14px;
+
+
+
+}
+
+.rodape p {
+    color: var(--cor-fonte);
+
+}
+
+.rodape h3 {
+    color: var(--cor-fonte);
+    margin-bottom: 15px;
+}
+
+.rodape-col-1,
+.rodape-col-2,
+.rodape-col-3,
+.rodape-col-4 {
+    min-width: 250px;
+    margin-bottom: 20px;
+
+}
+
+.rodape-col-1 {
+    flex-basis: 30%;
+}
+
+.rodape-col-2 {
+    flex: 1;
+    text-align: center;
+    
+
+}
+
+.rodape-col-2 img {
+    width: 180px;
+    margin-bottom: 20px;
+    
+}
+
+.rodape-col-3,
+.rodape-col-4 {
+    flex-basis: 12%;
+    text-align: right;
+    
+}
+
+
+
+.rodape-col-3 ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    
+    
+}
+.contato{
+text-decoration: none;
+}
+
+.rodape-col-3 ul li {
+    width: 15px;
+    min-width: 250px;
+    margin-bottom: 0px;
+    font-size: 15px;
+    flex-basis: 12%;
+    text-align: right;
+    margin: 0;
+    
+
+
+}
+
+.rodape-col-4 ul {
+  
+    min-width: 250px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    flex-basis: 12%;
+    text-align: right;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+}
+
+.rodape-col-4 ul li {
+    width: 15px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-width: 250px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    flex-basis: 12%;
+    text-align: right;
+    margin: 0;
+    gap:    10px;
+
+
+
+}
+
+
+.rodape-col-4 h3 {
+  margin-top: 0; /* remove margem superior para ficar grudado em cima */
+  margin-bottom: 15px; /* dá espaço para o social links */
+  font-size: 1.2rem;
+  transition: font-size 0.4s ease, margin-bottom 0.4s ease;
+  align-self: flex-end; /* alinha o h3 no lado direito da coluna */
+}
+
+ul {
+    list-style-type: none;
+}
+
+.app-logo {
+    margin-top: 20px;
+}
+
+.app-logo img {
+    width: 100%;
+    /* Garante que a logo ocupe toda a largura do contêiner */
+    max-width: 200px;
+    /* Define um tamanho máximo para a logo */
+    height: auto;
+    /* Mantém a proporção da imagem */
+}
+
+.rodape hr {
+    border: none;
+    height: 1px;
+    background: var(--cor-fonte);
+    margin: 20px 0;
+    text-align: center;
+}
+
+.direitos {
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+
+
+}
+
+.direitos hr {
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+
+
+}
+
+.direitos .rodape-col-5 {
+    text-align: center;
+    font-size: 14px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.menu-celular {
+    width: 28px;
+    margin-left: 20px;
+    display: none;
+
+
+}
+
+.novoMenu {
+
+    background-color: var(--cor-fonte);
+    /*background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));*/
+    width: 100%;
+    /* Garante que o banner ocupe toda a largura da tela */
+    height: auto;
+    /* Ajusta a altura automaticamente */
+    min-height: 100px;
+    /* Define uma altura mínima para o banner */
+
+    /* Para centralizar conteúdo, se necessário */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+}
+
+.novoMenu nav ul li a {
+    color: var(--cor-btn-fonte);
+
+}
+
+
+
+.linha2 {
+
+    margin: 100px auto 50px;
+    justify-content: space-between;
+}
+
+.linha2 select {
+    padding: 5px;
+    border: 1px solid var(--cor-padrao);
+}
+
+.lnha2 select:focus {
+    outline: none;
+}
+
+.paginacao {
+    margin: 0 auto 80px;
+}
+
+.paginacao span {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+    border: 1px solid var(--cor-padrao);
+    text-align: center;
+    line-height: 40px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.paginacao span:hover {
+    background: var(--cor-padrao);
+    color: var(--cor-fonte);
+}
+
+.ver-produtos {
+    margin-top: 40px;
+}
+
+.ver-produtos .col-2 img {
+    width: 100%;
+    padding: 10px;
+}
+
+.ver-produtos #produtoImg {
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+    object-position: top;
+
+}
+
+.ver-produtos .col-2 {
+    padding: 20px;
+
+}
+
+.ver-produtos h4 {
+    margin: 20px 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.ver-produtos select {
+    display: block;
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid var(--cor-padrao);
+    font-size: 20px;
+
+}
+
+.ver-produtos select:focus {
+    outline: none;
+}
+
+.ver-produtos input {
+    width: 50px;
+    height: 40px;
+    margin-right: 10px;
+    padding-left: 10px;
+    border: 1px solid var(--cor-padrao);
+    font-size: 20px;
+}
+
+.ver-produtos input:focus {
+    outline: none;
+}
+
+.ver-produtos .btn {
+    border: none;
+    background-color: var(--cor-padrao);
+    height: 42px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ver-produtos .btn:hover {
+    background-color: var(--cor-btn-hover);
+
+}
+
+.ver-produtos p {
+    font-size: 13px;
+}
+
+.img-linha {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.img-col {
+    flex-basis: 25%;
+    cursor: pointer;
+
+
+}
+
+.teste-img {
+    display: flex;
+    /* Define o container como flex */
+    flex-wrap: wrap;
+    /* Permite que os itens se movam para a próxima linha se não houver espaço */
+    justify-content: space-between;
+}
+
+.teste-img .img-col {
+    margin: 0;
+    /* Ajustar a margem para reduzir o espaço ao redor do elemento */
+    padding: 15px;
+    /* Espaço dentro do elemento */
+    flex-basis: calc(25% - 10px);
+    /* Cada item ocupa 25% do espaço disponível menos a margem */
+    cursor: pointer;
+    font-size: 15px;
+    box-sizing: border-box;
+    /* Inclui padding e margin no cálculo da largura */
+    overflow: hidden;
+}
+
+.teste-img .img-col img {
+    width: 100%;
+    /* Faz a imagem ocupar toda a largura do elemento */
+    transition: transform 0.5s;
+    /* Adiciona uma transição suave ao efeito */
+}
+
+.teste-img .img-col:hover img {
+    transform: scale(1.1);
+    /* Aumenta a imagem para 110% do seu tamanho original */
+}
+
+
+/*Carrinho de compras*/
+.carrinho-compras {
+    margin: 80px auto;
+}
+
+.carrinho-compras table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.info-carrinho {
+    display: none;
+
+}
+
+th {
+    background-color: var(--cor-padrao);
+    color: var(--cor--fonte);
+    text-align: left;
+    font-weight: normal;
+    padding: 5px;
+}
+
+td {
+    padding: 10px 5px;
+
+
+}
+
+td input {
+    width: 50px;
+    height: 30px;
+    padding: 5px;
+
+
+}
+
+td a {
+    color: var(--cor-padrao);
+    font-size: 12px;
+
+}
+
+td img {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+}
+
+.valor-total {
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+.valor-total table {
+
+    border-top: 3px solid var(--cor-padrao);
+    width: 100%;
+    max-width: 600px;
+    font-size: 15px;
+}
+
+
+
+td:last-child {
+    text-align: right;
+
+}
+
+th:last-child {
+    text-align: right;
+}
+
+.cep-input {
+    margin-top: 15px;
+    text-align: right;
+    /* Alinhado à direita */
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cep-input label {
+    font-weight: bold;
+    color: var(--cor-fonte);
+}
+
+.cep-input input {
+    width: 150px;
+    height: 30px;
+    padding: 5px;
+    border: 1px solid var(--cor-padrao);
+    border-radius: 4px;
+}
+
+.cep-input button {
+    background-color: var(--cor-padrao);
+    color: var(--cor-fonte);
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.cep-input button:hover {
+    background-color: #005f99;
+}
+
+/*Carrinho de compras*/
+/* Estilo global para botões 
+.btn {
+    display: inline-block;
+    background-color: #4CAF50;  Cor de fundo 
+    color: white; /* Cor do texto 
+    padding: 10px 20px; /* Espaçamento interno
+    font-size: 16px; /* Tamanho da fonte 
+    border: none; /* Sem bordas 
+    border-radius: 5px; /* Bordas arredondadas 
+    text-align: center; /* Alinhar texto ao centro 
+    cursor: pointer; /* Cursor ao passar o mouse 
+    transition: background-color 0.3s ease, transform 0.2s ease; Animação suave 
+}
+
+/* Efeito ao passar o mouse 
+.btn:hover {
+    background-color: #45a049; /* Cor ao passar o mouse 
+    transform: scale(1.05); /* Leve aumento 
+}
+
+/* Botão em estado ativo (pressionado) 
+.btn:active {
+    background-color: #3e8e41;
+    transform: scale(0.95); /* Leve redução 
+}
+
+/* Responsividade - Ajustar tamanho do botão em telas pequenas 
+@media (max-width: 768px) {
+    .btn {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+}
+
+/*Teste produtos de compras*/
+
+/*=============================== Minha Conta ==============================*/
+
+.minha-conta {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    padding: 50px 0;
+    width: 100%;
+
+}
+
+
+
+.formulario {
+    position: relative;
+    padding: 20px 0;
+    align-items: center;
+    text-align: center;
+    width: 350px;
+    height: 500px;
+    /* Ajustado para acomodar todos os campos */
+    margin: auto;
+    background-color: var(--cor-fonte);
+    /* Cor de fundo do formulário */
+    box-shadow: 30px 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border-radius: 10px;
+    /* Bordas arredondadas */
+}
+
+
+
+
+.formulario span {
+    display: inline-block;
+    width: 100px;
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--cor-fonte-corpo);
+    cursor: pointer;
+}
+
+
+.bth-form {
+
+    display: inline-block;
+
+}
+
+/*Formulario para cadastro*/
+/* Botões Entrar e Cadastro centralizados */
+.btn-form-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    /* Espaço entre os spans */
+    position: relative;
+    /* Para posicionar o Indicador */
+    margin-bottom: 20px;
+}
+
+.btn-form-2 span {
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    /* Animação suave */
+    text-align: center;
+}
+
+
+
+/* Indicador de posição */
+#Indicador {
+    position: absolute;
+
+    bottom: -5px;
+    height: 2px;
+    width: 80px;
+
+
+    transition: transform 0.3s ease-in-out;
+    /* Suavidade no movimento */
+}
+
+/* Formulários */
+#EntrarPainel form {
+    max-width: 400px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#EntrarPainel input,
+#EntrarPainel button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+    gap: 20px;
+}
+
+/* Contêiner do botão e texto "Esqueceu sua senha!" */
+
+
+#EntrarPainel .esqueceu {
+    display: flex;
+    /* Ativa o Flexbox */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    align-items: center;
+    /* Centraliza verticalmente */
+    margin-top: 10px;
+    /* Espaçamento acima */
+    gap: 20px;
+}
+
+.esqueceu {
+    display: flex;
+    justify-content: center;
+    /* Alinha horizontalmente ao centro */
+    align-items: center;
+    /* Alinha verticalmente ao centro */
+    margin-top: 10px;
+    /* Espaçamento entre os campos acima */
+}
+
+.esqueceu-senha {
+    background: none;
+    /* Remove o fundo do botão */
+    border: none;
+    /* Remove a borda */
+    color: black;
+    /* Cor do texto */
+    font-size: 14px;
+    /* Tamanho do texto */
+    cursor: pointer;
+    /* Ponteiro no hover */
+    text-decoration: none;
+    /* Sublinhado para parecer um link */
+}
+
+.esqueceu-senha:hover {
+    color: blue;
+    /* Cor mais escura ao passar o mouse */
+}
+
+/*Fim Formulario para cadastro*/
+
+.formulario form {
+    position: relative;
+    top: 110px;
+    max-width: 500px;
+    padding: 0 20px;
+    transition: transform 1s;
+
+}
+
+.formulario form input {
+    width: 100%;
+    height: 0px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid var(--cor-padrao);
+    border-radius: 3px;
+
+}
+
+.formulario form input:focus {
+    outline: none;
+
+}
+
+.formulario form .btn {
+    width: 100%;
+    margin: 10px 0;
+    border: nome;
+    border-radius: 4px;
+    background-color: var(--cor-padrao);
+    cursor: pointer;
+
+}
+
+.formulario form .bth-form:hover {
+    background-color: var(--cor-btn-hover);
+
+}
+
+.formulario form a {
+
+    font-size: 20px;
+    text-decoration: none;
+    color: var(--cor-fonte-corpo);
+    cursor: pointer;
+
+
+
+}
+
+/*Formulario do Cadastro */
+
+
+
+/*Formulario do Cadastro */
+
+
+/* Estilizando o contêiner pai */
+
+/* Estilo do botão WhatsApp */
+.btn-whatsapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 55px;
+    padding: 10px 20px;
+
+    background-color: #25d366;
+    /* Cor do botão */
+    color: #fff;
+    font-size: 16px;
+    /* Tamanho da fonte */
+    border-radius: 5px;
+    width: 100%;
+    /* Faz o botão ocupar toda a largura do seu contêiner */
+    max-width: 100%;
+    box-sizing: border-box;
+    /* Garante que o padding não afete a largura total */
+}
+
+
+
+/* Esconde o texto diretamente no botão */
+.btn-whatsapp::before {
+    content: '';
+    /* Não deixa o texto ser exibido */
+    visibility: hidden;
+    /* Torna o texto invisível */
+}
+
+.btn-whatsapp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        font-size: 14px;
+        /* Ajusta o tamanho da fonte */
+        padding: 10px 15px;
+        /* Ajusta o padding */
+    }
+
+    /* Esconde o texto e deixa apenas o ícone visível */
+    .btn-whatsapp span {
+        display: none;
+        /* Esconde o texto em telas pequenas */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
+    }
+}
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        width: 100%;
+        /* O botão vai ocupar 100% da largura do seu contêiner */
+        margin-top: 55px;
+        /* Menos espaço acima do botão */
+        padding: 10px 15px;
+        /* Ajusta o padding para que o botão fique proporcional */
+        font-size: 20px;
+        /* Reduz o tamanho da fonte em telas menores */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
+    }
+}
+
+/* Media Query para telas menores que 500px (Muito pequeno) */
+@media (max-width: 500px) {
+    .btn-whatsapp {
+        font-size: 12px;
+        /* Ajuste de fonte para telas muito pequenas */
+        padding: 10px 10px;
+        /* Ajuste do padding para otimizar o botão */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
+    }
+}
+
+/* Media Query para telas menores que 700px (Mobile) */
+@media (max-width: 700px) {
+    .btn-whatsapp {
+        font-size: 14px;
+        /* Ajusta o tamanho da fonte */
+        padding: 10px 15px;
+        /* Ajusta o padding */
+    }
+
+    /* Esconde o texto e deixa apenas o ícone visível */
+    .btn-whatsapp {
+        flex-direction: column;
+        /* Empilha ícone e texto verticalmente */
+    }
+
+    .btn-whatsapp ion-icon {
+        font-size: 20px;
+        /* Ajusta o tamanho do ícone */
+    }
+
+    .btn-whatsapp::after {
+        content: '';
+        /* Remove o texto */
+        display: none;
+        /* Esconde o texto do botão */
+    }
+
+    .btn-whatsapp span {
+        display: none;
+        /* Esconde o texto em telas pequenas */
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
+    }
+}
+
+
+#Indicador {
+    width: 100px;
+    height: 3px;
+    border: none;
+    background-color: var(--cor-padrao);
+    margin-top: 8px;
+    transform: translatex(100px);
+    transition: transform 1s;
+}
+
+/*=============================== Fim minha conta ==============================*/
+/*=============================== Inicio Pagina da Empesa ==============================*/
+/* Estilo geral */
+.missao-visao-valores {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    padding: 40px 0;
+    text-align: center;
+}
+
+.missao-visao-valores h1 {
+    margin-bottom: 30px;
+    font-size: 2rem;
+    color: #333;
+
+}
+
+.linha-campos {
+    display: flex;
+    justify-content: space-between;
+    /* Espaço igual entre os containers */
+    gap: 20px;
+    /* Espaço entre os containers */
+    flex-wrap: wrap;
+    /* Permite quebrar para próxima linha em telas pequenas */
+
+}
+
+.campo {
+    flex: 1;
+    /* Os containers ocupam tamanhos iguais */
+    min-width: 250px;
+    /* Tamanho mínimo para cada campo */
+    max-width: 100%px;
+    /* Tamanho máximo para campos */
+    background: var(--cor-fonte);
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: left;
+
+}
+
+.campo h1 {
+    color: #555;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.campo p,
+.campo ul {
+    color: #666;
+    line-height: 1.6;
+
+}
+
+.campo ul {
+    list-style: none;
+    padding: 0;
+
+}
+
+.campo ul li {
+    margin-bottom: 5px;
+
+}
+
+/*============================Colocando Modal============================*/
+
+/* Estilizando o modal */
+.modal {
+    display: none;
+    /* Inicialmente oculto */
+    position: fixed;
+    z-index: 1000;
+    /* Sempre acima de outros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Barra de rolagem se necessário */
+    background-color: rgba(0, 0, 0, 0.8);
+    /* Fundo semitransparente */
+}
+
+/* Imagem expandida */
+.modal-conteudo {
+    margin: auto;
+    display: block;
+    max-width: 100%;
+    /* Limita a largura */
+    max-height: 100%;
+    /* Limita a altura */
+    border-radius: 8px;
+}
+
+/* Texto descritivo abaixo da imagem */
+#descricao {
+    text-align: center;
+    color: white;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+/* Botão de fechar */
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: white;
+    font-size: 35px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fechar:hover,
+.fechar:focus {
+    color: red;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*============================Colocando Modal============================*/
+/* Estilo responsivo */
+@media (max-width: 768px) {
+    .linha-campos {
+        flex-direction: column;
+        /* Empilha os campos verticalmente em telas pequenas */
+        align-items: center;
+        /* Centraliza os campos */
+    }
+}
+
+/*=============================== Fim Pagina da Empresa ==============================*/
+/*=============================== Incio do contato da Empresa ==============================*/
+
+/* Estilo do background e container principal */
+
+/* Estilo do formulário */
+
+/* Título do formulário */
+.formulario span {
+    display: inline-block;
+    width: 100px;
+    padding: 0 10px;
+    font-weight: bold;
+    color: var(--cor-fonte-corpo);
+    font-size: 18px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    display: block;
+}
+
+/* Estilo do formulário dentro do container */
+.formulario form {
+    position: absolute;
+    top: 110px;
+    /* Distância do topo */
+    width: 100%;
+    /* Usa toda a largura do container */
+    padding: 0 20px;
+}
+
+/* Estilo dos campos de input e textarea */
+.formulario form input,
+.formulario form textarea {
+    width: 100%;
+    height: 40px;
+    margin: 10px 0;
+    padding: 0 10px;
+    border: 1px solid var(--cor-padrao);
+    /* Cor da borda */
+    border-radius: 3px;
+    box-sizing: border-box;
+    /* Garante que padding não ultrapasse a largura total */
+}
+
+.formulario form textarea {
+    height: 120px;
+    /* Ajustado para dar mais espaço para a mensagem */
+    resize: none;
+    /* Desabilita o redimensionamento */
+}
+
+/* Estilo do botão de envio */
+.bth-form {
+    display: inline-block;
+    background-color: var(--cor-padrao);
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    margin-top: 20px;
+    transition: background-color 0.3s;
+}
+
+.bth-form:hover {
+    background-color: var(--cor-padrao-hover);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .formulario {
+        width: 100%;
+        /* Faz o formulário ocupar 90% da largura da tela */
+        height: auto;
+        /* Ajusta a altura */
+    }
+}
+
+@media (max-width: 768px) {
+    .formulario-2 {
+        width: 100%;
+        /* Faz o formulário ocupar 90% da largura da tela */
+        height: auto;
+        /* Ajusta a altura */
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .btn-form-2 span {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    #EntrarPainel input,
+    #CadastroSite input,
+    #RecuperarSenha input,
+    #EntrarPainel button,
+    #CadastroSite button,
+    #RecuperarSenha button {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/*=============================== Fim do contato da Empresa ==============================*/
+/*=============================== Inicio do Eventos da Empresa ==============================*/
+
+/* Estilo para a seção de eventos */
+.eventos {
+    background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+    /* Fundo com gradiente */
+    padding: 50px 0;
+
+}
+
+.eventos .container {
+    width: 100%;
+    max-width: 1200px;
+    /* Largura máxima */
+    margin: 0 auto;
+    text-align: center;
+}
+
+/* Estilo para o título */
+.eventos h2 {
+    font-size: 2rem;
+    color: var(--cor-fonte-corpo);
+    margin-bottom: 20px;
+}
+
+.evento .texto {
+    position: absolute;
+    bottom: 10px;
+    /* Fica próximo à parte inferior da imagem */
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    background: rgba(0, 0, 0, 0.5);
+    /* Fundo semitransparente */
+    padding: 5px 10px;
+    border-radius: 4px;
+    /* Bordas arredondadas para o fundo */
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+
+
+}
+
+.evento {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    /* Centraliza o texto no container */
+}
+
+.evento img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+    /* Bordas arredondadas para as imagens */
+}
+
+/* Estilo para a galeria de imagens */
+.galeria-eventos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 colunas */
+    gap: 15px;
+    margin-top: 20px;
+}
+
+/* Estilo para as imagens dentro da galeria */
+.galeria-eventos img {
+    align-items: center;
+    width: 100%;
+    /* A largura vai ser 100% do seu container */
+    height: 200px;
+    /* Altura fixa para as imagens */
+    object-fit: cover;
+    /* Faz a imagem cobrir completamente o espaço */
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Efeito de hover nas imagens */
+.galeria-eventos img:hover {
+    transform: scale(1.15);
+    /* Aumenta a imagem ligeiramente ao passar o mouse */
+}
+
+video {
+    width: 100%;
+    height: auto;
+    border: 5px solid #333;
+    /* Borda em torno do vídeo */
+    border-radius: 10px;
+    /* Bordas arredondadas */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Sombra suave */
+    display: block;
+    /* Remove espaços em branco em volta do vídeo */
+    margin: 20px auto;
+    /* Centraliza o vídeo com margens automáticas */
+    max-width: 75%;
+    /* Limita a largura máxima do vídeo */
+    object-fit: contain;
+    /* O vídeo cobre toda a área do contêiner, mantendo a proporção */
+
+
+}
+
+video:hover {
+    filter: brightness(90%);
+    /* Aplica um efeito ao passar o mouse */
+}
+
+/* Colocando icone de Whatsapp*/
+
+.whatsapp {
+    display: flex;
+    /* Ativa o Flexbox */
+    flex-direction: column;
+    /* Alinha os itens em coluna */
+    align-items: center;
+    /* Centraliza horizontalmente */
+    justify-content: center;
+    /* Centraliza verticalmente */
+    text-align: center;
+    /* Garante que o texto fique centralizado */
+    margin-top: 340px;
+    /* Espaçamento entre o formulário e o WhatsApp */
+
+}
+
+.whatsapp p {
+    font-size: 14px;
+    /* Tamanho do texto */
+    color: #333;
+    /* Cor do texto */
+    margin-bottom: 10px;
+    /* Espaçamento entre o texto e o botão */
+
+}
+
+.whatsapp a button {
+    background-color: #25D366;
+    /* Cor do botão */
+    color: white;
+    /* Cor do texto */
+    border: none;
+    /* Remove bordas */
+    padding: 10px 20px;
+    /* Espaçamento interno */
+    border-radius: 5px;
+    /* Bordas arredondadas */
+    font-size: 16px;
+    /* Tamanho da fonte */
+    cursor: pointer;
+    display: flex;
+    /* Flex para alinhar ícone e texto */
+    align-items: center;
+    /* Centraliza verticalmente */
+    justify-content: center;
+    /* Centraliza horizontalmente */
+    gap: 8px;
+    /* Espaçamento entre o ícone e o texto */
+    transition: background-color 0.3s ease;
+    /* Seleciona o botão ou link do WhatsApp */
+
+
+
+
+
+
+}
+
+.whatsapp a button:hover {
+    background-color: #1EBE57;
+    /* Cor mais escura no hover */
+
+}
+
+.whatsapp ion-icon {
+    font-size: 25px;
+    /* Tamanho do ícone */
+    vertical-align: middle;
+    /* Alinha o ícone */
+
+}
+
+/* Colocando icone de Whatsapp*/
+
+/* Remove o sublinhado do link */
+/* Seleciona o link do WhatsApp */
+a[href*="wa.me"] {
+    text-decoration: none;
+    /* Remove o sublinhado */
+    color: inherit;
+    /* Herda a cor do texto ou defina a cor desejada */
+}
+
+/*Colocando agora botão para rolar a pagina de volta pra cima*/
+#btnTopo {
+    position: fixed;
+    /* Fixa o botão na tela */
+    bottom: 20px;
+    /* Distância da parte inferior */
+    right: 20px;
+    /* Distância da lateral direita */
+    display: none;
+    /* Invisível por padrão */
+    background-color: #25D366;
+    /* Cor do botão */
+    color: white;
+    /* Cor do ícone */
+    border: none;
+    /* Remove a borda */
+    border-radius: 50%;
+    /* Deixa o botão circular */
+    width: 50px;
+    /* Largura do botão */
+    height: 50px;
+    /* Altura do botão */
+    font-size: 24px;
+    /* Tamanho do ícone */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    /* Sombra */
+    cursor: pointer;
+    /* Mostra o ponteiro */
+    z-index: 1000;
+    /* Garante que ele fique acima de outros elementos */
+    transition: opacity 0.3s ease-in-out;
+    /* Animação suave de exibição */
+}
+
+#btnTopo:hover {
+    background-color: #1EBE57;
+    /* Cor mais escura no hover */
+}
+
+/* Quando o botão deve aparecer */
+#btnTopo.show {
+    display: block;
+    opacity: 1;
+    /* Faz o botão aparecer */
+}
+
+/* Estilos para telas pequenas (menores que 150px de largura) */
+@media (max-width: 150px) {
+    #btnTopo {
+        bottom: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+    }
+}
+
+/* Estilos para telas grandes (maiores que Full HD) */
+@media (min-width: 1920px) {
+    #btnTopo {
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        font-size: 28px;
+    }
+}
+
+/*Colocando agora botão para rolar a pagina de volta pra cima*/
+/* Responsividade: para telas menores */
+@media (max-width: 1024px) {
+    .galeria-eventos {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 colunas em telas menores */
+    }
+}
+
+@media (max-width: 768px) {
+    .galeria-eventos {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 colunas em telas ainda menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .galeria-eventos {
+        grid-template-columns: 1fr;
+        /* 1 coluna em telas muito pequenas */
+    }
+}
+
+
+
+/*=============================== Fim do Eventos da Empresa ==============================*/
+
+
+
+
+
+/*=============================== Modo Celular==============================*/
+@media only screen and (min-width: 75px) and (max-width: 768px) {
+    .teste-img .img-col {
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+
+    .teste-img .img-col img {
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
+    }
+}
+
+@media only screen and (min-width: 75px) and (max-width: 768px) {
+    .teste-img .img-col {
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+
+    .teste-img .img-col img {
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 100px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
+    }
+}
+
+@media only screen and (min-width: 75px) and (max-width: 480px) {
+    .teste-img .img-col {
+        margin: 0;
+        /* Ajustar a margem para dispositivos menores */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+
+    .teste-img .img-col img {
+        margin: 0;
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px;
+        /* Limita a largura máxima da imagem para dispositivos menores */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
+    }
+}
+
+@media only screen and (min-width: 75px) and (max-width: 320px) {
+    .teste-img .img-col {
+        margin: 0;
+        /* Remove o espaçamento para dispositivos muito pequenos */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 100% do espaço disponível */
+    }
+}
+
+@media only screen and (min-width: 75px) and (max-width:500px) {
+    .logo {
+        width: 100%;
+        /* Ajuste a largura da logo para telas menores */
+        max-width: 200px;
+        /* Defina um tamanho máximo, se necessário */
+    }
+
+    nav ul {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: var(--cor-btn-fonte);
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        min-width: 100%;
+        max-width: none;
+    }
+
+    .menu-ativo nav ul {
+        max-height: 300px;
+        /* Ajuste conforme necessário */
+    }
+
+    @media only screen and (min-width:100px) and (max-width: 1080px) {
+
+        /* Ajustes específicos para telas menores */
+        #MenuItens {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .info-carrinho p {
+            display: none;
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+
+    #MenuItens {
+        overflow: hidden;
+        transition: max-height 0.5s ease-in-out;
+        background-color: rgba(0, 0, 0, 0.5);
+        /* Preto com 50% de transparência */
+    }
+
+    .menu-ativo nav ul {
+        max-width: 300px;
+        transition: max-heitght 0.3s ease-in-out;
+    }
+
+    nav ul li {
+        display: block;
+        margin-top: 10px;
+        margin-right: 50px;
+        margin-bottom: 10px;
+    }
+
+    nav ul li a {
+        color: var(--cor-fonte);
+    }
+
+    .menu-celular {
+        display: block;
+    }
+
+    .novoMenu nav ul li a {
+        color: var(--cor-fonte);
+
+    }
+
+    .teste-img .img-col {
+        margin: 0;
+        /* Ajustar a margem para dispositivos médios */
+        flex-basis: calc(25% - 10px);
+        /* Cada item ocupa 25% do espaço disponível menos a margem */
+    }
+
+    .teste-img .img-col img {
+        width: 100%;
+        /* Faz a imagem ocupar toda a largura do elemento */
+        max-width: 200px;
+        /* Limita a largura máxima da imagem */
+        transition: transform 0.5s;
+        /* Adiciona uma transição suave ao efeito */
+    }
+
+    @media only screen and (min-width: 100px) and (max-width: 550px) {
+        .resolucao {
+
+            /* Estilos para telas entre 100px e 500px */
+            .logo {
+                width: 100%;
+                /* Ajuste a largura da logo para telas menores */
+                max-width: 200px;
+                /* Defina um tamanho máximo, se necessário */
+            }
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+    @media only screen and (min-width: 100px) and (max-width: 600px) {
+        .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .info-carrinho p {
+            display: none;
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+    /*Forçando o codigo pra que não perca resolução para celulares menores*/
+
+
+    /*Fim do menu forçando*/
+
+    @media only screen and (max-width:300px) {
+        .linha {
+            text-align: center;
+        }
+
+        .col-2,
+        .col-3,
+        .col-4 {
+            flex-basis: 100%;
+            min-width: 100%;
+        }
+
+        .col-2 h1 {
+            font-size: 27px;
+        }
+
+        .rodape-col-3,
+        .rodape-col-4 {
+
+            text-align: center;
+
+        }
+
+        .col-4 p {
+            font-size: 24px;
+        }
+
+        .novoMenu nav ul li a {
+            color: var(--cor-fonte);
+
+        }
+
+        .ver-produtos .col-2 {
+            margin: 20px 0;
+        }
+
+        .ver-produtos .linha {
+            text-align: left;
+        }
+
+        .ver-produtos h1 {
+            font-size: 26px;
+            line-height: 26px;
+        }
+
+        .rodape-col-4 ul {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 25px;
+            flex-basis: 12%;
+            text-align: right;
+
+        }
+
+        .rodape-col-4 ul li {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            flex-basis: 12%;
+            text-align: right;
+            margin: 0;
+
+
+
+        }
+
+        .rodape-col-3 ul {
+            padding: 0;
+            margin: 0;
+            list-style-type: none;
+        }
+
+        .rodape-col-3 ul li {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 0px;
+            font-size: 15px;
+            flex-basis: 12%;
+            text-align: right;
+            
+
+
+
+
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .info-carrinho p {
+            display: none;
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+    /*Esse resolução foi feita com classe pra utilização de codigo*/
+
+    @media only screen and (min-width: 100px) and (max-width: 800px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
+
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+            max-width: 0;
+        }
+
+        .resolucao .menu-ativo nav ul {
+            max-height: 300px;
+            /* Ajuste conforme necessário */
+        }
+
+        .resolucao nav ul li {
+            display: block;
+            /* Altere para bloco */
+            margin-top: 10px;
+            margin-right: 0;
+            /* Remova margem direita para menu em coluna */
+            margin-bottom: 10px;
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .info-carrinho p {
+            display: none;
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+    @media only screen and (min-width: 100px) and (max-width: 740px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+    }
+
+    /* Subtítulo com detalhe dourado */
+    .historia .subtitulo {
+        font-size: 1.5rem;
+        font-family: 'Lora', serif;
+        color: #6e6e6e;
+        margin-bottom: 30px;
+        font-style: italic;
+        position: relative;
+        display: inline-block;
+        padding: 0 20px;
+    }
+
+    .historia .subtitulo::before,
+    .historia .subtitulo::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, #d4af37, transparent);
+    }
+
+    .historia .subtitulo::before {
+        left: -70px;
+    }
+
+    .historia .subtitulo::after {
+        right: -70px;
+    }
+
+    /* Texto com animação de entrada */
+    .historia p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #4f4f4f;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    .historia p:nth-of-type(1) {
+        animation-delay: 0.5s;
+    }
+
+    .historia p:nth-of-type(2) {
+        animation-delay: 0.8s;
+    }
+
+    /* Botão glamouroso */
+    .btn-explorar {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(to right, #e91e63, #ff4081);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-explorar:hover {
+        background: linear-gradient(to right, #ff4081, #e91e63);
+        box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Keyframes para o fadeIn */
+    
+
+ /* Certifique-se de que a seção .mapa ocupe o espaço central */
+.mapa {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;  /* Largura total */
+    height: 100%; /* Ocupa a altura disponível */
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center; /* Centraliza o texto */
+    background-color: white; /* Cor de fundo opcional */
+}
+
+/* Título */
+.mapa h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Descrição do mapa */
+.mapa-descricao p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+/* CSS opcional */
+#map {
+    width: 100%;  /* Largura total */
+    height: 450px;  /* Altura fixa ou pode ser ajustada conforme necessário */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    #map {
+        height: 300px; /* Ajuste da altura para telas menores */
+    }
+}
+.cuidados {
+    text-decoration: none !important; /* Remove o sublinhado com prioridade */
+    color: #333; /* Ajuste a cor do link */
+}
+
+.cuidados:hover {
+    color: #007BFF; /* Cor ao passar o mouse */
+}
+
+/* Responsividade para telas pequenas */
+@media (max-width: 768px) {
+    .mapa h2 {
+        font-size: 1.6rem;
+    }
+
+    .mapa-descricao p {
+        font-size: 1rem;
+    }
+
+    .mapa-embed iframe {
+        height: 300px;
+    }
+}
+
+/* Ajustes para o iframe do mapa */
+.mapa-embed iframe {
+    width: 100%;
+    max-width: 800px; /* Limita o tamanho máximo */
+    height: 450px;
+    border: none;
+    margin-top: 20px;
+}
+
+    @media only screen and (min-width: 100px) and (max-width: 600px) {
+        .resolucao .logo {
+            width: 100%;
+            /* Ajuste a largura da logo para telas menores */
+            max-width: 200px;
+            /* Defina um tamanho máximo, se necessário */
+        }
+
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+        }
+
+        .resolucao #MenuItens {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(25% - 10px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .info-carrinho p {
+            display: none;
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    }
+
+    .resolucao #MenuItens {
+        overflow: hidden;
+        transition: max-height 0.3s ease-in-out;
+    }
+
+    .resolucao .menu-ativo nav ul {
+        max-width: 300px;
+        transition: max-height 0.5s ease-in-out;
+    }
+
+    .resolucao nav ul li {
+        display: block;
+        margin-top: 10px;
+        margin-right: 50px;
+        margin-bottom: 10px;
+    }
+
+    .resolucao nav ul li a {
+        color: var(--cor-fonte);
+    }
+
+    .resolucao .menu-celular {
+        display: block;
+    }
+
+    .resolucao .novoMenu nav ul li a {
+        color: var(--cor-fonte);
+    }
+
+    @media only screen and (max-width: 100px) and (min-width: 400px) {
+        .resolucao nav ul {
+            position: absolute;
+            top: 70px;
+            left: 0;
+            background: var(--cor-btn-fonte);
+            width: 100%;
+            height: auto;
+            overflow: hidden;
+            transition: max-height 0.5s;
+            min-width: 100%;
+        }
+
+        .resolucao .linha {
+            text-align: center;
+        }
+
+        .resolucao .col-2,
+        .resolucao .col-3,
+        .resolucao .col-4 {
+            flex-basis: 100%;
+            min-width: 100%;
+        }
+
+        .resolucao .col-2 h1 {
+            font-size: 27px;
+        }
+
+        .resolucao .rodape-col-3,
+        .resolucao .rodape-col-4 {
+            text-align: center;
+        }
+
+        .resolucao .col-4 p {
+            font-size: 24px;
+        }
+
+        .resolucao .novoMenu nav ul li a {
+            color: var(--cor-fonte);
+        }
+
+        .teste-img .img-col {
+            margin: 0;
+            /* Ajustar a margem para dispositivos médios */
+            flex-basis: calc(50% - 20px);
+            /* Cada item ocupa 25% do espaço disponível menos a margem */
+        }
+
+        .teste-img .img-col img {
+            width: 100%;
+            /* Faz a imagem ocupar toda a largura do elemento */
+            max-width: 200px;
+            /* Limita a largura máxima da imagem */
+            transition: transform 0.5s;
+            /* Adiciona uma transição suave ao efeito */
+        }
+
+        .minha-conta {
+            background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+            padding: 50px 0;
+            width: 100%;
+
+        }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    }
+
+    .info-carrinho p {
+        display: none;
+    }
+
+    .minha-conta {
+        background: radial-gradient(var(--cor-padrao-hover), var(--cor-padrao));
+        padding: 50px 0;
+        width: 100%;
+
+    }
+}
+
+
+.resolucao {
+    /* As regras padrão (caso queira manter) */
+
+
+    @media (max-width: 768px) {
+        .resolucao body {
+            background-color: var(--cor-padrao-hover), var(--cor-padrao);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .resolucao body {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 1024px) {
+        .resolucao body {
+            padding: 10px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .rodape-col-4 ul li {
+            width: 15px;
+            min-width: 250px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            flex-basis: 12%;
+            text-align: right;
+            margin: 0;
+
+        }
+
+        .ver-produtos .col-2 {
+            margin: 20px 0;
+        }
+
+        .ver-produtos .linha {
+            text-align: left;
+        }
+
+        .ver-produtos h1 {
+            font-size: 26px;
+            line-height: 26px;
+        }
+
+        /* Subtítulo com detalhe dourado */
+        .historia .subtitulo {
+            font-size: 1.5rem;
+            font-family: 'Lora', serif;
+            color: #6e6e6e;
+            margin-bottom: 30px;
+            font-style: italic;
+            position: relative;
+            display: inline-block;
+            padding: 0 20px;
+        }
+
+        .historia .subtitulo::before,
+        .historia .subtitulo::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(to right, #d4af37, transparent);
+        }
+
+        .historia .subtitulo::before {
+            left: -70px;
+        }
+
+        .historia .subtitulo::after {
+            right: -70px;
+        }
+
+        /* Texto com animação de entrada */
+        .historia p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #4f4f4f;
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1.2s ease-out forwards;
+        }
+
+        .historia p:nth-of-type(1) {
+            animation-delay: 0.5s;
+        }
+
+        .historia p:nth-of-type(2) {
+            animation-delay: 0.8s;
+        }
+
+        /* Botão glamouroso */
+        .btn-explorar {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(to right, #e91e63, #ff4081);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-explorar:hover {
+            background: linear-gradient(to right, #ff4081, #e91e63);
+            box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+            transform: scale(1.1);
+        }
+
+        /* Keyframes para o fadeIn */
+        
+
+        .mapa iframe {
+            border: none;
+            width: 100%;
+            height: 400px;
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+    }
+
+    .info-carrinho p {
+        display: none;
+    }
+}
+
+.footer {
+    margin-top: auto;
+}
+
+
+.call-to-action {
+    text-align: center;
+
+    border-radius: 10px;
+
+    margin: 20px;
+}
+
+.call-to-action h1 {
+    font-size: 2.5em;
+    color: #e91e63;
+    /* Cor vibrante e chamativa */
+    margin-bottom: 20px;
+}
+
+.call-to-action h1 span {
+    color: #c2185b;
+    /* Destaque em tom sofisticado */
+}
+
+.call-to-action p {
+    font-size: 1.2em;
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.call-to-action .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background-color: #e91e63;
+    /* Cor vibrante */
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.call-to-action .btn:hover {
+    background-color: #c2185b;
+    /* Destaque no hover */
+}
+
+
+/* Container do modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    padding-top: 100px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal img {
+    margin: auto;
+    display: block;
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.seta-esquerda,
+.seta-direita {
+    position: absolute;
+    top: 50%;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.seta-esquerda {
+    left: 10px;
+}
+
+.seta-direita {
+    right: 10px;
+}
+
+.fechar {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fechar:hover,
+.seta-esquerda:hover,
+.seta-direita:hover {
+    color: #bbb;
+    text-decoration: none;
+}
+
+
+/* mdoda e maquiagem*/
+
+.cuidados {
+    justify-content: space-between;
+    text-align: center;
+    color: var(--cor-btn-fonte);
+
+}
+
+.col-3 .cuidados-img {
+    height: 337px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+/* Fundo principal glamuroso */
+section.historia {
+    background: linear-gradient(to bottom right, #fce4ec, #ffffff);
+    background-size: cover;
+    background-attachment: fixed;
+    /* Efeito de parallax */
+    padding: 70px 0;
+    position: relative;
+    overflow: hidden;
+    border-top: 5px solid #e91e63;
+    /* Linha de cor viva */
+    border-bottom: 5px solid #e91e63;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Brilho de fundo extra glamuroso */
+section.historia::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: -50px;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.5), transparent);
+    z-index: 1;
+    pointer-events: none;
+    animation: sparkle 6s infinite;
+}
+
+/* Animação de brilho */
+
+
+/* Container centralizado */
+.historia .container {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    /* Para ficar acima do efeito de brilho */
+    padding: 0 30px;
+}
+
+/* Título com sombra */
+.historia h2 {
+    font-size: 3rem;
+    color: #d81b60;
+    /* Rosa vibrante */
+    font-family: 'Playfair Display', serif;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 15px;
+    letter-spacing: 2px;
+    text-shadow: 0px 4px 6px rgba(216, 27, 96, 0.3);
+    position: relative;
+}
+
+/* Subtítulo com detalhe dourado */
+.historia .subtitulo {
+    font-size: 1.5rem;
+    font-family: 'Lora', serif;
+    color: #6e6e6e;
+    margin-bottom: 30px;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+}
+
+.historia .subtitulo::before,
+.historia .subtitulo::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(to right, #d4af37, transparent);
+}
+
+.historia .subtitulo::before {
+    left: -70px;
+}
+
+.historia .subtitulo::after {
+    right: -70px;
+}
+
+/* Texto com animação de entrada */
+.historia p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    color: #4f4f4f;
+    margin-bottom: 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeIn 1.2s ease-out forwards;
+}
+
+.historia p:nth-of-type(1) {
+    animation-delay: 0.5s;
+}
+
+.historia p:nth-of-type(2) {
+    animation-delay: 0.8s;
+}
+
+/* Botão glamouroso */
+.btn-explorar {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 30px;
+    background: linear-gradient(to right, #e91e63, #ff4081);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+    transition: all 0.3s ease;
+}
+
+.btn-explorar:hover {
+    background: linear-gradient(to right, #ff4081, #e91e63);
+    box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+    transform: scale(1.1);
+}
+
+/* Keyframes para o fadeIn */
+
+
+.mapa iframe {
+    border: none;
+    width: 100%;
+    height: 400px;
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media only screen and (min-width: 350px) and (max-width: 1024px) {
+    /* Subtítulo com detalhe dourado */
+    .historia .subtitulo {
+        font-size: 1.5rem;
+        font-family: 'Lora', serif;
+        color: #6e6e6e;
+        margin-bottom: 30px;
+        font-style: italic;
+        position: relative;
+        display: inline-block;
+        padding: 0 20px;
+    }
+
+    .historia .subtitulo::before,
+    .historia .subtitulo::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(to right, #d4af37, transparent);
+    }
+
+    .historia .subtitulo::before {
+        left: -70px;
+    }
+
+    .historia .subtitulo::after {
+        right: -70px;
+    }
+
+    /* Texto com animação de entrada */
+    .historia p {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #4f4f4f;
+        margin-bottom: 20px;
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeIn 1.2s ease-out forwards;
+    }
+
+    .historia p:nth-of-type(1) {
+        animation-delay: 0.5s;
+    }
+
+    .historia p:nth-of-type(2) {
+        animation-delay: 0.8s;
+    }
+
+    /* Botão glamouroso */
+    .btn-explorar {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 30px;
+        background: linear-gradient(to right, #e91e63, #ff4081);
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        text-decoration: none;
+        border-radius: 50px;
+        box-shadow: 0px 6px 15px rgba(233, 30, 99, 0.4);
+        transition: all 0.3s ease;
+    }
+
+    .btn-explorar:hover {
+        background: linear-gradient(to right, #ff4081, #e91e63);
+        box-shadow: 0px 10px 20px rgba(233, 30, 99, 0.6);
+        transform: scale(1.1);
+    }
+
+    /* Keyframes para o fadeIn */
+    
+
+    .mapa iframe {
+        border: none;
+        width: 100%;
+        height: 400px;
+        max-width: 100%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    }
+}
+
+.navegar {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    z-index: 10;
+}
+.navegar.esquerda {
+    left: 20px;
+}
+.navegar.direita {
+    right: 20px;
+}
+.navegar:hover {
+    color: #ccc;
+}
+
+
+.bnt-carrinho {
+    margin: 20px auto 15px auto; /* Centraliza o botão verticalmente e horizontalmente */
+    width: 100%; /* Ocupa toda a largura disponível */
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Regras para telas menores (mobile) */
+@media (max-width: 768px) {
+    .bnt-carrinho {
+        margin: 10px auto; /* Ajuste das margens */
+        padding: 0; /* Remove qualquer padding */
+    }
+}
+
+.bnt-volta-produto {
+    margin: 20px auto 15px auto; /* Centraliza o botão verticalmente e horizontalmente */
+    width: 100%; /* Ocupa toda a largura disponível */
+    display: flex; /* Ativa o Flexbox */
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente */
+}
+
+/* Regras para telas menores (mobile) */
+@media (max-width: 768px) {
+    .bnt-volta-produto {
+        margin: 10px auto; /* Ajuste das margens */
+        padding: 0; /* Remove qualquer padding */
+    }
+}
+/* Botão fechar modal */
+#imagemModal button.fechar {
+  background: transparent;  /* Sem fundo */
+  border: none;             /* Sem borda */
+  color: #fff;              /* Cor branca */
+  font-size: 2.5rem;        /* Tamanho do "x" */
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  padding: 0;
+  line-height: 1;
+  user-select: none;
+  transition: color 0.3s ease;
+}
+
+#imagemModal button.fechar:hover,
+#imagemModal button.fechar:focus {
+  color: #ff69b4;           /* Cor de destaque no hover/focus */
+  outline: none;
+}
+
+/* Botões de navegação do modal */
+#imagemModal button.navegar {
+  background: transparent;  /* Sem fundo */
+  border: none;             /* Sem borda */
+  color: #fff;              /* Cor branca */
+  font-size: 2.5rem;        /* Tamanho das setas */
+  cursor: pointer;
+  padding: 0 10px;
+  user-select: none;
+  transition: color 0.3s ease;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#imagemModal button.navegar:hover,
+#imagemModal button.navegar:focus {
+  color: #ff69b4;           /* Cor de destaque no hover/focus */
+  outline: none;
+}
+
+/* Posicionamento - você pode ajustar para ficar igual ao que tinha */
+#imagemModal button.esquerda {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+}
+
+#imagemModal button.direita {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+}
+@media (max-width: 600px) {
+  #imagemModal {
+    padding: 10px;
+  }
+
+  /* Aumenta o botão fechar no mobile */
+  #imagemModal button.fechar {
+    font-size: 3rem;     /* Tamanho maior pro toque */
+    top: 10px;
+    right: 10px;
+  }
+
+  /* Aumenta os botões de navegação no mobile */
+  #imagemModal button.navegar {
+    font-size: 3rem;     /* Tamanho maior pro toque */
+    padding: 0 12px;
+  }
+
+  /* Posiciona melhor os botões nas laterais */
+  #imagemModal button.esquerda {
+    left: 10px;
+  }
+
+  #imagemModal button.direita {
+    right: 10px;
+  }
+
+  /* Ajusta a imagem para ocupar toda a largura disponível */
+  #imagemModal .modal-conteudo {
+    max-width: 100%;
+    max-height: 70vh;
+    margin: 0 auto;
+    display: block;
+  }
+
+  /* Ajuste da descrição */
+  #imagemModal #descricao {
+    font-size: 0.9rem;
+    padding: 10px 5px;
+    color: #fff;
+    text-align: center;
+  }
+}
+/* === Responsividade para mobile === */
+@media (max-width: 400px) {
+  #chatbot-window {
+    width: 90vw;
+    right: 5vw;
+    bottom: 80px;
+    max-height: 60vh;
+  }
+  #chatbot-body {
+    max-height: 50vh;
+  }
+  #chatbot-button {
+    bottom: 80px;
+    right: 20px;
+    padding: 12px;
+  }
+}
+/* Mobile super pequeno (de 220px até 320px) */
+@media (max-width: 320px) {
+  #chatbot-window {
+    width: 90vw;
+    right: 5vw;
+    bottom: 60px;
+    max-height: 50vh;
+  }
+  #chatbot-body {
+    max-height: 40vh;
+  }
+  #chatbot-button {
+    bottom: 60px;
+    right: 15px;
+    padding: 10px;
+  }
+  #chatbot-input {
+    font-size: 12px;
+    padding: 10px;
+  }
+}
+
+/* Mobile pequeno (321px até 480px) */
+@media (min-width: 321px) and (max-width: 480px) {
+  #chatbot-window {
+    width: 85vw;
+    right: 7vw;
+    bottom: 70px;
+    max-height: 55vh;
+  }
+  #chatbot-body {
+    max-height: 45vh;
+  }
+  #chatbot-button {
+    bottom: 70px;
+    right: 20px;
+    padding: 12px;
+  }
+  #chatbot-input {
+    font-size: 13px;
+    padding: 11px;
+  }
+}
+
+/* Tablets e mobiles médios (481px até 768px) */
+@media (min-width: 481px) and (max-width: 768px) {
+  #chatbot-window {
+    width: 350px;
+    right: 40px;
+    bottom: 80px;
+    max-height: 60vh;
+  }
+  #chatbot-body {
+    max-height: 50vh;
+  }
+  #chatbot-button {
+    bottom: 80px;
+    right: 30px;
+    padding: 13px;
+  }
+}
+
+/* Telas pequenas desktop (769px até 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #chatbot-window {
+    width: 370px;
+    right: 50px;
+    bottom: 90px;
+    max-height: 65vh;
+  }
+  #chatbot-body {
+    max-height: 55vh;
+  }
+  #chatbot-button {
+    bottom: 90px;
+    right: 35px;
+    padding: 14px;
+  }
+}
+
+/* Telas desktop médias (1025px até 1440px) */
+@media (min-width: 1025px) and (max-width: 1440px) {
+  #chatbot-window {
+    width: 400px;
+    right: 60px;
+    bottom: 100px;
+    max-height: 70vh;
+  }
+  #chatbot-body {
+    max-height: 60vh;
+  }
+  #chatbot-button {
+    bottom: 100px;
+    right: 40px;
+    padding: 15px;
+  }
+}
+
+/* Telas Full HD e maiores (1441px até 1920px e além) */
+@media (min-width: 1441px) {
+  #chatbot-window {
+    width: 420px;
+    right: 70px;
+    bottom: 110px;
+    max-height: 75vh;
+  }
+  #chatbot-body {
+    max-height: 65vh;
+  }
+  #chatbot-button {
+    bottom: 110px;
+    right: 50px;
+    padding: 16px;
+  }
+}
+.rodape-col-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Mantém no canto direito */
+  transition: align-items 0.4s ease;
+}
+
+.rodape-col-4 ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: auto; /* Remove largura fixa */
+  transition: width 0.4s ease;
+}
+
+.social-links-vertical {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px; /* Espaçamento consistente entre os ícones */
+  transition: align-items 0.4s ease, gap 0.4s ease;
+}
+
+.social-links-vertical li {
+  margin: 0; /* margem removida pois o gap já cuida disso */
+}
+
+.social-links-vertical a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 
+    color 0.3s ease, 
+    transform 0.3s ease, 
+    font-size 0.4s ease;
+  outline-offset: 3px;
+  outline: none;
+}
+
+.social-links-vertical a:hover,
+.social-links-vertical a:focus-visible {
+  color: #00aaff;
+  transform: scale(1.05);
+  outline: 2px solid #00aaff;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.social-links-vertical i {
+  font-size: 1.5rem;
+  filter: drop-shadow(0 0 5px #00aaff);
+  transition: filter 0.3s ease, transform 0.3s ease, font-size 0.4s ease;
+}
+
+.social-links-vertical a:hover i,
+.social-links-vertical a:focus-visible i {
+  filter: drop-shadow(0 0 8px #00aaff);
+  transform: scale(1.2);
+}
+
+/* Media query gradual para telas menores que 700px */
+@media (max-width: 700px) {
+  .rodape-col-4 {
+    align-items: center; /* centraliza suavemente */
+  }
+
+  .social-links-vertical {
+    align-items: center;
+    gap: 12px; /* reduz um pouco o gap */
+  }
+
+  .social-links-vertical a {
+    font-size: 1.2rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.4rem;
+  }
+}
+
+/* Media query para telas menores que 500px */
+@media (max-width: 500px) {
+  .rodape-col-4 {
+    align-items: center;
+  }
+
+  .social-links-vertical {
+    gap: 8px; /* aumenta o gap para melhor toque em telas pequenas */
+  }
+
+  .social-links-vertical a {
+    font-size: 1.1rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.3rem;
+  }
+}
+
+/* Em telas muito pequenas (ex: celular até 350px) */
+@media (max-width: 350px) {
+  .social-links-vertical {
+    gap: 8px;
+  }
+
+  .social-links-vertical a {
+    font-size: 1rem;
+  }
+
+  .social-links-vertical i {
+    font-size: 1.2rem;
+  }
+}
+@media (max-width: 700px) {
+  .rodape-col-4 h3 {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  .rodape-col-4 h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 350px) {
+  .rodape-col-4 h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+}
+
+
+/* Extracted @keyframes */
+@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        transform: translate(-10%, -10%);
+    }
+
+    50% {
+        transform: translate(10%, 10%);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }

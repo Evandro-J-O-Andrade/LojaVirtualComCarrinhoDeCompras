@@ -1,0 +1,224 @@
+/* ==========================================================================
+   Angel Cosméticos — Cinema de entrada
+   Palco fixo sobre o conteúdo. O Home já está montado por baixo: nem o
+   crawler nem o LCP dependem desta camada.
+   ========================================================================== */
+
+.cinema {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  cursor: pointer;
+  animation: cinema-exit var(--t-exit) cubic-bezier(0.64, 0, 0.36, 1) var(--d-exit) both;
+}
+
+/* --- Palco: vinho profundo, nunca preto puro --- */
+.cinema__stage {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(120% 90% at 50% 12%, var(--c-wine-light) 0%, transparent 62%),
+    linear-gradient(178deg, var(--c-wine) 0%, var(--c-void) 78%);
+  animation: cinema-veil var(--t-veil) ease-out both;
+}
+
+/* --- Frame: retrato nativo 9:16, tratado como still de cinema --- */
+.cinema__frame {
+  position: relative;
+  width: min(30vh, 42vw);
+  max-width: 26rem;
+  aspect-ratio: var(--c-frame-ratio);
+  overflow: hidden;
+  background: var(--c-void);
+  box-shadow:
+    0 0 0 1px rgba(255, 248, 240, 0.08),
+    0 40px 90px -30px rgba(0, 0, 0, 0.85);
+  animation: cinema-settle var(--t-frame) cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.cinema__frame-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  display: block;
+}
+
+.cinema__frame-fallback {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(80% 60% at 50% 30%, var(--c-brand) 0%, transparent 70%),
+    linear-gradient(180deg, var(--c-wine) 0%, var(--c-void) 100%);
+}
+
+.cinema__frame-vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(28, 7, 20, 0.5) 0%, transparent 34%, transparent 62%, rgba(28, 7, 20, 0.78) 100%);
+  pointer-events: none;
+}
+
+/* --- Identidade --- */
+.cinema__identity {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 0 1.5rem clamp(2.5rem, 9vh, 5rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+  pointer-events: none;
+}
+
+.cinema__rule {
+  width: min(14rem, 40vw);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-champagne) 50%,
+    transparent 100%
+  );
+  transform-origin: center;
+  animation: cinema-rule var(--t-rule) cubic-bezier(0.16, 1, 0.3, 1) var(--d-rule) both;
+}
+
+.cinema__name {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 1rem + 6vw, 4.5rem);
+  line-height: 1;
+  color: var(--c-cream);
+  animation: cinema-word var(--t-word) cubic-bezier(0.16, 1, 0.3, 1) var(--d-word) both;
+}
+
+.cinema__name-main {
+  letter-spacing: 0.26em;
+  text-indent: 0.26em;
+}
+
+.cinema__name-sub {
+  letter-spacing: 0.12em;
+  color: var(--c-champagne);
+  font-style: italic;
+}
+
+.cinema__tagline {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 248, 240, 0.72);
+  animation: cinema-tag var(--t-tag) cubic-bezier(0.16, 1, 0.3, 1) var(--d-tag) both;
+}
+
+/* --- Pular --- */
+.cinema__skip {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid rgba(255, 248, 240, 0.22);
+  border-radius: 9999px;
+  background: rgba(28, 7, 20, 0.35);
+  backdrop-filter: blur(6px);
+  color: rgba(255, 248, 240, 0.78);
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 200ms ease, border-color 200ms ease, background-color 200ms ease;
+}
+
+.cinema__skip:hover {
+  color: var(--c-cream);
+  border-color: rgba(255, 248, 240, 0.45);
+  background: rgba(28, 7, 20, 0.55);
+}
+
+/* --- Mobile: o retrato preenche a tela, alinhado à composição nativa ---
+   100vh antes de 100dvh como fallback: em iOS Safari 100vh é MAIOR que a
+   área visível, e o frame transbordaria por baixo da barra do sistema. */
+@media (max-width: 639px) {
+  .cinema__frame {
+    width: 100vw;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    aspect-ratio: auto;
+  }
+  .cinema__frame-img {
+    object-position: center 25%;
+  }
+}
+
+/* --- Desktop largo: o palco respira, o frame permanece em pé --- */
+@media (min-width: 1536px) {
+  .cinema__frame {
+    width: min(38vh, 30rem);
+  }
+}
+
+/* ==========================================================================
+   Keyframes
+   ========================================================================== */
+
+@keyframes cinema-veil {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes cinema-settle {
+  from { opacity: 0; transform: scale(1.08) translateY(1.5%); }
+  60%  { opacity: 1; }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes cinema-rule {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes cinema-word {
+  from { opacity: 0; letter-spacing: 0.5em; filter: blur(10px); }
+  to   { opacity: 1; letter-spacing: 0.26em; filter: blur(0); }
+}
+
+@keyframes cinema-tag {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Cortina: sobe revelando o Home por baixo. */
+@keyframes cinema-exit {
+  from { opacity: 1; transform: translateY(0); visibility: visible; }
+  to   { opacity: 0; transform: translateY(-3%); visibility: hidden; }
+}
+
+/* ==========================================================================
+   Reduced motion: a sequência inteira é desligada.
+   O componente nem chega a renderizar, mas a rede de segurança fica.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .cinema {
+    animation: none;
+  }
+  .cinema__stage,
+  .cinema__frame,
+  .cinema__rule,
+  .cinema__name,
+  .cinema__tagline {
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}

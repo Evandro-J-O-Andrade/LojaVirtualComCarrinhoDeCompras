@@ -1,0 +1,22 @@
+# Supabase CLI Configuration
+# Project: Angel Cosméticos
+# Project Ref: bmqxgibhuzekxpcgosap
+
+project_id = "bmqxgibhuzekxpcgosap"
+
+# Database
+[db]
+port = 5432
+
+# Migrations
+[migrations]
+directory = "supabase/migrations"
+
+# Edge Functions
+[edge_functions]
+entrypoint = "supabase/functions"
+
+# Note: service_role key must NEVER be in frontend .env files.
+# Use Supabase CLI auth for migration operations:
+# supabase login
+# supabase link --project-ref bmqxgibhuzekxpcgosap
