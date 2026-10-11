@@ -14,14 +14,16 @@ const FavoritesContext = createContext<FavoritesContextType | undefined>(undefin
 const FAVORITES_STORAGE_KEY = 'angel-favorites'
 
 export function FavoritesProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<(number | string)[]>([])
-
-  useEffect(() => {
+  // Hidratação no inicializador: o estado já nasce com o que está salvo,
+  // sem render extra nem efeito de sincronização.
+  const [items, setItems] = useState<(number | string)[]>(() => {
     try {
       const saved = localStorage.getItem(FAVORITES_STORAGE_KEY)
-      if (saved) setItems(JSON.parse(saved))
-    } catch {}
-  }, [])
+      return saved ? JSON.parse(saved) : []
+    } catch {
+      return []
+    }
+  })
 
   useEffect(() => {
     localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(items))

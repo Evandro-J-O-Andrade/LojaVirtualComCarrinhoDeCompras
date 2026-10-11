@@ -136,6 +136,32 @@
     @apply bg-background/85 backdrop-blur-sm;
   }
 
+  /* ---------- Marca ---------- */
+  /* Lockup "Angel Cosméticos": nome em display
+     + sublinhado letterspaced. Assinatura da
+     marca no header e em contextos institucionais. */
+  .angel-wordmark {
+    @apply inline-flex flex-col leading-none;
+  }
+
+  .angel-wordmark__name {
+    @apply font-display text-2xl font-bold text-content;
+    letter-spacing: 0.04em;
+  }
+
+  .angel-wordmark__sub {
+    @apply mt-1 font-sans text-[0.6rem] font-semibold uppercase text-champagne-dark;
+    letter-spacing: 0.34em;
+  }
+
+  .angel-wordmark--inverted .angel-wordmark__name {
+    @apply text-cream;
+  }
+
+  .angel-wordmark--inverted .angel-wordmark__sub {
+    @apply text-champagne;
+  }
+
   /* ---------- Botões ---------- */
   .btn-angel {
     @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3
@@ -222,6 +248,43 @@
 
   .no-scroll {
     overflow: hidden;
+  }
+
+  /* ---------- Brilho dourado controlado ----------
+     Uma varredura lenta de champanhe sobre a
+     superfície. Decorativa, discreta (7s) e
+     desligada por prefers-reduced-motion. */
+  .brilho-angel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brilho-angel::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(
+      105deg,
+      transparent 42%,
+      rgba(196, 168, 124, 0.16) 48%,
+      rgba(255, 248, 240, 0.26) 50%,
+      rgba(196, 168, 124, 0.16) 52%,
+      transparent 58%
+    );
+    transform: translateX(-130%);
+    animation: brilho-angel 7s ease-in-out infinite;
+  }
+
+  @keyframes brilho-angel {
+    0%,
+    55% {
+      transform: translateX(-130%);
+    }
+    90%,
+    100% {
+      transform: translateX(130%);
+    }
   }
 
   .safe-bottom {

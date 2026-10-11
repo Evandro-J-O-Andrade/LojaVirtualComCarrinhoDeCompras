@@ -4,13 +4,26 @@ import { Heart, Menu, User } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CartDrawer } from '@/components/commerce/CartDrawer'
 import { MobileNav } from './MobileNav'
+import { AngelWordmark } from '@/components/brand/AngelWordmark'
+import { useAccount } from '@/domains/conta/context/AccountContext'
 
 /**
- * Rotas que existem de fato hoje. Nada de link para página inexistente:
- * `/eventos` e a busca foram reportados como lacunas, não inventados aqui.
+ * Navegação principal — rotas que existem de
+ * fato. Nada de link para página inexistente.
+ * Itens institucionais vivem no menu mobile
+ * (espaço) e continuam acessíveis no desktop
+ * via rodapé.
  */
 export const NAV_ITEMS = [
+  { label: 'Início', to: '/' },
   { label: 'Produtos', to: '/produtos' },
+  { label: 'Categorias', to: '/categorias' },
+  { label: 'Mimos', to: '/mimos' },
+  { label: 'Serviços', to: '/servicos' },
+  { label: 'Experiências', to: '/experiencias' },
+] as const
+
+export const NAV_INSTITUCIONAL = [
   { label: 'Sobre', to: '/sobre' },
   { label: 'Atendimento', to: '/atendimento' },
   { label: 'Contato', to: '/contato' },
@@ -28,6 +41,7 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
+  const { authenticated } = useAccount()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -47,7 +61,7 @@ export function Header() {
   )
 
   const iconLink =
-    'inline-flex h-10 w-10 items-center justify-center rounded-full text-content-muted transition-colors hover:bg-surface-alt hover:text-primary'
+    'inline-flex h-10 w-10 items-center justify-center rounded-full text-content-muted transition-colors hover:bg-champagne-light/50 hover:text-primary'
 
   return (
     <>
@@ -61,7 +75,7 @@ export function Header() {
 
       <header
         className={cn(
-          'fixed inset-x-0 top-0 z-40 border-b border-border bg-surface',
+          'fixed inset-x-0 top-0 z-40 border-b border-champagne/60 bg-ivory/95 backdrop-blur-md',
           scrolled ? 'shadow-md' : ''
         )}
       >
@@ -75,23 +89,24 @@ export function Header() {
               alt=""
               width={160}
               height={156}
-              className="h-10 w-auto md:h-12"
+              className="h-12 w-auto md:h-14"
             />
-            <span className="font-display text-lg font-semibold leading-none text-content md:text-xl">
-              Angel <span className="text-primary">Cosméticos</span>
-            </span>
+            <AngelWordmark className="transition-all duration-300 ease-angel" />
           </Link>
 
           <nav className="hidden lg:block" aria-label="Navegação principal">
-            <ul className="flex items-center gap-8">
+            <ul className="flex items-center gap-6 xl:gap-8">
               {NAV_ITEMS.map((item) => (
                 <li key={item.to}>
                   <NavLink
                     to={item.to}
+                    end={item.to === '/'}
                     className={({ isActive: active }) =>
                       cn(
                         'relative py-2 font-display text-base transition-colors',
-                        active ? 'text-primary' : 'text-content hover:text-primary'
+                        active || isActive(item.to)
+                          ? 'text-primary after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary'
+                          : 'text-content hover:text-primary'
                       )
                     }
                   >
@@ -107,9 +122,24 @@ export function Header() {
               <Heart size={20} />
             </Link>
 
-            <Link to="/conta" className={cn(iconLink, 'hidden sm:inline-flex')} aria-label="Minha conta">
-              <User size={20} />
-            </Link>
+            {authenticated ? (
+              <Link
+                to="/conta"
+                className={cn(iconLink, 'hidden sm:inline-flex')}
+                aria-label="Minha conta"
+              >
+                <User size={20} />
+              </Link>
+            ) : (
+              <Link
+                to="/entrar"
+                className={cn(
+                  'hidden rounded-lg border-2 border-champagne bg-surface/60 px-4 py-2 text-sm font-medium text-soft-black transition-colors hover:border-primary hover:bg-blush sm:inline-flex',
+                )}
+              >
+                Entrar
+              </Link>
+            )}
 
             <CartDrawer />
 
@@ -131,6 +161,7 @@ export function Header() {
         open={menuOpen}
         onClose={() => setMenuOpen(false)}
         items={NAV_ITEMS.map((i) => ({ label: i.label, to: i.to }))}
+        institucional={NAV_INSTITUCIONAL.map((i) => ({ label: i.label, to: i.to }))}
         isActive={isActive}
       />
     </>

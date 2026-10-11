@@ -118,6 +118,32 @@ module.exports = {
           '0%': { transform: 'translateX(100%)' },
           '100%': { transform: 'translateX(0)' },
         },
+        'hero-panel-in': {
+          '0%': { opacity: '0', transform: 'translateX(-2.5rem)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'hero-panel-in-alt': {
+          '0%': { opacity: '0', transform: 'translateX(2.5rem)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'hero-media-in': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(3rem) scale(1.04)',
+          },
+          '100%': { opacity: '1', transform: 'translateX(0) scale(1)' },
+        },
+        'hero-media-in-alt': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateX(-3rem) scale(1.04)',
+          },
+          '100%': { opacity: '1', transform: 'translateX(0) scale(1)' },
+        },
+        'hero-kenburns': {
+          '0%': { transform: 'scale(1)' },
+          '100%': { transform: 'scale(1.06)' },
+        },
         'wordmark-in': {
           '0%': { opacity: '0', letterSpacing: '0.5em', filter: 'blur(8px)' },
           '100%': { opacity: '1', letterSpacing: '0.24em', filter: 'blur(0)' },
@@ -145,6 +171,11 @@ module.exports = {
         'fade-down': 'fade-down 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
         'scale-in': 'scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) both',
         'slide-in-right': 'slide-in-right 0.3s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'hero-panel-in': 'hero-panel-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'hero-panel-in-alt': 'hero-panel-in-alt 0.9s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'hero-media-in': 'hero-media-in 1.1s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'hero-media-in-alt': 'hero-media-in-alt 1.1s cubic-bezier(0.16, 1, 0.3, 1) both',
+        'hero-kenburns': 'hero-kenburns 8s ease-out both',
         'wordmark-in': 'wordmark-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both',
         'rule-draw': 'rule-draw 0.6s cubic-bezier(0.16, 1, 0.3, 1) both',
         'intro-curtain-up': 'intro-curtain-up 0.7s cubic-bezier(0.64, 0, 0.36, 1) both',

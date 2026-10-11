@@ -1,8 +1,8 @@
-import { useAuth } from '@/contexts/AuthContext'
+import { useAccount } from '@/domains/conta/context/AccountContext'
 import { Navigate, Outlet } from 'react-router-dom'
 
 export function ProtectedRoute() {
-  const { user, loading } = useAuth()
+  const { authenticated, loading } = useAccount()
 
   if (loading) {
     return (
@@ -12,7 +12,7 @@ export function ProtectedRoute() {
     )
   }
 
-  if (!user) {
+  if (!authenticated) {
     return <Navigate to="/admin/login" replace />
   }
 

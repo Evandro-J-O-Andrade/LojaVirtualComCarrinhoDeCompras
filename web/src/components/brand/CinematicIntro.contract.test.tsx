@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import { render, screen, cleanup, act } from '@testing-library/react'
-import { useState, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { CinematicIntro } from './CinematicIntro'
 import { useDocumentIntro } from '@/hooks/useDocumentIntro'
 

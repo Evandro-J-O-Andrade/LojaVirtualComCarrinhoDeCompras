@@ -1,6 +1,5 @@
 import { Mail, MapPin } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { Instagram, Facebook, Twitter } from '@/components/icons/SocialIcons'
 
 export function Footer() {
   return (
@@ -20,21 +19,10 @@ export function Footer() {
                 Angel <span className="text-champagne">Cosméticos</span>
               </span>
             </Link>
-            <p className="text-warm-gray text-sm mb-6">
-              Sua beleza, seu estilo. Produtos selecionados para celebrar a mulher moderna.
-            </p>
-            <div className="flex gap-3">
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-deep-rose transition-colors">
-                <Instagram size={18} />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-deep-rose transition-colors">
-                <Facebook size={18} />
-              </a>
-              <a href="#" className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-deep-rose transition-colors">
-                <Twitter size={18} />
-              </a>
+              <p className="text-warm-gray text-sm">
+                Sua beleza, seu estilo. Produtos selecionados para celebrar a mulher moderna.
+              </p>
             </div>
-          </div>
 
           <div>
             <h4 className="font-display font-bold text-lg mb-4">Produtos</h4>

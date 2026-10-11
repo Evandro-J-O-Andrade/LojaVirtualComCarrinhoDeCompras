@@ -28,6 +28,7 @@ export function QuantitySelector({
       <button
         onClick={decrease}
         disabled={value <= min}
+        aria-label="Diminuir quantidade"
         className={cn(
           buttonSize,
           'rounded-full bg-blush flex items-center justify-center hover:bg-rose transition-colors disabled:opacity-40 disabled:cursor-not-allowed'
@@ -35,10 +36,11 @@ export function QuantitySelector({
       >
         <MinusIcon />
       </button>
-      <span className={cn('font-medium w-8 text-center', fontSize)}>{value}</span>
+      <span aria-live="polite" className={cn('font-medium w-8 text-center', fontSize)}>{value}</span>
       <button
         onClick={increase}
         disabled={value >= max}
+        aria-label="Aumentar quantidade"
         className={cn(
           buttonSize,
           'rounded-full bg-blush flex items-center justify-center hover:bg-rose transition-colors disabled:opacity-40 disabled:cursor-not-allowed'

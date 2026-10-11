@@ -1,7 +1,8 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { CartProvider } from '@/contexts/CartContext'
+import { CarrinhoProvider } from '@/domains/carrinho/context/CarrinhoProvider'
 import { FavoritesProvider } from '@/contexts/FavoritesContext'
 import { AuthProvider } from '@/contexts/AuthContext'
+import { AccountProvider } from '@/domains/conta/context/AccountContext'
 import { Toaster } from 'sonner'
 import { AngelRouter } from '@/routes/AppRouter'
 import { CinematicIntro } from '@/components/brand/CinematicIntro'
@@ -17,8 +18,9 @@ export function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <FavoritesProvider>
-          <CartProvider>
+        <AccountProvider>
+          <FavoritesProvider>
+            <CarrinhoProvider>
             {intro.active ? (
               <CinematicIntro onFinish={intro.finish} />
             ) : (
@@ -27,8 +29,9 @@ export function App() {
                 <AngelRouter />
               </>
             )}
-          </CartProvider>
-        </FavoritesProvider>
+          </CarrinhoProvider>
+          </FavoritesProvider>
+        </AccountProvider>
       </AuthProvider>
     </QueryClientProvider>
   )

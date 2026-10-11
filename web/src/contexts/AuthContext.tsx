@@ -8,6 +8,8 @@ interface AuthContextType {
   loading: boolean
   signIn: (email: string, password: string) => Promise<{ error?: string }>
   signOut: () => Promise<void>
+  /** Alteração de senha via Supabase Auth — nunca implementação própria. */
+  alterarSenha: (novaSenha: string) => Promise<{ error?: string }>
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
@@ -37,8 +39,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut()
   }
 
+  const alterarSenha = async (
+    novaSenha: string,
+  ) => {
+    const { error } = await supabase.auth.updateUser(
+      { password: novaSenha },
+    )
+    if (error) return { error: error.message }
+    return {}
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        signIn,
+        signOut,
+        alterarSenha,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   )
