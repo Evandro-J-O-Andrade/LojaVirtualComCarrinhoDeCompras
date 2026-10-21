@@ -15,6 +15,14 @@ import {
   type ProdutoRepository,
 } from './produto.repository'
 
+import type { PostgrestError } from '@supabase/supabase-js'
+
+function isTableMissingError(error: PostgrestError | Error): boolean {
+  if ('code' in error && error.code === 'PGRST200') return true
+  const msg = error.message ?? ''
+  return msg.toLowerCase().includes('does not exist')
+}
+
 interface ProdutoRow {
   id: number
   nome: string
@@ -156,7 +164,10 @@ export class SupabaseProdutoRepository implements ProdutoRepository {
     }
 
     const { data, error } = await query
-    if (error) throw new ProdutoTableMissingError()
+    if (error) {
+      if (isTableMissingError(error)) throw new ProdutoTableMissingError()
+      throw error
+    }
 
     const linhas = (data ?? []) as ProdutoRow[]
     return this.comporLista(linhas)
@@ -171,7 +182,8 @@ export class SupabaseProdutoRepository implements ProdutoRepository {
       .single()
     if (error) {
       if (error.code === 'PGRST116') return null
-      throw new ProdutoTableMissingError()
+      if (isTableMissingError(error)) throw new ProdutoTableMissingError()
+      throw error
     }
     const [produto] = await this.comporLista([data as ProdutoRow])
     return produto ?? null
