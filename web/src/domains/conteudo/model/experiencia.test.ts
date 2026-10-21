@@ -62,4 +62,25 @@ describe('experiências editoriais', () => {
     expect(midias[0].alt).toContain('foto 1')
     expect(midias[1].titulo).toBeNull()
   })
+
+  it('experiências de skincare usam os vídeos reais existentes', () => {
+    const skincareSlugs = ['skincare-rotina-diaria', 'skincare-massagem-facial', 'skincare-mascara-tratamento']
+    const videosEsperados = ['/assets/video/skinCare-1.mp4', '/assets/video/skinCare-2.mp4', '/assets/video/skinCare-3.mp4']
+
+    skincareSlugs.forEach((slug, i) => {
+      const exper = experienciaPorSlug(slug)
+      expect(exper).toBeDefined()
+      expect(exper!.video).toBe(videosEsperados[i])
+      expect(exper!.contextos).toContain('skincare')
+      expect(exper!.contextos).toContain('cuidados')
+    })
+  })
+
+  it('produtos diferentes mantêm suas próprias imagens e vídeos', () => {
+    const rotina = experienciaPorSlug('skincare-rotina-diaria')!
+    const massagem = experienciaPorSlug('skincare-massagem-facial')!
+
+    expect(rotina.capa).not.toBe(massagem.capa)
+    expect(rotina.video).not.toBe(massagem.video)
+  })
 })

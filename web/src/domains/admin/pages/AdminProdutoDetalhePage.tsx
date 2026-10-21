@@ -1,3 +1,4 @@
+import { useCallback, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -22,11 +23,12 @@ import {
 } from '@/components/dashboard/Table'
 import { formatPrice } from '@/lib/utils'
 import {
-  imagensOrdenadas,
   imagemOuFallback,
   type Produto,
   type Promocao,
 } from '@/domains/produtos/model/produto'
+import { ProdutoImagemUpload } from '../components/ProdutoImagemUpload'
+import { produtoImagemService } from '@/domains/produtos/services/produtoImagem.service'
 import { useAdminPermissao } from '../context/AdminPermissionContext'
 import {
   estadoAdminProdutos,
@@ -172,6 +174,57 @@ function DetalheContent({
   const promocaoAtiva = produto.promocoes.find(
     (promocao) => promocao.ativo,
   )
+  const [carregandoUpload, setCarregandoUpload] =
+    useState(false)
+  const [erroUpload, setErroUpload] = useState<string | null>(null)
+
+  const handleEnviarImagens = useCallback(
+    async (arquivos: File[]) => {
+      if (!podeEditar) return
+      const produtoIdNum = Number(produto.id)
+      try {
+        setCarregandoUpload(true)
+        setErroUpload(null)
+        await produtoImagemService.uploadMultiplo(
+          produtoIdNum,
+          arquivos,
+        )
+      } catch (err) {
+        setErroUpload(
+          err instanceof Error
+            ? err.message
+            : 'Erro inesperado ao enviar imagens.',
+        )
+        throw err
+      }
+    },
+    [produto.id, podeEditar],
+  )
+
+  const handleRemover = useCallback(
+    async (imagemId: string, url: string) => {
+      if (!podeEditar) return
+      const produtoIdNum = Number(produto.id)
+      await produtoImagemService.removerImagem(
+        produtoIdNum,
+        Number(imagemId),
+        url,
+      )
+    },
+    [produto.id, podeEditar],
+  )
+
+  const handleTogglePrincipal = useCallback(
+    async (imagemId: string) => {
+      if (!podeEditar) return
+      const produtoIdNum = Number(produto.id)
+      await produtoImagemService.definirPrincipalUnica(
+        produtoIdNum,
+        Number(imagemId),
+      )
+    },
+    [produto.id, podeEditar],
+  )
 
   return (
     <div>
@@ -277,28 +330,22 @@ function DetalheContent({
                 className="aspect-square w-full object-cover"
               />
             </div>
-            <ul className="space-y-2 text-sm">
-              {imagensOrdenadas(produto).map(
-                (imagem, indice) => (
-                  <li
-                    key={imagem.id}
-                    className="flex items-center justify-between gap-2 text-content-muted"
-                  >
-                    <span className="truncate">
-                      {indice + 1}. {imagem.url}
-                    </span>
-                    {imagem.principal && (
-                      <Badge variant="promo">capa</Badge>
-                    )}
-                  </li>
-                ),
-              )}
-              {produto.imagens.length === 0 && (
-                <li className="text-content-muted">
-                  Sem imagens cadastradas.
-                </li>
-              )}
-            </ul>
+            <ProdutoImagemUpload
+              produtoId={produto.id}
+              imagensExistentes={produto.imagens}
+              podeEditar={podeEditar}
+              motivoPermissao={motivoPermissao}
+              carregando={carregandoUpload}
+              aoEnviar={handleEnviarImagens}
+              aoRemover={handleRemover}
+              aoTogglePrincipal={handleTogglePrincipal}
+              aoSetCarregando={setCarregandoUpload}
+            />
+            {erroUpload && (
+              <div className="mt-3 flex items-center gap-2 text-sm text-coral">
+                <span>{erroUpload}</span>
+              </div>
+            )}
           </Card>
 
           {/* Preço e promoção */}

@@ -135,6 +135,49 @@ export const EXPERIENCIAS: Experiencia[] = [
     data: null,
     local: null,
   },
+  {
+    slug: 'skincare-rotina-diaria',
+    titulo: 'Rotina Diária de Skincare',
+    chamada: '3 passos essenciais para pele equilibrada todos os dias',
+    narrativa:
+      'Uma rotina de skincare simples e eficaz: limpeza, tratamento e hidratação. Ideal para pele mista e acneica, usando produtos acessíveis e de confiança.',
+    capa: '/assets/img/produto-9.jpg',
+    galeria: ['/assets/img/produto-9.jpg', '/assets/img/produto-10.jpg'],
+    video: '/assets/video/skinCare-1.mp4',
+    contextos: ['cuidados', 'skincare', 'bem-estar'],
+    data: null,
+    local: null,
+  },
+  {
+    slug: 'skincare-massagem-facial',
+    titulo: 'Massagem Facial com Gua Sha',
+    chamada: 'Técnica antiga para drenagem linfática e microcirculação',
+    narrativa:
+      'Nesta demonstração, a fundadora Grasiely mostra como aplicar a técnica de gua sha na rotina de skincare para estimular a drenagem linfática, reduzir inchaço e potencializar a absorção dos produtos.',
+    capa: '/assets/img/produto-17.jpg',
+    galeria: [
+      '/assets/img/produto-17.jpg',
+      '/assets/img/produto-18.jpg',
+      '/assets/img/produto-19.jpg',
+    ],
+    video: '/assets/video/skinCare-2.mp4',
+    contextos: ['cuidados', 'skincare', 'bem-estar'],
+    data: null,
+    local: null,
+  },
+  {
+    slug: 'skincare-mascara-tratamento',
+    titulo: 'Máscara de Tratamento Caseira',
+    chamada: 'Ingredientes que sua cozinha tem e que sua pele vai amar',
+    narrativa:
+      'Três receitas de máscaras faciais caseiras usando ingredientes naturais: aveia e mel para hidratação, argila e mel para purificação, e óleo de coco para oleagem equilibrada. Combinações seguras e eficazes para cada tipo de pele.',
+    capa: '/assets/img/produto-5.jpg',
+    galeria: ['/assets/img/produto-5.jpg', '/assets/img/produto-6.jpg'],
+    video: '/assets/video/skinCare-3.mp4',
+    contextos: ['cuidados', 'skincare', 'bem-estar'],
+    data: null,
+    local: null,
+  },
 ]
 
 export function experienciaPorSlug(
