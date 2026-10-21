@@ -1,0 +1,1 @@
+SELECT proname FROM pg_proc WHERE proname = 'imagem_definir_principal';

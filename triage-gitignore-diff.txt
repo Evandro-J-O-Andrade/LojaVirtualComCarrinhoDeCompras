@@ -1,0 +1,30 @@
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+diff --git a/.gitignore b/.gitignore
+index 271572f..8cf34a0 100644
+Binary files a/.gitignore and b/.gitignore differ
+diff --git a/package.json b/package.json
+index a8ed368..d69d2d5 100644
+--- a/package.json
++++ b/package.json
+@@ -14,6 +14,7 @@
+   "author": "",
+   "license": "ISC",
+   "dependencies": {
++    "@supabase/supabase-js": "^2.118.0",
+     "cors": "^2.8.5",
+     "dotenv": "^17.2.1",
+     "express": "^5.1.0",
+@@ -21,9 +22,11 @@
+     "node.js": "^0.0.1-security",
+     "nodes.js": "^0.0.1-security",
+     "openai": "^5.11.0",
+-    "openrouter-sdk": "^1.0.9"
++    "openrouter-sdk": "^1.0.9",
++    "pg": "^8.23.1"
+   },
+   "devDependencies": {
+-    "@stackbit/types": "^2.1.15"
++    "@stackbit/types": "^2.1.15",
++    "prisma": "^6.19.3"
+   }
+ }

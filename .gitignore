@@ -18,3 +18,13 @@ build/
 # Ignora arquivos temporários do sistema
 .DS_Store
 Thumbs.db
+
+# Arquivos temporários locais do Supabase
+supabase/.temp/
+
+# Large media files (exceed GitHub 100MB limit)
+assets-importacao/
+
+# Large video files (exceed GitHub 100MB limit)
+assets/video/skinCare2.mp4
+web/public/assets/video/skinCare-2.mp4

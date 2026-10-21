@@ -1,0 +1,1 @@
+SELECT proname, proargtypes::regtype[], prorettype::regtype, prosrc FROM pg_proc WHERE proname = 'imagem_definir_principal';
