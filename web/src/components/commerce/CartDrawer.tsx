@@ -143,7 +143,7 @@ export function CartDrawer() {
                 <div className="space-y-4">
                   {itens.map((item) => (
                     <div key={chave(item)} className="flex gap-3 bg-white rounded-xl p-3">
-                      <Link to={`/produtos/${item.produto.slug}`} className="w-16 h-16 rounded-lg bg-blush flex items-center justify-center flex-shrink-0 overflow-hidden">
+                      <Link to={`/produtos/${item.produto.slug}`} onClick={() => setIsOpen(false)} className="w-16 h-16 rounded-lg bg-blush flex items-center justify-center flex-shrink-0 overflow-hidden">
                         <ProdutoImagem
                           src={item.produto.imagem}
                           alt={item.produto.nome}

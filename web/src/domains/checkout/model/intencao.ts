@@ -22,6 +22,7 @@ export interface IntencaoEndereco {
   cep: string
   rua: string
   numero: string
+  bairro: string | null
   complemento: string | null
   cidade: string
   estado: string

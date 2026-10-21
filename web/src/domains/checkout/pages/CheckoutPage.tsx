@@ -7,6 +7,7 @@ import {
   QrCode,
   Shield,
   Truck,
+  AlertCircle,
 } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
@@ -26,17 +27,10 @@ import {
 } from '@/domains/checkout/model/intencao'
 import { calcularFrete } from '@/domains/checkout/model/frete'
 import { LocalIntencaoRepository } from '@/domains/checkout/repositories/intencao.repository.local'
+import { buscarEnderecoPorCep } from '@/domains/checkout/services/cep'
 import { formatPrice } from '@/lib/utils'
 
 const intencoes = new LocalIntencaoRepository()
-
-interface ViaCEP {
-  logradouro?: string
-  bairro?: string
-  localidade?: string
-  uf?: string
-  erro?: boolean
-}
 
 export function CheckoutPage() {
   const { itens, limpar } = useCarrinho()
@@ -46,10 +40,13 @@ export function CheckoutPage() {
   const [whatsapp, setWhatsapp] = useState('')
   const [cep, setCep] = useState('')
   const [rua, setRua] = useState('')
+  const [bairro, setBairro] = useState('')
   const [numero, setNumero] = useState('')
   const [complemento, setComplemento] = useState('')
   const [cidade, setCidade] = useState('')
   const [estado, setEstado] = useState('')
+  const [cepLoading, setCepLoading] = useState(false)
+  const [cepError, setCepError] = useState<string | null>(null)
   const [modalidade, setModalidade] =
     useState<ModalidadeEntrega>('entrega')
   const [metodo, setMetodo] = useState<MetodoPagamento>('pix')
@@ -69,20 +66,26 @@ export function CheckoutPage() {
   )
 
   const aoBuscarCEP = async () => {
-    if (cep.length !== 8) return
-    try {
-      const resposta = await fetch(
-        `https://viacep.com.br/json/${cep}/`,
-      )
-      const dados = (await resposta.json()) as ViaCEP
-      if (!dados.erro) {
-        if (dados.logradouro) setRua(dados.logradouro)
-        if (dados.localidade) setCidade(dados.localidade)
-        if (dados.uf) setEstado(dados.uf)
+    setCepLoading(true)
+    setCepError(null)
+    const resultado = await buscarEnderecoPorCep(cep)
+    if (!resultado.sucesso) {
+      const mensagens: Record<string, string> = {
+        'cep-invalido': 'CEP inválido. Digite 8 dígitos.',
+        'cep-inexistente': 'CEP não encontrado.',
+        'erro-no-servidor': 'Erro ao consultar o CEP. Tente novamente.',
+        'erro-de-rede': 'Não foi possível buscar o CEP. Preencha manualmente.',
       }
-    } catch {
-      // ViaCEP indisponível: o cliente preenche manualmente.
+      setCepError(mensagens[resultado.erro!] ?? 'Erro desconhecido.')
+      setCepLoading(false)
+      return
     }
+    const dados = resultado.dados!
+    if (dados.logradouro) setRua(dados.logradouro)
+    if (dados.bairro) setBairro(dados.bairro)
+    if (dados.localidade) setCidade(dados.localidade)
+    if (dados.uf) setEstado(dados.uf)
+    setCepLoading(false)
   }
 
   const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
@@ -118,6 +121,7 @@ export function CheckoutPage() {
         cep: cep.trim(),
         rua: rua.trim(),
         numero: numero.trim(),
+        bairro: bairro.trim() || null,
         complemento: complemento.trim() || null,
         cidade: cidade.trim(),
         estado: estado.trim(),
@@ -353,10 +357,17 @@ export function CheckoutPage() {
                       size="md"
                       className="mt-6"
                       onClick={aoBuscarCEP}
+                      disabled={cep.length !== 8 || cepLoading}
                     >
-                      Buscar
+                      {cepLoading ? 'Buscando...' : 'Buscar'}
                     </Button>
                   </div>
+                  {cepError && (
+                    <div className="flex items-center gap-2 text-sm text-coral">
+                      <AlertCircle size={16} />
+                      <span>{cepError}</span>
+                    </div>
+                  )}
                   <Input
                     label="Rua"
                     value={rua}
@@ -365,6 +376,14 @@ export function CheckoutPage() {
                     }
                     placeholder="Nome da rua"
                     required
+                  />
+                  <Input
+                    label="Bairro"
+                    value={bairro}
+                    onChange={(evento) =>
+                      setBairro(evento.target.value)
+                    }
+                    placeholder="Nome do bairro"
                   />
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <Input
