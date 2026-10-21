@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { Header } from '@/components/navigation/Header'
 import { Footer } from '@/components/layout/Footer'
+import { WhatsAppFloat } from '@/components/commerce/WhatsAppFloat'
 
 /**
  * App Shell público.
@@ -17,6 +18,7 @@ export function Layout() {
         <Outlet />
       </main>
       <Footer />
+      <WhatsAppFloat />
     </div>
   )
 }

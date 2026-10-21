@@ -1,5 +1,6 @@
-import { Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { Instagram, Facebook } from '@/components/icons/SocialIcons'
 
 export function Footer() {
   return (
@@ -19,10 +20,10 @@ export function Footer() {
                 Angel <span className="text-champagne">Cosméticos</span>
               </span>
             </Link>
-              <p className="text-warm-gray text-sm">
-                Sua beleza, seu estilo. Produtos selecionados para celebrar a mulher moderna.
-              </p>
-            </div>
+            <p className="text-warm-gray text-sm">
+              Sua beleza, seu estilo. Produtos selecionados para celebrar a mulher moderna.
+            </p>
+          </div>
 
           <div>
             <h4 className="font-display font-bold text-lg mb-4">Produtos</h4>
@@ -44,7 +45,7 @@ export function Footer() {
             </ul>
           </div>
 
-<div>
+          <div>
             <h4 className="font-display font-bold text-lg mb-4">Onde nos encontrar</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2 text-warm-gray text-sm">
@@ -55,7 +56,38 @@ export function Footer() {
                 <Mail size={16} className="shrink-0" />
                 contato@angelcosmeticos.com.br
               </li>
+              <li className="flex items-center gap-2 text-warm-gray text-sm">
+                <Phone size={16} className="shrink-0" />
+                <a
+                  href="https://wa.me/5511963205776"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors"
+                >
+                  (11) 96320-5776
+                </a>
+              </li>
             </ul>
+            <div className="flex gap-4 mt-6">
+              <a
+                href="https://instagram.com/angelcosmeticos"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram da Angel Cosméticos"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-ivory/10 text-ivory transition-colors hover:bg-primary hover:text-white"
+              >
+                <Instagram size={20} />
+              </a>
+              <a
+                href="https://facebook.com/angelcosmeticos"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook da Angel Cosméticos"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-ivory/10 text-ivory transition-colors hover:bg-primary hover:text-white"
+              >
+                <Facebook size={20} />
+              </a>
+            </div>
             <p className="mt-4 text-body-sm text-warm-gray/70">
               CNPJ 48.591.163/0001-12
             </p>
@@ -71,4 +103,3 @@ export function Footer() {
     </footer>
   )
 }
-
