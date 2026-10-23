@@ -33,7 +33,7 @@ export const angelCinema = {
   },
 
   /** Origem do asset editorial. Native 719×1280 (9:16 retrato). */
-  frameImage: '/assets/img/cinematic.png',
+  frameImage: '/assets/img/marca/cinematic.png',
   frameRatio: 9 / 16,
 } as const
 

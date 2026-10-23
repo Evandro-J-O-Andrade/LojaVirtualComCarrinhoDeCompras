@@ -83,7 +83,7 @@ export function Header() {
           className="container-angel flex items-center justify-between gap-6 transition-[height] duration-300"
           style={{ height: scrolled ? 'var(--header-h-scrolled)' : 'var(--header-h)' }}
         >
-          <Link to="/" className="flex shrink-0 items-center gap-3" aria-label="Angel Cosméticos — página inicial">
+          <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex shrink-0 items-center gap-3" aria-label="Angel Cosméticos — página inicial">
             <img
               src="/brand/angel-logo-160.png"
               alt=""
@@ -163,6 +163,7 @@ export function Header() {
         items={NAV_ITEMS.map((i) => ({ label: i.label, to: i.to }))}
         institucional={NAV_INSTITUCIONAL.map((i) => ({ label: i.label, to: i.to }))}
         isActive={isActive}
+        authenticated={authenticated}
       />
     </>
   )

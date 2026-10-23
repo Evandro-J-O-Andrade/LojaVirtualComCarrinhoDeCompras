@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Building2, MapPin, Phone } from 'lucide-react'
+import { Instagram } from '@/components/icons/SocialIcons'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { ImagemEditorial } from '@/components/brand/ImagemEditorial'
 import { BrilhoShimmer } from '@/domains/home/components/BrilhoShimmer'
@@ -90,7 +91,22 @@ export function SobrePage() {
             </div>
           </div>
 
-          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3">
+          <div className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-2">
+            <article className="surface-card p-6">
+              <h3 className="title-h3">Missão</h3>
+              <p className="mt-3 text-body text-content-muted">
+                {HISTORIA_MARCA.missao}
+              </p>
+            </article>
+            <article className="surface-card p-6">
+              <h3 className="title-h3">Visão</h3>
+              <p className="mt-3 text-body text-content-muted">
+                {HISTORIA_MARCA.visao}
+              </p>
+            </article>
+          </div>
+
+          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {HISTORIA_MARCA.valores.map((valor) => (
               <article key={valor.rotulo} className="surface-card p-6">
                 <h3 className="title-h3">{valor.rotulo}</h3>
@@ -99,6 +115,77 @@ export function SobrePage() {
                 </p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-angel bg-surface-alt/60">
+        <div className="container-angel">
+          <div className="mb-10 max-w-2xl">
+            <p className="overline-angel mb-2">Onde nos encontrar</p>
+            <h2 className="title-h2">Contato</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+            <div className="space-y-6">
+              <div className="flex items-start gap-3">
+                <MapPin size={20} className="mt-1 shrink-0 text-primary" />
+                <div>
+                  <p className="font-medium text-content">Endereço</p>
+                  <p className="text-body text-content-muted">
+                    Viela Aristides de Oliveira, nº 130 — Poá/SP — CEP 08551-275
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone size={20} className="shrink-0 text-primary" />
+                <div>
+                  <p className="font-medium text-content">Telefone / WhatsApp</p>
+                  <a
+                    href="https://wa.me/5511963205776"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body text-content-muted hover:text-primary transition-colors"
+                  >
+                    (11) 96320-5776
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Instagram size={20} className="shrink-0 text-primary" />
+                <div>
+                  <p className="font-medium text-content">Instagram</p>
+                  <a
+                    href="https://instagram.com/angel.cosmeticos.grasi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body text-content-muted hover:text-primary transition-colors"
+                  >
+                    @angel.cosmeticos.grasi
+                  </a>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <Building2 size={20} className="shrink-0 text-primary" />
+                <div>
+                  <p className="font-medium text-content">CNPJ</p>
+                  <p className="text-body text-content-muted">
+                    48.591.163/0001-12
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="overflow-hidden rounded-3xl shadow-xl">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4539.496793009442!2d-46.35132872376097!3d-23.52270536017499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce7b272bd80219%3A0x3736d64dcd09ee73!2sViela%20Aristides%20de%20Oliveira%2C%20130%20-%20Vila%20J%C3%BAlia%2C%20Po%C3%A1%20-%20SP%2C%2008551-275!5e1!3m2!1spt-BR!2sbr!4v1734497669538!5m2!1spt-BR!2sbr"
+                width="100%"
+                height="320"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Localização Angel Cosméticos"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -123,6 +210,37 @@ export function SobrePage() {
                 </p>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-angel bg-surface-alt/60">
+        <div className="container-angel">
+          <div className="mb-8 max-w-2xl">
+            <p className="overline-angel mb-2">Onde nos encontrar</p>
+            <h2 className="title-h2">Localização e contato</h2>
+          </div>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="surface-card p-6">
+              <p className="text-body text-content-muted">
+                Viela Aristides de Oliveira, nº 130 — Poá/SP — CEP 08551-275
+              </p>
+            </div>
+            <div className="surface-card p-6">
+              <p className="text-body text-content-muted">(11) 96320-5776</p>
+              <p className="text-body text-content-muted">
+                contato@angelcosmeticos.com.br
+              </p>
+            </div>
+            <div className="surface-card p-6 flex items-center justify-center">
+              <Link
+                to="/contato"
+                className="btn-angel inline-flex items-center gap-2"
+              >
+                Ver contato completo
+                <ArrowRight size={18} />
+              </Link>
+            </div>
           </div>
         </div>
       </section>

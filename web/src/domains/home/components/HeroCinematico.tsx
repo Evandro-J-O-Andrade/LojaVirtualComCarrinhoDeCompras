@@ -4,6 +4,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { BrilhoShimmer } from './BrilhoShimmer'
 import { ImagemEditorial } from '@/components/brand/ImagemEditorial'
+import { BorboletasHero } from './BorboletasHero'
 
 const HERO_IMAGEM = '/images/hero-beauty.jpg'
 
@@ -37,7 +38,7 @@ const CAMPANHAS: Campanha[] = [
     titulo: 'Pequenos detalhes que importam',
     descricao:
       'Cuidar, ritual e presentear — composições selecionadas para cada momento do seu dia.',
-    imagem: '/assets/img/galeria-2.jpg',
+    imagem: '/assets/img/produtos/galeria-2.jpg',
     imagemAlt: 'Mimo Angel em composição editorial',
     cta: { rotulo: 'Descobrir mimos', to: '/mimos' },
   },
@@ -46,7 +47,7 @@ const CAMPANHAS: Campanha[] = [
     titulo: 'Beleza também é viver',
     descricao:
       'Atendimento, produção e encontros — a Angel também é presença.',
-    imagem: '/assets/img/evento1.jpeg',
+    imagem: '/assets/img/eventos/evento1.jpeg',
     imagemAlt: 'Evento de beleza Angel',
     cta: { rotulo: 'Agendar experiência', to: '/agendamento' },
   },
@@ -141,7 +142,10 @@ export function HeroCinematico() {
         <BrilhoShimmer />
       </div>
 
-      <div className="container-angel relative grid flex-1 items-center gap-12 py-20 lg:grid-cols-2">
+      {/* ---------- BORBOLETAS DECORATIVAS ---------- */}
+      <BorboletasHero />
+
+      <div className="container-angel relative z-10 grid flex-1 items-center gap-12 py-20 lg:grid-cols-2">
         {/* ---------- PAINEL EDITORIAL (texto) ---------- */}
         <div
           className={cn(

@@ -45,7 +45,7 @@ export const COLUNAS_EDITORIAIS: Record<ColunaEditorial, EditorialColuna> = {
         chamada: 'A base de tudo é o cuidado',
         narrativa:
           'Antes da cor, a pele. Limpeza, hidratação e proteção formam a base onde toda beleza acontece — e é com essa base que a curadoria da Angel começa.',
-        imagem: '/assets/img/rostosemfundo.png',
+        imagem: '/assets/img/institucional/rostosemfundo.png',
       },
       {
         slug: 'rotina-de-beleza',
@@ -61,7 +61,7 @@ export const COLUNAS_EDITORIAIS: Record<ColunaEditorial, EditorialColuna> = {
         chamada: 'Menos camada, mais pele',
         narrativa:
           'A beleza mais elegante é a que deixa a pele aparecer. Produtos leves, acabamento honesto e a luz certa: o natural é uma escolha.',
-        imagem: '/assets/img/cosmetics.jpg',
+        imagem: '/assets/img/banners/cosmetics.jpg',
       },
     ],
   },
@@ -79,8 +79,8 @@ export const COLUNAS_EDITORIAIS: Record<ColunaEditorial, EditorialColuna> = {
         chamada: 'O olhar que fica',
         narrativa:
           'Evento pede produção: pele uniforme, cor na medida e fixação que dura a noite inteira. Nossa equipe assina a produção — você assina o momento.',
-        imagem: '/assets/img/woman-3096664_640.jpg',
-        video: '/assets/video/sessãoMaquiagem.mp4',
+        imagem: '/assets/img/institucional/woman-3096664_640.jpg',
+        video: '/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4',
       },
       {
         slug: 'maquiagem-autoral',
@@ -88,7 +88,7 @@ export const COLUNAS_EDITORIAIS: Record<ColunaEditorial, EditorialColuna> = {
         chamada: 'Assinatura própria',
         narrativa:
           'Toda produção conta uma história. A maquiagem autoral é a que traduz quem você é — do tom de pele ao traço do batom.',
-        imagem: '/assets/img/theLookJaneiro.jpg',
+        imagem: '/assets/img/institucional/theLookJaneiro.jpg',
       },
       {
         slug: 'finalizacao-e-acabamento',
@@ -96,7 +96,7 @@ export const COLUNAS_EDITORIAIS: Record<ColunaEditorial, EditorialColuna> = {
         chamada: 'O último toque',
         narrativa:
           'O acabamento é o detalhe que ninguém esquece: o brilho na medida, a pele selada, o olhar definido. Finalizar é fechar a produção com cuidado.',
-        imagem: '/assets/img/grasiely.png',
+        imagem: '/assets/img/marca/grasiely.png',
       },
     ],
   },

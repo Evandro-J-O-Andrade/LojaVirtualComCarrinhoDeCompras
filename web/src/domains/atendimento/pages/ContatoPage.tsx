@@ -1,4 +1,5 @@
-import { Mail, MapPin } from 'lucide-react'
+import { Mail, MapPin, Phone } from 'lucide-react'
+import { Instagram } from '@/components/icons/SocialIcons'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { AtendimentoForm } from '../components/AtendimentoForm'
 import { useAtendimento } from '../hooks/useAtendimento'
@@ -77,6 +78,52 @@ export function ContatoPage() {
                     className="text-body text-deep-rose underline-offset-4 hover:underline"
                   >
                     contato@angelcosmeticos.com.br
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blush">
+                  <Phone
+                    size={24}
+                    className="text-deep-rose"
+                    aria-hidden
+                  />
+                </div>
+                <div>
+                  <h2 className="font-semibold text-soft-black">
+                    Telefone / WhatsApp
+                  </h2>
+                  <a
+                    href="https://wa.me/5511963205776"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body text-deep-rose underline-offset-4 hover:underline"
+                  >
+                    (11) 96320-5776
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blush">
+                  <Instagram
+                    size={24}
+                    className="text-deep-rose"
+                    aria-hidden
+                  />
+                </div>
+                <div>
+                  <h2 className="font-semibold text-soft-black">
+                    Instagram
+                  </h2>
+                  <a
+                    href="https://instagram.com/angel.cosmeticos.grasi"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-body text-deep-rose underline-offset-4 hover:underline"
+                  >
+                    @angel.cosmeticos.grasi
                   </a>
                 </div>
               </div>

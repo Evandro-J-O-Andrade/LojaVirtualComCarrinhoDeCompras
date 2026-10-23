@@ -1,11 +1,18 @@
 import { useEffect, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { AlertCircle, ArrowRight, Mail, KeyRound } from 'lucide-react'
+import {
+  AlertCircle,
+  ArrowRight,
+  Mail,
+  KeyRound,
+  ServerCrash,
+} from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { useAccount } from '../context/AccountContext'
+import { destinoSeguro } from '../model/conta'
 
 /**
  * Entrar — identidade real via Supabase
@@ -18,7 +25,7 @@ import { useAccount } from '../context/AccountContext'
 export function EntrarPage() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const { signIn, authenticated } =
+  const { signIn, authenticated, error, configurado } =
     useAccount()
 
   const [email, setEmail] = useState('')
@@ -27,7 +34,9 @@ export function EntrarPage() {
   const [enviando, setEnviando] =
     useState(false)
 
-  const destino = params.get('destino') || '/conta'
+  // Só caminho interno: o parâmetro nunca
+  // tira a cliente da loja.
+  const destino = destinoSeguro(params.get('destino'))
 
   // Já autenticada: nada a fazer aqui.
   useEffect(() => {
@@ -77,64 +86,114 @@ export function EntrarPage() {
               sistema seguro da Angel.
             </p>
 
-            <form
-              onSubmit={submeter}
-              noValidate
-              className="mt-8 space-y-5"
-              aria-label="Formulário de entrada"
-            >
-              <Input
-                id="entrar-email"
-                label="E-mail"
-                type="email"
-                autoComplete="email"
-                placeholder="seu@email.com"
-                value={email}
-                onChange={(evento) =>
-                  setEmail(evento.target.value)
-                }
-                required
-              />
-              <Input
-                id="entrar-senha"
-                label="Senha"
-                type="password"
-                autoComplete="current-password"
-                placeholder="••••••••"
-                value={senha}
-                onChange={(evento) =>
-                  setSenha(evento.target.value)
-                }
-                required
-              />
-
-              {erro && (
-                <div
-                  role="alert"
-                  className="flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4"
-                >
-                  <AlertCircle
+            {!configurado ? (
+              <div
+                role="alert"
+                className="mt-8 rounded-xl border border-coral/40 bg-coral/10 p-5"
+              >
+                <div className="flex items-start gap-3">
+                  <ServerCrash
                     size={20}
                     className="mt-0.5 shrink-0 text-coral"
                     aria-hidden
                   />
-                  <p className="text-sm text-soft-black">
-                    {erro}
-                  </p>
+                  <div>
+                    <h2 className="font-semibold text-soft-black">
+                      Entrada indisponível
+                      neste ambiente
+                    </h2>
+                    <p className="mt-2 text-sm text-content-muted">
+                      {error ??
+                        'O serviço de identidade da Angel não está configurado aqui agora.'}
+                    </p>
+                    <p className="mt-3 text-sm text-content-muted">
+                      Nada é simulado enquanto
+                      isso: sua conta continua
+                      anônima e você pode
+                      navegar, orçar, agendar e
+                      falar com o atendimento.
+                    </p>
+                  </div>
                 </div>
-              )}
+              </div>
+            ) : (
+              <>
+                {error && !erro && (
+                  <div
+                    role="alert"
+                    className="mt-6 flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4"
+                  >
+                    <AlertCircle
+                      size={20}
+                      className="mt-0.5 shrink-0 text-coral"
+                      aria-hidden
+                    />
+                    <p className="text-sm text-soft-black">
+                      {error}
+                    </p>
+                  </div>
+                )}
 
-              <Button
-                type="submit"
-                variant="primary"
-                size="lg"
-                className="w-full"
-                disabled={enviando}
-              >
-                <KeyRound size={18} aria-hidden />
-                {enviando ? 'Entrando…' : 'Entrar'}
-              </Button>
-            </form>
+                <form
+                  onSubmit={submeter}
+                  noValidate
+                  className="mt-8 space-y-5"
+                  aria-label="Formulário de entrada"
+                >
+                  <Input
+                    id="entrar-email"
+                    label="E-mail"
+                    type="email"
+                    autoComplete="email"
+                    placeholder="seu@email.com"
+                    value={email}
+                    onChange={(evento) =>
+                      setEmail(evento.target.value)
+                    }
+                    required
+                  />
+                  <Input
+                    id="entrar-senha"
+                    label="Senha"
+                    type="password"
+                    autoComplete="current-password"
+                    placeholder="••••••••"
+                    value={senha}
+                    onChange={(evento) =>
+                      setSenha(evento.target.value)
+                    }
+                    required
+                  />
+
+                  {erro && (
+                    <div
+                      role="alert"
+                      className="flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4"
+                    >
+                      <AlertCircle
+                        size={20}
+                        className="mt-0.5 shrink-0 text-coral"
+                        aria-hidden
+                      />
+                      <p className="text-sm text-soft-black">
+                        {erro}
+                      </p>
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    className="w-full"
+                    disabled={enviando}
+                  >
+                    <KeyRound size={18} aria-hidden />
+                    {enviando ? 'Entrando…' : 'Entrar'}
+                  </Button>
+                </form>
+              </>
+            )}
 
             <div className="mt-8 space-y-3 border-t border-champagne pt-6">
               <p className="text-sm text-content-muted">

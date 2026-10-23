@@ -68,7 +68,7 @@ describe('manifesto de mídia', () => {
 
   it('consulta por id, contexto, evento e produto', () => {
     expect(assetPorId('cinematic')?.caminho).toBe(
-      '/assets/img/cinematic.png',
+      '/assets/img/marca/cinematic.png',
     )
     expect(assetPorId('logoteste2')?.status).toBe('teste')
 
@@ -94,7 +94,7 @@ describe('manifesto de mídia', () => {
     const video = PATRIMONIO.find(
       (asset) => asset.tipo === 'video',
     )
-    expect(video?.caminho).toBe('/assets/video/sessãoMaquiagem.mp4')
+    expect(video?.caminho).toBe('/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4')
     expect(video?.status).toBe('real')
   })
 })

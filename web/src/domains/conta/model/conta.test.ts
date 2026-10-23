@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import {
   CONTA_SECOES,
+  destinoSeguro,
   inicialAvatar,
   nomeExibicao,
   perfilDoUsuario,
@@ -117,5 +118,41 @@ describe('CONTA_SECOES', () => {
       expect(secao.rotulo.length).toBeGreaterThan(0)
       expect(secao.descricao.length).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('destinoSeguro', () => {
+  it('mantém caminho interno', () => {
+    expect(destinoSeguro('/conta/pedidos')).toBe(
+      '/conta/pedidos',
+    )
+  })
+
+  it('sem destino: usa o padrão', () => {
+    expect(destinoSeguro(null)).toBe('/conta')
+    expect(destinoSeguro(undefined)).toBe('/conta')
+    expect(destinoSeguro('')).toBe('/conta')
+  })
+
+  it('recusa URL externa', () => {
+    expect(
+      destinoSeguro('https://exemplo.com/robo'),
+    ).toBe('/conta')
+  })
+
+  it('recusa caminho absoluto de outro site', () => {
+    expect(destinoSeguro('//exemplo.com')).toBe('/conta')
+  })
+
+  it('recusa barra invertida', () => {
+    expect(destinoSeguro('/\\exemplo.com')).toBe('/conta')
+  })
+
+  it('recusa caractere de controle', () => {
+    expect(destinoSeguro('/conta\n/algo')).toBe('/conta')
+  })
+
+  it('aceita um padrão diferente', () => {
+    expect(destinoSeguro('https://exemplo.com', '/')).toBe('/')
   })
 })

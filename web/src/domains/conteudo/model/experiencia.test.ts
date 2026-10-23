@@ -43,7 +43,7 @@ describe('experiências editoriais', () => {
     const midias = midiasDaExperiencia(sessao)
 
     expect(midias.at(-1)?.tipo).toBe('video')
-    expect(midias.at(-1)?.url).toBe('/assets/video/sessãoMaquiagem.mp4')
+    expect(midias.at(-1)?.url).toBe('/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4')
     expect(midias[0].titulo).toBe('Capa')
   })
 
@@ -65,7 +65,7 @@ describe('experiências editoriais', () => {
 
   it('experiências de skincare usam os vídeos reais existentes', () => {
     const skincareSlugs = ['skincare-rotina-diaria', 'skincare-massagem-facial', 'skincare-mascara-tratamento']
-    const videosEsperados = ['/assets/video/skinCare-1.mp4', '/assets/video/skinCare-2.mp4', '/assets/video/skinCare-3.mp4']
+    const videosEsperados = ['/assets/video/skincare/skinCare-1.mp4', '/assets/video/skincare/skinCare-2.mp4', '/assets/video/skincare/skinCare-3.mp4']
 
     skincareSlugs.forEach((slug, i) => {
       const exper = experienciaPorSlug(slug)

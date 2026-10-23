@@ -9,6 +9,8 @@ interface MobileNavProps {
   items: { label: string; to: string }[]
   institucional?: { label: string; to: string }[]
   isActive: (to: string) => boolean
+  /** Já autenticada: a entrada é "Minha conta", não "Entrar". */
+  authenticated?: boolean
 }
 
 /**
@@ -21,7 +23,7 @@ interface MobileNavProps {
  * - scroll do body travado enquanto aberto;
  * - landmark e rótulo próprios.
  */
-export function MobileNav({ open, onClose, items, institucional = [], isActive }: MobileNavProps) {
+export function MobileNav({ open, onClose, items, institucional = [], isActive, authenticated = false }: MobileNavProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const closeRef = useRef<HTMLButtonElement>(null)
   const restoreRef = useRef<Element | null>(null)
@@ -147,12 +149,14 @@ export function MobileNav({ open, onClose, items, institucional = [], isActive }
                   Favoritos
                 </Link>
               </li>
-              <li>
-                <Link to="/entrar" onClick={onClose}
-                      className="block rounded-lg px-4 py-3 text-body text-content-muted hover:bg-surface-alt">
-                  Entrar
-                </Link>
-              </li>
+              {!authenticated && (
+                <li>
+                  <Link to="/entrar" onClick={onClose}
+                        className="block rounded-lg px-4 py-3 text-body text-content-muted hover:bg-surface-alt">
+                    Entrar
+                  </Link>
+                </li>
+              )}
             </ul>
           </div>
         </nav>

@@ -11,10 +11,16 @@ import { EntrarPage } from './EntrarPage'
  *     provedor de identidade, nada inventado
  *   credenciais aceitas -> vai ao destino
  *   já autenticada -> nunca fica na página
+ *   sem provedor configurado -> estado
+ *     explícito, sem formulário e sem
+ *     simular entrada
+ *   destino externo -> ignorado, fica na loja
  */
 
 const accountMock = vi.hoisted(() => ({
   authenticated: false,
+  configurado: true,
+  error: null as string | null,
   signIn: vi.fn(),
 }))
 
@@ -38,6 +44,8 @@ function Harness({ destino }: { destino?: string }) {
 describe('EntrarPage', () => {
   beforeEach(() => {
     accountMock.authenticated = false
+    accountMock.configurado = true
+    accountMock.error = null
     accountMock.signIn.mockReset()
   })
   afterEach(() => {
@@ -131,5 +139,52 @@ describe('EntrarPage', () => {
       screen.queryByLabelText('E-mail'),
     ).toBeNull()
     expect(screen.getByText('minha conta')).toBeDefined()
+  })
+
+  it('sem provedor configurado: estado explícito, sem formulário', () => {
+    accountMock.configurado = false
+    accountMock.error =
+      'O serviço da Angel não está configurado neste ambiente.'
+    render(<Harness />)
+
+    expect(
+      screen.getByText(/entrada indisponível/i),
+    ).toBeDefined()
+    expect(
+      screen.getByText(/não está configurado/i),
+    ).toBeDefined()
+    // Nada de formulário que "funcionaria"
+    // sem provedor por trás.
+    expect(
+      screen.queryByLabelText('E-mail'),
+    ).toBeNull()
+    expect(
+      screen.queryByRole('button', { name: /entrar/i }),
+    ).toBeNull()
+  })
+
+  it('destino externo é ignorado: a cliente fica na loja', async () => {
+    accountMock.signIn.mockResolvedValue({})
+    const usuario = userEvent.setup()
+    render(
+      <Harness destino="https://exemplo.com/roubo" />,
+    )
+
+    await usuario.type(
+      screen.getByLabelText('E-mail'),
+      'ana@email.com',
+    )
+    await usuario.type(
+      screen.getByLabelText('Senha'),
+      'certa',
+    )
+    await usuario.click(
+      screen.getByRole('button', { name: /entrar/i }),
+    )
+
+    // Cai no destino padrão, que é interno.
+    expect(
+      await screen.findByText('minha conta'),
+    ).toBeDefined()
   })
 })

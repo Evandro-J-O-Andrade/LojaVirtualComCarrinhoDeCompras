@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAuth } from '@/contexts/AuthContext'
+import { useNavigate } from 'react-router-dom'
+import { verificarAdmin } from '@/domains/admin/services/adminAuth'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 
@@ -8,7 +10,8 @@ export function AdminLogin() {
   const [password, setPassword] = React.useState('')
   const [error, setError] = React.useState('')
   const [loading, setLoading] = React.useState(false)
-  const { signIn } = useAuth()
+  const { signIn, signOut } = useAuth()
+  const navigate = useNavigate()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -17,7 +20,22 @@ export function AdminLogin() {
     const result = await signIn(email, password)
     if (result.error) {
       setError(result.error)
+      setLoading(false)
+      return
     }
+    // A identidade existe, mas o privilégio
+    // administrativo vem do backend. Sem ele,
+    // não há painel.
+    const admin = await verificarAdmin()
+    if (!admin) {
+      await signOut()
+      setError(
+        'Sua conta não tem acesso ao painel administrativo.',
+      )
+      setLoading(false)
+      return
+    }
+    navigate('/admin', { replace: true })
     setLoading(false)
   }
 

@@ -11,6 +11,8 @@ import { AccountProvider, useAccount } from './AccountContext'
 const authMock = vi.hoisted(() => ({
   user: null as never,
   loading: false,
+  error: null as string | null,
+  configurado: true,
   signIn: vi.fn(),
   signOut: vi.fn(),
   alterarSenha: vi.fn(),
@@ -24,6 +26,8 @@ describe('AccountContext', () => {
   beforeEach(() => {
     authMock.user = null
     authMock.loading = false
+    authMock.error = null
+    authMock.configurado = true
   })
 
   it('anônima: authenticated falso, perfil nulo', () => {
@@ -72,5 +76,18 @@ describe('AccountContext', () => {
       wrapper: AccountProvider,
     })
     expect(result.current.loading).toBe(true)
+  })
+
+  it('sem provedor configurado: o estado chega à interface', () => {
+    authMock.configurado = false
+    authMock.error =
+      'O serviço da Angel não está configurado neste ambiente.'
+    const { result } = renderHook(() => useAccount(), {
+      wrapper: AccountProvider,
+    })
+    expect(result.current.configurado).toBe(false)
+    expect(result.current.error).toBe(
+      'O serviço da Angel não está configurado neste ambiente.',
+    )
   })
 })

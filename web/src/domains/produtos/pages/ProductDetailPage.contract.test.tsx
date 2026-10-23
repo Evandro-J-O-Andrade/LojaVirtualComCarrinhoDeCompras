@@ -25,7 +25,7 @@ const { PRODUTO } = vi.hoisted(() => {
     imagens: [
       {
         id: 'img1',
-        url: '/assets/img/produto-1.jpg',
+        url: '/assets/img/produtos/produto-1.jpg',
         ordem: 0,
         principal: true,
         alt: 'Batom Líquido Matte',

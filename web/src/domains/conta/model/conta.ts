@@ -128,3 +128,34 @@ export function inicialAvatar(
   const nome = nomeExibicao(perfil)
   return nome.charAt(0).toUpperCase()
 }
+
+/**
+ * Destino de retorno depois de entrar.
+ *
+ * Só caminhos internos são aceitos. URL
+ * externa, esquema, caminho absoluto de
+ * site e barras invertidas caem no padrão:
+ * o parâmetro `destino` nunca vira uma
+ * saída da loja.
+ */
+export function destinoSeguro(
+  candidato: string | null | undefined,
+  padrao = '/conta',
+): string {
+  if (!candidato) return padrao
+  const valor = candidato.trim()
+  if (!valor.startsWith('/')) return padrao
+  // "//exemplo.com" é caminho absoluto de
+  // outro site disfarçado de relativo.
+  if (valor.startsWith('//')) return padrao
+  if (valor.includes('://')) return padrao
+  if (valor.includes('\\')) return padrao
+  // Caractere de controle (quebra de linha,
+  // nulo) indica tentativa de injetar rota.
+  for (const caractere of valor) {
+    if ((caractere.codePointAt(0) ?? 0) < 32) {
+      return padrao
+    }
+  }
+  return valor
+}

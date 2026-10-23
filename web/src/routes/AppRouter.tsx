@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import { Layout } from '@/components/layout/Layout'
 import { ErrorBoundary } from '@/components/common/ErrorBoundary'
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute'
+import { ScrollToTop } from '@/components/common/ScrollToTop'
 import { homeRoutes } from '@/domains/home/routes'
 import { serviceRoutes } from '@/domains/services/routes'
 import { bookingRoutes } from '@/domains/booking/routes'
@@ -25,6 +26,7 @@ const AdminLogin = lazy(() => import('@/pages/Admin/Login').then((m) => ({ defau
 export function AngelRouter() {
   return (
     <ErrorBoundary>
+      <ScrollToTop />
       <Suspense fallback={null}>
         <Routes>
             <Route element={<Layout />}>

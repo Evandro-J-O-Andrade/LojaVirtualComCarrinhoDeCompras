@@ -265,7 +265,7 @@ const PAINEIS_EDITORIAIS = [
     titulo: 'Maquiagem',
     descricao:
       'Produção, cor e acabamento — com a sua assinatura.',
-    imagem: '/assets/img/theLookJaneiro.jpg',
+    imagem: '/assets/img/institucional/theLookJaneiro.jpg',
     href: '/maquiagem',
   },
 ]
@@ -420,17 +420,17 @@ const OCASOES: Array<{
 }> = [
   {
     contexto: 'cuidar',
-    imagem: '/assets/img/galeria-2.jpg',
+    imagem: '/assets/img/produtos/galeria-2.jpg',
     href: '/mimos/cuidar',
   },
   {
     contexto: 'ritual',
-    imagem: '/assets/img/galeria-3.jpg',
+    imagem: '/assets/img/produtos/galeria-3.jpg',
     href: '/mimos/ritual',
   },
   {
     contexto: 'presentear',
-    imagem: '/assets/img/galeria-4.jpg',
+    imagem: '/assets/img/produtos/galeria-4.jpg',
     href: '/mimos/presentear',
   },
 ]

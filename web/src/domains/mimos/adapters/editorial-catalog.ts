@@ -18,7 +18,7 @@ export const EDITORIAL_MIMOS: EditorialMimoEntry[] = [
     titulo: 'O cuidado de hoje começa aqui',
     descricao:
       'Um momento só seu, sem pressa e sem ruído. A curadoria da Angel reúne o que há de mais puro em beleza para o seu cuidado de cada dia.',
-    imagem: '/assets/img/rostosemfundo.png',
+    imagem: '/assets/img/institucional/rostosemfundo.png',
   },
   {
     slug: 'ritual',
@@ -28,7 +28,7 @@ export const EDITORIAL_MIMOS: EditorialMimoEntry[] = [
     descricao:
       'A beleza que acompanha você: da primeira luz ao último olhar. Transforme o ordinário em cerimônia com a nossa curadoria de rituais.',
     imagem: '/images/hero-beauty.jpg',
-    video: '/assets/video/sessãoMaquiagem.mp4',
+    video: '/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4',
   },
   {
     slug: 'presentear',
@@ -37,6 +37,6 @@ export const EDITORIAL_MIMOS: EditorialMimoEntry[] = [
     titulo: 'Para quem você ama',
     descricao:
       'Presentear é dizer com cuidado. Escolha uma composição da Angel e entregue um pedaço da nossa curadoria a quem faz bem ao seu mundo.',
-    imagem: '/assets/img/theLookJaneiro.jpg',
+    imagem: '/assets/img/institucional/theLookJaneiro.jpg',
   },
 ]

@@ -4,7 +4,7 @@ import { Instagram, Facebook } from '@/components/icons/SocialIcons'
 
 export function Footer() {
   return (
-    <footer className="bg-charcoal text-ivory">
+    <footer className="bg-[#0B0B0D] text-[#F5F5F5]">
       <div className="container-angel py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           <div>
@@ -16,7 +16,7 @@ export function Footer() {
                 height={62}
                 className="h-12 w-auto"
               />
-              <span className="font-display font-bold text-2xl leading-none text-ivory">
+              <span className="font-display font-bold text-2xl leading-none text-[#F5F5F5]">
                 Angel <span className="text-champagne">Cosméticos</span>
               </span>
             </Link>
@@ -74,7 +74,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram da Angel Cosméticos"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-ivory/10 text-ivory transition-colors hover:bg-primary hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#F5F5F5] transition-colors hover:bg-primary hover:text-white"
               >
                 <Instagram size={20} />
               </a>
@@ -83,7 +83,7 @@ export function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook da Angel Cosméticos"
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-ivory/10 text-ivory transition-colors hover:bg-primary hover:text-white"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-[#F5F5F5] transition-colors hover:bg-primary hover:text-white"
               >
                 <Facebook size={20} />
               </a>
@@ -94,9 +94,27 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/10 mt-12 pt-8 text-center">
+        <div className="mt-12 border-t border-white/10 pt-8 text-center">
+          <p className="mx-auto max-w-2xl text-body text-[#F5F5F5]">
+            Muito obrigada por escolher a Angel Cosméticos!
+          </p>
+          <p className="mx-auto mt-3 max-w-2xl text-body-sm text-warm-gray">
+            Estamos aqui para realçar a sua beleza única, oferecendo os melhores
+            produtos que celebram a sua confiança e autenticidade. 💖
+          </p>
+          <p className="mx-auto mt-2 max-w-2xl text-body-sm text-warm-gray">
+            Explore nossas novidades e aproveite promoções exclusivas feitas
+            especialmente para você. 💅
+          </p>
+          <p className="mx-auto mt-2 max-w-2xl text-body-sm text-warm-gray">
+            Você merece o melhor, e nós estamos ao seu lado para ajudá-la a
+            brilhar a cada momento. ✨
+          </p>
+        </div>
+
+        <div className="border-t border-white/10 mt-8 pt-6 text-center">
           <p className="text-warm-gray text-sm">
-            © 2026 Angel Cosméticos — CNPJ 48.591.163/0001-12. Todos os direitos reservados.
+            © Angel Cosméticos · Todos os direitos reservados
           </p>
         </div>
       </div>

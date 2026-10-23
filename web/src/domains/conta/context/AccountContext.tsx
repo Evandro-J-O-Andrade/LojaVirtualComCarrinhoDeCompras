@@ -27,7 +27,14 @@ interface AccountContextType {
   user: User | null
   profile: PerfilCliente | null
   loading: boolean
+  /** Falha do provedor de identidade, se houver. */
   error: string | null
+  /**
+   * O provedor de identidade está configurado
+   * neste ambiente. Quando falso, a conta
+   * mostra o que falta em vez de simular.
+   */
+  configurado: boolean
   signIn: (
     email: string,
     senha: string,
@@ -49,8 +56,15 @@ export function AccountProvider({
 }: {
   children: ReactNode
 }) {
-  const { user, loading, signIn, signOut, alterarSenha } =
-    useAuth()
+  const {
+    user,
+    loading,
+    error,
+    configurado,
+    signIn,
+    signOut,
+    alterarSenha,
+  } = useAuth()
 
   const value = useMemo<AccountContextType>(
     () => ({
@@ -58,15 +72,25 @@ export function AccountProvider({
       user,
       profile: perfilDoUsuario(user),
       loading,
-      // Erros de auth são expostos onde
-      // acontecem (entrar); a conta
-      // autenticada não carrega erro.
-      error: null,
+      // O erro vem do provedor de identidade
+      // (configuração ausente ou falha de rede):
+      // a conta autenticada não carrega erro
+      // próprio.
+      error,
+      configurado,
       signIn,
       signOut,
       alterarSenha,
     }),
-    [user, loading, signIn, signOut, alterarSenha],
+    [
+      user,
+      loading,
+      error,
+      configurado,
+      signIn,
+      signOut,
+      alterarSenha,
+    ],
   )
 
   return (

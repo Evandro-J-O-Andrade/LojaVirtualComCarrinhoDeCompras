@@ -28,13 +28,13 @@ const CATEGORIAS_EDITORIAIS: Record<string, CategoriaEditorial> = {
     slug: 'maquiagem',
     descricao:
       'Cor, produção e acabamento — com a sua assinatura.',
-    imagem: '/assets/img/produto-1.jpg',
+    imagem: '/assets/img/produtos/produto-1.jpg',
     imagemAlt: 'Batom Líquido Matte — produto da categoria',
   },
   fragrancias: {
     slug: 'fragrancias',
     descricao: 'Assinaturas olfativas para o dia e para a noite.',
-    imagem: '/assets/img/produto-5.jpg',
+    imagem: '/assets/img/produtos/produto-5.jpg',
     imagemAlt: 'Perfume Eau de Parfum — produto da categoria',
   },
   casa: {

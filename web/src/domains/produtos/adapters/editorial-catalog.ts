@@ -28,12 +28,12 @@ interface EditorialProdutoEntry {
 
 const FORNECEDOR_CASA = { id: 'editorial-fornecedor', nome: 'ANGEL Cosméticos' }
 
-const VIDEO_DEMONSTRACAO = '/assets/video/sessãoMaquiagem.mp4'
+const VIDEO_DEMONSTRACAO = '/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4'
 
 /**
  * Mídia real do patrimônio da Angel: fotos de produto
  * (/assets/img/produto-*.jpg) e vídeo de demonstração
- * (/assets/video/sessãoMaquiagem.mp4). Nenhuma URL é
+ * (/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4). Nenhuma URL é
  * inventada; mídia ausente simplesmente não existe.
  */
 const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
@@ -49,10 +49,10 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 34.9,
     sku: 'ANG-BAT-001',
     imagens: [
-      '/assets/img/produto-1.jpg',
-      '/assets/img/produto-2.jpg',
-      '/assets/img/produto-3.jpg',
-      '/assets/img/produto-4.jpg',
+      '/assets/img/produtos/produto-1.jpg',
+      '/assets/img/produtos/produto-2.jpg',
+      '/assets/img/produtos/produto-3.jpg',
+      '/assets/img/produtos/produto-4.jpg',
     ],
     video: VIDEO_DEMONSTRACAO,
     categorias: [
@@ -87,10 +87,10 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 189,
     sku: 'ANG-PER-001',
     imagens: [
-      '/assets/img/produto-5.jpg',
-      '/assets/img/produto-6.jpg',
-      '/assets/img/produto-7.jpg',
-      '/assets/img/produto-8.jpg',
+      '/assets/img/produtos/produto-5.jpg',
+      '/assets/img/produtos/produto-6.jpg',
+      '/assets/img/produtos/produto-7.jpg',
+      '/assets/img/produtos/produto-8.jpg',
     ],
     categorias: [
       { slug: 'beleza-e-maquiagem', nome: 'Beleza & Maquiagem' },
@@ -118,10 +118,10 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 49.9,
     sku: 'ANG-BASE-001',
     imagens: [
-      '/assets/img/produto-9.jpg',
-      '/assets/img/produto-10.jpg',
-      '/assets/img/produto-11.jpg',
-      '/assets/img/produto-12.jpg',
+      '/assets/img/produtos/produto-9.jpg',
+      '/assets/img/produtos/produto-10.jpg',
+      '/assets/img/produtos/produto-11.jpg',
+      '/assets/img/produtos/produto-12.jpg',
     ],
     video: VIDEO_DEMONSTRACAO,
     categorias: [
@@ -153,11 +153,11 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 79.9,
     sku: 'ANG-PAL-001',
     imagens: [
-      '/assets/img/produto-13.jpg',
-      '/assets/img/produto-14.jpg',
-      '/assets/img/produto-15.jpg',
-      '/assets/img/produto-16.jpg',
-      '/assets/img/produto-16-Photoroom.png',
+      '/assets/img/produtos/produto-13.jpg',
+      '/assets/img/produtos/produto-14.jpg',
+      '/assets/img/produtos/produto-15.jpg',
+      '/assets/img/produtos/produto-16.jpg',
+      '/assets/img/produtos/produto-16-Photoroom.png',
     ],
     video: VIDEO_DEMONSTRACAO,
     categorias: [
@@ -184,11 +184,11 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 39.9,
     sku: 'ANG-TOA-001',
     imagens: [
-      '/assets/img/produto-17.jpg',
-      '/assets/img/produto-18.jpg',
-      '/assets/img/produto-19.jpg',
-      '/assets/img/produto-20.jpg',
-      '/assets/img/produto-20-1.jpg',
+      '/assets/img/produtos/produto-17.jpg',
+      '/assets/img/produtos/produto-18.jpg',
+      '/assets/img/produtos/produto-19.jpg',
+      '/assets/img/produtos/produto-20.jpg',
+      '/assets/img/produtos/produto-20-1.jpg',
     ],
     categorias: [{ slug: 'casa', nome: 'Casa' }],
     varianteAtributos: [
@@ -216,12 +216,12 @@ const EDITORIAL_PRODUTOS: EditorialProdutoEntry[] = [
     precoBase: 29.9,
     sku: 'ANG-BLU-001',
     imagens: [
-      '/assets/img/produto-21.jpg',
+      '/assets/img/produtos/produto-21.jpg',
       // produto-22.jpg não existe no patrimônio
       // (lacuna documentada no manifesto de
       // assets) — mostramos as disponíveis.
-      '/assets/img/produto-23.jpg',
-      '/assets/img/produto-24.jpg',
+      '/assets/img/produtos/produto-23.jpg',
+      '/assets/img/produtos/produto-24.jpg',
     ],
     video: VIDEO_DEMONSTRACAO,
     categorias: [
