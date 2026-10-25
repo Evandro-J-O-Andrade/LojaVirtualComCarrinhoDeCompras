@@ -76,26 +76,27 @@ SECURITY DEFINER
 SET search_path = public, pg_catalog
 AS $$
 BEGIN
-  -- Operações de backend (service_role, sem JWT) são autorizadas
-  IF auth.uid() IS NULL THEN
+  -- Backend (service_role) autorizado via claim confiável
+  IF auth.role() = 'service_role' THEN
+    RETURN NEW;
+  END IF;
+
+  -- Administrador autenticado autorizado
+  IF is_admin() THEN
     RETURN NEW;
   END IF;
 
   -- Cliente não pode definir status ou total em INSERT
   IF TG_OP = 'INSERT' THEN
     IF NEW.status IS NOT NULL OR NEW.total IS NOT NULL THEN
-      IF NOT is_admin() THEN
-        RAISE EXCEPTION 'Definição de status/total de pedido não permitida para este usuário';
-      END IF;
+      RAISE EXCEPTION 'Definição de status/total de pedido não permitida para este usuário';
     END IF;
   END IF;
 
   -- Cliente não pode alterar status ou total em UPDATE
   IF TG_OP = 'UPDATE' THEN
     IF (NEW.status IS DISTINCT FROM OLD.status OR NEW.total IS DISTINCT FROM OLD.total) THEN
-      IF NOT is_admin() THEN
-        RAISE EXCEPTION 'Alteração de status/total de pedido não permitida para este usuário';
-      END IF;
+      RAISE EXCEPTION 'Alteração de status/total de pedido não permitida para este usuário';
     END IF;
   END IF;
 
