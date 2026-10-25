@@ -1,15 +1,10 @@
-# NOTIFICAÇÕES + COMUNICAÇÃO — Angel Cosméticos v1.0
+# ANGEL COSMÉTICOS — NOTIFICAÇÕES E COMUNICAÇÃO V1.0
 
-**Status:** Infraestrutura de comunicação fechada. **NÃO é regra de negócio. NÃO contém SQL, API ou migration. Nenhuma alteração no Supabase nesta etapa.**
-**Data:** 2026-10-03
-**Base:** `CONTRATO_FUNCIONAL_V1.0` + `MODELO_COMERCIAL_V1.0` + `SERVICOS_AGENDAMENTO_V1.0` + `DECISOES_NEGOCIO` (D1–D4, D9, D10)
-**Natureza:** documento de infraestrutura de comunicação. Fecha eventos, canais, templates, preferências, entrega, idempotência. SQL só nas etapas 5–6.
+## 1. Princípio fundamental
 
----
+**Evento não é notificação.**
 
-## 0. Regra fundamental — Evento não é notificação
-
-```text
+```
 EVENTO
 "agendamento confirmado"
         ↓
@@ -20,81 +15,93 @@ NOTIFICATION DISPATCHER
 └────────────┴────────────┴─────────────┘
 ```
 
-- **Evento** informa **o que aconteceu**. Ele **não** manda o domínio fazer outra coisa.
-- **Notificação** é a **tentativa de entrega** desse evento por um canal.
-- Trocar provedor de WhatsApp/e-mail **não reescreve** pedido/agendamento — muda só o adaptador do canal.
+O evento informa **o que aconteceu**. Ele não manda o domínio fazer outra coisa.
 
-**Decisão arquitetural (fechada):** comunicação é **efeito**, não **causa**. Nenhuma regra de pedido, agenda ou pagamento depende de um canal ter entregue.
+A infraestrutura de comunicação é independente dos domínios de negócio (pedido, agendamento, pagamento, atendimento). Nenhum domínio controla notificações; apenas emite eventos.
 
----
+## 2. Eventos
 
-## 1. Eventos (catálogo)
+### 2.1 Catálogo de eventos
 
-O evento é o fato. Catálogo fechado:
-
-### 1.1 Operacionais — **já existem no schema** (nomes em inglês; reconciliar convenção — §11)
-
-| nome atual | normalização proposta | domínio |
+| Evento | Emissor | Descrição |
 |---|---|---|
-| `order.created` | `pedido.criado` | pedido |
-| `order.confirmed` | `pedido.confirmado` | pedido |
-| `payment.paid` | `pagamento.confirmado` | pagamento |
-| `payment.refused` | `pagamento.recusado` | pagamento |
-| `order.shipped` | `pedido.enviado` | pedido |
-| `order.delivered` | `pedido.entregue` | pedido |
-| `order.canceled` | `pedido.cancelado` | pedido |
-| `stock.reserved` | `estoque.reservado` | estoque |
-| `stock.released` | `estoque.liberado` | estoque |
-| `support.requested` | `atendimento.criado` | atendimento |
-| `support.handoff` | `atendimento.handoff` | atendimento |
+| `agendamento.criado` | Agendamento | Novo agendamento registrado |
+| `agendamento.confirmado` | Agendamento | Agendamento confirmado |
+| `agendamento.cancelado` | Agendamento | Agendamento cancelado |
+| `agendamento.reagendado` | Agendamento | Agendamento reagendado |
+| `pedido.criado` | Pedido | Novo pedido criado |
+| `pedido.atualizado` | Pedido | Status do pedido alterado |
+| `pagamento.confirmado` | Pagamento | Pagamento confirmado |
+| `pagamento.estornado` | Pagamento | Pagamento estornado |
+| `orcamento.enviado` | Orçamento | Orçamento enviado ao cliente |
+| `orcamento.aceito` | Orçamento | Orçamento aceito pelo cliente |
+| `orcamento.recusado` | Orçamento | Orçamento recusado |
+| `atendimento.criado` | Atendimento | Novo atendimento aberto |
+| `atendimento.respondido` | Atendimento | Resposta enviada ao cliente |
 
-### 1.2 Operacionais — **novos** (a adicionar ao catálogo)
+Novos eventos podem ser adicionados conforme necessidade, sem alterar a infraestrutura de dispatch.
 
-- `agendamento.criado` · `agendamento.confirmado` · `agendamento.cancelado` · `agendamento.reagendado` · `agendamento.concluido`
-- `agendamento.naousou` · `agendamento.expirado` (internos)
-- `orcamento.enviado` · `orcamento.aceito` · `orcamento.recusado` · `orcamento.expirado` (interno)
-- `pagamento.estornado`
-- `atendimento.mensagem`
-- `estoque.baixo` (interno, alerta)
-
-### 1.3 Marketing (opt-in — §4)
-
-`promocao.publicada` · `campanha.lancada` · `mimo.publicado` · `carrinho.abandonado`
-
-**Canais padrão por evento:**
-
-| Evento | Cliente | Admin interno |
-|---|---|---|
-| `agendamento.*` | email/whatsapp (preferencial) | ✅ |
-| `pedido.*`, `pagamento.*` | email/whatsapp (preferencial) | ✅ |
-| `orcamento.*` | email/whatsapp (preferencial) | ✅ |
-| `atendimento.*` | email/whatsapp | ✅ |
-| marketing | email/whatsapp (opt-in) | — |
-
----
-
-## 2. Canais
+### 2.2 Estrutura do evento
 
 ```text
 evento
-  ↓
-notificação
-  ↓
-canal
-  ├── interno
-  ├── e-mail
-  └── WhatsApp
+├── id (PK)
+├── tipo (enum: agendamento.criado, pedido.criado, etc.)
+├── entidade (nome da entidade: agendamento, pedido, pagamento, etc.)
+├── entidade_id (ID da entidade)
+├── payload (JSON com dados do evento)
+├── idempotency_key (UNIQUE)
+├── criado_em (timestamptz)
+└── processado (boolean)
 ```
 
-- Canal é um **adaptador**. Adicionar `sms`/`push` posteriormente **não altera** pedido/agendamento.
-- Cada canal declara quais estados de entrega **suporta** (§5 — nem todos reportam `lido`).
-- Canal inoperante **não bloqueia** o domínio (§7, §8).
+### 2.3 Regra de idempotência
 
----
+Se o servidor receber o mesmo evento duas vezes (mesma `idempotency_key`), a segunda é ignorada. Nenhuma notificação duplicada é gerada.
 
-## 3. Templates
+```text
+evento
+   ↓
+idempotency_key (UNIQUE)
+   ↓
+se já existe → ignorar
+se não existe → processar
+```
 
-Template por **evento + canal**:
+## 3. Canais
+
+### 3.1 Separação de camadas
+
+```text
+evento
+   ↓
+notificação
+   ↓
+canal
+├── interno
+├── e-mail
+└── WhatsApp
+```
+
+### 3.2 Canais definidos
+
+| Canal | Descrição | Suporta entrega? | Suporta leitura? |
+|---|---|---|---|
+| `interno` | Notificação no painel admin | Sim | Sim |
+| `email` | E-mail transacional | Sim | Não (depende do provedor) |
+| `whatsapp` | WhatsApp via API/provedor | Sim | Não (depende do provedor) |
+
+Novos canais podem ser adicionados sem alterar a lógica de negócio dos domínios emissores.
+
+### 3.3 Regra de independência
+
+O canal é responsável apenas pela **entrega**. O domínio de negócio não sabe qual canal será usado. O Notification Dispatcher decide quais canais acionar com base em templates e preferências do cliente.
+
+## 4. Templates
+
+### 4.1 Estrutura
+
+Template por evento + canal.
 
 ```text
 AGENDAMENTO_CONFIRMADO
@@ -103,89 +110,181 @@ AGENDAMENTO_CONFIRMADO
    └── INTERNO
 ```
 
-**Variáveis controladas** (nada de montar mensagem comercial em componentes React):
+### 4.2 Variáveis controladas
 
-`%nome%` · `%protocolo%` · `%servico%` · `%data%` · `%hora%` · `%pedido%` · `%valor%`
+Templates utilizam variáveis com sintaxe `%variavel%`:
 
-- Renderização é **server-side** (Edge Function/backend), nunca no frontend.
-- Template tem `variaveis` declaradas; variável ausente → campo vazio, **nunca** inventado.
-- Conteúdo de template é **dados reais** do evento (dados do `evento.dados`), sem Lorem ipsum, sem preço inventado.
+| Variável | Descrição |
+|---|---|
+| `%nome%` | Nome do cliente |
+| `%protocolo%` | Protocolo do agendamento/pedido |
+| `%servico%` | Nome do serviço |
+| `%data%` | Data formatada |
+| `%hora%` | Hora formatada |
+| `%pedido%` | Número do pedido |
+| `%valor%` | Valor formatado |
+| `%endereco%` | Endereço formatado |
+| `%link%` | Link de ação |
 
----
+### 4.3 Regra de centralização
 
-## 4. Preferências do cliente
+Nenhuma mensagem comercial deve ser montada em componentes React. Toda mensagem é gerada a partir de templates registrados no backend, com variáveis substituídas no momento do envio.
 
-1. **Operacional vs marketing:**
-   - **Operacional** (agendamento, pedido, pagamento, orçamento, atendimento): **essencial à operação**.
-   - **Marketing** (promoção, campanha, mimo, abandono): **não essencial**.
-2. **Opt-in/opt-out:** marketing exige **opt-in explícito** (consentimento, LGPD) com data; opt-out a qualquer momento. Operacional **não** pode ser bloqueado quando juridicamente/operacionalmente necessário.
-3. **Canal preferencial:** cliente escolhe canal preferido (email/whatsapp); se o preferido falhar, operacional pode **recair** em outro canal (marketing, não).
-4. **Respeito a consentimento:** nenhuma comunicação é enviada sem consentimento válido quando exigido.
-5. **Essenciais intransferíveis:** confirmação de agendamento, confirmação de pagamento, alerta de segurança **nunca** são silenciados por preferência.
-
----
-
-## 5. Estado de entrega
+### 4.4 Estrutura da tabela de templates
 
 ```text
-pendente → processando → enviado → entregue → lido
+notificacao_template
+├── id (PK)
+├── evento (tipo do evento)
+├── canal (interno, email, whatsapp)
+├── assunto (para e-mail)
+├── corpo (template com variáveis)
+├── ativo (boolean)
+├── created_at
+└── updated_at
 ```
 
-Falhas:
+## 5. Preferências do cliente
+
+### 5.1 Tipos de comunicação
+
+| Tipo | Descrição | Opt-in/opt-out |
+|---|---|---|
+| Operacional | Confirmações, cancelamentos, atualizações de pedido | Não pode ser bloqueado (essencial) |
+| Marketing | Promoções, novidades, campanhas | Opt-in/opt-out pelo cliente |
+
+### 5.2 Preferências
 
 ```text
-falhou → retry → falhou definitivamente
+cliente_preferencia_notificacao
+├── id (PK)
+├── cliente_id (FK)
+├── canal (interno, email, whatsapp)
+├── tipo (operacional, marketing)
+├── ativo (boolean)
+├── created_at
+└── updated_at
 ```
 
-- **Nem todo canal fornece todos os estados** → o modelo permite `null`/`não suportado` (ex.: WhatsApp pode não reportar `lido`; interno nasce `entregue` e fica `lido` quando o admin visualiza).
-- `entregue_em` e `lido_em` são **anuláveis**.
-- `falhou definitivamente` → **dead-letter** para revisão manual (não reenvio infinito).
+### 5.3 Regras
 
----
+- Comunicações operacionais são obrigatórias e não podem ser desativadas pelo cliente.
+- Comunicações de marketing respeitam opt-in/opt-out.
+- O cliente pode escolher o canal preferencial.
+- O consentimento é registrado e auditável.
 
-## 6. Idempotência e retry (crítico)
+## 6. Estado de entrega
 
-Se o servidor receber **duas vezes** `pedido.criado`, **não** podemos mandar dois WhatsApps/e-mails iguais.
+### 6.1 Estados possíveis
 
 ```text
-evento
-  ↓
-idempotency_key
-  ↓
-entrega
+pendente
+   ↓
+processando
+   ↓
+enviado
+   ↓
+entregue
+   ↓
+lido
 ```
 
-1. **Ingestão:** `evento.idempotency_key` **único** → mesmo evento produzido duas vezes é deduplicado (não cria linha duplicada no outbox).
-2. **Entrega:** `notificacao.idempotency_key` **único** (ou `(evento_id, canal, destinatario)` único) → mesmo evento+canal+destinatário é entregue **uma vez**.
-3. **Retry seguro:** retry **incrementa `tentativas` na mesma `notificacao`** (não cria nova entrega) → nenhum envio duplicado. Backoff exponencial; após máximo de tentativas → `falhou definitivamente`.
+### 6.2 Falhas
 
----
+```text
+falhou
+   ↓
+retry (tentativa automática)
+   ↓
+falhou definitivamente
+```
+
+### 6.3 Regra de suporte parcial
+
+Nem todo canal fornece todos os estados. O modelo deve permitir `null` para estados não suportados pelo canal.
+
+Exemplo: WhatsApp pode informar "enviado" mas não "lido" (depende do provedor). E-mail pode informar "entregue" mas não "lido".
+
+### 6.4 Estrutura da tabela de entrega
+
+```text
+notificacao_entrega
+├── id (PK)
+├── notificacao_id (FK)
+├── canal (interno, email, whatsapp)
+├── status (pendente, processando, enviado, entregue, lido, falhou, falhou_definitivamente)
+├── tentativas (integer)
+├── ultimo_erro (text, nullable)
+├── enviado_em (timestamptz, nullable)
+├── entregue_em (timestamptz, nullable)
+├── lido_em (timestamptz, nullable)
+├── idempotency_key (UNIQUE)
+├── created_at
+└── updated_at
+```
 
 ## 7. WhatsApp
 
-- WhatsApp é **canal, não banco de dados**.
-- O sistema **registra** o fato (`agendamento confirmado`) e **depois tenta entregar** (`WhatsApp → API/provedor`).
-- **Se a API estiver indisponível: o agendamento continua existindo e confirmado.** A entrega fica `falhou` → retry → `falhou definitivamente` (revisão manual).
-- Credencial do provedor fica **exclusivamente no backend/Edge Function** — nunca no frontend.
-- Trocar provedor = trocar adaptador do canal, não reescrever o sistema.
+### 7.1 Papel
 
----
+WhatsApp é **canal**, não banco de dados.
+
+O sistema registra que um evento ocorreu (ex: agendamento confirmado) e tenta entregar a notificação via WhatsApp.
+
+### 7.2 Fluxo
+
+```text
+evento
+   ↓
+Notification Dispatcher
+   ↓
+WhatsApp → API/provedor
+   ↓
+status de entrega
+```
+
+### 7.3 Regra de resiliência
+
+Se a API do WhatsApp estiver indisponível:
+
+- **o agendamento/pedido continua existindo.**
+- A notificação é marcada como `falhou` ou `pendente`.
+- Retry automático é tentado conforme política.
+- O domínio de negócio não é afetado.
+
+### 7.4 Segredos
+
+API keys e credenciais do provedor WhatsApp ficam exclusivamente no backend/Edge Function. Nunca no frontend.
 
 ## 8. E-mail
 
+### 8.1 Fluxo
+
 ```text
-evento → fila/outbox → serviço de e-mail → provider → status
+evento
+   ↓
+fila/outbox
+   ↓
+serviço de e-mail
+   ↓
+provider
+   ↓
+status
 ```
 
-- **Outbox:** o fato é persistido (`evento`) antes de qualquer tentativa de envio; o dispatcher consome o outbox e entrega.
-- **Segredos/API keys exclusivamente no backend/Edge Function/provider seguro** — **nunca** em `.env` do frontend (alinhado ao `supabase/config.toml`: *"service_role key must NEVER be in frontend .env files"*).
-- Status de entrega atualizado via callback/webhook do provider (quando disponível).
+### 8.2 Regra de resiliência
 
----
+Mesma regra do WhatsApp: se o provedor de e-mail estiver indisponível, o domínio de negócio continua funcionando. A notificação é registrada como falha e retry é tentado.
+
+### 8.3 Segredos
+
+API keys e credenciais do provedor de e-mail ficam exclusivamente no backend/Edge Function.
 
 ## 9. Notificação interna
 
-O admin visualiza, sem depender de WhatsApp nem de e-mail:
+### 9.1 Funcionalidade
+
+O admin deve conseguir visualizar notificações internas no painel:
 
 ```text
 🔔 Novo agendamento
@@ -194,62 +293,125 @@ Maquiagem
 14:00
 ```
 
-- `notificacao` com `canal = interno`, persistida, com `lido_em` quando o admin visualiza.
-- Inbox do admin com não-lidas e histórico.
-- Funciona mesmo com todos os canais externos fora.
+### 9.2 Independência
 
----
+A notificação interna não depende de WhatsApp nem de e-mail. É um canal autônomo que funciona mesmo se todos os outros canais estiverem indisponíveis.
 
-## 10. Auditoria ≠ Notificação
+### 9.3 Estrutura
 
-Comunicação e auditoria são **coisas diferentes** — não misturar.
+A notificação interna é armazenada na tabela `notificacao` com `canal = 'interno'` e `status` apropriado.
 
-- **Notificação:** *"Tentamos enviar o WhatsApp."* (registro técnico de entrega → `notificacao`)
-- **Auditoria:** *"Usuário X confirmou/reagendou/cancelou o agendamento."* (ato comercial, quem fez o quê → `auditoria`)
+## 10. Auditoria
 
-Um ato comercial escreve em `auditoria` **e** pode emitir um `evento` que gera uma `notificacao` — **dois registros, duas preocupações separadas**.
+### 10.1 Separação
 
----
+**Notificação:** "Tentamos enviar o WhatsApp."
 
-## 11. Achado — a infraestrutura de eventos já existe
+**Auditoria:** "Usuário X confirmou/reagendou/cancelou o agendamento."
 
-A tabela `evento` **já existe** no schema canônico (`202609190101_base_schema.sql:474`) como **barramento/outbox**:
+São coisas diferentes e não devem ser misturadas.
 
-- `idempotency_key varchar(255)` — idempotência **já modelada**.
-- `nome` com CHECK fechado (os 11 eventos de §1.1).
-- `entidade_tipo` · `entidade_id` · `dados jsonb` · `status ('pendente','processado','falhou')` · `tentativas` · `processado_em`.
+### 10.2 Tabela de auditoria
 
-**Implicação:** a camada de **evento/outbox + idempotência + retry** já está presente. O **gap** é a camada de **dispatch** (notificação/template/preferência/canal) e a **expansão do catálogo** de eventos (§1.2, §1.3).
+A tabela `auditoria` registra ações de usuários e sistemas:
 
-**Reconciliação de convenção (fechada):** adotar **`dominio.acao` em português** (ex.: `pedido.criado`, `agendamento.confirmado`), coerente com a linguagem do domínio e com esta especificação. Os 11 eventos existentes em inglês (`order.created` etc.) serão **normalizados/mapeados** na etapa 6 (migração do CHECK + produtores). A **decisão de convenção está fechada aqui**; a execução é migration da etapa 6.
+```text
+auditoria
+├── id (PK)
+├── entidade (nome da entidade)
+├── entidade_id (ID da entidade)
+├── acao (criar, atualizar, cancelar, etc.)
+├── usuario_id (FK para auth.users, nullable para sistema)
+├── dados_anteriores (JSON, nullable)
+├── dados_novos (JSON, nullable)
+├── ip (nullable)
+├── created_at
+```
 
----
+### 10.3 Regra
 
-## 12. Modelo de dados conceitual (sem SQL)
+- Notificações registram **tentativas de comunicação**.
+- Auditoria registra **ações de negócio**.
+- Uma ação de negócio pode gerar uma notificação, mas são entidades separadas.
 
-**Reaproveita (existem):** `evento` (outbox + idempotency_key + tentativas) · `auditoria` (campo-level, `acao` create/update/delete/view) · `atendimento` + `atendimento_mensagem` (threads de suporte) · `cliente` (destinatário).
+## 11. Idempotência e retry
 
-**Candidatos a novo (sinalizados para GAP Analysis — etapa 5; NENHUM criado agora):**
-- `notificacao` (evento_id, canal, destinatario, template, variaveis, idempotency_key único, status, tentativas, proxima_tentativa, enviado_em, entregue_em, lido_em, erro)
-- `notificacao_template` (evento_nome, canal, assunto, corpo, variaveis, ativo)
-- `notificacao_preferencia` (cliente_id, categoria operacional/marketing, canal_preferencial, opt_in_marketing, opt_in_marketing_em)
-- **Expansão** do CHECK `evento.nome` (§1.2, §1.3) + normalização de convenção (§11)
-- **Dispatcher** Edge Function (consome `evento` → dispatch idempotente por canal)
+### 11.1 Idempotência
 
-**Dúvida para a etapa 5:** `auditoria.usuario_id bigint` — atualmente provavelmente aponta para `cliente`; precisa mapear também **profissional/admin** como ator de atos operacionais (§10).
+Cada notificação tem uma `idempotency_key` única. Se o mesmo evento for processado duas vezes, a segunda tentativa é ignorada.
 
-**Nenhuma migration escrita ou aplicada.**
+### 11.2 Retry
 
----
+Política de retry:
 
-## 13. O que não é decidido aqui (destino técnico)
+| Tentativa | Intervalo | Ação |
+|---|---|---|
+| 1 | Imediato | Primeira tentativa |
+| 2 | 1 minuto | Retry automático |
+| 3 | 5 minutos | Retry automático |
+| 4 | 15 minutos | Retry automático |
+| 5 | 1 hora | Retry automático |
+| 6+ | — | `falhou_definitivamente` |
 
-- **Provedores** de WhatsApp/e-mail e suas credenciais → arquitetura técnica/segurança.
-- **Execução SQL/Edge Function** do dispatcher → etapas 5–6.
-- **Templates visuais** (HTML/WhatsApp) → fase de construção, com conteúdo real.
+### 11.3 Regra de segurança
 
-As **regras de comunicação** (eventos, canais, idempotência, entrega, preferências, separação auditoria/notificação) estão **fechadas** acima.
+Retry não pode causar efeito colateral duplicado. A idempotency_key garante que, mesmo se o retry for processado, a notificação não será enviada duas vezes.
 
----
+## 12. Outbox pattern
 
-> **Nenhuma migration, alteração de Supabase ou implementação de código é autorizada por este documento.** Ele fecha a infraestrutura de comunicação (etapa 4). O schema só é projetado após o Gap Analysis final (etapa 5).
+### 12.1 Conceito
+
+Utilizar o padrão outbox para garantir que eventos sejam processados de forma confiável:
+
+```text
+Domínio de negócio
+   ↓
+grava evento na tabela outbox (mesma transação)
+   ↓
+processador assíncrono lê outbox
+   ↓
+dispatch para canais
+   ↓
+atualiza status de entrega
+```
+
+### 12.2 Vantagens
+
+- Garante que o evento seja registrado mesmo se o dispatch falhar.
+- Permite retry automático.
+- Desacopla o domínio de negócio da infraestrutura de comunicação.
+- Permite processamento assíncrono.
+
+## 13. Resumo da arquitetura
+
+```text
+DOMÍNIO DE NEGÓCIO
+(agendamento, pedido, pagamento, orçamento, atendimento)
+        ↓
+    EMITE EVENTO
+        ↓
+    OUTBOX (idempotency_key)
+        ↓
+    NOTIFICATION DISPATCHER
+        ↓
+┌───────────┬───────────┬───────────┐
+│  INTERNO  │  E-MAIL   │ WHATSAPP  │
+└───────────┴───────────┴───────────┘
+        ↓
+    STATUS DE ENTREGA
+    (pendente → processando → enviado → entregue → lido)
+    (falhou → retry → falhou definitivamente)
+```
+
+### Regras finais
+
+1. **Evento não é notificação.** Evento informa o que aconteceu; notificação é a tentativa de comunicar.
+2. **Canal não é banco de dados.** WhatsApp e e-mail são meios de entrega, não fontes de verdade.
+3. **Domínio não controla comunicação.** Domínios emitem eventos; o dispatcher decide canais e templates.
+4. **Idempotência é obrigatória.** Nenhuma notificação pode ser enviada duas vezes para o mesmo evento.
+5. **Retry é seguro.** Retry não pode causar efeito colateral duplicado.
+6. **Segredos ficam no backend.** API keys e credenciais de provedores nunca no frontend.
+7. **Auditoria é separada de notificação.** Auditoria registra ações; notificação registra tentativas de comunicação.
+8. **Comunicação essencial não pode ser bloqueada.** O cliente não pode desativar comunicações operacionais.
+9. **Novos canais não alteram domínios.** Adicionar um canal novo não requer alteração nos domínios de negócio.
+10. **Novos eventos não alteram infraestrutura.** Adicionar um evento novo não requer alteração no dispatcher.

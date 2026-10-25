@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
+                "/assets/img/produtos/galeria-1.jpg",
+                "/assets/img/produtos/galeria-2.jpg",
+                "/assets/img/produtos/galeria-3.jpg",
+                "/assets/img/produtos/galeria-4.jpg",
+                "/assets/img/produtos/galeria-5.jpg"
             ]
         },
 
@@ -32,11 +32,11 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
+                "/assets/img/produtos/galeria-1.jpg",
+                "/assets/img/produtos/galeria-2.jpg",
+                "/assets/img/produtos/galeria-3.jpg",
+                "/assets/img/produtos/galeria-4.jpg",
+                "/assets/img/produtos/galeria-5.jpg"
             ]
         },
          {
@@ -51,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
+                "/assets/img/produtos/galeria-1.jpg",
+                "/assets/img/produtos/galeria-2.jpg",
+                "/assets/img/produtos/galeria-3.jpg",
+                "/assets/img/produtos/galeria-4.jpg",
+                "/assets/img/produtos/galeria-5.jpg"
             ]
         },
          {
@@ -70,11 +70,11 @@ document.addEventListener("DOMContentLoaded", function () {
             },
             descricao: "Produto de alta qualidade, feito com material de primeira linha.",
             imagens: [
-                "/assets/img/galeria-1.jpg",
-                "/assets/img/galeria-2.jpg",
-                "/assets/img/galeria-3.jpg",
-                "/assets/img/galeria-4.jpg",
-                "/assets/img/galeria-5.jpg"
+                "/assets/img/produtos/galeria-1.jpg",
+                "/assets/img/produtos/galeria-2.jpg",
+                "/assets/img/produtos/galeria-3.jpg",
+                "/assets/img/produtos/galeria-4.jpg",
+                "/assets/img/produtos/galeria-5.jpg"
             ]
         },
         // Adicione os outros produtos aqui...

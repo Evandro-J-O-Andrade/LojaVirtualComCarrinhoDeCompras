@@ -13,10 +13,11 @@
 CREATE OR REPLACE FUNCTION is_admin()
 RETURNS boolean AS $$
   SELECT EXISTS (
-    SELECT 1 FROM auth.users u
-    WHERE u.id = auth.uid() AND u.raw_user_meta_data->>'role' = 'admin'
+    SELECT 1 FROM admin_user au
+    WHERE au.user_id = auth.uid()
   );
-$$ LANGUAGE sql SECURITY DEFINER STABLE;
+$$ LANGUAGE sql SECURITY DEFINER STABLE
+SET search_path TO 'public', 'pg_catalog';
 
 -- ============================================================
 -- RLS — Tabelas Públicas (Leitura anônima, escrita admin)

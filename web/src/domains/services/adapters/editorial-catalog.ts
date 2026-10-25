@@ -13,20 +13,20 @@ export const EDITORIAL_SERVICES: EditorialServiceEntry[] = [
     descricao:
       'Maquiagem profissional para eventos, ensaios e momentos especiais, com atendimento personalizado no nosso espaço.',
     imagemCapa: '/images/categoria-beleza.jpg',
-    video: '/assets/video/sessãoMaquiagem.mp4',
+    video: '/assets/video/sessao-maquiagem/sessãoMaquiagem.mp4',
   },
   {
     slug: 'consultoria-de-beleza',
     nome: 'Consultoria de Beleza',
     descricao:
       'Análise de perfil, tons e necessidades para orientar sua rotina de beleza com segurança.',
-    imagemCapa: '/assets/img/rostosemfundo.png',
+    imagemCapa: '/assets/img/institucional/rostosemfundo.png',
   },
   {
     slug: 'cuidados-de-beleza',
     nome: 'Cuidados de Beleza',
     descricao:
       'Ritual de cuidados com a pele e acabamento, do diagnóstico à recomendação personalizada.',
-    imagemCapa: '/assets/img/woman-3096664_640.jpg',
+    imagemCapa: '/assets/img/institucional/woman-3096664_640.jpg',
   },
 ]

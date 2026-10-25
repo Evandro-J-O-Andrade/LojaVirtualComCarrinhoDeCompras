@@ -31,8 +31,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         cartIcons.forEach(cartIcon => {
             cartIcon.src = produtosNoCarrinho
-                ? "/assets/img/carrinhocheio.png"
-                : "/assets/img/carrinho2.png";
+                ? "/assets/img/interface/carrinhocheio.png"
+                : "/assets/img/interface/carrinho2.png";
         });
     }
 

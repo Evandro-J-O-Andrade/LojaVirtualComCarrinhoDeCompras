@@ -1,0 +1,24 @@
+diff --git a/web/src/domains/home/components/HeroCinematico.tsx b/web/src/domains/home/components/HeroCinematico.tsx
+--- a/web/src/domains/home/components/HeroCinematico.tsx
++++ b/web/src/domains/home/components/HeroCinematico.tsx
+@@ -3,6 +3,7 @@
+ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+ import { cn } from '@/lib/utils'
+ import { BrilhoShimmer } from './BrilhoShimmer'
+ import { ImagemEditorial } from '@/components/brand/ImagemEditorial'
++import { BorboletasHero } from './BorboletasHero'
+ 
+ const HERO_IMAGEM = '/images/hero-beauty.jpg'
+@@ -141,4 +142,7 @@
+         <div className="absolute inset-0 bg-gradient-to-t from-charcoal/80 via-transparent to-charcoal/40" />
+         <BrilhoShimmer />
+       </div>
+ 
+-      <div className="container-angel relative grid flex-1 items-center gap-12 py-20 lg:grid-cols-2">
++      {/* Atmosfera delicada, atrás dos textos, mídia e CTAs. */}
++      <BorboletasHero />
++
++      <div className="container-angel relative z-10 grid flex-1 items-center gap-12 py-20 lg:grid-cols-2">
+@@ -219,1 +222,1 @@
+-      <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 items-center gap-3">
++      <div className="absolute bottom-8 left-1/2 z-10 flex -translate-x-1/2 items-center gap-3">
