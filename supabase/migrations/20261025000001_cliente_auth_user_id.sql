@@ -86,9 +86,9 @@ BEGIN
     RETURN NEW;
   END IF;
 
-  -- Cliente não pode definir status ou total em INSERT
+  -- Cliente não pode definir status ou total não-padrão em INSERT
   IF TG_OP = 'INSERT' THEN
-    IF NEW.status IS NOT NULL OR NEW.total IS NOT NULL THEN
+    IF NEW.status <> 'rascunho' OR NEW.total <> 0 THEN
       RAISE EXCEPTION 'Definição de status/total de pedido não permitida para este usuário';
     END IF;
   END IF;
