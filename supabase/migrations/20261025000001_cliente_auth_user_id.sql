@@ -1,6 +1,6 @@
--- Migração (DRAFT revisado) — NÃO executar sem autorização explícita
+-- Migração (DRAFT revisado v3) — NÃO executar sem autorização explícita
 -- Objetivo: vincular cliente ao UUID do Supabase Auth, preservando cliente.id (bigint).
--- Revisão estática aplicada: políticas por operação, tabelas dependentes, índice único parcial único.
+-- Revisão estática aplicada: políticas por operação (sem FOR ALL), tabelas dependentes, validação de FK.
 -- Data: 2026-10-25
 
 BEGIN;
@@ -9,36 +9,40 @@ BEGIN;
 ALTER TABLE public.cliente
   ADD COLUMN IF NOT EXISTS auth_user_id uuid;
 
--- 2. FK para auth.users(id) — verificar schema+tabela+constraint
+-- 2. FK para auth.users(id) — verificar schema+tabela+constraint+definição completa
 DO $$
+DECLARE
+  fk_def text;
 BEGIN
-  IF NOT EXISTS (
-    SELECT 1
-    FROM pg_constraint c
-    JOIN pg_class t ON t.oid = c.conrelid
-    JOIN pg_namespace n ON n.oid = t.relnamespace
-    WHERE c.conname = 'cliente_auth_user_id_fkey'
-      AND n.nspname = 'public'
-      AND t.relname = 'cliente'
-  ) THEN
+  SELECT pg_get_constraintdef(c.oid) INTO fk_def
+  FROM pg_constraint c
+  JOIN pg_class t ON t.oid = c.conrelid
+  JOIN pg_namespace n ON n.oid = t.relnamespace
+  WHERE c.conname = 'cliente_auth_user_id_fkey'
+    AND n.nspname = 'public'
+    AND t.relname = 'cliente';
+
+  IF fk_def IS NULL THEN
     ALTER TABLE public.cliente
       ADD CONSTRAINT cliente_auth_user_id_fkey
       FOREIGN KEY (auth_user_id) REFERENCES auth.users(id) ON DELETE SET NULL;
+  ELSIF fk_def NOT LIKE '%REFERENCES auth.users(id)%ON DELETE SET NULL%' THEN
+    RAISE EXCEPTION 'FK existente com definição incompatível: %', fk_def;
   END IF;
 END $$;
 
--- 3. Índice único parcial (também atende buscas por auth_user_id) — sem índice redundante
+-- 3. Índice único parcial (também atende buscas por auth_user_id)
 CREATE UNIQUE INDEX IF NOT EXISTS cliente_auth_user_id_unique
   ON public.cliente (auth_user_id)
   WHERE auth_user_id IS NOT NULL;
 
--- 4. Vínculo de registros existentes — DESATIVADO (requer validação explícita de identidade)
+-- 4. Vínculo de registros existentes — DESATIVADO (requer validação explícita)
 -- UPDATE public.cliente c
 -- SET auth_user_id = u.id
 -- FROM auth.users u
 -- WHERE c.email = u.email AND c.auth_user_id IS NULL;
 
--- 5. Políticas RLS por UUID — por operação (não FOR ALL)
+-- 5. Políticas RLS por UUID — por operação (sem FOR ALL)
 -- cliente
 DROP POLICY IF EXISTS cliente_read_own_uuid ON public.cliente;
 CREATE POLICY cliente_read_own_uuid ON public.cliente
@@ -56,17 +60,32 @@ CREATE POLICY cliente_insert_own_uuid ON public.cliente
   FOR INSERT TO authenticated
   WITH CHECK (auth_user_id = auth.uid() OR is_admin());
 
+DROP POLICY IF EXISTS cliente_delete_own_uuid ON public.cliente;
+CREATE POLICY cliente_delete_own_uuid ON public.cliente
+  FOR DELETE TO authenticated
+  USING (auth_user_id = auth.uid() OR is_admin());
+
 -- endereco
 DROP POLICY IF EXISTS endereco_read_own_uuid ON public.endereco;
 CREATE POLICY endereco_read_own_uuid ON public.endereco
   FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = endereco.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
-DROP POLICY IF EXISTS endereco_write_own_uuid ON public.endereco;
-CREATE POLICY endereco_write_own_uuid ON public.endereco
-  FOR ALL TO authenticated
+DROP POLICY IF EXISTS endereco_insert_own_uuid ON public.endereco;
+CREATE POLICY endereco_insert_own_uuid ON public.endereco
+  FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = endereco.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+DROP POLICY IF EXISTS endereco_update_own_uuid ON public.endereco;
+CREATE POLICY endereco_update_own_uuid ON public.endereco
+  FOR UPDATE TO authenticated
   USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = endereco.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin())
   WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = endereco.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+DROP POLICY IF EXISTS endereco_delete_own_uuid ON public.endereco;
+CREATE POLICY endereco_delete_own_uuid ON public.endereco
+  FOR DELETE TO authenticated
+  USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = endereco.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
 -- carrinho
 DROP POLICY IF EXISTS carrinho_read_own_uuid ON public.carrinho;
@@ -74,11 +93,21 @@ CREATE POLICY carrinho_read_own_uuid ON public.carrinho
   FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = carrinho.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
-DROP POLICY IF EXISTS carrinho_write_own_uuid ON public.carrinho;
-CREATE POLICY carrinho_write_own_uuid ON public.carrinho
-  FOR ALL TO authenticated
+DROP POLICY IF EXISTS carrinho_insert_own_uuid ON public.carrinho;
+CREATE POLICY carrinho_insert_own_uuid ON public.carrinho
+  FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = carrinho.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+DROP POLICY IF EXISTS carrinho_update_own_uuid ON public.carrinho;
+CREATE POLICY carrinho_update_own_uuid ON public.carrinho
+  FOR UPDATE TO authenticated
   USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = carrinho.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin())
   WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = carrinho.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+DROP POLICY IF EXISTS carrinho_delete_own_uuid ON public.carrinho;
+CREATE POLICY carrinho_delete_own_uuid ON public.carrinho
+  FOR DELETE TO authenticated
+  USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = carrinho.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
 -- carrinho_item (via carrinho)
 DROP POLICY IF EXISTS carrinho_item_read_own_uuid ON public.carrinho_item;
@@ -86,13 +115,23 @@ CREATE POLICY carrinho_item_read_own_uuid ON public.carrinho_item
   FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM public.carrinho cr JOIN public.cliente c ON c.id = cr.cliente_id WHERE cr.id = carrinho_item.carrinho_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
-DROP POLICY IF EXISTS carrinho_item_write_own_uuid ON public.carrinho_item;
-CREATE POLICY carrinho_item_write_own_uuid ON public.carrinho_item
-  FOR ALL TO authenticated
+DROP POLICY IF EXISTS carrinho_item_insert_own_uuid ON public.carrinho_item;
+CREATE POLICY carrinho_item_insert_own_uuid ON public.carrinho_item
+  FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM public.carrinho cr JOIN public.cliente c ON c.id = cr.cliente_id WHERE cr.id = carrinho_item.carrinho_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+DROP POLICY IF EXISTS carrinho_item_update_own_uuid ON public.carrinho_item;
+CREATE POLICY carrinho_item_update_own_uuid ON public.carrinho_item
+  FOR UPDATE TO authenticated
   USING (EXISTS (SELECT 1 FROM public.carrinho cr JOIN public.cliente c ON c.id = cr.cliente_id WHERE cr.id = carrinho_item.carrinho_id AND c.auth_user_id = auth.uid()) OR is_admin())
   WITH CHECK (EXISTS (SELECT 1 FROM public.carrinho cr JOIN public.cliente c ON c.id = cr.cliente_id WHERE cr.id = carrinho_item.carrinho_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
--- pedido: leitura, inserção, atualização
+DROP POLICY IF EXISTS carrinho_item_delete_own_uuid ON public.carrinho_item;
+CREATE POLICY carrinho_item_delete_own_uuid ON public.carrinho_item
+  FOR DELETE TO authenticated
+  USING (EXISTS (SELECT 1 FROM public.carrinho cr JOIN public.cliente c ON c.id = cr.cliente_id WHERE cr.id = carrinho_item.carrinho_id AND c.auth_user_id = auth.uid()) OR is_admin());
+
+-- pedido
 DROP POLICY IF EXISTS pedido_read_owner_admin_uuid ON public.pedido;
 CREATE POLICY pedido_read_owner_admin_uuid ON public.pedido
   FOR SELECT TO authenticated
@@ -127,8 +166,7 @@ CREATE POLICY atendimento_insert_own_uuid ON public.atendimento
   WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = atendimento.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
 -- NOTA: políticas antigas baseadas em e-mail permanecem ativas durante a transição.
--- Elas devem ser removidas em migração posterior, após todos os clientes estarem vinculados
--- (auth_user_id preenchido) e validação de isolamento concluída.
+-- Elas devem ser removidas em migração posterior, após todos os clientes vinculados.
 -- is_admin() mantido sem alteração (SECURITY DEFINER, lê admin_user por auth.uid()).
 
 COMMIT;
