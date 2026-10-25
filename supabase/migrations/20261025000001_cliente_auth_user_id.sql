@@ -88,7 +88,7 @@ BEGIN
 
   -- Cliente não pode definir status ou total não-padrão em INSERT
   IF TG_OP = 'INSERT' THEN
-    IF NEW.status <> 'rascunho' OR NEW.total <> 0 THEN
+    IF NEW.status IS DISTINCT FROM 'rascunho' OR NEW.total IS DISTINCT FROM 0 THEN
       RAISE EXCEPTION 'Definição de status/total de pedido não permitida para este usuário';
     END IF;
   END IF;
