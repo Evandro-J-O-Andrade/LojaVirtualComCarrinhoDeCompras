@@ -1,7 +1,7 @@
--- Migração (DRAFT revisado v5) — NÃO executar sem autorização explícita
+-- Migração (DRAFT revisado v6) — NÃO executar sem autorização explícita
 -- Objetivo: vincular cliente ao UUID do Supabase Auth, preservando cliente.id (bigint).
--- Revisão estática aplicada (v5): FK validada por schema/contype/cardinalidade/colunas,
--- inventário por USING e WITH CHECK, proteção de colunas sensíveis de pedido.
+-- Revisão estática aplicada (v6): FK validada com escopo inequívoco + cardinalidade,
+-- inventário por qual/with_check direto, proteção de pedido.status/total via trigger.
 -- Data: 2026-10-25
 
 BEGIN;
@@ -10,7 +10,7 @@ BEGIN;
 ALTER TABLE public.cliente
   ADD COLUMN IF NOT EXISTS auth_user_id uuid;
 
--- 2. FK para auth.users(id) — validação completa (contype, schemas, tabelas, colunas, cardinalidade, ON DELETE)
+-- 2. FK para auth.users(id) — validação completa com escopo inequívoco
 DO $$
 DECLARE
   v_contype char;
@@ -21,7 +21,8 @@ DECLARE
   v_ref_tbl text;
   v_ref_col text;
   v_del_action text;
-  v_nkeys int;
+  v_nkeys_src int;
+  v_nkeys_ref int;
 BEGIN
   SELECT c.contype,
     (SELECT n.nspname FROM pg_namespace n WHERE n.oid = t.relnamespace),
@@ -31,12 +32,15 @@ BEGIN
     t2.relname,
     (SELECT a2.attname FROM pg_attribute a2 WHERE a2.attrelid = c.confrelid AND a2.attnum = c.confkey[1]),
     CASE c.confdeltype WHEN 'a' THEN 'NO ACTION' WHEN 'r' THEN 'RESTRICT' WHEN 'c' THEN 'CASCADE' WHEN 'n' THEN 'SET NULL' WHEN 'd' THEN 'SET DEFAULT' END,
-    array_length(c.conkey, 1)
-  INTO v_contype, v_src_schema, v_src_tbl, v_src_col, v_ref_schema, v_ref_tbl, v_ref_col, v_del_action, v_nkeys
+    array_length(c.conkey, 1),
+    array_length(c.confkey, 1)
+  INTO v_contype, v_src_schema, v_src_tbl, v_src_col, v_ref_schema, v_ref_tbl, v_ref_col, v_del_action, v_nkeys_src, v_nkeys_ref
   FROM pg_constraint c
   JOIN pg_class t ON t.oid = c.conrelid
+  JOIN pg_namespace n ON n.oid = t.relnamespace
   JOIN pg_class t2 ON t2.oid = c.confrelid
   WHERE c.conname = 'cliente_auth_user_id_fkey'
+    AND n.nspname = 'public'
     AND t.relname = 'cliente';
 
   IF v_contype IS NULL THEN
@@ -47,9 +51,9 @@ BEGIN
      OR v_src_schema <> 'public' OR v_src_tbl <> 'cliente' OR v_src_col <> 'auth_user_id'
      OR v_ref_schema <> 'auth' OR v_ref_tbl <> 'users' OR v_ref_col <> 'id'
      OR v_del_action <> 'SET NULL'
-     OR v_nkeys <> 1 THEN
-    RAISE EXCEPTION 'FK incompatível: contype=%, src=%.%(%), ref=%.%(%), on_delete=%, nkeys=%',
-      v_contype, v_src_schema, v_src_tbl, v_src_col, v_ref_schema, v_ref_tbl, v_ref_col, v_del_action, v_nkeys;
+     OR v_nkeys_src <> 1 OR v_nkeys_ref <> 1 THEN
+    RAISE EXCEPTION 'FK incompatível: contype=%, src=%.%(%), ref=%.%(%), on_delete=%, nkeys=%/%',
+      v_contype, v_src_schema, v_src_tbl, v_src_col, v_ref_schema, v_ref_tbl, v_ref_col, v_del_action, v_nkeys_src, v_nkeys_ref;
   END IF;
 END $$;
 
@@ -64,7 +68,31 @@ CREATE UNIQUE INDEX IF NOT EXISTS cliente_auth_user_id_unique
 -- FROM auth.users u
 -- WHERE c.email = u.email AND c.auth_user_id IS NULL;
 
--- 5. Políticas RLS por UUID — por operação (sem FOR ALL)
+-- 5. Proteção de colunas sensíveis de pedido (trigger)
+CREATE OR REPLACE FUNCTION public.pedido_proteger_colunas_sensiveis()
+RETURNS trigger
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, pg_catalog
+AS $$
+BEGIN
+  -- Apenas administradores podem alterar status e total
+  IF (NEW.status IS DISTINCT FROM OLD.status OR NEW.total IS DISTINCT FROM OLD.total) THEN
+    IF NOT is_admin() THEN
+      RAISE EXCEPTION 'Alteração de status/total de pedido não permitida para este usuário';
+    END IF;
+  END IF;
+  RETURN NEW;
+END;
+$$;
+
+DROP TRIGGER IF EXISTS pedido_proteger_colunas_sensiveis_trg ON public.pedido;
+CREATE TRIGGER pedido_proteger_colunas_sensiveis_trg
+  BEFORE UPDATE ON public.pedido
+  FOR EACH ROW
+  EXECUTE FUNCTION public.pedido_proteger_colunas_sensiveis();
+
+-- 6. Políticas RLS por UUID — por operação (sem FOR ALL)
 -- cliente
 DROP POLICY IF EXISTS cliente_read_own_uuid ON public.cliente;
 CREATE POLICY cliente_read_own_uuid ON public.cliente
@@ -81,7 +109,6 @@ DROP POLICY IF EXISTS cliente_insert_own_uuid ON public.cliente;
 CREATE POLICY cliente_insert_own_uuid ON public.cliente
   FOR INSERT TO authenticated
   WITH CHECK (auth_user_id = auth.uid() OR is_admin());
--- cliente_delete não criado — preservação de histórico.
 
 -- endereco (por operação)
 DROP POLICY IF EXISTS endereco_read_own_uuid ON public.endereco;
@@ -165,8 +192,6 @@ CREATE POLICY pedido_update_own_uuid ON public.pedido
   FOR UPDATE TO authenticated
   USING (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = pedido.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin())
   WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = pedido.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
--- NOTA: atualização de colunas sensíveis (status, total) deve ser bloqueada via privilégios de coluna
--- ou função controlada; RLS por linha não restringe colunas. Aplicar REVOKE/GRANT ou trigger antes da liberação.
 
 -- pedido_item (via pedido, leitura)
 DROP POLICY IF EXISTS pedido_item_read_own_uuid ON public.pedido_item;
@@ -185,17 +210,20 @@ CREATE POLICY atendimento_insert_own_uuid ON public.atendimento
   FOR INSERT TO authenticated
   WITH CHECK (EXISTS (SELECT 1 FROM public.cliente c WHERE c.id = atendimento.cliente_id AND c.auth_user_id = auth.uid()) OR is_admin());
 
--- 6. Inventário de políticas antigas (executar ANTES da aplicação)
+-- 7. Inventário de políticas antigas (executar ANTES da aplicação)
 -- SELECT schemaname, tablename, policyname, cmd, roles,
---        pg_get_expr(qual, (SELECT oid FROM pg_class WHERE relname=tablename AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname=schemaname))) AS using_expr,
---        pg_get_expr(with_check, (SELECT oid FROM pg_class WHERE relname=tablename AND relnamespace=(SELECT oid FROM pg_namespace WHERE nspname=schemaname))) AS with_check_expr
+--        qual AS using_expr,
+--        with_check AS with_check_expr
 -- FROM pg_policies
--- WHERE schemaname='public'
---   AND (COALESCE(qual,'') ILIKE '%email%' OR COALESCE(qual,'') ILIKE '%auth.jwt()%'
---        OR COALESCE(with_check,'') ILIKE '%email%' OR COALESCE(with_check,'') ILIKE '%auth.jwt()%');
+-- WHERE schemaname = 'public'
+--   AND (COALESCE(qual, '') ILIKE '%email%'
+--        OR COALESCE(qual, '') ILIKE '%auth.jwt()%'
+--        OR COALESCE(with_check, '') ILIKE '%email%'
+--        OR COALESCE(with_check, '') ILIKE '%auth.jwt()%')
+-- ORDER BY tablename, policyname;
 
 -- NOTA: políticas antigas baseadas em e-mail permanecem ativas durante a transição.
--- Remoção planejada em migração posterior, após todos os clientes vinculados e validação de isolamento.
+-- Remoção planejada em migração posterior, após vinculação e validação.
 -- is_admin() mantido sem alteração (SECURITY DEFINER, lê admin_user por auth.uid()).
 
 COMMIT;
