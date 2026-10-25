@@ -1,4 +1,4 @@
--- Migração (DRAFT revisado v7) — NÃO executar sem autorização explícita
+-- Migração (DRAFT revisado v8) — NÃO executar sem autorização explícita
 -- Objetivo: vincular cliente ao UUID do Supabase Auth, preservando cliente.id (bigint).
 -- Revisão estática aplicada (v7): trigger BEFORE INSERT OR UPDATE, autorização de backend/service_role.
 -- Data: 2026-10-25
@@ -68,7 +68,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS cliente_auth_user_id_unique
 -- WHERE c.email = u.email AND c.auth_user_id IS NULL;
 
 -- 5. Proteção de colunas sensíveis de pedido (trigger BEFORE INSERT OR UPDATE)
--- Backend/service_role (auth.uid() IS NULL) é autorizado; clientes não podem definir status/total.
+-- Backend (auth.role()='service_role') e admin (is_admin()) são autorizados; clientes não podem definir status/total.
 CREATE OR REPLACE FUNCTION public.pedido_proteger_colunas_sensiveis()
 RETURNS trigger
 LANGUAGE plpgsql
