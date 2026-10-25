@@ -4,11 +4,7 @@ import {
 } from '@supabase/supabase-js'
 
 const url = (import.meta.env.VITE_SUPABASE_URL ?? '').trim()
-const chave = (
-  import.meta.env.VITE_SUPABASE_ANON_KEY ||
-  import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ||
-  ''
-).trim()
+const chave = (import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY ?? '').trim()
 
 /**
  * O cliente do Supabase é criado no módulo.
