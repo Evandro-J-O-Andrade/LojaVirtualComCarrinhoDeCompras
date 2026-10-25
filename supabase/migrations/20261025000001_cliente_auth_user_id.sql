@@ -1,7 +1,6 @@
--- Migração (DRAFT revisado v6) — NÃO executar sem autorização explícita
+-- Migração (DRAFT revisado v7) — NÃO executar sem autorização explícita
 -- Objetivo: vincular cliente ao UUID do Supabase Auth, preservando cliente.id (bigint).
--- Revisão estática aplicada (v6): FK validada com escopo inequívoco + cardinalidade,
--- inventário por qual/with_check direto, proteção de pedido.status/total via trigger.
+-- Revisão estática aplicada (v7): trigger BEFORE INSERT OR UPDATE, autorização de backend/service_role.
 -- Data: 2026-10-25
 
 BEGIN;
@@ -10,7 +9,7 @@ BEGIN;
 ALTER TABLE public.cliente
   ADD COLUMN IF NOT EXISTS auth_user_id uuid;
 
--- 2. FK para auth.users(id) — validação completa com escopo inequívoco
+-- 2. FK para auth.users(id) — validação completa
 DO $$
 DECLARE
   v_contype char;
@@ -68,7 +67,8 @@ CREATE UNIQUE INDEX IF NOT EXISTS cliente_auth_user_id_unique
 -- FROM auth.users u
 -- WHERE c.email = u.email AND c.auth_user_id IS NULL;
 
--- 5. Proteção de colunas sensíveis de pedido (trigger)
+-- 5. Proteção de colunas sensíveis de pedido (trigger BEFORE INSERT OR UPDATE)
+-- Backend/service_role (auth.uid() IS NULL) é autorizado; clientes não podem definir status/total.
 CREATE OR REPLACE FUNCTION public.pedido_proteger_colunas_sensiveis()
 RETURNS trigger
 LANGUAGE plpgsql
@@ -76,19 +76,36 @@ SECURITY DEFINER
 SET search_path = public, pg_catalog
 AS $$
 BEGIN
-  -- Apenas administradores podem alterar status e total
-  IF (NEW.status IS DISTINCT FROM OLD.status OR NEW.total IS DISTINCT FROM OLD.total) THEN
-    IF NOT is_admin() THEN
-      RAISE EXCEPTION 'Alteração de status/total de pedido não permitida para este usuário';
+  -- Operações de backend (service_role, sem JWT) são autorizadas
+  IF auth.uid() IS NULL THEN
+    RETURN NEW;
+  END IF;
+
+  -- Cliente não pode definir status ou total em INSERT
+  IF TG_OP = 'INSERT' THEN
+    IF NEW.status IS NOT NULL OR NEW.total IS NOT NULL THEN
+      IF NOT is_admin() THEN
+        RAISE EXCEPTION 'Definição de status/total de pedido não permitida para este usuário';
+      END IF;
     END IF;
   END IF;
+
+  -- Cliente não pode alterar status ou total em UPDATE
+  IF TG_OP = 'UPDATE' THEN
+    IF (NEW.status IS DISTINCT FROM OLD.status OR NEW.total IS DISTINCT FROM OLD.total) THEN
+      IF NOT is_admin() THEN
+        RAISE EXCEPTION 'Alteração de status/total de pedido não permitida para este usuário';
+      END IF;
+    END IF;
+  END IF;
+
   RETURN NEW;
 END;
 $$;
 
 DROP TRIGGER IF EXISTS pedido_proteger_colunas_sensiveis_trg ON public.pedido;
 CREATE TRIGGER pedido_proteger_colunas_sensiveis_trg
-  BEFORE UPDATE ON public.pedido
+  BEFORE INSERT OR UPDATE ON public.pedido
   FOR EACH ROW
   EXECUTE FUNCTION public.pedido_proteger_colunas_sensiveis();
 
