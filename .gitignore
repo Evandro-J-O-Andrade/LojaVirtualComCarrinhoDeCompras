@@ -28,3 +28,7 @@ assets-importacao/
 # Large video files (exceed GitHub 100MB limit)
 assets/video/skinCare2.mp4
 web/public/assets/video/skinCare-2.mp4
+
+# Large video files (skincare folder)
+assets/video/skincare/skinCare2.mp4
+web/public/assets/video/skincare/skinCare-2.mp4
