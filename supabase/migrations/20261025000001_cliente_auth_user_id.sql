@@ -1,4 +1,4 @@
--- Migração (DRAFT revisado v8) — NÃO executar sem autorização explícita
+-- Migração (DRAFT revisado v10) — NÃO executar sem autorização explícita
 -- Objetivo: vincular cliente ao UUID do Supabase Auth, preservando cliente.id (bigint).
 -- Revisão estática aplicada (v7): trigger BEFORE INSERT OR UPDATE, autorização de backend/service_role.
 -- Data: 2026-10-25
