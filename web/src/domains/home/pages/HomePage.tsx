@@ -30,6 +30,7 @@ import { MomentoAngel } from '../components/MomentoAngel'
 import { ExperienciaAngel } from '../components/ExperienciaAngel'
 import { HistoriaMarca } from '../components/HistoriaMarca'
 import { CtaFinalHome } from '../components/CtaFinalHome'
+import { AcervoVisualDestaque } from '../components/AcervoVisualDestaque'
 
 /**
  * Home — vitrine da marca.
@@ -55,6 +56,7 @@ export function HomePage() {
       <MimosDiarios />
       <ProdutosDestaque />
       <BelezaEMaquiagem />
+      <AcervoVisualDestaque />
       <ServicosHome />
       <ExperienciaAngel />
       <OcasioesHome />
