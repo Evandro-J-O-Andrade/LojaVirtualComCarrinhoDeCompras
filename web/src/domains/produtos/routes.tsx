@@ -4,6 +4,7 @@ import {
   ProductDetailPage,
   CategoriasPage,
   CategoriaDetailPage,
+  ColecoesPage,
 } from './pages/lazy'
 
 export const produtoRoutes = (
@@ -15,5 +16,7 @@ export const produtoRoutes = (
       path="/categorias/:slug"
       element={<CategoriaDetailPage />}
     />
+    <Route path="/colecoes" element={<ColecoesPage />} />
+    <Route path="/colecoes/:slug" element={<ColecoesPage />} />
   </>
 )
