@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS profissional (
     CONSTRAINT pr_user_fk FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
 );
 
-CREATE OR REPLACE VIEW profissional_publico (id, nome) AS
+CREATE OR REPLACE VIEW profissional_publico (id, nome) WITH (security_invoker = true) AS
     SELECT id, nome FROM profissional WHERE ativo = true;
 
 CREATE TABLE IF NOT EXISTS profissional_servico (
@@ -140,7 +140,7 @@ DO $$ BEGIN CREATE POLICY "servico_read_active" ON servico FOR SELECT TO anon US
 DO $$ BEGIN CREATE POLICY "servico_write_admin" ON servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 ALTER TABLE profissional ENABLE ROW LEVEL SECURITY;
-DO $$ BEGIN CREATE POLICY "profissional_read_active" ON profissional FOR SELECT TO authenticated USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $$;
+DO $ BEGIN CREATE POLICY "profissional_read_active" ON profissional FOR SELECT TO anon, authenticated USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $;
 DO $$ BEGIN CREATE POLICY "profissional_write_admin" ON profissional FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $$;
 
 ALTER TABLE profissional_servico ENABLE ROW LEVEL SECURITY;
