@@ -25,7 +25,83 @@ export function AdminShell() {
   const nomeExibicao = profile?.nome || profile?.email || 'Administradora'
 
   return (
-    <div className="flex min-h-screen bg-ivory">
+    <div className="flex h-dvh overflow-hidden bg-ivory">
+      {/* Sidebar mobile */}
+      <div
+        className={cn(
+          'fixed inset-0 z-40 transition-opacity lg:hidden',
+          sidebarOpen
+            ? 'opacity-100'
+            : 'pointer-events-none opacity-0',
+        )}
+      >
+        <div
+          className="absolute inset-0 bg-charcoal/50"
+          onClick={() => setSidebarOpen(false)}
+        />
+        <aside className="relative flex h-full w-64 flex-col bg-charcoal text-ivory">
+          <AdminSidebar onNavigate={() => setSidebarOpen(false)} />
+        </aside>
+      </div>
+
+      {/* Sidebar desktop */}
+      <div className="hidden lg:block">
+        <AdminSidebar />
+      </div>
+
+      <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+        <header className="shrink-0 border-b border-champagne bg-white">
+          <div className="flex h-16 items-center justify-between gap-4 px-4 lg:px-6">
+            <div className="flex min-w-0 items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setSidebarOpen(true)}
+                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-content-muted hover:bg-surface-alt lg:hidden"
+                aria-label="Abrir menu administrativo"
+                aria-expanded={sidebarOpen}
+              >
+                <Menu size={20} aria-hidden />
+              </button>
+              <AdminBreadcrumb caminho={location.pathname} />
+            </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <span className="hidden text-sm text-content-muted md:block">
+                {nomeExibicao}
+              </span>
+              <button
+                type="button"
+                onClick={() => void signOut()}
+                className="inline-flex items-center gap-2 rounded-lg border-2 border-champagne px-3 py-1.5 text-sm font-medium text-soft-black transition-colors hover:border-coral hover:bg-coral/10"
+              >
+                <LogOut size={16} aria-hidden />
+                Sair
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 overflow-y-auto">
+          <AdminPermissionProvider>
+            <Outlet />
+          </AdminPermissionProvider>
+        </main>
+
+        <footer className="shrink-0 border-t border-champagne bg-white px-4 py-3 text-xs text-content-muted lg:px-6">
+          <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+            <span>© Angel Cosméticos e Lingerie — Todos os direitos reservados.</span>
+            <a
+              href="https://newwavesistemasdigitais.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-deep-rose hover:underline"
+            >
+              Feito por New Wave Sistemas Digitais
+            </a>
+          </div>
+        </footer>
+      </div>
+    </div>
+  )
       {/* Sidebar mobile */}
       <div
         className={cn(
