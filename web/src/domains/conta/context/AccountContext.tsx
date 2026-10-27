@@ -1,7 +1,9 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
+  useState,
   type ReactNode,
 } from 'react'
 import type { User } from '@supabase/supabase-js'
@@ -10,6 +12,7 @@ import {
   perfilDoUsuario,
   type PerfilCliente,
 } from '../model/conta'
+import { clientePerfilRepository } from '../repositories/cliente-perfil.repository'
 
 /**
  * AccountContext — o seam da conta.
@@ -39,6 +42,11 @@ interface AccountContextType {
     email: string,
     senha: string,
   ) => Promise<{ error?: string }>
+  signUp: (
+    email: string,
+    senha: string,
+    nome: string,
+  ) => Promise<{ error?: string }>
   signOut: () => Promise<void>
   /** Alteração de senha via Supabase Auth (não é própria). */
   alterarSenha: (novaSenha: string) => Promise<{
@@ -62,32 +70,74 @@ export function AccountProvider({
     error,
     configurado,
     signIn,
+    signUp,
     signOut,
     alterarSenha,
   } = useAuth()
+
+  const [telefone, setTelefone] = useState<string | null>(null)
+  const [perfilCarregando, setPerfilCarregando] =
+    useState(false)
+  const [perfilErro, setPerfilErro] = useState<string | null>(
+    null,
+  )
+
+  useEffect(() => {
+    if (!user) {
+      setTelefone(null)
+      setPerfilCarregando(false)
+      setPerfilErro(null)
+      return
+    }
+    let cancelado = false
+    const email = user.email ?? ''
+    setPerfilCarregando(true)
+    setPerfilErro(null)
+    clientePerfilRepository
+      .buscarPorEmail(email)
+      .then((resultado) => {
+        if (cancelado) return
+        setPerfilCarregando(false)
+        if (resultado.error) {
+          setPerfilErro(resultado.error)
+          return
+        }
+        setTelefone(resultado.data?.telefone ?? null)
+      })
+    return () => {
+      cancelado = true
+    }
+  }, [user])
+
+  const profile = useMemo<PerfilCliente | null>(() => {
+    const base = perfilDoUsuario(user)
+    if (!base) return null
+    return { ...base, telefone }
+  }, [user, telefone])
 
   const value = useMemo<AccountContextType>(
     () => ({
       authenticated: user !== null,
       user,
-      profile: perfilDoUsuario(user),
-      loading,
-      // O erro vem do provedor de identidade
-      // (configuração ausente ou falha de rede):
-      // a conta autenticada não carrega erro
-      // próprio.
-      error,
+      profile,
+      loading: loading || perfilCarregando,
+      error: error ?? perfilErro,
       configurado,
       signIn,
+      signUp,
       signOut,
       alterarSenha,
     }),
     [
       user,
+      profile,
       loading,
+      perfilCarregando,
       error,
+      perfilErro,
       configurado,
       signIn,
+      signUp,
       signOut,
       alterarSenha,
     ],

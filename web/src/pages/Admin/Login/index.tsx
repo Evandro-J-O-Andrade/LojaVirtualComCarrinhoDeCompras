@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAuth } from '@/contexts/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { verificarAdmin } from '@/domains/admin/services/adminAuth'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
@@ -85,9 +85,9 @@ export function AdminLogin() {
           </form>
 
           <div className="mt-6 text-center">
-            <a href="/" className="text-sm text-warm-gray hover:text-deep-rose">
+            <Link to="/" className="text-sm text-warm-gray hover:text-deep-rose">
               ← Voltar para a loja
-            </a>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom'
 import {
   EntrarPage,
+  CadastroPage,
   ContaPage,
   PerfilPage,
   PedidosPage,
@@ -23,6 +24,10 @@ export const contaRoutes = (
     <Route
       path="/entrar"
       element={<EntrarPage />}
+    />
+    <Route
+      path="/cadastro"
+      element={<CadastroPage />}
     />
     <Route
       path="/conta"

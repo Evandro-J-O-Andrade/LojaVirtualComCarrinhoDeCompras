@@ -23,13 +23,13 @@ export function AdminSidebar({
   const location = useLocation()
 
   return (
-    <aside className="flex h-screen w-64 flex-col bg-charcoal text-ivory">
+    <aside className="flex h-dvh w-64 flex-col bg-charcoal text-ivory">
       <div className="border-b border-white/10 p-5">
         <AdminLogoLink />
       </div>
 
       <nav
-        className="flex-1 overflow-y-auto px-3 py-5"
+        className="flex-1 px-3 py-5"
         aria-label="Navegação administrativa"
       >
         {ADMIN_GRUPOS.map((grupo) => (

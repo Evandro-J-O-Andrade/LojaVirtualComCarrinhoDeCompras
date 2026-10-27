@@ -22,6 +22,8 @@ export function AdminShell() {
   const { profile, signOut } = useAccount()
   const location = useLocation()
 
+  const nomeExibicao = profile?.nome || profile?.email || 'Administradora'
+
   return (
     <div className="flex min-h-screen bg-ivory">
       {/* Sidebar mobile */}
@@ -64,7 +66,7 @@ export function AdminShell() {
             </div>
             <div className="flex shrink-0 items-center gap-3">
               <span className="hidden text-sm text-content-muted md:block">
-                {profile?.email ?? 'Administradora'}
+                {nomeExibicao}
               </span>
               <button
                 type="button"
@@ -83,6 +85,20 @@ export function AdminShell() {
             <Outlet />
           </AdminPermissionProvider>
         </main>
+
+        <footer className="border-t border-champagne bg-white px-4 py-3 text-xs text-content-muted lg:px-6">
+          <div className="flex flex-col items-center justify-between gap-2 sm:flex-row">
+            <span>© Angel Cosméticos e Lingerie — Todos os direitos reservados.</span>
+            <a
+              href="https://newwavesistemasdigitais.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-deep-rose hover:underline"
+            >
+              Feito por New Wave Sistemas Digitais
+            </a>
+          </div>
+        </footer>
       </div>
     </div>
   )

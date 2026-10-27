@@ -6,6 +6,12 @@ export const EntrarPage = lazy(() =>
   })),
 )
 
+export const CadastroPage = lazy(() =>
+  import('./CadastroPage').then((m) => ({
+    default: m.CadastroPage,
+  })),
+)
+
 export const ContaPage = lazy(() =>
   import('./ContaPage').then((m) => ({
     default: m.ContaPage,

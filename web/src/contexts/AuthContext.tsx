@@ -25,6 +25,11 @@ interface AuthContextType {
   /** O provedor de identidade está configurado neste ambiente. */
   configurado: boolean
   signIn: (email: string, password: string) => Promise<{ error?: string }>
+  signUp: (
+    email: string,
+    password: string,
+    name: string,
+  ) => Promise<{ error?: string }>
   signOut: () => Promise<void>
   /** Alteração de senha via Supabase Auth — nunca implementação própria. */
   alterarSenha: (novaSenha: string) => Promise<{ error?: string }>
@@ -99,7 +104,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [],
   )
 
-  const signOut = useCallback(async () => {
+  const signUp = useCallback(
+    async (email: string, password: string, name: string) => {
+      if (!supabaseConfigurado) {
+        return { error: MENSAGEM_SEM_CONFIGURACAO }
+      }
+      const { error: erro } = await supabase.auth.signUp({
+        email,
+        password,
+        options: { data: { name } },
+      })
+      if (erro) return { error: erro.message }
+      return {}
+    },
+    [],
+  )
+    const signOut = useCallback(async () => {
     if (!supabaseConfigurado) return
     await supabase.auth.signOut()
   }, [])
@@ -126,6 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         error,
         configurado: supabaseConfigurado,
         signIn,
+        signUp,
         signOut,
         alterarSenha,
       }}
