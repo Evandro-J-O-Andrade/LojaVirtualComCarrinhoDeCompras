@@ -39,9 +39,21 @@ export function EntrarPage() {
   // tira a cliente da loja.
   const destino = destinoSeguro(params.get('destino'))
 
-  // Já autenticada: nada a fazer aqui.
+  // Já autenticada: verificar admin e redirecionar.
   useEffect(() => {
-    if (authenticated) navigate(destino, { replace: true })
+    if (!authenticated) return
+    let cancelado = false
+    verificarAdmin().then((admin) => {
+      if (cancelado) return
+      if (admin) {
+        navigate('/admin', { replace: true })
+      } else {
+        navigate(destino, { replace: true })
+      }
+    })
+    return () => {
+      cancelado = true
+    }
   }, [authenticated, navigate, destino])
 
   const submeter = async (
@@ -59,12 +71,8 @@ export function EntrarPage() {
       setErro(resultado.error)
       return
     }
-    const admin = await verificarAdmin()
-    if (admin) {
-      navigate('/admin', { replace: true })
-      return
-    }
-    navigate(destino, { replace: true })
+    // Navegação tratada pelo useEffect após
+    // a sessão ser atualizada.
   }
 
   return (
