@@ -136,30 +136,43 @@ CREATE TABLE IF NOT EXISTS agendamento (
 
 -- RLS para serviços
 ALTER TABLE servico ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "servico_read_active" ON servico FOR SELECT TO anon USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "servico_write_admin" ON servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "servico_read_active" ON servico;
+CREATE POLICY "servico_read_active" ON servico FOR SELECT TO anon USING (ativo = true);
+DROP POLICY IF EXISTS "servico_write_admin" ON servico;
+CREATE POLICY "servico_write_admin" ON servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE profissional ENABLE ROW LEVEL SECURITY;
 DO $ BEGIN CREATE POLICY "profissional_read_active" ON profissional FOR SELECT TO anon, authenticated USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $;
-DO $do$ BEGIN CREATE POLICY "profissional_write_admin" ON profissional FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "profissional_write_admin" ON profissional;
+CREATE POLICY "profissional_write_admin" ON profissional FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE profissional_servico ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "profissional_servico_read" ON profissional_servico FOR SELECT TO authenticated USING (true); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "profissional_servico_write_admin" ON profissional_servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "profissional_servico_read" ON profissional_servico;
+CREATE POLICY "profissional_servico_read" ON profissional_servico FOR SELECT TO authenticated USING (true);
+DROP POLICY IF EXISTS "profissional_servico_write_admin" ON profissional_servico;
+CREATE POLICY "profissional_servico_write_admin" ON profissional_servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE agenda ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "agenda_read_active" ON agenda FOR SELECT TO anon USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "agenda_write_admin" ON agenda FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "agenda_read_active" ON agenda;
+CREATE POLICY "agenda_read_active" ON agenda FOR SELECT TO anon USING (ativo = true);
+DROP POLICY IF EXISTS "agenda_write_admin" ON agenda;
+CREATE POLICY "agenda_write_admin" ON agenda FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE agenda_bloqueio ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "agenda_bloqueio_read" ON agenda_bloqueio FOR SELECT TO authenticated USING (true); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "agenda_bloqueio_write_admin" ON agenda_bloqueio FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "agenda_bloqueio_read" ON agenda_bloqueio;
+CREATE POLICY "agenda_bloqueio_read" ON agenda_bloqueio FOR SELECT TO authenticated USING (true);
+DROP POLICY IF EXISTS "agenda_bloqueio_write_admin" ON agenda_bloqueio;
+CREATE POLICY "agenda_bloqueio_write_admin" ON agenda_bloqueio FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE agendamento ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "agendamento_read_owner_admin" ON agendamento FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id) OR is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "agendamento_insert_owner" ON agendamento FOR INSERT TO authenticated WITH CHECK (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id)); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "agendamento_update_owner" ON agendamento FOR UPDATE TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id)) WITH CHECK (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id) AND (status = 'solicitado' OR (status = 'cancelado' AND inicio > now() + interval '24 hours'))); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "agendamento_update_admin" ON agendamento FOR UPDATE TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "agendamento_read_owner_admin" ON agendamento;
+CREATE POLICY "agendamento_read_owner_admin" ON agendamento FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id) OR is_admin());
+DROP POLICY IF EXISTS "agendamento_insert_owner" ON agendamento;
+CREATE POLICY "agendamento_insert_owner" ON agendamento FOR INSERT TO authenticated WITH CHECK (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id));
+DROP POLICY IF EXISTS "agendamento_update_owner" ON agendamento;
+CREATE POLICY "agendamento_update_owner" ON agendamento FOR UPDATE TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id)) WITH CHECK (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = agendamento.cliente_id) AND (status = 'solicitado' OR (status = 'cancelado' AND inicio > now() + interval '24 hours')));
+DROP POLICY IF EXISTS "agendamento_update_admin" ON agendamento;
+CREATE POLICY "agendamento_update_admin" ON agendamento FOR UPDATE TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 GRANT SELECT ON profissional_publico TO anon, authenticated;
 
@@ -198,13 +211,18 @@ CREATE TABLE IF NOT EXISTS mimo_produto (
 );
 
 ALTER TABLE mimo ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "mimo_read_publicado" ON mimo FOR SELECT TO anon USING (ativo = true AND inicio <= CURRENT_DATE AND fim >= CURRENT_DATE); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "mimo_read_admin" ON mimo FOR SELECT TO authenticated USING (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "mimo_write_admin" ON mimo FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "mimo_read_publicado" ON mimo;
+CREATE POLICY "mimo_read_publicado" ON mimo FOR SELECT TO anon USING (ativo = true AND inicio <= CURRENT_DATE AND fim >= CURRENT_DATE);
+DROP POLICY IF EXISTS "mimo_read_admin" ON mimo;
+CREATE POLICY "mimo_read_admin" ON mimo FOR SELECT TO authenticated USING (is_admin());
+DROP POLICY IF EXISTS "mimo_write_admin" ON mimo;
+CREATE POLICY "mimo_write_admin" ON mimo FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE mimo_produto ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "mimo_produto_read" ON mimo_produto FOR SELECT TO anon USING (EXISTS (SELECT 1 FROM mimo m WHERE m.id = mimo_produto.mimo_id AND m.ativo = true AND m.inicio <= CURRENT_DATE AND m.fim >= CURRENT_DATE)); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "mimo_produto_write_admin" ON mimo_produto FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "mimo_produto_read" ON mimo_produto;
+CREATE POLICY "mimo_produto_read" ON mimo_produto FOR SELECT TO anon USING (EXISTS (SELECT 1 FROM mimo m WHERE m.id = mimo_produto.mimo_id AND m.ativo = true AND m.inicio <= CURRENT_DATE AND m.fim >= CURRENT_DATE));
+DROP POLICY IF EXISTS "mimo_produto_write_admin" ON mimo_produto;
+CREATE POLICY "mimo_produto_write_admin" ON mimo_produto FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 CREATE INDEX IF NOT EXISTS idx_mimo_janela ON mimo (ativo, inicio, fim);
 CREATE INDEX IF NOT EXISTS idx_mimo_produto_produto ON mimo_produto (produto_id);
@@ -268,14 +286,18 @@ CREATE TABLE IF NOT EXISTS desconto_comercial (
 );
 
 ALTER TABLE orcamento ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "orcamento_read_own" ON orcamento FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = orcamento.cliente_id) OR is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "orcamento_write_admin" ON orcamento FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "orcamento_read_own" ON orcamento;
+CREATE POLICY "orcamento_read_own" ON orcamento FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = orcamento.cliente_id) OR is_admin());
+DROP POLICY IF EXISTS "orcamento_write_admin" ON orcamento;
+CREATE POLICY "orcamento_write_admin" ON orcamento FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE orcamento_item ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "orcamento_item_read" ON orcamento_item FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM orcamento o WHERE o.id = orcamento_item.orcamento_id AND (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = o.cliente_id) OR is_admin()))); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "orcamento_item_read" ON orcamento_item;
+CREATE POLICY "orcamento_item_read" ON orcamento_item FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM orcamento o WHERE o.id = orcamento_item.orcamento_id AND (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = o.cliente_id) OR is_admin())));
 
 ALTER TABLE orcamento_status_historico ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "orcamento_historico_read" ON orcamento_status_historico FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM orcamento o WHERE o.id = orcamento_status_historico.orcamento_id AND (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = o.cliente_id) OR is_admin()))); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "orcamento_historico_read" ON orcamento_status_historico;
+CREATE POLICY "orcamento_historico_read" ON orcamento_status_historico FOR SELECT TO authenticated USING (EXISTS (SELECT 1 FROM orcamento o WHERE o.id = orcamento_status_historico.orcamento_id AND (EXISTS (SELECT 1 FROM cliente WHERE cliente.email = auth.jwt() ->> 'email' AND cliente.id = o.cliente_id) OR is_admin())));
 
 CREATE INDEX IF NOT EXISTS idx_orcamento_cliente ON orcamento (cliente_id);
 CREATE INDEX IF NOT EXISTS idx_orcamento_status ON orcamento (status);
@@ -311,12 +333,16 @@ CREATE TABLE IF NOT EXISTS notificacao_preferencia (
 );
 
 ALTER TABLE notificacao ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "notificacao_read_admin" ON notificacao FOR SELECT TO authenticated USING (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "notificacao_write_admin" ON notificacao FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "notificacao_read_admin" ON notificacao;
+CREATE POLICY "notificacao_read_admin" ON notificacao FOR SELECT TO authenticated USING (is_admin());
+DROP POLICY IF EXISTS "notificacao_write_admin" ON notificacao;
+CREATE POLICY "notificacao_write_admin" ON notificacao FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE notificacao_template ENABLE ROW LEVEL SECURITY;
-DO $do$ BEGIN CREATE POLICY "notificacao_template_read" ON notificacao_template FOR SELECT TO authenticated USING (true); EXCEPTION WHEN duplicate_object THEN null; END $do$;
-DO $do$ BEGIN CREATE POLICY "notificacao_template_write_admin" ON notificacao_template FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin()); EXCEPTION WHEN duplicate_object THEN null; END $do$;
+DROP POLICY IF EXISTS "notificacao_template_read" ON notificacao_template;
+CREATE POLICY "notificacao_template_read" ON notificacao_template FOR SELECT TO authenticated USING (true);
+DROP POLICY IF EXISTS "notificacao_template_write_admin" ON notificacao_template;
+CREATE POLICY "notificacao_template_write_admin" ON notificacao_template FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 -- ------------------------------------------------------------
 -- KIT_COMPOSICAO: adicionar kit_produto_id se ausente
