@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { ArrowRight, SearchX } from 'lucide-react'
-import { Button } from '@/components/common/Button'
 import { ErrorState } from '@/components/feedback/ErrorState'
 import { LoadingGrid } from '@/components/feedback/LoadingGrid'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
@@ -72,9 +71,9 @@ export function CategoriaDetailPage() {
             <p className="mt-3 max-w-md body-angel">
               Esta categoria não está cadastrada no catálogo.
             </p>
-            <Button variant="primary" className="mt-8" onClick={() => window.history.back()}>
-              Voltar
-            </Button>
+            <Link to="/categorias" className="btn-angel-primary mt-8 inline-flex items-center justify-center px-6 py-3">
+              Voltar às categorias
+            </Link>
           </div>
         </div>
       </div>
@@ -156,9 +155,9 @@ export function CategoriaDetailPage() {
                   ? 'A categoria já está disponível para navegação. Os produtos aparecerão quando forem cadastrados e publicados no catálogo.'
                   : 'Os produtos desta categoria ainda não foram cadastrados.'}
               </p>
-              <Button variant="outline" className="mt-8" onClick={() => window.location.assign('/produtos')}>
+              <Link to="/produtos" className="btn-angel-subtle mt-8 inline-flex items-center justify-center px-6 py-3">
                 Ver todo o catálogo
-              </Button>
+              </Link>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
