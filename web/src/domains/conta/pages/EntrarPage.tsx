@@ -12,6 +12,7 @@ import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { useAccount } from '../context/AccountContext'
+import { verificarAdmin } from '@/domains/admin/services/adminAuth'
 import { destinoSeguro } from '../model/conta'
 
 /**
@@ -56,6 +57,11 @@ export function EntrarPage() {
     setEnviando(false)
     if (resultado.error) {
       setErro(resultado.error)
+      return
+    }
+    const admin = await verificarAdmin()
+    if (admin) {
+      navigate('/admin', { replace: true })
       return
     }
     navigate(destino, { replace: true })
