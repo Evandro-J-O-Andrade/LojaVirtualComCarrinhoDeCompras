@@ -131,14 +131,24 @@ export function Header() {
                 <User size={20} />
               </Link>
             ) : (
-              <Link
-                to="/entrar"
-                className={cn(
-                  'hidden rounded-lg border-2 border-champagne bg-surface/60 px-4 py-2 text-sm font-medium text-soft-black transition-colors hover:border-primary hover:bg-blush sm:inline-flex',
-                )}
-              >
-                Entrar
-              </Link>
+              <div className="hidden items-center gap-2 sm:inline-flex">
+                <Link
+                  to="/entrar"
+                  className={cn(
+                    'rounded-lg border-2 border-champagne bg-surface/60 px-4 py-2 text-sm font-medium text-soft-black transition-colors hover:border-primary hover:bg-blush',
+                  )}
+                >
+                  Entrar
+                </Link>
+                <Link
+                  to="/cadastro"
+                  className={cn(
+                    'rounded-lg bg-deep-rose px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-deep-rose/90',
+                  )}
+                >
+                  Criar conta
+                </Link>
+              </div>
             )}
 
             <CartDrawer />

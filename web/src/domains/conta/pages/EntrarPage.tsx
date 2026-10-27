@@ -197,9 +197,14 @@ export function EntrarPage() {
 
             <div className="mt-8 space-y-3 border-t border-champagne pt-6">
               <p className="text-sm text-content-muted">
-                Primeira visita? Crie sua
-                conta com a equipe ou fale
-                com o atendimento.
+                Primeira visita?{' '}
+                <Link
+                  to="/cadastro"
+                  className="font-medium text-deep-rose underline-offset-4 hover:underline"
+                >
+                  Crie sua conta
+                </Link>{' '}
+                ou fale com o atendimento.
               </p>
               <Link
                 to="/atendimento"
