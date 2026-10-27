@@ -31,6 +31,7 @@ import {
   type ProdutoVariante,
 } from '../model/produto'
 import { atendimentoHref } from '@/domains/atendimento/model/atendimento'
+import { normalizarSlugCategoria } from '../model/categoria-editorial'
 
 function Avaliacao({ nota, total }: { nota: number; total: number }) {
   const arredondada = Math.round(nota)
@@ -154,8 +155,37 @@ export function ProductDetailPage() {
     produto.comoUsar !== null ||
     produto.informacoes !== null ||
     produto.composicao.length > 0
+  const precisaSelecionarVariante =
+    variantesAtivas.length > 1 && varianteEfetiva === null
+  const ehModa = produto.categorias.some((categoria) => {
+    const slugCategoria = normalizarSlugCategoria(categoria.slug)
+    const nomeCategoria = normalizarSlugCategoria(categoria.nome)
+    return [
+      'moda',
+      'moda-feminina',
+      'moda-e-lingerie',
+      'lingerie',
+      'roupas',
+      'vestuario',
+    ].includes(slugCategoria) || [
+      'moda',
+      'moda-feminina',
+      'moda-e-lingerie',
+      'lingerie',
+      'roupas',
+      'vestuario',
+    ].includes(nomeCategoria)
+  })
+  const tamanhosDisponiveis = [...new Set(
+    variantesAtivas.flatMap((variante) =>
+      variante.atributos
+        .filter((atributo) => atributo.tipo === 'tamanho')
+        .map((atributo) => atributo.valor),
+    ),
+  )]
 
   const aoAdicionar = () => {
+    if (precisaSelecionarVariante) return
     adicionar(produto, varianteEfetiva, quantidade)
     setAdicionado(true)
   }
@@ -254,12 +284,39 @@ export function ProductDetailPage() {
 
               <ProdutoPreco produto={produto} variante={varianteEfetiva} />
 
-              {produto.variantes.length > 0 && (
+              {variantesAtivas.length > 0 && (
                 <ProdutoVarianteSelector
-                  variantes={produto.variantes}
+                  variantes={variantesAtivas}
                   selecionada={varianteEfetiva}
                   onSelect={setVarianteSelecionada}
                 />
+              )}
+
+              {precisaSelecionarVariante && (
+                <p role="status" className="text-sm font-medium text-primary">
+                  Selecione as opções disponíveis antes de adicionar ao carrinho.
+                </p>
+              )}
+
+              {ehModa && (
+                <details className="rounded-2xl border border-champagne/70 bg-surface p-4">
+                  <summary className="cursor-pointer font-medium text-content focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary">
+                    Guia de tamanho e medidas
+                  </summary>
+                  <div className="mt-4 space-y-3 text-sm text-content-muted">
+                    {tamanhosDisponiveis.length > 0 ? (
+                      <p>
+                        Tamanhos cadastrados para esta peça: <strong className="text-content">{tamanhosDisponiveis.join(', ')}</strong>.
+                      </p>
+                    ) : (
+                      <p>Esta peça ainda não tem tamanhos cadastrados como variantes.</p>
+                    )}
+                    <p>Para conferir o caimento, meça o busto na parte mais ampla, a cintura no ponto mais estreito e o quadril na parte mais larga, mantendo a fita métrica nivelada e sem apertar.</p>
+                    <p className="border-t border-champagne/60 pt-3">
+                      As medidas específicas da peça precisam ser informadas no cadastro do produto. Não use apenas a letra do tamanho como garantia de caimento; modelagens podem variar.
+                    </p>
+                  </div>
+                </details>
               )}
 
               <div className="flex flex-wrap items-center gap-4">
@@ -271,7 +328,8 @@ export function ProductDetailPage() {
                 <Button
                   variant="primary"
                   size="lg"
-                  className="flex-1"
+                  className="flex-1 disabled:cursor-not-allowed disabled:opacity-50"
+                  disabled={precisaSelecionarVariante}
                   onClick={aoAdicionar}
                 >
                   {adicionado ? (
