@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { MemoryRouter, Routes, Route } from 'react-router-dom'
 import { ProductDetailPage } from './ProductDetailPage'
 import { precoOfertado } from '../model/produto'
-import type { Produto } from '../model/produto'
+import type { Produto, ProdutoVariante } from '../model/produto'
 import { formatPrice } from '@/lib/utils'
 
 /**
@@ -120,6 +120,7 @@ describe('ProductDetailPage — quantidade em tempo real', () => {
   beforeEach(() => {
     carrinhoMock.adicionar.mockReset()
     favoritosMock.isFavorite.mockReturnValue(false)
+    produtoMock.resultado.data = PRODUTO
   })
   afterEach(() => {
     cleanup()
@@ -159,6 +160,65 @@ describe('ProductDetailPage — quantidade em tempo real', () => {
     expect(comUma.textContent).toContain('1 unidade')
     expect(comUma.textContent).toContain(
       formatPrice(precoOfertado(PRODUTO, null)),
+    )
+  })
+
+  it('comprar adiciona a quantidade efetiva ao carrinho', async () => {
+    const usuario = userEvent.setup()
+    render(<Harness />)
+
+    await usuario.click(
+      screen.getByRole('button', {
+        name: /aumentar quantidade/i,
+      }),
+    )
+    await usuario.click(
+      screen.getByRole('button', { name: /comprar/i }),
+    )
+
+    expect(carrinhoMock.adicionar).toHaveBeenCalledWith(
+      PRODUTO,
+      null,
+      2,
+    )
+  })
+
+  it('exige a seleção de uma variante quando há mais de uma opção ativa', async () => {
+    const usuario = userEvent.setup()
+    const variantes: ProdutoVariante[] = [
+      {
+        id: 'v-vermelho',
+        sku: 'ANG-TEST-V',
+        preco: 35,
+        ativo: true,
+        peso: null,
+        atributos: [{ tipo: 'cor', valor: 'Vermelho' }],
+      },
+      {
+        id: 'v-azul',
+        sku: 'ANG-TEST-A',
+        preco: 36,
+        ativo: true,
+        peso: null,
+        atributos: [{ tipo: 'cor', valor: 'Azul' }],
+      },
+    ]
+    const produtoComVariantes = { ...PRODUTO, variantes }
+    produtoMock.resultado.data = produtoComVariantes
+    render(<Harness />)
+
+    const comprar = screen.getByRole('button', { name: /comprar/i })
+    expect(comprar).toBeDisabled()
+    expect(screen.getByRole('status')).toHaveTextContent(/selecione as opções/i)
+
+    await usuario.click(screen.getByRole('button', { name: 'Vermelho' }))
+    expect(comprar).toBeEnabled()
+    await usuario.click(comprar)
+
+    expect(carrinhoMock.adicionar).toHaveBeenCalledWith(
+      produtoComVariantes,
+      variantes[0],
+      1,
     )
   })
 

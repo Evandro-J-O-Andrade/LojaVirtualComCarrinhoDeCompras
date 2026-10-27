@@ -1,61 +1,133 @@
 import type { CategoriaRef, Produto } from './produto'
 
-interface CategoriaEditorial {
+export interface CategoriaComercial {
+  slug: string
+  nome: string
+  descricao: string
+  imagem: string | null
+  imagemAlt: string
+  aliases: string[]
+  href: string
+}
+
+const CATEGORIAS_EDITORIAIS: Record<string, {
   slug: string
   descricao: string
   imagem: string
   imagemAlt: string
-}
-
-/**
- * Metadados editoriais das categorias do
- * catálogo. Toda imagem é real: fotos de
- * categoria (/images/categoria-*.jpg) ou a
- * primeira foto real de um produto da própria
- * categoria. Nenhuma URL inventada — categoria
- * sem mídia conhecida cai no fallback do
- * componente de imagem.
- */
-const CATEGORIAS_EDITORIAIS: Record<string, CategoriaEditorial> = {
+}> = {
   'beleza-e-maquiagem': {
     slug: 'beleza-e-maquiagem',
-    descricao:
-      'Cuidado com a pele, base, cor e acabamento — a rotina completa.',
+    descricao: 'Cuidado com a pele, maquiagem, fragrâncias e acabamento — uma curadoria para a sua rotina.',
     imagem: '/images/categoria-beleza.jpg',
-    imagemAlt: 'Composição de beleza e maquiagem',
+    imagemAlt: 'Composição editorial de beleza e maquiagem',
   },
   maquiagem: {
     slug: 'maquiagem',
-    descricao:
-      'Cor, produção e acabamento — com a sua assinatura.',
+    descricao: 'Cor, produção e acabamento — com a sua assinatura.',
     imagem: '/assets/img/produtos/produto-1.jpg',
-    imagemAlt: 'Batom Líquido Matte — produto da categoria',
+    imagemAlt: 'Produto da categoria maquiagem',
   },
   fragrancias: {
     slug: 'fragrancias',
     descricao: 'Assinaturas olfativas para o dia e para a noite.',
     imagem: '/assets/img/produtos/produto-5.jpg',
-    imagemAlt: 'Perfume Eau de Parfum — produto da categoria',
+    imagemAlt: 'Produto da categoria fragrâncias',
   },
   casa: {
     slug: 'casa',
     descricao: 'O ritual de cuidado também na casa.',
     imagem: '/images/categoria-casa.jpg',
-    imagemAlt: 'Composição de casa e bem-estar',
+    imagemAlt: 'Composição editorial de casa e bem-estar',
   },
 }
 
-export function categoriaEditorial(
+export const CATEGORIAS_COMERCIAIS: CategoriaComercial[] = [
+  {
+    slug: 'beleza-e-maquiagem',
+    nome: 'Beleza & Cosméticos',
+    descricao: 'Cuidados pessoais, maquiagem e fragrâncias para acompanhar a sua rotina.',
+    imagem: '/images/categoria-beleza.jpg',
+    imagemAlt: 'Curadoria de beleza e cosméticos',
+    aliases: ['beleza-e-maquiagem', 'beleza', 'cosmeticos', 'maquiagem', 'fragrancias', 'perfumaria', 'skincare', 'cuidados-pessoais'],
+    href: '/categorias/beleza-e-maquiagem',
+  },
+  {
+    slug: 'moda-e-lingerie',
+    nome: 'Moda & Lingerie',
+    descricao: 'Peças para vestir, escolher com confiança e encontrar o caimento certo.',
+    imagem: '/images/categoria-moda.jpg',
+    imagemAlt: 'Editorial da categoria moda e lingerie',
+    aliases: ['moda-e-lingerie', 'moda-feminina', 'moda', 'lingerie', 'roupas', 'vestuario'],
+    href: '/categorias/moda-e-lingerie',
+  },
+  {
+    slug: 'cama-mesa-banho',
+    nome: 'Cama, Mesa & Banho',
+    descricao: 'Têxteis e itens para deixar a casa mais confortável e acolhedora.',
+    imagem: '/images/categoria-casa.jpg',
+    imagemAlt: 'Editorial de casa, cama, mesa e banho',
+    aliases: ['cama-mesa-banho', 'cama-mesa-e-banho', 'casa', 'cama', 'mesa', 'banho', 'roupa-de-cama', 'toalhas', 'cama-mesa-e-banho'],
+    href: '/categorias/cama-mesa-banho',
+  },
+  {
+    slug: 'kits-e-presentes',
+    nome: 'Kits & Presentes',
+    descricao: 'Combinações e mimos cadastrados para presentear sem perder o toque pessoal.',
+    imagem: null,
+    imagemAlt: 'Kits e presentes Angel',
+    aliases: [],
+    href: '/mimos',
+  },
+]
+
+export function normalizarSlugCategoria(valor: string): string {
+  return valor
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '')
+}
+
+export function categoriaComercialPorSlug(
   slug: string,
-): CategoriaEditorial | undefined {
-  return CATEGORIAS_EDITORIAIS[slug]
+): CategoriaComercial | undefined {
+  const normalizado = normalizarSlugCategoria(slug)
+  return CATEGORIAS_COMERCIAIS.find(
+    (categoria) => categoria.slug === normalizado,
+  )
+}
+
+export function produtoPertenceCategoriaComercial(
+  produto: Produto,
+  categoria: CategoriaComercial,
+): boolean {
+  if (categoria.aliases.length === 0) return false
+  const aliases = new Set(categoria.aliases.map(normalizarSlugCategoria))
+  return produto.categorias.some((referencia) =>
+    aliases.has(normalizarSlugCategoria(referencia.slug)) ||
+    aliases.has(normalizarSlugCategoria(referencia.nome)),
+  )
+}
+
+export function categoriaBaseDaCategoriaComercial(
+  categoria: CategoriaComercial,
+  categorias: CategoriaRef[],
+): CategoriaRef | undefined {
+  const aliases = new Set(categoria.aliases.map(normalizarSlugCategoria))
+  return categorias.find((referencia) =>
+    aliases.has(normalizarSlugCategoria(referencia.slug)) ||
+    aliases.has(normalizarSlugCategoria(referencia.nome)),
+  )
 }
 
 /**
- * Mídia da categoria: metadado editorial quando
- * existir; senão a primeira foto real do primeiro
- * produto da categoria; senão nada (fallback
- * visual do componente de imagem).
+ * Mídia da categoria: primeiro usa metadado editorial
+ * conhecido; em seguida, a primeira foto real de um
+ * produto associado. Ausência de mídia cai no fallback
+ * acessível do componente — nunca numa URL inventada.
  */
 export function midiaDaCategoria(
   categoria: CategoriaRef,
@@ -76,10 +148,22 @@ export function midiaDaCategoria(
   return null
 }
 
-/** Descrição editorial ou texto estrutural neutro. */
-export function descricaoDaCategoria(
-  categoria: CategoriaRef,
-): string {
+export function midiaDaCategoriaComercial(
+  categoria: CategoriaComercial,
+  categorias: CategoriaRef[],
+  produtos: Produto[],
+): { url: string; alt: string } | null {
+  const categoriaBase = categoriaBaseDaCategoriaComercial(categoria, categorias)
+  if (categoriaBase) {
+    const midia = midiaDaCategoria(categoriaBase, produtos)
+    if (midia) return midia
+  }
+  return categoria.imagem
+    ? { url: categoria.imagem, alt: categoria.imagemAlt }
+    : null
+}
+
+export function descricaoDaCategoria(categoria: CategoriaRef): string {
   return (
     CATEGORIAS_EDITORIAIS[categoria.slug]?.descricao ??
     `Produtos da categoria ${categoria.nome}.`
