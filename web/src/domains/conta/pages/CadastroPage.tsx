@@ -36,7 +36,7 @@ export function CadastroPage() {
       setErro('Informe seu nome.')
       return
     }
-    if (!email.trim() || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim())) {
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       setErro('Informe um e-mail válido.')
       return
     }
