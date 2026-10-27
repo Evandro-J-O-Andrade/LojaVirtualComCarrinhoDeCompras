@@ -205,19 +205,17 @@ export function AdminProdutosPage() {
           ) : (
             <Table>
               <TableHeader>
-                <tr>
-                  <TableHead>Produto</TableHead>
-                  <TableHead>SKU</TableHead>
-                  <TableHead>Categoria</TableHead>
-                  <TableHead>Preço base</TableHead>
-                  <TableHead>Estoque</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>
-                    <span className="sr-only">
-                      Detalhes
-                    </span>
-                  </TableHead>
-                </tr>
+                <TableHead>Produto</TableHead>
+                <TableHead>SKU</TableHead>
+                <TableHead>Categoria</TableHead>
+                <TableHead>Preço base</TableHead>
+                <TableHead>Estoque</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>
+                  <span className="sr-only">
+                    Detalhes
+                  </span>
+                </TableHead>
               </TableHeader>
               <TableBody>
                 {productsRows(produtos)}
