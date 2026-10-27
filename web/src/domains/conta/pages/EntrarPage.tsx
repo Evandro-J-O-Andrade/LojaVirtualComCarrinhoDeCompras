@@ -198,6 +198,15 @@ export function EntrarPage() {
                     {enviando ? 'Entrando…' : 'Entrar'}
                   </Button>
                 </form>
+
+                <div className="mt-4 text-center">
+                  <Link
+                    to="/recuperar-senha"
+                    className="text-sm text-content-muted hover:text-deep-rose underline-offset-4 hover:underline"
+                  >
+                    Esqueci minha senha
+                  </Link>
+                </div>
               </>
             )}
 

@@ -12,6 +12,12 @@ export const CadastroPage = lazy(() =>
   })),
 )
 
+export const RecuperarSenhaPage = lazy(() =>
+  import('./RecuperarSenhaPage').then((m) => ({
+    default: m.RecuperarSenhaPage,
+  })),
+)
+
 export const ContaPage = lazy(() =>
   import('./ContaPage').then((m) => ({
     default: m.ContaPage,
