@@ -150,12 +150,20 @@ export function MobileNav({ open, onClose, items, institucional = [], isActive, 
                 </Link>
               </li>
               {!authenticated && (
-                <li>
-                  <Link to="/entrar" onClick={onClose}
-                        className="block rounded-lg px-4 py-3 text-body text-content-muted hover:bg-surface-alt">
-                    Entrar
-                  </Link>
-                </li>
+                <>
+                  <li>
+                    <Link to="/entrar" onClick={onClose}
+                          className="block rounded-lg px-4 py-3 text-body text-content-muted hover:bg-surface-alt">
+                      Entrar
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/cadastro" onClick={onClose}
+                          className="block rounded-lg px-4 py-3 text-body font-medium text-deep-rose hover:bg-surface-alt">
+                      Criar conta
+                    </Link>
+                  </li>
+                </>
               )}
             </ul>
           </div>
