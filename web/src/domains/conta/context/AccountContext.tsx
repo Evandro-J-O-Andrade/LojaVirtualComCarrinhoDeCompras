@@ -104,6 +104,15 @@ export function AccountProvider({
         }
         setTelefone(resultado.data?.telefone ?? null)
       })
+      .catch((err: unknown) => {
+        if (cancelado) return
+        setPerfilCarregando(false)
+        setPerfilErro(
+          err instanceof Error
+            ? err.message
+            : 'Erro ao carregar perfil.',
+        )
+      })
     return () => {
       cancelado = true
     }

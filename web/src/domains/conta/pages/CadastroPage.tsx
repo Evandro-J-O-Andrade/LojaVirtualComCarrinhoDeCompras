@@ -32,18 +32,39 @@ export function CadastroPage() {
   const submeter = async (evento: FormEvent) => {
     evento.preventDefault()
     setErro('')
-    setEnviando(true)
-    const resultado = await signUp(
-      email.trim(),
-      senha,
-      nome.trim(),
-    )
-    setEnviando(false)
-    if (resultado.error) {
-      setErro(resultado.error)
+    if (!nome.trim()) {
+      setErro('Informe seu nome.')
       return
     }
-    setSucesso(true)
+    if (!email.trim() || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email.trim())) {
+      setErro('Informe um e-mail válido.')
+      return
+    }
+    if (senha.length < 6) {
+      setErro('A senha deve ter pelo menos 6 caracteres.')
+      return
+    }
+    setEnviando(true)
+    try {
+      const resultado = await signUp(
+        email.trim(),
+        senha,
+        nome.trim(),
+      )
+      if (resultado.error) {
+        setErro(resultado.error)
+        return
+      }
+      setSucesso(true)
+    } catch (err) {
+      setErro(
+        err instanceof Error
+          ? err.message
+          : 'Erro inesperado ao criar conta.',
+      )
+    } finally {
+      setEnviando(false)
+    }
   }
 
   return (

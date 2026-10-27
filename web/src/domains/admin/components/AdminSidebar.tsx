@@ -29,7 +29,7 @@ export function AdminSidebar({
       </div>
 
       <nav
-        className="flex-1 px-3 py-5"
+        className="flex-1 overflow-y-auto px-3 py-5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         aria-label="Navegação administrativa"
       >
         {ADMIN_GRUPOS.map((grupo) => (
