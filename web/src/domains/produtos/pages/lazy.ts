@@ -23,3 +23,9 @@ export const CategoriaDetailPage = lazy(() =>
     default: modulo.CategoriaDetailPage,
   })),
 )
+
+export const ColecoesPage = lazy(() =>
+  import('./ColecoesPage').then((modulo) => ({
+    default: modulo.ColecoesPage,
+  })),
+)
