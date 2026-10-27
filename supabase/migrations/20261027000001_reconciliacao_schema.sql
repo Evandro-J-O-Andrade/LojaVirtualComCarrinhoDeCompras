@@ -142,7 +142,8 @@ DROP POLICY IF EXISTS "servico_write_admin" ON servico;
 CREATE POLICY "servico_write_admin" ON servico FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 ALTER TABLE profissional ENABLE ROW LEVEL SECURITY;
-DO $ BEGIN CREATE POLICY "profissional_read_active" ON profissional FOR SELECT TO anon, authenticated USING (ativo = true); EXCEPTION WHEN duplicate_object THEN null; END $;
+DROP POLICY IF EXISTS "profissional_read_active" ON profissional;
+CREATE POLICY "profissional_read_active" ON profissional FOR SELECT TO anon, authenticated USING (ativo = true);
 DROP POLICY IF EXISTS "profissional_write_admin" ON profissional;
 CREATE POLICY "profissional_write_admin" ON profissional FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
