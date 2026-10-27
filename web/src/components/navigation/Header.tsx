@@ -18,6 +18,7 @@ export const NAV_ITEMS = [
   { label: 'Início', to: '/' },
   { label: 'Produtos', to: '/produtos' },
   { label: 'Categorias', to: '/categorias' },
+  { label: 'Coleções', to: '/colecoes' },
   { label: 'Mimos', to: '/mimos' },
   { label: 'Serviços', to: '/servicos' },
   { label: 'Experiências', to: '/experiencias' },
