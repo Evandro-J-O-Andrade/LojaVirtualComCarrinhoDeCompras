@@ -27,7 +27,7 @@ export function AdminProdutoNovoPage() {
   const [sku, setSku] = useState('')
   const [descricao, setDescricao] = useState('')
   const [precoBase, setPrecoBase] = useState('')
-  const [ativo, setAtivo] = useState(true)
+  const [ativo, setAtivo] = useState(false)
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
 
@@ -97,7 +97,7 @@ export function AdminProdutoNovoPage() {
           </label>
           <label className="flex items-center gap-2 text-sm text-soft-black md:col-span-2">
             <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} />
-            Publicar produto na vitrine após salvar
+            Manter ativo na vitrine após salvar
           </label>
         </div>
 
