@@ -1,12 +1,13 @@
 -- ============================================================
--- 20261011000005_produto_imagem_principal_testes.sql
+-- Testes manuais: produto_imagem_definir_principal.sql
 -- Testes comportamentais para RPC produto_imagem_definir_principal
--- Execute em dados de teste isolados, NÃO em produção.
+-- Arquivo de teste manual. NÃO é uma migração e NÃO deve ser executado em produção.
+-- Execute cada cenário em banco local/de teste, tratando as exceções esperadas individualmente.
 -- ============================================================
 
 -- Setup: criar produto de teste e imagens
-INSERT INTO public.produto (id, nome, slug, ativo)
-VALUES (9999, 'Produto Teste Principal', 'teste-principal', true)
+INSERT INTO public.produto (id, nome, slug, preco_base, ativo)
+VALUES (9999, 'Produto Teste Principal', 'teste-principal', 0.00, true)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO public.produto_imagem (id, produto_id, url, principal, ordem)
