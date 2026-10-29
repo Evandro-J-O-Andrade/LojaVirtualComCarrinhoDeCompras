@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import {
@@ -13,6 +13,20 @@ import { Input } from '@/components/common/Input'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { useAccount } from '../context/AccountContext'
 
+function mensagemDeCadastro(erro: string): string {
+  const normalizado = erro.toLowerCase()
+  if (
+    normalizado.includes('over_email_send_rate_limit') ||
+    normalizado.includes('email rate limit') ||
+    normalizado.includes('rate limit exceeded') ||
+    normalizado.includes('too many requests') ||
+    normalizado.includes('429')
+  ) {
+    return 'O serviço de cadastro atingiu o limite de envio de e-mails. Aguarde o período de liberação antes de tentar novamente. Não reenvie o formulário repetidamente.'
+  }
+  return erro
+}
+
 export function CadastroPage() {
   const navigate = useNavigate()
   const { signUp, authenticated, error, configurado } =
@@ -24,6 +38,7 @@ export function CadastroPage() {
   const [erro, setErro] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [sucesso, setSucesso] = useState(false)
+  const submissaoEmAndamento = useRef(false)
 
   useEffect(() => {
     if (authenticated) navigate('/conta', { replace: true })
@@ -31,6 +46,7 @@ export function CadastroPage() {
 
   const submeter = async (evento: FormEvent) => {
     evento.preventDefault()
+    if (submissaoEmAndamento.current) return
     setErro('')
     if (!nome.trim()) {
       setErro('Informe seu nome.')
@@ -44,6 +60,7 @@ export function CadastroPage() {
       setErro('A senha deve ter pelo menos 6 caracteres.')
       return
     }
+    submissaoEmAndamento.current = true
     setEnviando(true)
     try {
       const resultado = await signUp(
@@ -52,17 +69,20 @@ export function CadastroPage() {
         nome.trim(),
       )
       if (resultado.error) {
-        setErro(resultado.error)
+        setErro(mensagemDeCadastro(resultado.error))
         return
       }
       setSucesso(true)
     } catch (err) {
       setErro(
-        err instanceof Error
-          ? err.message
-          : 'Erro inesperado ao criar conta.',
+        mensagemDeCadastro(
+          err instanceof Error
+            ? err.message
+            : 'Erro inesperado ao criar conta.',
+        ),
       )
     } finally {
+      submissaoEmAndamento.current = false
       setEnviando(false)
     }
   }
@@ -154,6 +174,7 @@ export function CadastroPage() {
                 <form
                   onSubmit={submeter}
                   noValidate
+                  aria-busy={enviando}
                   className="mt-8 space-y-5"
                   aria-label="Formulário de cadastro"
                 >
