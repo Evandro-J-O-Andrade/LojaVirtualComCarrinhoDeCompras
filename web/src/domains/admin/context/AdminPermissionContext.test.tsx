@@ -1,11 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { renderHook } from '@testing-library/react'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import {
   AdminPermissionProvider,
   useAdminPermissao,
 } from './AdminPermissionContext'
 import type { AdminAcao } from '../model/admin'
+import type { ReactNode } from 'react'
 import { useIsAdmin } from '../services/adminAuth'
 
 vi.mock('../services/adminAuth', () => ({ useIsAdmin: vi.fn() }))
@@ -18,9 +18,8 @@ const ACOES: AdminAcao[] = [
   'configuracao.editar',
 ]
 
-function wrapper({ children }: { children: React.ReactNode }) {
-  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } })
-  return <QueryClientProvider client={client}><AdminPermissionProvider>{children}</AdminPermissionProvider></QueryClientProvider>
+function wrapper({ children }: { children: ReactNode }) {
+  return <AdminPermissionProvider>{children}</AdminPermissionProvider>
 }
 
 describe('AdminPermissionContext', () => {
