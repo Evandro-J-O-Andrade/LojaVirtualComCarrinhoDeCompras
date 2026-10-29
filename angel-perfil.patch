@@ -1,0 +1,500 @@
+diff --git a/web/src/contexts/AuthContext.tsx b/web/src/contexts/AuthContext.tsx
+index a8f613a..aa2ba4e 100644
+--- a/web/src/contexts/AuthContext.tsx
++++ b/web/src/contexts/AuthContext.tsx
+@@ -25,6 +25,11 @@ interface AuthContextType {
+   /** O provedor de identidade está configurado neste ambiente. */
+   configurado: boolean
+   signIn: (email: string, password: string) => Promise<{ error?: string }>
++  signUp: (
++    email: string,
++    password: string,
++    name: string,
++  ) => Promise<{ error?: string }>
+   signOut: () => Promise<void>
+   /** Alteração de senha via Supabase Auth — nunca implementação própria. */
+   alterarSenha: (novaSenha: string) => Promise<{ error?: string }>
+@@ -99,7 +104,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
+     [],
+   )
+ 
+-  const signOut = useCallback(async () => {
++  const signUp = useCallback(
++    async (email: string, password: string, name: string) => {
++      if (!supabaseConfigurado) {
++        return { error: MENSAGEM_SEM_CONFIGURACAO }
++      }
++      const { error: erro } = await supabase.auth.signUp({
++        email,
++        password,
++        options: { data: { name } },
++      })
++      if (erro) return { error: erro.message }
++      return {}
++    },
++    [],
++  )
++    const signOut = useCallback(async () => {
+     if (!supabaseConfigurado) return
+     await supabase.auth.signOut()
+   }, [])
+@@ -126,6 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
+         error,
+         configurado: supabaseConfigurado,
+         signIn,
++        signUp,
+         signOut,
+         alterarSenha,
+       }}
+diff --git a/web/src/domains/conta/context/AccountContext.tsx b/web/src/domains/conta/context/AccountContext.tsx
+index efc8b23..3a467ed 100644
+--- a/web/src/domains/conta/context/AccountContext.tsx
++++ b/web/src/domains/conta/context/AccountContext.tsx
+@@ -1,7 +1,9 @@
+ import {
+   createContext,
+   useContext,
++  useEffect,
+   useMemo,
++  useState,
+   type ReactNode,
+ } from 'react'
+ import type { User } from '@supabase/supabase-js'
+@@ -10,6 +12,7 @@ import {
+   perfilDoUsuario,
+   type PerfilCliente,
+ } from '../model/conta'
++import { clientePerfilRepository } from '../repositories/cliente-perfil.repository'
+ 
+ /**
+  * AccountContext — o seam da conta.
+@@ -39,6 +42,11 @@ interface AccountContextType {
+     email: string,
+     senha: string,
+   ) => Promise<{ error?: string }>
++  signUp: (
++    email: string,
++    senha: string,
++    nome: string,
++  ) => Promise<{ error?: string }>
+   signOut: () => Promise<void>
+   /** Alteração de senha via Supabase Auth (não é própria). */
+   alterarSenha: (novaSenha: string) => Promise<{
+@@ -62,32 +70,66 @@ export function AccountProvider({
+     error,
+     configurado,
+     signIn,
++    signUp,
+     signOut,
+     alterarSenha,
+   } = useAuth()
+ 
++  const [telefone, setTelefone] = useState<string | null>(null)
++
++  useEffect(() => {
++    if (!user) {
++      setTelefone(null)
++      return
++    }
++    let cancelado = false
++    const email = user.email ?? ''
++    const authId = user.id
++    clientePerfilRepository
++      .buscarPorAuthUserId(authId)
++      .then((row) => {
++        if (cancelado) return
++        if (row) setTelefone(row.telefone ?? null)
++        else {
++          clientePerfilRepository
++            .buscarPorEmail(email)
++            .then((r) => {
++              if (!cancelado && r) setTelefone(r.telefone ?? null)
++            })
++        }
++      })
++    return () => {
++      cancelado = true
++    }
++  }, [user])
++
++  const profile = useMemo<PerfilCliente | null>(() => {
++    const base = perfilDoUsuario(user)
++    if (!base) return null
++    return { ...base, telefone }
++  }, [user, telefone])
++
+   const value = useMemo<AccountContextType>(
+     () => ({
+       authenticated: user !== null,
+       user,
+-      profile: perfilDoUsuario(user),
++      profile,
+       loading,
+-      // O erro vem do provedor de identidade
+-      // (configuração ausente ou falha de rede):
+-      // a conta autenticada não carrega erro
+-      // próprio.
+       error,
+       configurado,
+       signIn,
++      signUp,
+       signOut,
+       alterarSenha,
+     }),
+     [
+       user,
++      profile,
+       loading,
+       error,
+       configurado,
+       signIn,
++      signUp,
+       signOut,
+       alterarSenha,
+     ],
+diff --git a/web/src/domains/conta/pages/CadastroPage.tsx b/web/src/domains/conta/pages/CadastroPage.tsx
+new file mode 100644
+index 0000000..8744bbf
+--- /dev/null
++++ b/web/src/domains/conta/pages/CadastroPage.tsx
+@@ -0,0 +1,237 @@
++import { useEffect, useState } from 'react'
++import type { FormEvent } from 'react'
++import { Link, useNavigate } from 'react-router-dom'
++import {
++  AlertCircle,
++  ArrowRight,
++  Mail,
++  ServerCrash,
++  User,
++} from 'lucide-react'
++import { Button } from '@/components/common/Button'
++import { Input } from '@/components/common/Input'
++import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
++import { useAccount } from '../context/AccountContext'
++
++export function CadastroPage() {
++  const navigate = useNavigate()
++  const { signUp, authenticated, error, configurado } =
++    useAccount()
++
++  const [nome, setNome] = useState('')
++  const [email, setEmail] = useState('')
++  const [senha, setSenha] = useState('')
++  const [erro, setErro] = useState('')
++  const [enviando, setEnviando] = useState(false)
++  const [sucesso, setSucesso] = useState(false)
++
++  useEffect(() => {
++    if (authenticated) navigate('/conta', { replace: true })
++  }, [authenticated, navigate])
++
++  const submeter = async (evento: FormEvent) => {
++    evento.preventDefault()
++    setErro('')
++    setEnviando(true)
++    const resultado = await signUp(
++      email.trim(),
++      senha,
++      nome.trim(),
++    )
++    setEnviando(false)
++    if (resultado.error) {
++      setErro(resultado.error)
++      return
++    }
++    setSucesso(true)
++  }
++
++  return (
++    <div>
++      <SeoHead
++        title="Cadastro — Angel Cosméticos"
++        description="Crie sua conta Angel Cosméticos para ver pedidos, orçamentos e agendamentos."
++        canonical="/cadastro"
++        jsonLd={breadcrumbJsonLd([
++          { name: 'Início', href: '/' },
++          { name: 'Cadastro', href: '/cadastro' },
++        ])}
++      />
++
++      <section className="section-angel">
++        <div className="container-angel max-w-md">
++          <div className="rounded-2xl border border-champagne bg-white p-6 shadow-sm lg:p-8">
++            <p className="overline-angel mb-3">
++              Sua conta
++            </p>
++            <h1 className="title-h1">Criar conta</h1>
++            <p className="mt-3 text-body text-content-muted">
++              Sua identidade é real: o
++              cadastro é feito pelo sistema
++              seguro da Angel.
++            </p>
++
++            {!configurado ? (
++              <div
++                role="alert"
++                className="mt-8 rounded-xl border border-coral/40 bg-coral/10 p-5"
++              >
++                <div className="flex items-start gap-3">
++                  <ServerCrash
++                    size={20}
++                    className="mt-0.5 shrink-0 text-coral"
++                    aria-hidden
++                  />
++                  <div>
++                    <h2 className="font-semibold text-soft-black">
++                      Cadastro indisponível
++                      neste ambiente
++                    </h2>
++                    <p className="mt-2 text-sm text-content-muted">
++                      {error ??
++                        'O serviço de identidade da Angel não está configurado aqui agora.'}
++                    </p>
++                  </div>
++                </div>
++              </div>
++            ) : sucesso ? (
++              <div
++                role="status"
++                className="mt-8 rounded-xl border border-champagne bg-surface-sunken p-5"
++              >
++                <p className="text-sm text-soft-black">
++                  Conta criada. Verifique seu
++                  e-mail para confirmar o
++                  cadastro e depois entre.
++                </p>
++                <Link
++                  to="/entrar"
++                  className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-deep-rose underline-offset-4 hover:underline"
++                >
++                  <ArrowRight size={16} aria-hidden />
++                  Ir para entrar
++                </Link>
++              </div>
++            ) : (
++              <>
++                {error && !erro && (
++                  <div
++                    role="alert"
++                    className="mt-6 flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4"
++                  >
++                    <AlertCircle
++                      size={20}
++                      className="mt-0.5 shrink-0 text-coral"
++                      aria-hidden
++                    />
++                    <p className="text-sm text-soft-black">
++                      {error}
++                    </p>
++                  </div>
++                )}
++
++                <form
++                  onSubmit={submeter}
++                  noValidate
++                  className="mt-8 space-y-5"
++                  aria-label="Formulário de cadastro"
++                >
++                  <Input
++                    id="cadastro-nome"
++                    label="Nome"
++                    type="text"
++                    autoComplete="name"
++                    placeholder="Seu nome"
++                    value={nome}
++                    onChange={(evento) =>
++                      setNome(evento.target.value)
++                    }
++                    required
++                  />
++                  <Input
++                    id="cadastro-email"
++                    label="E-mail"
++                    type="email"
++                    autoComplete="email"
++                    placeholder="seu@email.com"
++                    value={email}
++                    onChange={(evento) =>
++                      setEmail(evento.target.value)
++                    }
++                    required
++                  />
++                  <Input
++                    id="cadastro-senha"
++                    label="Senha"
++                    type="password"
++                    autoComplete="new-password"
++                    placeholder="••••••••"
++                    value={senha}
++                    onChange={(evento) =>
++                      setSenha(evento.target.value)
++                    }
++                    required
++                  />
++
++                  {erro && (
++                    <div
++                      role="alert"
++                      className="flex items-start gap-3 rounded-xl border border-coral/40 bg-coral/10 p-4"
++                    >
++                      <AlertCircle
++                        size={20}
++                        className="mt-0.5 shrink-0 text-coral"
++                        aria-hidden
++                      />
++                      <p className="text-sm text-soft-black">
++                        {erro}
++                      </p>
++                    </div>
++                  )}
++
++                  <Button
++                    type="submit"
++                    variant="primary"
++                    size="lg"
++                    className="w-full"
++                    disabled={enviando}
++                  >
++                    <User size={18} aria-hidden />
++                    {enviando
++                      ? 'Criando conta…'
++                      : 'Criar conta'}
++                  </Button>
++                </form>
++              </>
++            )}
++
++            <div className="mt-8 space-y-3 border-t border-champagne pt-6">
++              <p className="text-sm text-content-muted">
++                Já tem conta? Entre com
++                seu e-mail e senha.
++              </p>
++              <Link
++                to="/entrar"
++                className="inline-flex items-center gap-2 text-sm font-medium text-deep-rose underline-offset-4 hover:underline"
++              >
++                <Mail size={16} aria-hidden />
++                Entrar
++              </Link>
++              <Link
++                to="/"
++                className="inline-flex items-center gap-2 text-sm text-content-muted hover:text-primary"
++              >
++                <ArrowRight
++                  size={16}
++                  className="-scale-x-100"
++                  aria-hidden
++                />
++                Voltar para a loja
++              </Link>
++            </div>
++          </div>
++        </div>
++      </section>
++    </div>
++  )
++}
+diff --git a/web/src/domains/conta/pages/lazy.ts b/web/src/domains/conta/pages/lazy.ts
+index 674add8..f082709 100644
+--- a/web/src/domains/conta/pages/lazy.ts
++++ b/web/src/domains/conta/pages/lazy.ts
+@@ -6,6 +6,12 @@ export const EntrarPage = lazy(() =>
+   })),
+ )
+ 
++export const CadastroPage = lazy(() =>
++  import('./CadastroPage').then((m) => ({
++    default: m.CadastroPage,
++  })),
++)
++
+ export const ContaPage = lazy(() =>
+   import('./ContaPage').then((m) => ({
+     default: m.ContaPage,
+diff --git a/web/src/domains/conta/repositories/cliente-perfil.repository.ts b/web/src/domains/conta/repositories/cliente-perfil.repository.ts
+new file mode 100644
+index 0000000..390e4f0
+--- /dev/null
++++ b/web/src/domains/conta/repositories/cliente-perfil.repository.ts
+@@ -0,0 +1,57 @@
++import { supabase } from '@/lib/supabase'
++
++export interface ClientePerfilRow {
++  id: number
++  nome: string | null
++  email: string | null
++  telefone: string | null
++  auth_user_id?: string | null
++}
++
++export interface ClientePerfilInput {
++  nome?: string
++  telefone?: string | null
++}
++
++export interface ClientePerfilRepository {
++  buscarPorEmail(email: string): Promise<ClientePerfilRow | null>
++  buscarPorAuthUserId(authUserId: string): Promise<ClientePerfilRow | null>
++  atualizar(id: number, input: ClientePerfilInput): Promise<ClientePerfilRow | null>
++}
++
++export const clientePerfilRepository: ClientePerfilRepository = {
++  async buscarPorEmail(email) {
++    if (!email) return null
++    const { data, error } = await supabase
++      .from('cliente')
++      .select('id, nome, email, telefone, auth_user_id')
++      .eq('email', email)
++      .maybeSingle()
++    if (error) return null
++    return (data as ClientePerfilRow | null) ?? null
++  },
++  async buscarPorAuthUserId(authUserId) {
++    if (!authUserId) return null
++    const { data, error } = await supabase
++      .from('cliente')
++      .select('id, nome, email, telefone, auth_user_id')
++      .eq('auth_user_id', authUserId)
++      .maybeSingle()
++    if (error) return null
++    return (data as ClientePerfilRow | null) ?? null
++  },
++  async atualizar(id, input) {
++    const payload: Record<string, string | null> = {}
++    if (input.nome !== undefined) payload.nome = input.nome
++    if (input.telefone !== undefined) payload.telefone = input.telefone
++    if (Object.keys(payload).length === 0) return null
++    const { data, error } = await supabase
++      .from('cliente')
++      .update(payload)
++      .eq('id', id)
++      .select('id, nome, email, telefone, auth_user_id')
++      .maybeSingle()
++    if (error) return null
++    return (data as ClientePerfilRow | null) ?? null
++  },
++}
+diff --git a/web/src/domains/conta/routes.tsx b/web/src/domains/conta/routes.tsx
+index 7f1015f..e5c0c10 100644
+--- a/web/src/domains/conta/routes.tsx
++++ b/web/src/domains/conta/routes.tsx
+@@ -1,6 +1,7 @@
+ import { Route } from 'react-router-dom'
+ import {
+   EntrarPage,
++  CadastroPage,
+   ContaPage,
+   PerfilPage,
+   PedidosPage,
+@@ -24,6 +25,10 @@ export const contaRoutes = (
+       path="/entrar"
+       element={<EntrarPage />}
+     />
++    <Route
++      path="/cadastro"
++      element={<CadastroPage />}
++    />
+     <Route
+       path="/conta"
+       element={<ContaPage />}
