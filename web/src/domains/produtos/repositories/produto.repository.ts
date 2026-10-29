@@ -14,4 +14,18 @@ export interface ProdutoRepository {
   getProdutoBySlug(slug: string): Promise<Produto | null>
   getProdutosRelacionados(slug: string, limit?: number): Promise<Produto[]>
   listCategorias(): Promise<Produto['categorias']>
+  createProduto(data: ProdutoInput): Promise<Produto>
+  updateProduto(id: string, data: ProdutoInput): Promise<Produto>
+  deleteProduto(id: string): Promise<void>
+}
+
+export interface ProdutoInput {
+  nome: string
+  slug: string
+  precoBase: number
+  descricao?: string | null
+  sku?: string | null
+  ativo?: boolean
+  fornecedorId?: string | null
+  categoriaIds?: string[]
 }

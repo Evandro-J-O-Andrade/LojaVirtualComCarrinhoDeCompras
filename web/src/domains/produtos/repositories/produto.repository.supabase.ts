@@ -13,6 +13,7 @@ import {
 import {
   ProdutoTableMissingError,
   type ProdutoRepository,
+  type ProdutoInput,
 } from './produto.repository'
 
 import type { PostgrestError } from '@supabase/supabase-js'
@@ -148,6 +149,74 @@ async function seguro<T>(
 }
 
 export class SupabaseProdutoRepository implements ProdutoRepository {
+  async createProduto(data: ProdutoInput): Promise<Produto> {
+    const { data: row, error } = await supabase
+      .from('produto')
+      .insert({
+        nome: data.nome,
+        slug: data.slug,
+        preco_base: data.precoBase,
+        descricao: data.descricao ?? null,
+        sku: data.sku ?? null,
+        ativo: data.ativo ?? true,
+        fornecedor_id: data.fornecedorId ? Number(data.fornecedorId) : null,
+      })
+      .select(PRODUTO_CORE_SELECT)
+      .single()
+    if (error) throw error
+    if (data.categoriaIds && data.categoriaIds.length > 0) {
+      await supabase.from('produto_categoria').insert(
+        data.categoriaIds.map((cid) => ({
+          produto_id: (row as ProdutoRow).id,
+          categoria_id: Number(cid),
+        })),
+      )
+    }
+    const [produto] = await this.comporLista([row as ProdutoRow])
+    return produto
+  }
+
+  async updateProduto(id: string, data: ProdutoInput): Promise<Produto> {
+    const { data: row, error } = await supabase
+      .from('produto')
+      .update({
+        nome: data.nome,
+        slug: data.slug,
+        preco_base: data.precoBase,
+        descricao: data.descricao ?? null,
+        sku: data.sku ?? null,
+        ativo: data.ativo ?? true,
+        fornecedor_id: data.fornecedorId ? Number(data.fornecedorId) : null,
+      })
+      .eq('id', Number(id))
+      .select(PRODUTO_CORE_SELECT)
+      .single()
+    if (error) throw error
+    if (data.categoriaIds !== undefined) {
+      await supabase
+        .from('produto_categoria')
+        .delete()
+        .eq('produto_id', Number(id))
+      if (data.categoriaIds.length > 0) {
+        await supabase.from('produto_categoria').insert(
+          data.categoriaIds.map((cid) => ({
+            produto_id: Number(id),
+            categoria_id: Number(cid),
+          })),
+        )
+      }
+    }
+    const [produto] = await this.comporLista([row as ProdutoRow])
+    return produto
+  }
+
+  async deleteProduto(id: string): Promise<void> {
+    const { error } = await supabase
+      .from('produto')
+      .delete()
+      .eq('id', Number(id))
+    if (error) throw error
+  }
   async listProdutos(filtro?: ProdutoFiltro): Promise<Produto[]> {
     let query = supabase
       .from('produto')

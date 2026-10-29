@@ -3,6 +3,7 @@ import { EDITORIAL_CATALOGO } from './editorial-catalog'
 import {
   ProdutoTableMissingError,
   type ProdutoRepository,
+  type ProdutoInput,
 } from '../repositories/produto.repository'
 
 function filtrar(
@@ -101,5 +102,17 @@ export class ProdutoCatalogAdapter implements ProdutoRepository {
       }
       throw error
     }
+  }
+
+  async createProduto(data: ProdutoInput): Promise<Produto> {
+    return this.database.createProduto(data)
+  }
+
+  async updateProduto(id: string, data: ProdutoInput): Promise<Produto> {
+    return this.database.updateProduto(id, data)
+  }
+
+  async deleteProduto(id: string): Promise<void> {
+    return this.database.deleteProduto(id)
   }
 }

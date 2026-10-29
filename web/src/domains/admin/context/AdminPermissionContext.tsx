@@ -1,32 +1,17 @@
 import {
   createContext,
   useContext,
+  useEffect,
+  useState,
   useMemo,
   type ReactNode,
 } from 'react'
 import type { AdminAcao } from '../model/admin'
+import { verificarAdmin } from '../services/adminAuth'
 
-/**
- * AdminPermissionContext — o seam de
- * autorização administrativa.
- *
- * Enquanto o backend não está
- * conectado, o contexto NÃO afirma
- * que o usuário possui permissões
- * reais: `estado` fica pendente e
- * `pode()` responde falso. Ações de
- * escrita (criar/editar/excluir)
- * ficam indisponíveis até o RBAC
- * real (Etapa 8). Leitura de dados
- * conectados segue pelo repositório,
- * não por permissão inventada.
- */
 interface AdminPermissionContextType {
-  /** 'pendente' até o RBAC real existir. */
   estado: 'pendente' | 'conectado'
-  /** Sempre falso enquanto pendente. */
   pode(acao: AdminAcao): boolean
-  /** Por que a ação está indisponível. */
   motivo: string
 }
 
@@ -43,13 +28,38 @@ export function AdminPermissionProvider({
 }: {
   children: ReactNode
 }) {
+  const [admin, setAdmin] = useState(false)
+  const [carregando, setCarregando] = useState(true)
+
+  useEffect(() => {
+    let ativo = true
+    verificarAdmin()
+      .then((resultado) => {
+        if (!ativo) return
+        setAdmin(resultado)
+        setCarregando(false)
+      })
+      .catch(() => {
+        if (!ativo) return
+        setAdmin(false)
+        setCarregando(false)
+      })
+    return () => {
+      ativo = false
+    }
+  }, [])
+
   const value = useMemo<AdminPermissionContextType>(
     () => ({
-      estado: 'pendente',
-      pode: () => false,
-      motivo: MOTIVO_PENDENTE,
+      estado: carregando
+        ? 'pendente'
+        : admin
+          ? 'conectado'
+          : 'pendente',
+      pode: () => !carregando && admin,
+      motivo: carregando || !admin ? MOTIVO_PENDENTE : '',
     }),
-    [],
+    [admin, carregando],
   )
 
   return (
