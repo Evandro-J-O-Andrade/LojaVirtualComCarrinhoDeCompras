@@ -5,6 +5,7 @@ import {
   AdminProdutoDetalhePage,
 } from './pages/lazy'
 import { AdminShell } from './components/AdminShell'
+import { AdminProdutoNovoPage } from './pages/AdminProdutoNovoPage'
 
 /**
  * Rotas administrativas — dentro do
@@ -26,6 +27,10 @@ export const adminRoutes = (
     <Route
       path="/admin/produtos"
       element={<AdminProdutosPage />}
+    />
+    <Route
+      path="/admin/produtos/novo"
+      element={<AdminProdutoNovoPage />}
     />
     <Route
       path="/admin/produtos/:id"
