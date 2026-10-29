@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import { Check, Pencil, Plus, RefreshCw, Tag, X } from 'lucide-react'
+import { Check, Pencil, RefreshCw, Tag, X } from 'lucide-react'
 import { SeoHead } from '@/lib/seo'
 import { Button } from '@/components/common/Button'
 import { supabase } from '@/lib/supabase'
@@ -96,7 +96,7 @@ export function AdminCategoriasPage() {
   function submeter(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault()
     setErro(null)
-    if (!pode('produto.editar')) {
+    if (!pode(editandoId === null ? 'categoria.criar' : 'categoria.editar')) {
       setErro(motivo || 'Sem permissão para administrar categorias.')
       return
     }
@@ -131,7 +131,7 @@ export function AdminCategoriasPage() {
                 setSlugManual(true)
               }} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
             </label>
-            {!pode('produto.editar') && <p className="text-xs text-content-muted">{motivo || 'Verificando permissão administrativa…'}</p>}
+            {!pode(editandoId === null ? 'categoria.criar' : 'categoria.editar') && <p className="text-xs text-content-muted">{motivo || 'Verificando permissão administrativa…'}</p>}
             {erro && <p role="alert" className="rounded-lg border border-coral/40 bg-coral/10 px-3 py-2 text-sm text-soft-black">{erro}</p>}
             <div className="flex flex-wrap gap-2">
               <Button type="submit" variant="primary" disabled={!pode('produto.editar') || salvar.isPending}>
@@ -158,10 +158,10 @@ export function AdminCategoriasPage() {
                     <td className="py-3 pr-3"><span className="block font-medium text-soft-black">{categoria.nome}</span><span className="text-xs text-content-muted">{categoria.slug}</span></td>
                     <td className="py-3 pr-3"><span className={categoria.ativo ? 'text-emerald-700' : 'text-content-muted'}>{categoria.ativo ? 'Ativa' : 'Inativa'}</span></td>
                     <td className="py-3 text-right"><div className="inline-flex items-center gap-2">
-                      <Button type="button" variant="outline" size="sm" disabled={!pode('produto.editar')} onClick={() => {
+                      <Button type="button" variant="outline" size="sm" disabled={!pode('categoria.editar')} onClick={() => {
                         setEditandoId(categoria.id); setNome(categoria.nome); setSlug(categoria.slug); setSlugManual(true); setErro(null)
                       }}><Pencil size={14} aria-hidden /> Editar</Button>
-                      <Button type="button" variant="outline" size="sm" disabled={!pode('produto.editar') || alternarStatus.isPending} onClick={() => alternarStatus.mutate(categoria)}>{categoria.ativo ? 'Desativar' : 'Ativar'}</Button>
+                      <Button type="button" variant="outline" size="sm" disabled={!pode('categoria.editar') || alternarStatus.isPending} onClick={() => alternarStatus.mutate(categoria)}>{categoria.ativo ? 'Desativar' : 'Ativar'}</Button>
                     </div></td>
                   </tr>)}
                 </tbody>
