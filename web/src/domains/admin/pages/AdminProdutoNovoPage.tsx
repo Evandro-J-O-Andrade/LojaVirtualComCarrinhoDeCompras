@@ -41,8 +41,12 @@ export function AdminProdutoNovoPage() {
       .select('id,nome')
       .eq('ativo', true)
       .order('nome', { ascending: true })
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (cancelado) return
+        if (error) {
+          setErro('Não foi possível carregar categorias.')
+          return
+        }
         setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
       })
     return () => { cancelado = true }

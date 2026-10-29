@@ -202,17 +202,27 @@ function DetalheContent({
   const [promocaoDataInicio, setPromocaoDataInicio] = useState('')
   const [promocaoDataFim, setPromocaoDataFim] = useState('')
   const [categoriasDisponiveis, setCategoriasDisponiveis] = useState<Array<{ id: number; nome: string }>>([])
+  const [erroCategorias, setErroCategorias] = useState<string | null>(null)
+  const [carregandoCategorias, setCarregandoCategorias] = useState(true)
 
   useEffect(() => {
     let cancelado = false
+    setCarregandoCategorias(true)
+    setErroCategorias(null)
     supabase
       .from('categoria')
       .select('id,nome')
       .eq('ativo', true)
       .order('nome', { ascending: true })
-      .then(({ data }) => {
+      .then(({ data, error }) => {
         if (cancelado) return
+        if (error) {
+          setErroCategorias('Não foi possível carregar categorias.')
+          setCarregandoCategorias(false)
+          return
+        }
         setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
+        setCarregandoCategorias(false)
       })
     return () => { cancelado = true }
   }, [])
@@ -266,7 +276,7 @@ function DetalheContent({
       if (valorPromo > 0 && promocaoDataInicio && promocaoDataFim) {
         const promocaoExistente = produto.promocoes.find((p) => p.ativo)
         if (promocaoExistente) {
-          await supabase
+          const { error: erroPromo } = await supabase
             .from('promocao')
             .update({
               tipo: promocaoTipo,
@@ -276,8 +286,9 @@ function DetalheContent({
               ativo: true,
             })
             .eq('id', Number(promocaoExistente.id))
+          if (erroPromo) throw new Error(`Não foi possível atualizar a promoção: ${erroPromo.message}`)
         } else {
-          await supabase
+          const { error: erroPromo } = await supabase
             .from('promocao')
             .insert({
               produto_id: Number(produto.id),
@@ -287,6 +298,7 @@ function DetalheContent({
               data_fim: promocaoDataFim,
               ativo: true,
             })
+          if (erroPromo) throw new Error(`Não foi possível criar a promoção: ${erroPromo.message}`)
         }
       }
 
@@ -304,7 +316,14 @@ function DetalheContent({
     if (!podeEditar) return
     const sku = novoVarianteSku.trim()
     const preco = Number(novoVariantePreco.replace(',', '.'))
-    if (!sku || !Number.isFinite(preco) || preco < 0) return
+    if (!sku) {
+      setErroSalvar('SKU da variante é obrigatório.')
+      return
+    }
+    if (!Number.isFinite(preco) || preco < 0) {
+      setErroSalvar('Informe um preço válido para a variante.')
+      return
+    }
     setSalvandoVariante(true)
     try {
       const { error } = await supabase
@@ -483,8 +502,14 @@ function DetalheContent({
                       {cat.nome}
                     </label>
                   ))}
-                  {categoriasDisponiveis.length === 0 && (
+                  {carregandoCategorias && (
                     <span className="text-xs text-content-muted">Carregando categorias…</span>
+                  )}
+                  {erroCategorias && (
+                    <span className="text-xs text-coral">{erroCategorias}</span>
+                  )}
+                  {!carregandoCategorias && !erroCategorias && categoriasDisponiveis.length === 0 && (
+                    <span className="text-xs text-content-muted">Nenhuma categoria disponível.</span>
                   )}
                 </div>
               </label>
