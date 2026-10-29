@@ -134,7 +134,7 @@ export function AdminCategoriasPage() {
             {!pode(editandoId === null ? 'categoria.criar' : 'categoria.editar') && <p className="text-xs text-content-muted">{motivo || 'Verificando permissão administrativa…'}</p>}
             {erro && <p role="alert" className="rounded-lg border border-coral/40 bg-coral/10 px-3 py-2 text-sm text-soft-black">{erro}</p>}
             <div className="flex flex-wrap gap-2">
-              <Button type="submit" variant="primary" disabled={!pode('produto.editar') || salvar.isPending}>
+              <Button type="submit" variant="primary" disabled={!pode(editandoId === null ? 'categoria.criar' : 'categoria.editar') || salvar.isPending}>
                 <Check size={16} aria-hidden /> {salvar.isPending ? 'Salvando…' : editandoId === null ? 'Criar categoria' : 'Salvar alterações'}
               </Button>
               {editandoId !== null && <Button type="button" variant="outline" onClick={limparFormulario} disabled={salvar.isPending}><X size={16} aria-hidden /> Cancelar</Button>}
