@@ -47,6 +47,8 @@ export type AdminAcao =
   | 'produto.criar'
   | 'produto.editar'
   | 'produto.excluir'
+  | 'categoria.criar'
+  | 'categoria.editar'
   | 'orcamento.ler'
   | 'orcamento.editar'
   | 'pedido.ler'
@@ -96,7 +98,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
         href: '/admin/produtos',
         icon: Package,
       },
-      { rotulo: 'Categorias', href: null, icon: Tag, emBreve: true },
+      { rotulo: 'Categorias', href: '/admin/categorias', icon: Tag },
       { rotulo: 'Promoções', href: null, icon: Megaphone, emBreve: true },
       { rotulo: 'Kits', href: null, icon: Layers, emBreve: true },
       { rotulo: 'Orçamentos', href: null, icon: FileText, emBreve: true },
