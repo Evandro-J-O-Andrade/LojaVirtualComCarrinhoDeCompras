@@ -43,7 +43,7 @@ export function AdminAvatar() {
     setErro(null)
     try {
       const { error: erroUpload } = await supabase.storage
-        .from('product-images')
+        .from('user-avatars')
         .upload(caminho, arquivo, {
           contentType: arquivo.type,
           cacheControl: '3600',
@@ -51,12 +51,12 @@ export function AdminAvatar() {
         })
       if (erroUpload) throw new Error(`Não foi possível enviar o avatar: ${erroUpload.message}`)
 
-      const { data } = supabase.storage.from('product-images').getPublicUrl(caminho)
+      const { data } = supabase.storage.from('user-avatars').getPublicUrl(caminho)
       const { error: erroPerfil } = await supabase.auth.updateUser({
         data: { avatar_url: data.publicUrl },
       })
       if (erroPerfil) {
-        await supabase.storage.from('product-images').remove([caminho])
+        await supabase.storage.from('user-avatars').remove([caminho])
         throw new Error(`A imagem foi enviada, mas não foi possível salvar o perfil: ${erroPerfil.message}`)
       }
     } catch (erroAtual) {
