@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import type { FormEvent } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {
   ArrowLeft,
@@ -29,6 +30,7 @@ import {
 } from '@/domains/produtos/model/produto'
 import { ProdutoImagemUpload } from '../components/ProdutoImagemUpload'
 import { produtoImagemService } from '@/domains/produtos/services/produtoImagem.service'
+import { atualizarProdutoAdmin } from '../services/adminProduto.service'
 import { useAdminPermissao } from '../context/AdminPermissionContext'
 import {
   estadoAdminProdutos,
@@ -148,6 +150,7 @@ export function AdminProdutoDetalhePage() {
       produto={produto}
       podeEditar={pode('produto.editar')}
       motivoPermissao={motivo}
+      aoAtualizar={async () => { await refetch() }}
     />
   )
 }
@@ -164,12 +167,14 @@ interface DetalheContentProps {
   produto: Produto
   podeEditar: boolean
   motivoPermissao: string
+  aoAtualizar: () => Promise<void>
 }
 
 function DetalheContent({
   produto,
   podeEditar,
   motivoPermissao,
+  aoAtualizar,
 }: DetalheContentProps) {
   const promocaoAtiva = produto.promocoes.find(
     (promocao) => promocao.ativo,
@@ -177,6 +182,57 @@ function DetalheContent({
   const [carregandoUpload, setCarregandoUpload] =
     useState(false)
   const [erroUpload, setErroUpload] = useState<string | null>(null)
+  const [editando, setEditando] = useState(false)
+  const [salvando, setSalvando] = useState(false)
+  const [erroSalvar, setErroSalvar] = useState<string | null>(null)
+  const [sucessoSalvar, setSucessoSalvar] = useState(false)
+  const [nome, setNome] = useState(produto.nome)
+  const [slug, setSlug] = useState(produto.slug)
+  const [sku, setSku] = useState(produto.sku ?? '')
+  const [descricao, setDescricao] = useState(produto.descricao ?? '')
+  const [precoBase, setPrecoBase] = useState(String(produto.precoBase))
+  const [ativo, setAtivo] = useState(produto.ativo)
+
+  useEffect(() => {
+    setNome(produto.nome)
+    setSlug(produto.slug)
+    setSku(produto.sku ?? '')
+    setDescricao(produto.descricao ?? '')
+    setPrecoBase(String(produto.precoBase))
+    setAtivo(produto.ativo)
+  }, [produto])
+
+  const cancelarEdicao = useCallback(() => {
+    setNome(produto.nome)
+    setSlug(produto.slug)
+    setSku(produto.sku ?? '')
+    setDescricao(produto.descricao ?? '')
+    setPrecoBase(String(produto.precoBase))
+    setAtivo(produto.ativo)
+    setErroSalvar(null)
+    setEditando(false)
+  }, [produto])
+
+  const handleSalvarProduto = useCallback(async (evento: FormEvent<HTMLFormElement>) => {
+    evento.preventDefault()
+    if (!podeEditar) return
+    const preco = Number(precoBase.replace(',', '.'))
+    try {
+      setSalvando(true)
+      setErroSalvar(null)
+      setSucessoSalvar(false)
+      await atualizarProdutoAdmin(Number(produto.id), {
+        nome, slug, sku, descricao, precoBase: preco, ativo,
+      })
+      await aoAtualizar()
+      setEditando(false)
+      setSucessoSalvar(true)
+    } catch (err) {
+      setErroSalvar(err instanceof Error ? err.message : 'Não foi possível salvar o produto.')
+    } finally {
+      setSalvando(false)
+    }
+  }, [aoAtualizar, ativo, descricao, nome, podeEditar, precoBase, produto.id, sku, slug])
 
   const handleEnviarImagens = useCallback(
     async (arquivos: File[]) => {
@@ -189,6 +245,7 @@ function DetalheContent({
           produtoIdNum,
           arquivos,
         )
+        await aoAtualizar()
       } catch (err) {
         setErroUpload(
           err instanceof Error
@@ -198,7 +255,7 @@ function DetalheContent({
         throw err
       }
     },
-    [produto.id, podeEditar],
+    [aoAtualizar, produto.id, podeEditar],
   )
 
   const handleRemover = useCallback(
@@ -210,8 +267,9 @@ function DetalheContent({
         Number(imagemId),
         url,
       )
+      await aoAtualizar()
     },
-    [produto.id, podeEditar],
+    [aoAtualizar, produto.id, podeEditar],
   )
 
   const handleTogglePrincipal = useCallback(
@@ -222,8 +280,9 @@ function DetalheContent({
         produtoIdNum,
         Number(imagemId),
       )
+      await aoAtualizar()
     },
-    [produto.id, podeEditar],
+    [aoAtualizar, produto.id, podeEditar],
   )
 
   return (
@@ -261,11 +320,17 @@ function DetalheContent({
           </div>
           <Button
             variant="outline"
-            disabled={!podeEditar}
+            disabled={!podeEditar || salvando}
             title={podeEditar ? undefined : motivoPermissao}
+            onClick={() => {
+              setErroSalvar(null)
+              setSucessoSalvar(false)
+              if (editando) cancelarEdicao()
+              else setEditando(true)
+            }}
           >
             <Pencil size={16} aria-hidden />
-            Editar
+            {editando ? 'Cancelar edição' : 'Editar produto'}
           </Button>
         </div>
 
@@ -275,9 +340,44 @@ function DetalheContent({
           trate esta ficha como produção.
         </p>
 
+        {sucessoSalvar && (
+          <p role="status" className="mb-4 rounded-lg border border-emerald-300 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">Produto salvo com sucesso.</p>
+        )}
+        {editando && (
+          <Card className="mb-6">
+            <h2 className="mb-4 font-display text-lg font-bold text-soft-black">Editar dados do produto</h2>
+            <form onSubmit={handleSalvarProduto} className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <label className="space-y-1 text-sm font-medium text-soft-black">Nome
+                <input required value={nome} onChange={(e) => setNome(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Slug
+                <input required value={slug} onChange={(e) => setSlug(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">SKU
+                <input value={sku} onChange={(e) => setSku(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Preço base (R$)
+                <input required type="number" min="0" step="0.01" value={precoBase} onChange={(e) => setPrecoBase(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Descrição
+                <textarea rows={4} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="flex items-center gap-2 text-sm text-soft-black md:col-span-2">
+                <input type="checkbox" checked={ativo} disabled={!ativo && produto.imagens.length === 0} onChange={(e) => setAtivo(e.target.checked)} />
+                Produto ativo e disponível para a vitrine
+              </label>
+              {produto.imagens.length === 0 && <p className="text-xs text-content-muted md:col-span-2">Adicione ao menos uma imagem antes de publicar este produto na vitrine.</p>}
+              {erroSalvar && <p role="alert" className="text-sm text-coral md:col-span-2">{erroSalvar}</p>}
+              <div className="flex justify-end gap-3 md:col-span-2">
+                <Button type="button" variant="outline" disabled={salvando} onClick={cancelarEdicao}>Cancelar</Button>
+                <Button type="submit" variant="primary" disabled={salvando || !podeEditar}>{salvando ? 'Salvando…' : 'Salvar alterações'}</Button>
+              </div>
+            </form>
+          </Card>
+        )}
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
           {/* Dados principais */}
-          <Card className="lg:col-span-2">
+          {!editando && <Card className="lg:col-span-2">
             <h2 className="font-display mb-4 text-lg font-bold text-soft-black">
               Dados principais
             </h2>
@@ -315,7 +415,7 @@ function DetalheContent({
                 </dd>
               </div>
             </dl>
-          </Card>
+          </Card>}
 
           {/* Mídia */}
           <Card>
@@ -406,13 +506,11 @@ function DetalheContent({
             ) : (
               <Table>
                 <TableHeader>
-                  <tr>
-                    <TableHead>SKU</TableHead>
-                    <TableHead>Atributos</TableHead>
-                    <TableHead>Preço</TableHead>
-                    <TableHead>Peso</TableHead>
-                    <TableHead>Status</TableHead>
-                  </tr>
+                  <TableHead>SKU</TableHead>
+                  <TableHead>Atributos</TableHead>
+                  <TableHead>Preço</TableHead>
+                  <TableHead>Peso</TableHead>
+                  <TableHead>Status</TableHead>
                 </TableHeader>
                 <TableBody>
                   {produto.variantes.map((variante) => (
