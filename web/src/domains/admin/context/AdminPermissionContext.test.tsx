@@ -12,6 +12,7 @@ vi.mock('../services/adminAuth', () => ({ useIsAdmin: vi.fn() }))
 
 const ACOES: AdminAcao[] = [
   'produto.criar', 'produto.editar', 'produto.excluir',
+  'categoria.criar', 'categoria.editar',
   'orcamento.ler', 'orcamento.editar', 'pedido.ler',
   'pedido.editar', 'agendamento.ler', 'cliente.ler',
   'cliente.editar', 'atendimento.ler', 'auditoria.ler',
