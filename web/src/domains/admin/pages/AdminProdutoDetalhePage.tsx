@@ -363,9 +363,10 @@ function DetalheContent({
                 <textarea rows={4} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
               </label>
               <label className="flex items-center gap-2 text-sm text-soft-black md:col-span-2">
-                <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} />
+                <input type="checkbox" checked={ativo} disabled={produto.imagens.length === 0} onChange={(e) => setAtivo(e.target.checked)} />
                 Produto ativo e disponível para a vitrine
               </label>
+              {produto.imagens.length === 0 && <p className="text-xs text-content-muted md:col-span-2">Adicione ao menos uma imagem antes de publicar este produto na vitrine.</p>}
               {erroSalvar && <p role="alert" className="text-sm text-coral md:col-span-2">{erroSalvar}</p>}
               <div className="flex justify-end gap-3 md:col-span-2">
                 <Button type="button" variant="outline" disabled={salvando} onClick={cancelarEdicao}>Cancelar</Button>
