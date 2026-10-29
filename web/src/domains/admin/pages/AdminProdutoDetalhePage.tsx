@@ -202,6 +202,17 @@ function DetalheContent({
     setAtivo(produto.ativo)
   }, [produto])
 
+  const cancelarEdicao = useCallback(() => {
+    setNome(produto.nome)
+    setSlug(produto.slug)
+    setSku(produto.sku ?? '')
+    setDescricao(produto.descricao ?? '')
+    setPrecoBase(String(produto.precoBase))
+    setAtivo(produto.ativo)
+    setErroSalvar(null)
+    setEditando(false)
+  }, [produto])
+
   const handleSalvarProduto = useCallback(async (evento: FormEvent<HTMLFormElement>) => {
     evento.preventDefault()
     if (!podeEditar) return
@@ -314,7 +325,8 @@ function DetalheContent({
             onClick={() => {
               setErroSalvar(null)
               setSucessoSalvar(false)
-              setEditando((valor) => !valor)
+              if (editando) cancelarEdicao()
+              else setEditando(true)
             }}
           >
             <Pencil size={16} aria-hidden />
@@ -356,7 +368,7 @@ function DetalheContent({
               </label>
               {erroSalvar && <p role="alert" className="text-sm text-coral md:col-span-2">{erroSalvar}</p>}
               <div className="flex justify-end gap-3 md:col-span-2">
-                <Button type="button" variant="outline" disabled={salvando} onClick={() => setEditando(false)}>Cancelar</Button>
+                <Button type="button" variant="outline" disabled={salvando} onClick={cancelarEdicao}>Cancelar</Button>
                 <Button type="submit" variant="primary" disabled={salvando || !podeEditar}>{salvando ? 'Salvando…' : 'Salvar alterações'}</Button>
               </div>
             </form>
