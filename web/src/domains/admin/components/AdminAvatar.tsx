@@ -1,5 +1,6 @@
 import { useRef, useState, type ChangeEvent } from 'react'
 import { Camera, UserRound } from 'lucide-react'
+import { toast } from 'sonner'
 import { useAccount } from '@/domains/conta/context/AccountContext'
 import { supabase } from '@/lib/supabase'
 
@@ -59,8 +60,11 @@ export function AdminAvatar() {
         await supabase.storage.from('user-avatars').remove([caminho])
         throw new Error(`A imagem foi enviada, mas não foi possível salvar o perfil: ${erroPerfil.message}`)
       }
+      toast.success('Avatar atualizado com sucesso.')
     } catch (erroAtual) {
-      setErro(erroAtual instanceof Error ? erroAtual.message : 'Não foi possível atualizar o avatar.')
+      const mensagem = erroAtual instanceof Error ? erroAtual.message : 'Não foi possível atualizar o avatar.'
+      setErro(mensagem)
+      toast.error(mensagem)
     } finally {
       setEnviando(false)
     }
