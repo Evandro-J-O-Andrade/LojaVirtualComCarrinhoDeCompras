@@ -1,4 +1,5 @@
 import { useState, type FormEvent } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, PackagePlus } from 'lucide-react'
 import { SeoHead } from '@/lib/seo'
@@ -18,6 +19,7 @@ function gerarSlug(valor: string): string {
 
 export function AdminProdutoNovoPage() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const { pode, motivo } = useAdminPermissao()
   const [nome, setNome] = useState('')
   const [slug, setSlug] = useState('')
@@ -47,6 +49,7 @@ export function AdminProdutoNovoPage() {
         precoBase: Number(precoBase.replace(',', '.')),
         ativo,
       })
+      await queryClient.invalidateQueries({ queryKey: ['admin-produtos'] })
       navigate(`/admin/produtos/${id}`, { replace: true })
     } catch (err) {
       setErro(err instanceof Error ? err.message : 'Não foi possível criar o produto.')
