@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ChevronRight, PackagePlus, Search } from 'lucide-react'
 import { SeoHead } from '@/lib/seo'
 import { Badge } from '@/components/common/Badge'
@@ -39,6 +39,7 @@ type FiltroStatus = 'todos' | 'ativo' | 'inativo'
  * até o RBAC — nunca CRUD fake.
  */
 export function AdminProdutosPage() {
+  const navigate = useNavigate()
   const {
     data,
     error,
@@ -106,6 +107,7 @@ export function AdminProdutosPage() {
           </div>
           <Button
             variant="primary"
+            onClick={() => navigate('/admin/produtos/novo')}
             disabled={!pode('produto.criar')}
             title={
               pode('produto.criar')
