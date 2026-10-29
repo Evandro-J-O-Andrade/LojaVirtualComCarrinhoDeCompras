@@ -310,7 +310,7 @@ function DetalheContent({
     } finally {
       setSalvando(false)
     }
-  }, [aoAtualizar, ativo, descricao, nome, podeEditar, precoBase, produto.id, sku, slug])
+  }, [aoAtualizar, ativo, categoriaIds, descricao, nome, podeEditar, precoBase, produto.id, sku, slug])
 
   const handleAdicionarVariante = useCallback(async () => {
     if (!podeEditar) return

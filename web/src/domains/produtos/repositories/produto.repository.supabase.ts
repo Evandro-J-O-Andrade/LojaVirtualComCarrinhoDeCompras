@@ -453,12 +453,14 @@ export class SupabaseProdutoRepository implements ProdutoRepository {
   ): Promise<Map<number, CategoriaRef[]>> {
     const mapa = new Map<number, CategoriaRef[]>()
     if (ids.length === 0) return mapa
-    const data = await seguro(() =>
-      supabase
-        .from('produto_categoria')
-        .select('produto_id, categoria (id, nome, slug)')
-        .in('produto_id', ids),
-    )
+    const { data, error } = await supabase
+      .from('produto_categoria')
+      .select('produto_id, categoria (id, nome, slug)')
+      .in('produto_id', ids)
+    if (error) {
+      console.error('Erro ao buscar categorias:', error.message)
+      return mapa
+    }
     for (const linha of (data ?? []) as unknown as Array<{
       produto_id: number
       categoria?: CategoriaRow
