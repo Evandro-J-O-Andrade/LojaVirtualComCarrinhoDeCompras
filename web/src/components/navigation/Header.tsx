@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
-import { Heart, Menu, User } from 'lucide-react'
+import { Heart, LayoutDashboard, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { CartDrawer } from '@/components/commerce/CartDrawer'
 import { MobileNav } from './MobileNav'
 import { AngelWordmark } from '@/components/brand/AngelWordmark'
 import { useAccount } from '@/domains/conta/context/AccountContext'
+import { useIsAdmin } from '@/domains/admin/services/adminAuth'
 
 /**
  * Navegação principal — rotas que existem de
@@ -41,7 +42,14 @@ export function Header() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const location = useLocation()
-  const { authenticated } = useAccount()
+  const { authenticated, user, profile } = useAccount()
+  const { data: isAdmin } = useIsAdmin()
+  const metadataUrl = user?.user_metadata?.avatar_url
+  const avatarUrl = typeof metadataUrl === 'string' && /^https?:\/\//i.test(metadataUrl)
+    ? metadataUrl
+    : null
+  const nome = profile?.nome || profile?.email || user?.email || 'Cliente'
+  const iniciais = nome.split(/[\s@]+/).filter(Boolean).slice(0, 2).map((parte) => parte[0]?.toUpperCase()).join('') || 'C'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12)
@@ -123,13 +131,29 @@ export function Header() {
             </Link>
 
             {authenticated ? (
-              <Link
-                to="/conta"
-                className={cn(iconLink, 'hidden sm:inline-flex')}
-                aria-label="Minha conta"
-              >
-                <User size={20} />
+              <>
+                {isAdmin && (
+                  <Link
+                    to="/admin"
+                    className={cn(iconLink, 'hidden sm:inline-flex')}
+                    aria-label="Painel administrativo"
+                    title="Painel administrativo"
+                  >
+                    <LayoutDashboard size={20} />
+                  </Link>
+                )}
+                <Link
+                  to="/conta"
+                  className={cn(iconLink, 'hidden sm:inline-flex overflow-hidden')}
+                  aria-label="Minha conta"
+                >
+                {avatarUrl ? (
+                  <img src={avatarUrl} alt="" className="h-full w-full rounded-full object-cover" />
+                ) : (
+                  <span className="text-xs font-semibold">{iniciais}</span>
+                )}
               </Link>
+              </>
             ) : (
               <div className="hidden items-center gap-2 sm:inline-flex">
                 <Link

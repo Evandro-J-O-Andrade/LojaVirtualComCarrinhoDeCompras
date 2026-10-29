@@ -7,6 +7,7 @@ export interface DadosProdutoAdmin {
   descricao: string | null
   precoBase: number
   ativo: boolean
+  categoriaIds?: string[]
 }
 
 function validarDados(valores: DadosProdutoAdmin): void {
@@ -36,7 +37,19 @@ export async function criarProdutoAdmin(valores: DadosProdutoAdmin): Promise<str
 
   if (error) throw new Error(`Não foi possível criar o produto: ${error.message}`)
   if (!data) throw new Error('O Supabase não retornou o produto criado.')
-  return String(data.id)
+  const produtoId = Number(data.id)
+
+  if (valores.categoriaIds && valores.categoriaIds.length > 0) {
+    const { error: erroInsert } = await supabase
+      .from('produto_categoria')
+      .insert(valores.categoriaIds.map((cid) => ({
+        produto_id: produtoId,
+        categoria_id: Number(cid),
+      })))
+    if (erroInsert) throw new Error(`Não foi possível associar categorias: ${erroInsert.message}`)
+  }
+
+  return String(produtoId)
 }
 
 export async function atualizarProdutoAdmin(
@@ -65,4 +78,41 @@ export async function atualizarProdutoAdmin(
 
   if (error) throw new Error(`Não foi possível salvar o produto: ${error.message}`)
   if (!data) throw new Error('Nenhum produto foi atualizado. Verifique sua permissão administrativa e tente novamente.')
+
+  if (valores.categoriaIds !== undefined) {
+    const { data: existentes, error: erroLeitura } = await supabase
+      .from('produto_categoria')
+      .select('categoria_id')
+      .eq('produto_id', produtoId)
+    if (erroLeitura) throw new Error(`Não foi possível ler categorias existentes: ${erroLeitura.message}`)
+
+    const categoriasAnteriores = (existentes ?? []).map((row: { categoria_id: number }) => row.categoria_id)
+
+    const { error: erroDelete } = await supabase
+      .from('produto_categoria')
+      .delete()
+      .eq('produto_id', produtoId)
+    if (erroDelete) throw new Error(`Não foi possível atualizar categorias: ${erroDelete.message}`)
+
+    if (valores.categoriaIds.length > 0) {
+      const { error: erroInsert } = await supabase
+        .from('produto_categoria')
+        .insert(valores.categoriaIds.map((cid) => ({
+          produto_id: produtoId,
+          categoria_id: Number(cid),
+        })))
+      if (erroInsert) {
+        // Tentar restaurar as associações anteriores
+        if (categoriasAnteriores.length > 0) {
+          await supabase
+            .from('produto_categoria')
+            .insert(categoriasAnteriores.map((cid) => ({
+              produto_id: produtoId,
+              categoria_id: cid,
+            })))
+        }
+        throw new Error(`Não foi possível associar categorias: ${erroInsert.message}`)
+      }
+    }
+  }
 }

@@ -31,6 +31,7 @@ import {
 import { ProdutoImagemUpload } from '../components/ProdutoImagemUpload'
 import { produtoImagemService } from '@/domains/produtos/services/produtoImagem.service'
 import { atualizarProdutoAdmin } from '../services/adminProduto.service'
+import { supabase } from '@/lib/supabase'
 import { useAdminPermissao } from '../context/AdminPermissionContext'
 import {
   estadoAdminProdutos,
@@ -192,6 +193,29 @@ function DetalheContent({
   const [descricao, setDescricao] = useState(produto.descricao ?? '')
   const [precoBase, setPrecoBase] = useState(String(produto.precoBase))
   const [ativo, setAtivo] = useState(produto.ativo)
+  const [categoriaIds, setCategoriaIds] = useState<string[]>(produto.categorias.map((c) => c.id))
+  const [precoPromocional, setPrecoPromocional] = useState('')
+  const [novoVarianteSku, setNovoVarianteSku] = useState('')
+  const [novoVariantePreco, setNovoVariantePreco] = useState('')
+  const [salvandoVariante, setSalvandoVariante] = useState(false)
+  const [promocaoTipo, setPromocaoTipo] = useState<'percentual' | 'fixo'>('percentual')
+  const [promocaoDataInicio, setPromocaoDataInicio] = useState('')
+  const [promocaoDataFim, setPromocaoDataFim] = useState('')
+  const [categoriasDisponiveis, setCategoriasDisponiveis] = useState<Array<{ id: number; nome: string }>>([])
+
+  useEffect(() => {
+    let cancelado = false
+    supabase
+      .from('categoria')
+      .select('id,nome')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+      .then(({ data }) => {
+        if (cancelado) return
+        setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
+      })
+    return () => { cancelado = true }
+  }, [])
 
   useEffect(() => {
     setNome(produto.nome)
@@ -200,6 +224,12 @@ function DetalheContent({
     setDescricao(produto.descricao ?? '')
     setPrecoBase(String(produto.precoBase))
     setAtivo(produto.ativo)
+    setCategoriaIds(produto.categorias.map((c) => c.id))
+    const promoAtiva = produto.promocoes.find((p) => p.ativo)
+    setPrecoPromocional(promoAtiva ? String(promoAtiva.valor) : '')
+    setPromocaoTipo(promoAtiva?.tipo ?? 'percentual')
+    setPromocaoDataInicio(promoAtiva?.dataInicio ?? '')
+    setPromocaoDataFim(promoAtiva?.dataFim ?? '')
   }, [produto])
 
   const cancelarEdicao = useCallback(() => {
@@ -209,6 +239,12 @@ function DetalheContent({
     setDescricao(produto.descricao ?? '')
     setPrecoBase(String(produto.precoBase))
     setAtivo(produto.ativo)
+    setCategoriaIds(produto.categorias.map((c) => c.id))
+    const promoAtivaCancel = produto.promocoes.find((p) => p.ativo)
+    setPrecoPromocional(promoAtivaCancel ? String(promoAtivaCancel.valor) : '')
+    setPromocaoTipo(promoAtivaCancel?.tipo ?? 'percentual')
+    setPromocaoDataInicio(promoAtivaCancel?.dataInicio ?? '')
+    setPromocaoDataFim(promoAtivaCancel?.dataFim ?? '')
     setErroSalvar(null)
     setEditando(false)
   }, [produto])
@@ -222,8 +258,38 @@ function DetalheContent({
       setErroSalvar(null)
       setSucessoSalvar(false)
       await atualizarProdutoAdmin(Number(produto.id), {
-        nome, slug, sku, descricao, precoBase: preco, ativo,
+        nome, slug, sku, descricao, precoBase: preco, ativo, categoriaIds,
       })
+
+      // Salvar promoção se preenchida
+      const valorPromo = Number(precoPromocional.replace(',', '.'))
+      if (valorPromo > 0 && promocaoDataInicio && promocaoDataFim) {
+        const promocaoExistente = produto.promocoes.find((p) => p.ativo)
+        if (promocaoExistente) {
+          await supabase
+            .from('promocao')
+            .update({
+              tipo: promocaoTipo,
+              valor: valorPromo,
+              data_inicio: promocaoDataInicio,
+              data_fim: promocaoDataFim,
+              ativo: true,
+            })
+            .eq('id', Number(promocaoExistente.id))
+        } else {
+          await supabase
+            .from('promocao')
+            .insert({
+              produto_id: Number(produto.id),
+              tipo: promocaoTipo,
+              valor: valorPromo,
+              data_inicio: promocaoDataInicio,
+              data_fim: promocaoDataFim,
+              ativo: true,
+            })
+        }
+      }
+
       await aoAtualizar()
       setEditando(false)
       setSucessoSalvar(true)
@@ -234,6 +300,31 @@ function DetalheContent({
     }
   }, [aoAtualizar, ativo, descricao, nome, podeEditar, precoBase, produto.id, sku, slug])
 
+  const handleAdicionarVariante = useCallback(async () => {
+    if (!podeEditar) return
+    const sku = novoVarianteSku.trim()
+    const preco = Number(novoVariantePreco.replace(',', '.'))
+    if (!sku || !Number.isFinite(preco) || preco < 0) return
+    setSalvandoVariante(true)
+    try {
+      const { error } = await supabase
+        .from('produto_variante')
+        .insert({
+          produto_id: Number(produto.id),
+          sku,
+          preco,
+          ativo: true,
+        })
+      if (error) throw new Error(`Não foi possível criar variante: ${error.message}`)
+      setNovoVarianteSku('')
+      setNovoVariantePreco('')
+      await aoAtualizar()
+    } catch (err) {
+      setErroSalvar(err instanceof Error ? err.message : 'Erro ao criar variante.')
+    } finally {
+      setSalvandoVariante(false)
+    }
+  }, [aoAtualizar, novoVariantePreco, novoVarianteSku, podeEditar, produto.id])
   const handleEnviarImagens = useCallback(
     async (arquivos: File[]) => {
       if (!podeEditar) return
@@ -358,6 +449,44 @@ function DetalheContent({
               </label>
               <label className="space-y-1 text-sm font-medium text-soft-black">Preço base (R$)
                 <input required type="number" min="0" step="0.01" value={precoBase} onChange={(e) => setPrecoBase(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Preço promocional (R$)
+                <input type="number" min="0" step="0.01" value={precoPromocional} onChange={(e) => setPrecoPromocional(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="Deixe vazio se não houver" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Tipo de promoção
+                <select value={promocaoTipo} onChange={(e) => setPromocaoTipo(e.target.value as 'percentual' | 'fixo')} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2">
+                  <option value="percentual">Percentual (%)</option>
+                  <option value="fixo">Valor fixo (R$)</option>
+                </select>
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Início da promoção
+                <input type="date" value={promocaoDataInicio} onChange={(e) => setPromocaoDataInicio(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black">Fim da promoção
+                <input type="date" value={promocaoDataFim} onChange={(e) => setPromocaoDataFim(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+              </label>
+              <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Categorias
+                <div className="mt-1 flex flex-wrap gap-3">
+                  {categoriasDisponiveis.map((cat) => (
+                    <label key={cat.id} className="inline-flex items-center gap-1.5 text-sm text-soft-black">
+                      <input
+                        type="checkbox"
+                        checked={categoriaIds.includes(String(cat.id))}
+                        onChange={(e) => {
+                          setCategoriaIds((prev) =>
+                            e.target.checked
+                              ? [...prev, String(cat.id)]
+                              : prev.filter((id) => id !== String(cat.id)),
+                          )
+                        }}
+                      />
+                      {cat.nome}
+                    </label>
+                  ))}
+                  {categoriasDisponiveis.length === 0 && (
+                    <span className="text-xs text-content-muted">Carregando categorias…</span>
+                  )}
+                </div>
               </label>
               <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Descrição
                 <textarea rows={4} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
@@ -499,11 +628,27 @@ function DetalheContent({
             <h2 className="font-display mb-4 text-lg font-bold text-soft-black">
               Variantes
             </h2>
-            {produto.variantes.length === 0 ? (
-              <p className="text-sm text-content-muted">
-                Produto sem variantes.
+            {produto.variantes.length === 0 && (
+              <p className="mb-3 text-sm text-content-muted">
+                Produto sem variantes. Adicione abaixo.
               </p>
-            ) : (
+            )}
+            {podeEditar && (
+              <div className="mb-4 flex flex-wrap items-end gap-3">
+                <label className="space-y-1 text-sm font-medium text-soft-black">
+                  SKU da variante
+                  <input value={novoVarianteSku} onChange={(e) => setNovoVarianteSku(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="SKU" />
+                </label>
+                <label className="space-y-1 text-sm font-medium text-soft-black">
+                  Preço (R$)
+                  <input type="number" min="0" step="0.01" value={novoVariantePreco} onChange={(e) => setNovoVariantePreco(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="0.00" />
+                </label>
+                <Button type="button" variant="primary" disabled={salvandoVariante || !novoVarianteSku.trim()} onClick={() => void handleAdicionarVariante()}>
+                  {salvandoVariante ? 'Salvando…' : 'Adicionar variante'}
+                </Button>
+              </div>
+            )}
+            {produto.variantes.length > 0 && (
               <Table>
                 <TableHeader>
                   <TableHead>SKU</TableHead>

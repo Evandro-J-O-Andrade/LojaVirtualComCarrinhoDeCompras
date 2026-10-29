@@ -1,5 +1,5 @@
 import { useRef, useState, type ChangeEvent } from 'react'
-import { Camera, UserRound } from 'lucide-react'
+import { Camera, UserRound, X } from 'lucide-react'
 import { toast } from 'sonner'
 import { useAccount } from '@/domains/conta/context/AccountContext'
 import { supabase } from '@/lib/supabase'
@@ -24,6 +24,34 @@ export function AdminAvatar() {
     : null
   const iniciais = nome.split(/[\s@]+/).filter(Boolean).slice(0, 2).map((parte) => parte[0]?.toUpperCase()).join('') || 'U'
 
+  async function removerAvatar() {
+    if (!user || !avatarUrl) return
+    setEnviando(true)
+    setErro(null)
+    try {
+      // Extract path from public URL
+      const url = new URL(avatarUrl)
+      const pathSegments = url.pathname.split('/user-avatars/')
+      const caminhoArquivo = pathSegments.length > 1 ? pathSegments[1] : null
+      if (caminhoArquivo) {
+        const { error: erroRemocao } = await supabase.storage
+          .from('user-avatars')
+          .remove([caminhoArquivo])
+        if (erroRemocao) throw new Error(`Não foi possível remover o avatar: ${erroRemocao.message}`)
+      }
+      const { error: erroPerfil } = await supabase.auth.updateUser({
+        data: { avatar_url: null },
+      })
+      if (erroPerfil) throw new Error(`A imagem foi removida, mas não foi possível atualizar o perfil: ${erroPerfil.message}`)
+      toast.success('Avatar removido com sucesso.')
+    } catch (erroAtual) {
+      const mensagem = erroAtual instanceof Error ? erroAtual.message : 'Não foi possível remover o avatar.'
+      setErro(mensagem)
+      toast.error(mensagem)
+    } finally {
+      setEnviando(false)
+    }
+  }
   async function enviarAvatar(evento: ChangeEvent<HTMLInputElement>) {
     const arquivo = evento.target.files?.[0]
     evento.target.value = ''
@@ -39,7 +67,7 @@ export function AdminAvatar() {
       return
     }
 
-    const caminho = `avatars/${user.id}/${crypto.randomUUID()}.${extensao}`
+    const caminho = `${user.id}/${crypto.randomUUID()}.${extensao}`
     setEnviando(true)
     setErro(null)
     try {
@@ -89,18 +117,29 @@ export function AdminAvatar() {
         aria-label={enviando ? 'Enviando avatar' : `Alterar avatar de ${nome}`}
         title={erro ?? (enviando ? 'Enviando imagem…' : 'Alterar avatar')}
       >
-        {avatarUrl ? (
-          <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
-        ) : iniciais ? (
-          <span className="text-xs font-semibold">{iniciais}</span>
-        ) : (
-          <UserRound size={18} aria-hidden />
-        )}
-        <span className="absolute inset-0 flex items-center justify-center bg-charcoal/70 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
-          <Camera size={15} aria-hidden />
-        </span>
+      {avatarUrl ? (
+        <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
+      ) : iniciais ? (
+        <span className="text-xs font-semibold">{iniciais}</span>
+      ) : (
+        <UserRound size={18} aria-hidden />
+      )}
+      <span className="absolute inset-0 flex items-center justify-center bg-charcoal/70 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+        <Camera size={15} aria-hidden />
+      </span>
       </button>
-      {erro && <span role="alert" className="sr-only">{erro}</span>}
+      {avatarUrl && (
+        <button
+          type="button"
+          onClick={() => void removerAvatar()}
+          disabled={enviando}
+          className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-champagne bg-white text-deep-rose shadow-sm hover:bg-blush disabled:opacity-60"
+          aria-label="Remover avatar"
+          title="Remover avatar"
+        >
+          <X size={10} aria-hidden />
+        </button>
+      )}
     </div>
   )
 }

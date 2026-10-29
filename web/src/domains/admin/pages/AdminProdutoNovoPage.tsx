@@ -1,9 +1,10 @@
-import { useState, type FormEvent } from 'react'
+import { useState, type FormEvent, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { Link, useNavigate } from 'react-router-dom'
 import { ArrowLeft, PackagePlus } from 'lucide-react'
 import { SeoHead } from '@/lib/seo'
 import { Button } from '@/components/common/Button'
+import { supabase } from '@/lib/supabase'
 import { useAdminPermissao } from '../context/AdminPermissionContext'
 import { criarProdutoAdmin } from '../services/adminProduto.service'
 
@@ -28,8 +29,24 @@ export function AdminProdutoNovoPage() {
   const [descricao, setDescricao] = useState('')
   const [precoBase, setPrecoBase] = useState('')
   const [ativo, setAtivo] = useState(false)
+  const [categoriaIds, setCategoriaIds] = useState<string[]>([])
+  const [categoriasDisponiveis, setCategoriasDisponiveis] = useState<Array<{ id: number; nome: string }>>([])
   const [salvando, setSalvando] = useState(false)
   const [erro, setErro] = useState<string | null>(null)
+
+  useEffect(() => {
+    let cancelado = false
+    supabase
+      .from('categoria')
+      .select('id,nome')
+      .eq('ativo', true)
+      .order('nome', { ascending: true })
+      .then(({ data }) => {
+        if (cancelado) return
+        setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
+      })
+    return () => { cancelado = true }
+  }, [])
 
   async function submeter(evento: FormEvent<HTMLFormElement>) {
     evento.preventDefault()
@@ -48,6 +65,7 @@ export function AdminProdutoNovoPage() {
         descricao,
         precoBase: Number(precoBase.replace(',', '.')),
         ativo,
+        categoriaIds,
       })
       await queryClient.invalidateQueries({ queryKey: ['admin-produtos'] })
       navigate(`/admin/produtos/${id}`, { replace: true })
@@ -94,6 +112,26 @@ export function AdminProdutoNovoPage() {
           </label>
           <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Descrição
             <textarea rows={5} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+          </label>
+          <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Categorias
+            <div className="mt-1 flex flex-wrap gap-3">
+              {categoriasDisponiveis.map((cat) => (
+                <label key={cat.id} className="inline-flex items-center gap-1.5 text-sm text-soft-black">
+                  <input
+                    type="checkbox"
+                    checked={categoriaIds.includes(String(cat.id))}
+                    onChange={(e) => {
+                      setCategoriaIds((prev) =>
+                        e.target.checked
+                          ? [...prev, String(cat.id)]
+                          : prev.filter((id) => id !== String(cat.id)),
+                      )
+                    }}
+                  />
+                  {cat.nome}
+                </label>
+              ))}
+            </div>
           </label>
           <label className="flex items-center gap-2 text-sm text-soft-black md:col-span-2">
             <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} />
