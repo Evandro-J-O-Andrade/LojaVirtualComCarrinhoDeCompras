@@ -1,0 +1,673 @@
+diff --git a/web/src/components/navigation/Header.tsx b/web/src/components/navigation/Header.tsx
+index fa10820..f91fa37 100644
+--- a/web/src/components/navigation/Header.tsx
++++ b/web/src/components/navigation/Header.tsx
+@@ -1,11 +1,12 @@
+ import { useCallback, useEffect, useState } from 'react'
+ import { Link, NavLink, useLocation } from 'react-router-dom'
+-import { Heart, Menu, User } from 'lucide-react'
++import { Heart, LayoutDashboard, Menu } from 'lucide-react'
+ import { cn } from '@/lib/utils'
+ import { CartDrawer } from '@/components/commerce/CartDrawer'
+ import { MobileNav } from './MobileNav'
+ import { AngelWordmark } from '@/components/brand/AngelWordmark'
+ import { useAccount } from '@/domains/conta/context/AccountContext'
++import { useIsAdmin } from '@/domains/admin/services/adminAuth'
+ 
+ /**
+  * Navegação principal — rotas que existem de
+@@ -41,7 +42,14 @@ export function Header() {
+   const [scrolled, setScrolled] = useState(false)
+   const [menuOpen, setMenuOpen] = useState(false)
+   const location = useLocation()
+-  const { authenticated } = useAccount()
++  const { authenticated, user, profile } = useAccount()
++  const { data: isAdmin } = useIsAdmin()
++  const metadataUrl = user?.user_metadata?.avatar_url
++  const avatarUrl = typeof metadataUrl === 'string' && /^https?:\/\//i.test(metadataUrl)
++    ? metadataUrl
++    : null
++  const nome = profile?.nome || profile?.email || user?.email || 'Cliente'
++  const iniciais = nome.split(/[\s@]+/).filter(Boolean).slice(0, 2).map((parte) => parte[0]?.toUpperCase()).join('') || 'C'
+ 
+   useEffect(() => {
+     const onScroll = () => setScrolled(window.scrollY > 12)
+@@ -123,13 +131,29 @@ export function Header() {
+             </Link>
+ 
+             {authenticated ? (
+-              <Link
+-                to="/conta"
+-                className={cn(iconLink, 'hidden sm:inline-flex')}
+-                aria-label="Minha conta"
+-              >
+-                <User size={20} />
++              <>
++                {isAdmin && (
++                  <Link
++                    to="/admin"
++                    className={cn(iconLink, 'hidden sm:inline-flex')}
++                    aria-label="Painel administrativo"
++                    title="Painel administrativo"
++                  >
++                    <LayoutDashboard size={20} />
++                  </Link>
++                )}
++                <Link
++                  to="/conta"
++                  className={cn(iconLink, 'hidden sm:inline-flex overflow-hidden')}
++                  aria-label="Minha conta"
++                >
++                {avatarUrl ? (
++                  <img src={avatarUrl} alt="" className="h-full w-full rounded-full object-cover" />
++                ) : (
++                  <span className="text-xs font-semibold">{iniciais}</span>
++                )}
+               </Link>
++              </>
+             ) : (
+               <div className="hidden items-center gap-2 sm:inline-flex">
+                 <Link
+diff --git a/web/src/domains/admin/components/AdminAvatar.tsx b/web/src/domains/admin/components/AdminAvatar.tsx
+index cef048b..47c9a81 100644
+--- a/web/src/domains/admin/components/AdminAvatar.tsx
++++ b/web/src/domains/admin/components/AdminAvatar.tsx
+@@ -1,5 +1,5 @@
+ import { useRef, useState, type ChangeEvent } from 'react'
+-import { Camera, UserRound } from 'lucide-react'
++import { Camera, UserRound, X } from 'lucide-react'
+ import { toast } from 'sonner'
+ import { useAccount } from '@/domains/conta/context/AccountContext'
+ import { supabase } from '@/lib/supabase'
+@@ -24,6 +24,34 @@ export function AdminAvatar() {
+     : null
+   const iniciais = nome.split(/[\s@]+/).filter(Boolean).slice(0, 2).map((parte) => parte[0]?.toUpperCase()).join('') || 'U'
+ 
++  async function removerAvatar() {
++    if (!user || !avatarUrl) return
++    setEnviando(true)
++    setErro(null)
++    try {
++      // Extract path from public URL
++      const url = new URL(avatarUrl)
++      const pathSegments = url.pathname.split('/user-avatars/')
++      const caminhoArquivo = pathSegments.length > 1 ? pathSegments[1] : null
++      if (caminhoArquivo) {
++        const { error: erroRemocao } = await supabase.storage
++          .from('user-avatars')
++          .remove([caminhoArquivo])
++        if (erroRemocao) throw new Error(`Não foi possível remover o avatar: ${erroRemocao.message}`)
++      }
++      const { error: erroPerfil } = await supabase.auth.updateUser({
++        data: { avatar_url: null },
++      })
++      if (erroPerfil) throw new Error(`A imagem foi removida, mas não foi possível atualizar o perfil: ${erroPerfil.message}`)
++      toast.success('Avatar removido com sucesso.')
++    } catch (erroAtual) {
++      const mensagem = erroAtual instanceof Error ? erroAtual.message : 'Não foi possível remover o avatar.'
++      setErro(mensagem)
++      toast.error(mensagem)
++    } finally {
++      setEnviando(false)
++    }
++  }
+   async function enviarAvatar(evento: ChangeEvent<HTMLInputElement>) {
+     const arquivo = evento.target.files?.[0]
+     evento.target.value = ''
+@@ -39,7 +67,7 @@ export function AdminAvatar() {
+       return
+     }
+ 
+-    const caminho = `avatars/${user.id}/${crypto.randomUUID()}.${extensao}`
++    const caminho = `${user.id}/${crypto.randomUUID()}.${extensao}`
+     setEnviando(true)
+     setErro(null)
+     try {
+@@ -89,18 +117,29 @@ export function AdminAvatar() {
+         aria-label={enviando ? 'Enviando avatar' : `Alterar avatar de ${nome}`}
+         title={erro ?? (enviando ? 'Enviando imagem…' : 'Alterar avatar')}
+       >
+-        {avatarUrl ? (
+-          <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
+-        ) : iniciais ? (
+-          <span className="text-xs font-semibold">{iniciais}</span>
+-        ) : (
+-          <UserRound size={18} aria-hidden />
+-        )}
+-        <span className="absolute inset-0 flex items-center justify-center bg-charcoal/70 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+-          <Camera size={15} aria-hidden />
+-        </span>
++      {avatarUrl ? (
++        <img src={avatarUrl} alt="" className="h-full w-full object-cover" />
++      ) : iniciais ? (
++        <span className="text-xs font-semibold">{iniciais}</span>
++      ) : (
++        <UserRound size={18} aria-hidden />
++      )}
++      <span className="absolute inset-0 flex items-center justify-center bg-charcoal/70 text-white opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
++        <Camera size={15} aria-hidden />
++      </span>
+       </button>
+-      {erro && <span role="alert" className="sr-only">{erro}</span>}
++      {avatarUrl && (
++        <button
++          type="button"
++          onClick={() => void removerAvatar()}
++          disabled={enviando}
++          className="absolute -bottom-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full border border-champagne bg-white text-deep-rose shadow-sm hover:bg-blush disabled:opacity-60"
++          aria-label="Remover avatar"
++          title="Remover avatar"
++        >
++          <X size={10} aria-hidden />
++        </button>
++      )}
+     </div>
+   )
+ }
+diff --git a/web/src/domains/admin/pages/AdminProdutoDetalhePage.tsx b/web/src/domains/admin/pages/AdminProdutoDetalhePage.tsx
+index cad845b..b3ec47d 100644
+--- a/web/src/domains/admin/pages/AdminProdutoDetalhePage.tsx
++++ b/web/src/domains/admin/pages/AdminProdutoDetalhePage.tsx
+@@ -31,6 +31,7 @@ import {
+ import { ProdutoImagemUpload } from '../components/ProdutoImagemUpload'
+ import { produtoImagemService } from '@/domains/produtos/services/produtoImagem.service'
+ import { atualizarProdutoAdmin } from '../services/adminProduto.service'
++import { supabase } from '@/lib/supabase'
+ import { useAdminPermissao } from '../context/AdminPermissionContext'
+ import {
+   estadoAdminProdutos,
+@@ -192,6 +193,29 @@ function DetalheContent({
+   const [descricao, setDescricao] = useState(produto.descricao ?? '')
+   const [precoBase, setPrecoBase] = useState(String(produto.precoBase))
+   const [ativo, setAtivo] = useState(produto.ativo)
++  const [categoriaIds, setCategoriaIds] = useState<string[]>(produto.categorias.map((c) => c.id))
++  const [precoPromocional, setPrecoPromocional] = useState('')
++  const [novoVarianteSku, setNovoVarianteSku] = useState('')
++  const [novoVariantePreco, setNovoVariantePreco] = useState('')
++  const [salvandoVariante, setSalvandoVariante] = useState(false)
++  const [promocaoTipo, setPromocaoTipo] = useState<'percentual' | 'fixo'>('percentual')
++  const [promocaoDataInicio, setPromocaoDataInicio] = useState('')
++  const [promocaoDataFim, setPromocaoDataFim] = useState('')
++  const [categoriasDisponiveis, setCategoriasDisponiveis] = useState<Array<{ id: number; nome: string }>>([])
++
++  useEffect(() => {
++    let cancelado = false
++    supabase
++      .from('categoria')
++      .select('id,nome')
++      .eq('ativo', true)
++      .order('nome', { ascending: true })
++      .then(({ data }) => {
++        if (cancelado) return
++        setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
++      })
++    return () => { cancelado = true }
++  }, [])
+ 
+   useEffect(() => {
+     setNome(produto.nome)
+@@ -200,6 +224,12 @@ function DetalheContent({
+     setDescricao(produto.descricao ?? '')
+     setPrecoBase(String(produto.precoBase))
+     setAtivo(produto.ativo)
++    setCategoriaIds(produto.categorias.map((c) => c.id))
++    const promoAtiva = produto.promocoes.find((p) => p.ativo)
++    setPrecoPromocional(promoAtiva ? String(promoAtiva.valor) : '')
++    setPromocaoTipo(promoAtiva?.tipo ?? 'percentual')
++    setPromocaoDataInicio(promoAtiva?.dataInicio ?? '')
++    setPromocaoDataFim(promoAtiva?.dataFim ?? '')
+   }, [produto])
+ 
+   const cancelarEdicao = useCallback(() => {
+@@ -209,6 +239,12 @@ function DetalheContent({
+     setDescricao(produto.descricao ?? '')
+     setPrecoBase(String(produto.precoBase))
+     setAtivo(produto.ativo)
++    setCategoriaIds(produto.categorias.map((c) => c.id))
++    const promoAtivaCancel = produto.promocoes.find((p) => p.ativo)
++    setPrecoPromocional(promoAtivaCancel ? String(promoAtivaCancel.valor) : '')
++    setPromocaoTipo(promoAtivaCancel?.tipo ?? 'percentual')
++    setPromocaoDataInicio(promoAtivaCancel?.dataInicio ?? '')
++    setPromocaoDataFim(promoAtivaCancel?.dataFim ?? '')
+     setErroSalvar(null)
+     setEditando(false)
+   }, [produto])
+@@ -222,8 +258,38 @@ function DetalheContent({
+       setErroSalvar(null)
+       setSucessoSalvar(false)
+       await atualizarProdutoAdmin(Number(produto.id), {
+-        nome, slug, sku, descricao, precoBase: preco, ativo,
++        nome, slug, sku, descricao, precoBase: preco, ativo, categoriaIds,
+       })
++
++      // Salvar promoção se preenchida
++      const valorPromo = Number(precoPromocional.replace(',', '.'))
++      if (valorPromo > 0 && promocaoDataInicio && promocaoDataFim) {
++        const promocaoExistente = produto.promocoes.find((p) => p.ativo)
++        if (promocaoExistente) {
++          await supabase
++            .from('promocao')
++            .update({
++              tipo: promocaoTipo,
++              valor: valorPromo,
++              data_inicio: promocaoDataInicio,
++              data_fim: promocaoDataFim,
++              ativo: true,
++            })
++            .eq('id', Number(promocaoExistente.id))
++        } else {
++          await supabase
++            .from('promocao')
++            .insert({
++              produto_id: Number(produto.id),
++              tipo: promocaoTipo,
++              valor: valorPromo,
++              data_inicio: promocaoDataInicio,
++              data_fim: promocaoDataFim,
++              ativo: true,
++            })
++        }
++      }
++
+       await aoAtualizar()
+       setEditando(false)
+       setSucessoSalvar(true)
+@@ -234,6 +300,31 @@ function DetalheContent({
+     }
+   }, [aoAtualizar, ativo, descricao, nome, podeEditar, precoBase, produto.id, sku, slug])
+ 
++  const handleAdicionarVariante = useCallback(async () => {
++    if (!podeEditar) return
++    const sku = novoVarianteSku.trim()
++    const preco = Number(novoVariantePreco.replace(',', '.'))
++    if (!sku || !Number.isFinite(preco) || preco < 0) return
++    setSalvandoVariante(true)
++    try {
++      const { error } = await supabase
++        .from('produto_variante')
++        .insert({
++          produto_id: Number(produto.id),
++          sku,
++          preco,
++          ativo: true,
++        })
++      if (error) throw new Error(`Não foi possível criar variante: ${error.message}`)
++      setNovoVarianteSku('')
++      setNovoVariantePreco('')
++      await aoAtualizar()
++    } catch (err) {
++      setErroSalvar(err instanceof Error ? err.message : 'Erro ao criar variante.')
++    } finally {
++      setSalvandoVariante(false)
++    }
++  }, [aoAtualizar, novoVariantePreco, novoVarianteSku, podeEditar, produto.id])
+   const handleEnviarImagens = useCallback(
+     async (arquivos: File[]) => {
+       if (!podeEditar) return
+@@ -359,6 +450,44 @@ function DetalheContent({
+               <label className="space-y-1 text-sm font-medium text-soft-black">Preço base (R$)
+                 <input required type="number" min="0" step="0.01" value={precoBase} onChange={(e) => setPrecoBase(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+               </label>
++              <label className="space-y-1 text-sm font-medium text-soft-black">Preço promocional (R$)
++                <input type="number" min="0" step="0.01" value={precoPromocional} onChange={(e) => setPrecoPromocional(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="Deixe vazio se não houver" />
++              </label>
++              <label className="space-y-1 text-sm font-medium text-soft-black">Tipo de promoção
++                <select value={promocaoTipo} onChange={(e) => setPromocaoTipo(e.target.value as 'percentual' | 'fixo')} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2">
++                  <option value="percentual">Percentual (%)</option>
++                  <option value="fixo">Valor fixo (R$)</option>
++                </select>
++              </label>
++              <label className="space-y-1 text-sm font-medium text-soft-black">Início da promoção
++                <input type="date" value={promocaoDataInicio} onChange={(e) => setPromocaoDataInicio(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
++              </label>
++              <label className="space-y-1 text-sm font-medium text-soft-black">Fim da promoção
++                <input type="date" value={promocaoDataFim} onChange={(e) => setPromocaoDataFim(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
++              </label>
++              <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Categorias
++                <div className="mt-1 flex flex-wrap gap-3">
++                  {categoriasDisponiveis.map((cat) => (
++                    <label key={cat.id} className="inline-flex items-center gap-1.5 text-sm text-soft-black">
++                      <input
++                        type="checkbox"
++                        checked={categoriaIds.includes(String(cat.id))}
++                        onChange={(e) => {
++                          setCategoriaIds((prev) =>
++                            e.target.checked
++                              ? [...prev, String(cat.id)]
++                              : prev.filter((id) => id !== String(cat.id)),
++                          )
++                        }}
++                      />
++                      {cat.nome}
++                    </label>
++                  ))}
++                  {categoriasDisponiveis.length === 0 && (
++                    <span className="text-xs text-content-muted">Carregando categorias…</span>
++                  )}
++                </div>
++              </label>
+               <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Descrição
+                 <textarea rows={4} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+               </label>
+@@ -499,11 +628,27 @@ function DetalheContent({
+             <h2 className="font-display mb-4 text-lg font-bold text-soft-black">
+               Variantes
+             </h2>
+-            {produto.variantes.length === 0 ? (
+-              <p className="text-sm text-content-muted">
+-                Produto sem variantes.
++            {produto.variantes.length === 0 && (
++              <p className="mb-3 text-sm text-content-muted">
++                Produto sem variantes. Adicione abaixo.
+               </p>
+-            ) : (
++            )}
++            {podeEditar && (
++              <div className="mb-4 flex flex-wrap items-end gap-3">
++                <label className="space-y-1 text-sm font-medium text-soft-black">
++                  SKU da variante
++                  <input value={novoVarianteSku} onChange={(e) => setNovoVarianteSku(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="SKU" />
++                </label>
++                <label className="space-y-1 text-sm font-medium text-soft-black">
++                  Preço (R$)
++                  <input type="number" min="0" step="0.01" value={novoVariantePreco} onChange={(e) => setNovoVariantePreco(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" placeholder="0.00" />
++                </label>
++                <Button type="button" variant="primary" disabled={salvandoVariante || !novoVarianteSku.trim()} onClick={() => void handleAdicionarVariante()}>
++                  {salvandoVariante ? 'Salvando…' : 'Adicionar variante'}
++                </Button>
++              </div>
++            )}
++            {produto.variantes.length > 0 && (
+               <Table>
+                 <TableHeader>
+                   <TableHead>SKU</TableHead>
+diff --git a/web/src/domains/admin/pages/AdminProdutoNovoPage.tsx b/web/src/domains/admin/pages/AdminProdutoNovoPage.tsx
+index b666d28..c4b2db4 100644
+--- a/web/src/domains/admin/pages/AdminProdutoNovoPage.tsx
++++ b/web/src/domains/admin/pages/AdminProdutoNovoPage.tsx
+@@ -1,9 +1,10 @@
+-import { useState, type FormEvent } from 'react'
++import { useState, type FormEvent, useEffect } from 'react'
+ import { useQueryClient } from '@tanstack/react-query'
+ import { Link, useNavigate } from 'react-router-dom'
+ import { ArrowLeft, PackagePlus } from 'lucide-react'
+ import { SeoHead } from '@/lib/seo'
+ import { Button } from '@/components/common/Button'
++import { supabase } from '@/lib/supabase'
+ import { useAdminPermissao } from '../context/AdminPermissionContext'
+ import { criarProdutoAdmin } from '../services/adminProduto.service'
+ 
+@@ -28,9 +29,25 @@ export function AdminProdutoNovoPage() {
+   const [descricao, setDescricao] = useState('')
+   const [precoBase, setPrecoBase] = useState('')
+   const [ativo, setAtivo] = useState(false)
++  const [categoriaIds, setCategoriaIds] = useState<string[]>([])
++  const [categoriasDisponiveis, setCategoriasDisponiveis] = useState<Array<{ id: number; nome: string }>>([])
+   const [salvando, setSalvando] = useState(false)
+   const [erro, setErro] = useState<string | null>(null)
+ 
++  useEffect(() => {
++    let cancelado = false
++    supabase
++      .from('categoria')
++      .select('id,nome')
++      .eq('ativo', true)
++      .order('nome', { ascending: true })
++      .then(({ data }) => {
++        if (cancelado) return
++        setCategoriasDisponiveis((data ?? []) as Array<{ id: number; nome: string }>)
++      })
++    return () => { cancelado = true }
++  }, [])
++
+   async function submeter(evento: FormEvent<HTMLFormElement>) {
+     evento.preventDefault()
+     if (!pode('produto.criar')) {
+@@ -48,6 +65,7 @@ export function AdminProdutoNovoPage() {
+         descricao,
+         precoBase: Number(precoBase.replace(',', '.')),
+         ativo,
++        categoriaIds,
+       })
+       await queryClient.invalidateQueries({ queryKey: ['admin-produtos'] })
+       navigate(`/admin/produtos/${id}`, { replace: true })
+@@ -95,6 +113,26 @@ export function AdminProdutoNovoPage() {
+           <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Descrição
+             <textarea rows={5} value={descricao} onChange={(e) => setDescricao(e.target.value)} className="w-full rounded-lg border-2 border-champagne bg-white px-3 py-2" />
+           </label>
++          <label className="space-y-1 text-sm font-medium text-soft-black md:col-span-2">Categorias
++            <div className="mt-1 flex flex-wrap gap-3">
++              {categoriasDisponiveis.map((cat) => (
++                <label key={cat.id} className="inline-flex items-center gap-1.5 text-sm text-soft-black">
++                  <input
++                    type="checkbox"
++                    checked={categoriaIds.includes(String(cat.id))}
++                    onChange={(e) => {
++                      setCategoriaIds((prev) =>
++                        e.target.checked
++                          ? [...prev, String(cat.id)]
++                          : prev.filter((id) => id !== String(cat.id)),
++                      )
++                    }}
++                  />
++                  {cat.nome}
++                </label>
++              ))}
++            </div>
++          </label>
+           <label className="flex items-center gap-2 text-sm text-soft-black md:col-span-2">
+             <input type="checkbox" checked={ativo} onChange={(e) => setAtivo(e.target.checked)} />
+             Manter ativo na vitrine após salvar
+diff --git a/web/src/domains/admin/services/adminProduto.service.ts b/web/src/domains/admin/services/adminProduto.service.ts
+index 0dc6a05..4565840 100644
+--- a/web/src/domains/admin/services/adminProduto.service.ts
++++ b/web/src/domains/admin/services/adminProduto.service.ts
+@@ -7,6 +7,7 @@ export interface DadosProdutoAdmin {
+   descricao: string | null
+   precoBase: number
+   ativo: boolean
++  categoriaIds?: string[]
+ }
+ 
+ function validarDados(valores: DadosProdutoAdmin): void {
+@@ -36,7 +37,19 @@ export async function criarProdutoAdmin(valores: DadosProdutoAdmin): Promise<str
+ 
+   if (error) throw new Error(`Não foi possível criar o produto: ${error.message}`)
+   if (!data) throw new Error('O Supabase não retornou o produto criado.')
+-  return String(data.id)
++  const produtoId = Number(data.id)
++
++  if (valores.categoriaIds && valores.categoriaIds.length > 0) {
++    const { error: erroInsert } = await supabase
++      .from('produto_categoria')
++      .insert(valores.categoriaIds.map((cid) => ({
++        produto_id: produtoId,
++        categoria_id: Number(cid),
++      })))
++    if (erroInsert) throw new Error(`Não foi possível associar categorias: ${erroInsert.message}`)
++  }
++
++  return String(produtoId)
+ }
+ 
+ export async function atualizarProdutoAdmin(
+@@ -65,4 +78,41 @@ export async function atualizarProdutoAdmin(
+ 
+   if (error) throw new Error(`Não foi possível salvar o produto: ${error.message}`)
+   if (!data) throw new Error('Nenhum produto foi atualizado. Verifique sua permissão administrativa e tente novamente.')
++
++  if (valores.categoriaIds !== undefined) {
++    const { data: existentes, error: erroLeitura } = await supabase
++      .from('produto_categoria')
++      .select('categoria_id')
++      .eq('produto_id', produtoId)
++    if (erroLeitura) throw new Error(`Não foi possível ler categorias existentes: ${erroLeitura.message}`)
++
++    const categoriasAnteriores = (existentes ?? []).map((row: { categoria_id: number }) => row.categoria_id)
++
++    const { error: erroDelete } = await supabase
++      .from('produto_categoria')
++      .delete()
++      .eq('produto_id', produtoId)
++    if (erroDelete) throw new Error(`Não foi possível atualizar categorias: ${erroDelete.message}`)
++
++    if (valores.categoriaIds.length > 0) {
++      const { error: erroInsert } = await supabase
++        .from('produto_categoria')
++        .insert(valores.categoriaIds.map((cid) => ({
++          produto_id: produtoId,
++          categoria_id: Number(cid),
++        })))
++      if (erroInsert) {
++        // Tentar restaurar as associações anteriores
++        if (categoriasAnteriores.length > 0) {
++          await supabase
++            .from('produto_categoria')
++            .insert(categoriasAnteriores.map((cid) => ({
++              produto_id: produtoId,
++              categoria_id: cid,
++            })))
++        }
++        throw new Error(`Não foi possível associar categorias: ${erroInsert.message}`)
++      }
++    }
++  }
+ }
+diff --git a/web/src/domains/conteudo/pages/AcervoVisualPage.tsx b/web/src/domains/conteudo/pages/AcervoVisualPage.tsx
+index 3389fb1..72dd68a 100644
+--- a/web/src/domains/conteudo/pages/AcervoVisualPage.tsx
++++ b/web/src/domains/conteudo/pages/AcervoVisualPage.tsx
+@@ -1,20 +1,53 @@
+-import { useMemo, useState } from 'react'
++import { useEffect, useMemo, useState } from 'react'
+ import { Link } from 'react-router-dom'
+ import { ArrowLeft, Search, Image as ImageIcon } from 'lucide-react'
+ import { SeoHead } from '@/lib/seo'
+-import { ACERVO_CATEGORIAS, ACERVO_IMAGENS, type AcervoCategoria } from '../model/acervo-visual'
++import { supabase } from '@/lib/supabase'
++
++interface ImagemAcervo {
++  id: number
++  url: string
++  produtoId: number | null
++  principal: boolean
++}
+ 
+ export function AcervoVisualPage() {
+-  const [categoria, setCategoria] = useState<AcervoCategoria | 'todas'>('todas')
++  const [imagens, setImagens] = useState<ImagemAcervo[]>([])
++  const [carregando, setCarregando] = useState(true)
++  const [erro, setErro] = useState<string | null>(null)
+   const [busca, setBusca] = useState('')
+-  const imagens = useMemo(() => {
++
++  useEffect(() => {
++    let cancelado = false
++    supabase
++      .from('produto_imagem')
++      .select('id, url, produto_id, principal')
++      .order('id', { ascending: false })
++      .then(({ data, error }) => {
++        if (cancelado) return
++        if (error) {
++          setErro('Não foi possível carregar o acervo.')
++          setCarregando(false)
++          return
++        }
++        setImagens(
++          (data ?? []).map((row: { id: number; url: string; produto_id: number | null; principal: boolean }) => ({
++            id: row.id,
++            url: row.url,
++            produtoId: row.produto_id,
++            principal: row.principal,
++          })),
++        )
++        setCarregando(false)
++      })
++    return () => { cancelado = true }
++  }, [])
++
++  const imagensFiltradas = useMemo(() => {
+     const termo = busca.trim().toLocaleLowerCase('pt-BR')
+-    return ACERVO_IMAGENS.filter((imagem) => {
+-      const correspondeCategoria = categoria === 'todas' || imagem.categoria === categoria
+-      const correspondeBusca = !termo || imagem.arquivo.toLocaleLowerCase('pt-BR').includes(termo) || imagem.titulo.toLocaleLowerCase('pt-BR').includes(termo)
+-      return correspondeCategoria && correspondeBusca
+-    })
+-  }, [categoria, busca])
++    if (!termo) return imagens
++    return imagens.filter((img) => img.url.toLocaleLowerCase('pt-BR').includes(termo))
++  }, [imagens, busca])
+ 
+   return (
+     <main className="section-angel min-h-[60vh]">
+@@ -26,42 +59,44 @@ export function AcervoVisualPage() {
+         <header className="mb-8 max-w-3xl">
+           <p className="overline-angel mb-2">Patrimônio visual</p>
+           <h1 className="title-h1">Acervo visual Angel</h1>
+-          <p className="mt-3 text-body-lg text-content-muted">As imagens do lote foram organizadas por finalidade visual. Esta galeria não substitui o cadastro comercial: a associação de uma imagem a um produto só será feita quando for confirmada no catálogo.</p>
+-          <p className="mt-3 text-sm text-content-subtle">{ACERVO_IMAGENS.length} arquivos inventariados · {imagens.length} exibidos</p>
++          <p className="mt-3 text-body-lg text-content-muted">Imagens vinculadas ao catálogo comercial do Supabase. A associação de uma imagem a um produto é feita na ficha do produto.</p>
++          <p className="mt-3 text-sm text-content-subtle">{imagens.length} imagens no acervo · {imagensFiltradas.length} exibidas</p>
+         </header>
+ 
+         <div className="mb-5 flex flex-col gap-3 sm:flex-row">
+           <label className="relative block flex-1">
+             <span className="sr-only">Buscar imagens por nome</span>
+             <Search size={18} aria-hidden="true" className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-content-subtle" />
+-            <input value={busca} onChange={(event) => setBusca(event.target.value)} placeholder="Buscar por nome do arquivo…" className="field-angel pl-10" />
++            <input value={busca} onChange={(event) => setBusca(event.target.value)} placeholder="Buscar por URL…" className="field-angel pl-10" />
+           </label>
+         </div>
+-        <div className="mb-8 flex flex-wrap gap-2" aria-label="Filtrar por categoria">
+-          {ACERVO_CATEGORIAS.map((item) => {
+-            const count = item.id === 'todas' ? ACERVO_IMAGENS.length : ACERVO_IMAGENS.filter((imagem) => imagem.categoria === item.id).length
+-            const ativo = categoria === item.id
+-            return <button key={item.id} type="button" onClick={() => setCategoria(item.id)} aria-pressed={ativo} className={ativo ? 'rounded-full bg-primary px-4 py-2 text-sm font-semibold text-primary-contrast' : 'rounded-full border border-border bg-surface px-4 py-2 text-sm font-medium text-content hover:border-primary'}>{item.label} <span className="ml-1 opacity-75">{count}</span></button>
+-          })}
+-        </div>
+ 
+-        {imagens.length === 0 ? (
++        {carregando ? (
++          <div className="surface-card px-6 py-16 text-center">
++            <p className="text-body text-content-muted">Carregando acervo…</p>
++          </div>
++        ) : erro ? (
++          <div className="surface-card px-6 py-16 text-center">
++            <p className="text-body text-coral">{erro}</p>
++          </div>
++        ) : imagensFiltradas.length === 0 ? (
+           <div className="surface-card px-6 py-16 text-center">
+             <ImageIcon size={28} className="mx-auto text-content-subtle" aria-hidden="true" />
+             <h2 className="mt-4 title-h3">Nenhuma imagem encontrada</h2>
+-            <p className="mt-2 text-body text-content-muted">Altere a busca ou escolha outra categoria.</p>
++            <p className="mt-2 text-body text-content-muted">Altere a busca ou associe imagens a produtos.</p>
+           </div>
+         ) : (
+           <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+-            {imagens.map((imagem) => (
+-              <article key={imagem.arquivo} className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
++            {imagensFiltradas.map((imagem) => (
++              <article key={imagem.id} className="overflow-hidden rounded-2xl border border-border bg-surface shadow-sm">
+                 <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-surface-alt p-3">
+-                  <img src={imagem.src} alt={imagem.titulo} loading="lazy" decoding="async" className="h-full w-full object-contain" />
++                  <img src={imagem.url} alt="" loading="lazy" decoding="async" className="h-full w-full object-contain" />
+                 </div>
+                 <div className="p-3">
+-                  <p className="line-clamp-2 text-sm font-semibold text-content">{imagem.titulo}</p>
+-                  <p className="mt-1 text-xs uppercase tracking-wide text-content-subtle">{imagem.categoria}</p>
+-                  <p className="mt-2 break-all text-[11px] text-content-subtle">{imagem.arquivo}</p>
++                  <p className="text-xs text-content-subtle">
++                    {imagem.principal ? 'Principal' : 'Galeria'}
++                    {imagem.produtoId ? ` · Produto ${imagem.produtoId}` : ' · Sem produto'}
++                  </p>
+                 </div>
+               </article>
+             ))}
+@@ -70,4 +105,4 @@ export function AcervoVisualPage() {
+       </div>
+     </main>
+   )
+-}
++}
+\ No newline at end of file
