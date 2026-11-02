@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import type { MidiaProduto } from '../model/produto'
@@ -25,6 +25,12 @@ export function ProdutoGaleria({
   const [indice, setIndice] = useState(0)
   const [lightboxAberta, setLightboxAberta] = useState(false)
 
+  useEffect(() => {
+    if (indice >= midias.length) {
+      setIndice(Math.max(0, midias.length - 1))
+    }
+  }, [midias, indice])
+
   if (midias.length === 0) {
     return (
       <ProdutoImagem
@@ -36,6 +42,7 @@ export function ProdutoGaleria({
   }
 
   const midia = midias[indice]
+  if (!midia) return null
   const anterior = () =>
     setIndice((atual) => (atual - 1 + midias.length) % midias.length)
   const proxima = () =>
