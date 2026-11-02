@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { paginaRepositorySupabase } from '../repositories/pagina.repository.supabase'
-import type { Pagina, PaginaSecao, PaginaBloco } from '../model/pagina'
+import { paginaRepositorySupabase } from '../../repositories/pagina.repository.supabase'
+import type { Pagina, PaginaSecao, PaginaBloco } from '../../model/pagina'
 
 export function PaginaPublicaPage() {
   const { slug } = useParams<{ slug: string }>()
@@ -14,11 +14,11 @@ export function PaginaPublicaPage() {
     setLoading(true)
     paginaRepositorySupabase
       .buscarPorSlug(slug)
-      .then((p) => {
+      .then((p: Pagina | null) => {
         if (!p) setError('Página não encontrada')
         else setPagina(p)
       })
-      .catch((e) => setError(e instanceof Error ? e.message : 'Erro ao carregar'))
+      .catch((e: unknown) => setError(e instanceof Error ? e.message : 'Erro ao carregar'))
       .finally(() => setLoading(false))
   }, [slug])
 
@@ -30,11 +30,11 @@ export function PaginaPublicaPage() {
     <article className="container-angel py-8">
       <h1 className="text-3xl font-bold mb-4">{pagina.titulo}</h1>
       {pagina.resumo && <p className="text-lg text-gray-600 mb-6">{pagina.resumo}</p>}
-      {pagina.secoes?.map((secao) => (
+      {pagina.secoes?.map((secao: PaginaSecao) => (
         <section key={secao.id} className="mb-8">
           {secao.titulo && <h2 className="text-2xl font-semibold mb-3">{secao.titulo}</h2>}
           {secao.subtitulo && <p className="text-gray-500 mb-3">{secao.subtitulo}</p>}
-          {secao.blocos?.map((bloco) => (
+          {secao.blocos?.map((bloco: PaginaBloco) => (
             <BlocoRenderer key={bloco.id} bloco={bloco} />
           ))}
         </section>
