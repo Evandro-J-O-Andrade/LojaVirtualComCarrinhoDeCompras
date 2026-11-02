@@ -2,6 +2,35 @@ export type PaginaStatus = 'rascunho' | 'publicado' | 'arquivado'
 
 export type PaginaMidiaTipo = 'imagem' | 'video' | 'banner'
 
+export type PaginaBlocoTipo =
+  | 'banner'
+  | 'texto'
+  | 'imagem'
+  | 'video'
+  | 'produtos_destaque'
+  | 'categorias'
+  | 'promocoes'
+  | 'beneficios'
+  | 'servicos'
+  | 'cta'
+  | 'galeria'
+  | 'html'
+
+export interface PaginaBloco {
+  id: number
+  secaoId: number
+  tipo: PaginaBlocoTipo
+  titulo?: string
+  subtitulo?: string
+  conteudo?: string
+  url?: string
+  ordem: number
+  visivel: boolean
+  metadata?: Record<string, unknown>
+  criadoEm: string
+  atualizadoEm: string
+}
+
 export interface PaginaMidia {
   id: number
   paginaId: number
@@ -25,6 +54,7 @@ export interface PaginaSecao {
   ativo: boolean
   criadoEm: string
   atualizadoEm: string
+  blocos?: PaginaBloco[]
 }
 
 export interface Pagina {
@@ -57,4 +87,16 @@ export interface PaginaInput {
   imagemCapa?: string
   videoUrl?: string
   ordem?: number
+}
+
+export interface PaginaBlocoInput {
+  secaoId: number
+  tipo: PaginaBlocoTipo
+  titulo?: string
+  subtitulo?: string
+  conteudo?: string
+  url?: string
+  ordem?: number
+  visivel?: boolean
+  metadata?: Record<string, unknown>
 }
