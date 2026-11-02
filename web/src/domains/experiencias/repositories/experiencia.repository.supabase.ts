@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Experiencia, ExperienciaInput, ExperienciaMidia, ExperienciaStatus } from '../model/experiencia'
+import type { Experiencia, ExperienciaMidia, ExperienciaStatus } from '../model/experiencia'
 import type { ExperienciaRepository } from './experiencia.repository'
 
 interface ExperienciaRow {

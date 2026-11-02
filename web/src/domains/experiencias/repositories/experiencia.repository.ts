@@ -1,5 +1,4 @@
-import { supabase } from '@/lib/supabase'
-import type { Experiencia, ExperienciaInput, ExperienciaMidia, ExperienciaStatus } from '../model/experiencia'
+import type { Experiencia, ExperienciaInput, ExperienciaMidia } from '../model/experiencia'
 
 export interface ExperienciaRepository {
   listar(): Promise<Experiencia[]>
