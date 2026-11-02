@@ -54,7 +54,55 @@ CREATE TABLE IF NOT EXISTS pagina_midia (
 );
 
 -- ============================================================
--- Experiências
+-- CMS: Blocos de conteúdo por seção
+-- ============================================================
+CREATE TABLE IF NOT EXISTS pagina_bloco (
+  id bigserial PRIMARY KEY,
+  secao_id bigint NOT NULL REFERENCES pagina_secao(id) ON DELETE CASCADE,
+  tipo varchar(50) NOT NULL,
+  titulo varchar(255),
+  subtitulo text,
+  conteudo text,
+  url text,
+  ordem integer NOT NULL DEFAULT 0,
+  visivel boolean NOT NULL DEFAULT true,
+  metadata jsonb,
+  criado_em timestamptz NOT NULL DEFAULT now(),
+  atualizado_em timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT pb_tipo_check CHECK (tipo IN ('banner', 'texto', 'imagem', 'video', 'produtos_destaque', 'categorias', 'promocoes', 'beneficios', 'servicos', 'cta', 'galeria', 'html'))
+);
+
+CREATE TABLE IF NOT EXISTS pagina_revisao (
+  id bigserial PRIMARY KEY,
+  pagina_id bigint NOT NULL REFERENCES pagina(id) ON DELETE CASCADE,
+  titulo varchar(255) NOT NULL,
+  slug varchar(255) NOT NULL,
+  conteudo jsonb,
+  status varchar(20) NOT NULL,
+  criado_por uuid REFERENCES auth.users(id),
+  criado_em timestamptz NOT NULL DEFAULT now()
+);
+
+-- Indexes adicionais para blocos e revisões
+CREATE INDEX IF NOT EXISTS idx_pagina_bloco_secao ON pagina_bloco(secao_id);
+CREATE INDEX IF NOT EXISTS idx_pagina_revisao_pagina ON pagina_revisao(pagina_id);
+
+-- RLS: blocos seguem a página pai
+ALTER TABLE pagina_bloco ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pagina_revisao ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "pagina_bloco_public_read" ON pagina_bloco FOR SELECT TO public
+  USING (EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_bloco.secao_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
+
+CREATE POLICY "pagina_bloco_admin_all" ON pagina_bloco FOR ALL TO authenticated
+  USING (is_admin()) WITH CHECK (is_admin());
+
+CREATE POLICY "pagina_revisao_admin_all" ON pagina_revisao FOR ALL TO authenticated
+  USING (is_admin()) WITH CHECK (is_admin());
+
+-- Trigger para pagina_bloco
+DROP TRIGGER IF EXISTS trg_pagina_bloco_atualizado ON pagina_bloco;
+CREATE TRIGGER trg_pagina_bloco_atualizado BEFORE UPDATE ON pagina_bloco FOR EACH ROW EXECUTE FUNCTION update_atualizado_em();
 -- ============================================================
 CREATE TABLE IF NOT EXISTS experiencia (
   id bigserial PRIMARY KEY,
