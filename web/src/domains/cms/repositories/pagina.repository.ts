@@ -1,4 +1,4 @@
-import type { Pagina, PaginaInput, PaginaMidia, PaginaSecao, PaginaBloco, PaginaBlocoInput } from '../model/pagina'
+import type { Pagina, PaginaInput, PaginaMidia, PaginaSecao } from '../model/pagina'
 
 export interface PaginaRepository {
   listar(): Promise<Pagina[]>
@@ -13,9 +13,4 @@ export interface PaginaRepository {
   removerMidia(id: number): Promise<void>
   adicionarSecao(paginaId: number, tipo: string, titulo?: string, conteudo?: string): Promise<PaginaSecao>
   removerSecao(id: number): Promise<void>
-  adicionarBloco(input: PaginaBlocoInput): Promise<PaginaBloco>
-  atualizarBloco(id: number, input: Partial<PaginaBlocoInput>): Promise<PaginaBloco>
-  removerBloco(id: number): Promise<void>
-  reordenarSecoes(paginaId: number, ordens: { id: number; ordem: number }[]): Promise<void>
-  reordenarBlocos(secaoId: number, ordens: { id: number; ordem: number }[]): Promise<void>
 }
