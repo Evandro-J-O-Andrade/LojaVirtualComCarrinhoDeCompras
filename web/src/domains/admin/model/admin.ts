@@ -110,6 +110,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
   {
     grupo: 'Experiências',
     modulos: [
+      { rotulo: 'Experiências', href: '/admin/experiencias', icon: Sparkles },
       { rotulo: 'Serviços', href: null, icon: Sparkles, emBreve: true },
       { rotulo: 'Profissionais', href: null, icon: Users, emBreve: true },
       { rotulo: 'Agenda', href: null, icon: CalendarClock, emBreve: true },

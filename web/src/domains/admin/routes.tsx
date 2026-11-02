@@ -8,6 +8,7 @@ import { AdminShell } from './components/AdminShell'
 import { AdminProdutoNovoPage } from './pages/AdminProdutoNovoPage'
 import { AdminCategoriasPage } from './pages/AdminCategoriasPage'
 import { AdminPaginasPage } from '../cms/pages/lazy'
+import { AdminExperienciasPage } from '../experiencias/pages/lazy'
 
 /**
  * Rotas administrativas
@@ -37,6 +38,10 @@ export const adminRoutes = (
     <Route
       path="/admin/paginas"
       element={<AdminPaginasPage />}
+    />
+    <Route
+      path="/admin/experiencias"
+      element={<AdminExperienciasPage />}
     />
   </Route>
 )
