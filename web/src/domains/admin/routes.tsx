@@ -9,6 +9,8 @@ import { AdminProdutoNovoPage } from './pages/AdminProdutoNovoPage'
 import { AdminCategoriasPage } from './pages/AdminCategoriasPage'
 import { AdminPaginasPage } from '../cms/pages/lazy'
 import { AdminExperienciasPage } from '../experiencias/pages/lazy'
+import { AdminServicosPage } from '../services/pages/lazy'
+import { AdminClientesPage } from '../clientes/pages/lazy'
 
 /**
  * Rotas administrativas
@@ -42,6 +44,14 @@ export const adminRoutes = (
     <Route
       path="/admin/experiencias"
       element={<AdminExperienciasPage />}
+    />
+    <Route
+      path="/admin/servicos"
+      element={<AdminServicosPage />}
+    />
+    <Route
+      path="/admin/clientes"
+      element={<AdminClientesPage />}
     />
   </Route>
 )

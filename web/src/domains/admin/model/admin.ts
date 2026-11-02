@@ -111,7 +111,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
     grupo: 'Experiências',
     modulos: [
       { rotulo: 'Experiências', href: '/admin/experiencias', icon: Sparkles },
-      { rotulo: 'Serviços', href: null, icon: Sparkles, emBreve: true },
+      { rotulo: 'Serviços', href: '/admin/servicos', icon: Sparkles },
       { rotulo: 'Profissionais', href: null, icon: Users, emBreve: true },
       { rotulo: 'Agenda', href: null, icon: CalendarClock, emBreve: true },
       { rotulo: 'Agendamentos', href: null, icon: ClipboardList, emBreve: true },
@@ -122,7 +122,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
   {
     grupo: 'Relacionamento',
     modulos: [
-      { rotulo: 'Clientes', href: null, icon: Users, emBreve: true },
+      { rotulo: 'Clientes', href: '/admin/clientes', icon: Users },
       { rotulo: 'Atendimentos', href: null, icon: MessageCircle, emBreve: true },
       { rotulo: 'Notificações', href: null, icon: Bell, emBreve: true },
     ],
