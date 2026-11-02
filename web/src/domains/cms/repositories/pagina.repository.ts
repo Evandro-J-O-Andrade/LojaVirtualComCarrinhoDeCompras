@@ -1,4 +1,3 @@
-import { supabase } from '@/lib/supabase'
 import type { Pagina, PaginaInput, PaginaMidia, PaginaSecao } from '../model/pagina'
 
 export interface PaginaRepository {

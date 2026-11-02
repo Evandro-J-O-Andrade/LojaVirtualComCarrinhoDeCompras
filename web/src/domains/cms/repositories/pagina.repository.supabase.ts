@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Pagina, PaginaInput, PaginaMidia, PaginaSecao, PaginaStatus } from '../model/pagina'
+import type { Pagina, PaginaMidia, PaginaStatus } from '../model/pagina'
 import type { PaginaRepository } from './pagina.repository'
 
 interface PaginaRow {
@@ -116,7 +116,7 @@ export const paginaRepositorySupabase: PaginaRepository = {
       .eq('pagina_id', id)
       .order('ordem', { ascending: true })
 
-    return rowToPagina(pagina as PaginaRow, secoes as SecaoRow[] | null, midias as MidiaRow[] | null)
+    return rowToPagina(pagina as PaginaRow, (secoes as SecaoRow[] | null) ?? undefined, (midias as MidiaRow[] | null) ?? undefined)
   },
 
   async buscarPorSlug(slug) {
