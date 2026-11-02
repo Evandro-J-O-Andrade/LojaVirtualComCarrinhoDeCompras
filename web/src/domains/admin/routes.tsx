@@ -7,17 +7,10 @@ import {
 import { AdminShell } from './components/AdminShell'
 import { AdminProdutoNovoPage } from './pages/AdminProdutoNovoPage'
 import { AdminCategoriasPage } from './pages/AdminCategoriasPage'
+import { AdminPaginasPage } from '../cms/pages/lazy'
 
 /**
- * Rotas administrativas — dentro do
- * shell próprio (AdminShell) e do
- * gate de autenticação real
- * (ProtectedRoute, no router).
- *
- * Primeiro corte (12A): shell +
- * dashboard + produtos (lista e
- * detalhe). Os demais módulos
- * permanecem "em breve" na sidebar.
+ * Rotas administrativas
  */
 export const adminRoutes = (
   <Route element={<AdminShell />}>
@@ -40,6 +33,10 @@ export const adminRoutes = (
     <Route
       path="/admin/produtos/:id"
       element={<AdminProdutoDetalhePage />}
+    />
+    <Route
+      path="/admin/paginas"
+      element={<AdminPaginasPage />}
     />
   </Route>
 )
