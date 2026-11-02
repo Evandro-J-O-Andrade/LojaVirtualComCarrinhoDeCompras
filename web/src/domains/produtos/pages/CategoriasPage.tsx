@@ -8,7 +8,6 @@ import { useCategorias, useProdutos } from '../hooks/useProdutos'
 import { useMimos } from '@/domains/mimos/hooks/useMimos'
 import {
   CATEGORIAS_COMERCIAIS,
-  descricaoDaCategoria,
   midiaDaCategoria,
   midiaDaCategoriaComercial,
   normalizarSlugCategoria,

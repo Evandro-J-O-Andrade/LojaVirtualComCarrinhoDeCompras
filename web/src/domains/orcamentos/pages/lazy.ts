@@ -5,3 +5,9 @@ export const NovoOrcamentoPage = lazy(() =>
     default: modulo.NovoOrcamentoPage,
   })),
 )
+
+export const AdminOrcamentosPage = lazy(() =>
+  import('./AdminOrcamentosPage').then((m) => ({
+    default: m.AdminOrcamentosPage,
+  })),
+)

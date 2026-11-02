@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AlertCircle, Mail, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
@@ -7,7 +7,6 @@ import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { supabase, supabaseConfigurado } from '@/lib/supabase'
 
 export function RecuperarSenhaPage() {
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [erro, setErro] = useState('')
   const [enviando, setEnviando] = useState(false)

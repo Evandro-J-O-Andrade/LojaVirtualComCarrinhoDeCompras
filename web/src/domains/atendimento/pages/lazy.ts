@@ -11,3 +11,15 @@ export const ContatoPage = lazy(() =>
     default: m.ContatoPage,
   })),
 )
+
+export const AdminAtendimentosPage = lazy(() =>
+  import('./AdminAtendimentosPage').then((m) => ({
+    default: m.AdminAtendimentosPage,
+  })),
+)
+
+export const AdminNotificacoesPage = lazy(() =>
+  import('./AdminNotificacoesPage').then((m) => ({
+    default: m.AdminNotificacoesPage,
+  })),
+)

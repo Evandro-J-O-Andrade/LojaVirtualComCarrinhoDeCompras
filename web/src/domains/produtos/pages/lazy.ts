@@ -23,3 +23,15 @@ export const CategoriaDetailPage = lazy(() =>
     default: modulo.CategoriaDetailPage,
   })),
 )
+
+export const AdminPromocoesPage = lazy(() =>
+  import('./AdminPromocoesPage').then((m) => ({
+    default: m.AdminPromocoesPage,
+  })),
+)
+
+export const AdminEstoquePage = lazy(() =>
+  import('./AdminEstoquePage').then((m) => ({
+    default: m.AdminEstoquePage,
+  })),
+)

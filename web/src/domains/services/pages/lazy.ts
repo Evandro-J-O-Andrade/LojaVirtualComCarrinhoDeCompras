@@ -17,3 +17,9 @@ export const AdminServicosPage = lazy(() =>
     default: m.AdminServicosPage,
   })),
 )
+
+export const AdminProfissionaisPage = lazy(() =>
+  import('./AdminProfissionaisPage').then((m) => ({
+    default: m.AdminProfissionaisPage,
+  })),
+)

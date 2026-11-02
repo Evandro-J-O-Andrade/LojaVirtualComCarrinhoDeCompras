@@ -7,12 +7,16 @@ import {
   Users,
   FileText,
   TriangleAlert,
+  Heart,
+  Calendar,
 } from 'lucide-react'
 import { SeoHead } from '@/lib/seo'
 import { Card } from '@/components/dashboard/Card'
 import { Button } from '@/components/common/Button'
 import { useAdminProdutos } from '../hooks/useAdminProdutos'
 import { useAdminPermissao } from '../context/AdminPermissionContext'
+import { useEffect, useState } from 'react'
+import { clienteRepositorySupabase } from '@/domains/clientes/repositories/cliente.repository.supabase'
 
 interface Atalho {
   rotulo: string
@@ -29,6 +33,30 @@ const ATALHOS: Atalho[] = [
     icon: Package,
   },
   {
+    rotulo: 'Clientes',
+    descricao: 'Cadastro central e endereços.',
+    href: '/admin/clientes',
+    icon: Users,
+  },
+  {
+    rotulo: 'Serviços',
+    descricao: 'Catálogo de serviços e agendamentos.',
+    href: '/admin/servicos',
+    icon: Calendar,
+  },
+  {
+    rotulo: 'Experiências',
+    descricao: 'Gestão de experiências.',
+    href: '/admin/experiencias',
+    icon: Heart,
+  },
+  {
+    rotulo: 'Páginas (CMS)',
+    descricao: 'Criar e editar páginas do site.',
+    href: '/admin/paginas',
+    icon: FileText,
+  },
+  {
     rotulo: 'Orçamentos',
     descricao: 'Propostas comerciais em aberto.',
     href: null,
@@ -39,12 +67,6 @@ const ATALHOS: Atalho[] = [
     descricao: 'Acompanhamento de pedidos.',
     href: null,
     icon: ShoppingBag,
-  },
-  {
-    rotulo: 'Clientes',
-    descricao: 'Base de clientes.',
-    href: null,
-    icon: Users,
   },
 ]
 
@@ -67,6 +89,14 @@ export function DashboardPage() {
   } = useAdminProdutos()
   const { estado: permissaoEstado, motivo } =
     useAdminPermissao()
+
+  const [clientesCount, setClientesCount] = useState<number | null>(null)
+  const [mimosCount, setMimosCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    clienteRepositorySupabase.listar().then((r: any[]) => setClientesCount(r.length)).catch(() => setClientesCount(null))
+    setMimosCount(null)
+  }, [])
 
   const conectado =
     !error && data?.estado === 'conectado'
@@ -156,7 +186,7 @@ export function DashboardPage() {
         )}
 
         {/* KPIs estruturais */}
-        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-6">
           <KpiCard
             icon={Package}
             rotulo="Produtos no catálogo"
@@ -174,20 +204,32 @@ export function DashboardPage() {
             }
           />
           <KpiCard
-            icon={ShoppingBag}
-            rotulo="Pedidos"
-            valor="—"
-            nota="Após a integração"
-          />
-          <KpiCard
             icon={Users}
             rotulo="Clientes"
+            valor={clientesCount !== null ? String(clientesCount) : '—'}
+            nota={clientesCount !== null ? 'Contagem real do banco' : 'Após a integração'}
+          />
+          <KpiCard
+            icon={Heart}
+            rotulo="Mimos"
+            valor={mimosCount !== null ? String(mimosCount) : '—'}
+            nota={mimosCount !== null ? 'Contagem real do banco' : 'Após a integração'}
+          />
+          <KpiCard
+            icon={Calendar}
+            rotulo="Agendamentos"
             valor="—"
-            nota="Após a integração"
+            nota="Em progresso"
           />
           <KpiCard
             icon={FileText}
             rotulo="Orçamentos em aberto"
+            valor="—"
+            nota="Após a integração"
+          />
+          <KpiCard
+            icon={ShoppingBag}
+            rotulo="Pedidos"
             valor="—"
             nota="Após a integração"
           />
@@ -248,6 +290,31 @@ export function DashboardPage() {
               </Card>
             )
           })}
+        </div>
+
+        <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <Card>
+            <h2 className="font-display mb-3 text-lg font-bold text-soft-black">Módulos administrativos</h2>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <Link to="/admin/clientes" className="p-2 border rounded hover:bg-gray-50">Clientes</Link>
+              <Link to="/admin/servicos" className="p-2 border rounded hover:bg-gray-50">Serviços</Link>
+              <Link to="/admin/experiencias" className="p-2 border rounded hover:bg-gray-50">Experiências</Link>
+              <Link to="/admin/paginas" className="p-2 border rounded hover:bg-gray-50">Páginas (CMS)</Link>
+              <Link to="/admin/produtos" className="p-2 border rounded hover:bg-gray-50">Produtos</Link>
+              <Link to="/admin/categorias" className="p-2 border rounded hover:bg-gray-50">Categorias</Link>
+            </div>
+          </Card>
+          <Card>
+            <h2 className="font-display mb-3 text-lg font-bold text-soft-black">Status</h2>
+            <ul className="space-y-2 text-sm">
+              <li className="flex justify-between"><span>CMS / Páginas</span><span className="text-green-600">Implementado</span></li>
+              <li className="flex justify-between"><span>Experiências</span><span className="text-green-600">Implementado</span></li>
+              <li className="flex justify-between"><span>Serviços</span><span className="text-green-600">Implementado</span></li>
+              <li className="flex justify-between"><span>Clientes</span><span className="text-green-600">Implementado</span></li>
+              <li className="flex justify-between"><span>Agendamentos</span><span className="text-yellow-600">Em progresso</span></li>
+              <li className="flex justify-between"><span>Biblioteca de Mídia</span><span className="text-yellow-600">Em progresso</span></li>
+            </ul>
+          </Card>
         </div>
 
         {/* Permissões (seam RBAC) */}

@@ -5,6 +5,8 @@ import {
   AlertCircle,
   ArrowRight,
   Mail,
+  MapPin,
+  Search,
   ServerCrash,
   User,
 } from 'lucide-react'
@@ -12,6 +14,7 @@ import { Button } from '@/components/common/Button'
 import { Input } from '@/components/common/Input'
 import { SeoHead, breadcrumbJsonLd } from '@/lib/seo'
 import { useAccount } from '../context/AccountContext'
+import { supabase } from '@/lib/supabase'
 
 function mensagemDeCadastro(erro: string): string {
   const normalizado = erro.toLowerCase()
@@ -24,7 +27,14 @@ function mensagemDeCadastro(erro: string): string {
   ) {
     return 'O serviço de cadastro atingiu o limite de envio de e-mails. Aguarde o período de liberação antes de tentar novamente. Não reenvie o formulário repetidamente.'
   }
+  if (normalizado.includes('already registered') || normalizado.includes('already exists')) {
+    return 'Este e-mail já está cadastrado. Tente fazer login ou recuperar sua senha.'
+  }
   return erro
+}
+
+function apenasDigitos(valor: string) {
+  return valor.replace(/\D/g, '')
 }
 
 export function CadastroPage() {
@@ -34,7 +44,21 @@ export function CadastroPage() {
 
   const [nome, setNome] = useState('')
   const [email, setEmail] = useState('')
+  const [telefone, setTelefone] = useState('')
+  const [cpf, setCpf] = useState('')
+  const [nascimento, setNascimento] = useState('')
   const [senha, setSenha] = useState('')
+  const [confirmarSenha, setConfirmarSenha] = useState('')
+
+  const [cep, setCep] = useState('')
+  const [logradouro, setLogradouro] = useState('')
+  const [numero, setNumero] = useState('')
+  const [complemento, setComplemento] = useState('')
+  const [bairro, setBairro] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [uf, setUf] = useState('')
+  const [buscandoCep, setBuscandoCep] = useState(false)
+
   const [erro, setErro] = useState('')
   const [enviando, setEnviando] = useState(false)
   const [sucesso, setSucesso] = useState(false)
@@ -44,12 +68,38 @@ export function CadastroPage() {
     if (authenticated) navigate('/conta', { replace: true })
   }, [authenticated, navigate])
 
+  const buscarCep = async () => {
+    const cepLimpo = apenasDigitos(cep)
+    if (cepLimpo.length !== 8) {
+      setErro('Informe um CEP válido com 8 dígitos.')
+      return
+    }
+    setBuscandoCep(true)
+    setErro('')
+    try {
+      const resp = await fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
+      const data = await resp.json()
+      if (data.erro) {
+        setErro('CEP não encontrado.')
+        return
+      }
+      setLogradouro(data.logradouro || '')
+      setBairro(data.bairro || '')
+      setCidade(data.localidade || '')
+      setUf(data.uf || '')
+    } catch {
+      setErro('Não foi possível buscar o CEP agora.')
+    } finally {
+      setBuscandoCep(false)
+    }
+  }
+
   const submeter = async (evento: FormEvent) => {
     evento.preventDefault()
     if (submissaoEmAndamento.current) return
     setErro('')
     if (!nome.trim()) {
-      setErro('Informe seu nome.')
+      setErro('Informe seu nome completo.')
       return
     }
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
@@ -60,6 +110,16 @@ export function CadastroPage() {
       setErro('A senha deve ter pelo menos 6 caracteres.')
       return
     }
+    if (senha !== confirmarSenha) {
+      setErro('As senhas não conferem.')
+      return
+    }
+    const cepLimpo = apenasDigitos(cep)
+    if (cepLimpo && cepLimpo.length !== 8) {
+      setErro('Informe um CEP válido ou deixe em branco.')
+      return
+    }
+
     submissaoEmAndamento.current = true
     setEnviando(true)
     try {
@@ -72,6 +132,47 @@ export function CadastroPage() {
         setErro(mensagemDeCadastro(resultado.error))
         return
       }
+
+      // Tentar criar cliente e endereço após cadastro
+      try {
+        const { data: authUser } = await supabase.auth.getUser()
+        const userId = authUser.user?.id
+
+        const clientePayload: Record<string, unknown> = {
+          nome: nome.trim(),
+          email: email.trim(),
+          telefone: telefone.trim() || null,
+          cpf: apenasDigitos(cpf) || null,
+          nascimento: nascimento || null,
+        }
+        if (userId) {
+          clientePayload.auth_user_id = userId
+        }
+
+        const { data: clienteCriado, error: clienteErro } = await supabase
+          .from('cliente')
+          .upsert(clientePayload, { onConflict: 'email' })
+          .select()
+          .maybeSingle()
+
+        if (!clienteErro && clienteCriado && cepLimpo && logradouro && numero && bairro && cidade && uf) {
+          await supabase.from('endereco').insert({
+            cliente_id: clienteCriado.id,
+            logradouro: logradouro.trim(),
+            numero: numero.trim(),
+            complemento: complemento.trim() || null,
+            bairro: bairro.trim(),
+            cidade: cidade.trim(),
+            uf: uf.trim().toUpperCase(),
+            cep: cepLimpo,
+            principal: true,
+            ativo: true,
+          })
+        }
+      } catch {
+        // Não bloquear o cadastro se criação de cliente/endereco falhar
+      }
+
       setSucesso(true)
     } catch (err) {
       setErro(
@@ -178,42 +279,181 @@ export function CadastroPage() {
                   className="mt-8 space-y-5"
                   aria-label="Formulário de cadastro"
                 >
-                  <Input
-                    id="cadastro-nome"
-                    label="Nome"
-                    type="text"
-                    autoComplete="name"
-                    placeholder="Seu nome"
-                    value={nome}
-                    onChange={(evento) =>
-                      setNome(evento.target.value)
-                    }
-                    required
-                  />
-                  <Input
-                    id="cadastro-email"
-                    label="E-mail"
-                    type="email"
-                    autoComplete="email"
-                    placeholder="seu@email.com"
-                    value={email}
-                    onChange={(evento) =>
-                      setEmail(evento.target.value)
-                    }
-                    required
-                  />
-                  <Input
-                    id="cadastro-senha"
-                    label="Senha"
-                    type="password"
-                    autoComplete="new-password"
-                    placeholder="••••••••"
-                    value={senha}
-                    onChange={(evento) =>
-                      setSenha(evento.target.value)
-                    }
-                    required
-                  />
+                  <div className="space-y-4">
+                    <p className="text-sm font-medium text-soft-black">Identificação</p>
+                    <Input
+                      id="cadastro-nome"
+                      label="Nome completo"
+                      type="text"
+                      autoComplete="name"
+                      placeholder="Seu nome completo"
+                      value={nome}
+                      onChange={(evento) =>
+                        setNome(evento.target.value)
+                      }
+                      required
+                    />
+                    <Input
+                      id="cadastro-email"
+                      label="E-mail"
+                      type="email"
+                      autoComplete="email"
+                      placeholder="seu@email.com"
+                      value={email}
+                      onChange={(evento) =>
+                        setEmail(evento.target.value)
+                      }
+                      required
+                    />
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <Input
+                        id="cadastro-telefone"
+                        label="Telefone / WhatsApp"
+                        type="tel"
+                        autoComplete="tel"
+                        placeholder="(00) 00000-0000"
+                        value={telefone}
+                        onChange={(evento) =>
+                          setTelefone(evento.target.value)
+                        }
+                      />
+                      <Input
+                        id="cadastro-cpf"
+                        label="CPF"
+                        type="text"
+                        placeholder="000.000.000-00"
+                        value={cpf}
+                        onChange={(evento) =>
+                          setCpf(evento.target.value)
+                        }
+                      />
+                    </div>
+                    <Input
+                      id="cadastro-nascimento"
+                      label="Data de nascimento"
+                      type="date"
+                      value={nascimento}
+                      onChange={(evento) =>
+                        setNascimento(evento.target.value)
+                      }
+                    />
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-sm font-medium text-soft-black flex items-center gap-2">
+                      <MapPin size={16} /> Endereço principal
+                    </p>
+                    <div className="flex gap-2">
+                      <Input
+                        id="cadastro-cep"
+                        label="CEP"
+                        type="text"
+                        placeholder="00000-000"
+                        value={cep}
+                        onChange={(evento) =>
+                          setCep(evento.target.value)
+                        }
+                        className="flex-1"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="mt-6"
+                        onClick={buscarCep}
+                        disabled={buscandoCep}
+                      >
+                        <Search size={16} />
+                        {buscandoCep ? 'Buscando...' : 'Buscar'}
+                      </Button>
+                    </div>
+                    <Input
+                      id="cadastro-logradouro"
+                      label="Logradouro"
+                      type="text"
+                      value={logradouro}
+                      onChange={(evento) =>
+                        setLogradouro(evento.target.value)
+                      }
+                    />
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <Input
+                        id="cadastro-numero"
+                        label="Número"
+                        type="text"
+                        value={numero}
+                        onChange={(evento) =>
+                          setNumero(evento.target.value)
+                        }
+                      />
+                      <Input
+                        id="cadastro-complemento"
+                        label="Complemento"
+                        type="text"
+                        value={complemento}
+                        onChange={(evento) =>
+                          setComplemento(evento.target.value)
+                        }
+                      />
+                    </div>
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                      <Input
+                        id="cadastro-bairro"
+                        label="Bairro"
+                        type="text"
+                        value={bairro}
+                        onChange={(evento) =>
+                          setBairro(evento.target.value)
+                        }
+                      />
+                      <Input
+                        id="cadastro-cidade"
+                        label="Cidade"
+                        type="text"
+                        value={cidade}
+                        onChange={(evento) =>
+                          setCidade(evento.target.value)
+                        }
+                      />
+                      <Input
+                        id="cadastro-uf"
+                        label="UF"
+                        type="text"
+                        maxLength={2}
+                        value={uf}
+                        onChange={(evento) =>
+                          setUf(evento.target.value.toUpperCase())
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <p className="text-sm font-medium text-soft-black">Acesso</p>
+                    <Input
+                      id="cadastro-senha"
+                      label="Senha"
+                      type="password"
+                      autoComplete="new-password"
+                      placeholder="••••••••"
+                      value={senha}
+                      onChange={(evento) =>
+                        setSenha(evento.target.value)
+                      }
+                      required
+                    />
+                    <Input
+                      id="cadastro-confirmar-senha"
+                      label="Confirmar senha"
+                      type="password"
+                      autoComplete="new-password"
+                      placeholder="••••••••"
+                      value={confirmarSenha}
+                      onChange={(evento) =>
+                        setConfirmarSenha(evento.target.value)
+                      }
+                      required
+                    />
+                  </div>
 
                   {erro && (
                     <div

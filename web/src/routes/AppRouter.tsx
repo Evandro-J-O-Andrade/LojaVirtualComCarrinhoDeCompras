@@ -17,6 +17,7 @@ import { contaRoutes } from '@/domains/conta/routes'
 import { adminRoutes } from '@/domains/admin/routes'
 import { CarrinhoPage } from '@/domains/carrinho/pages/lazy'
 import { CheckoutPage } from '@/domains/checkout/pages/lazy'
+import { PaginaPublicaPage } from '@/domains/cms/pages/public/PaginaPublicaPage'
 
 // Code splitting por rota: só a Home é do caminho inicial.
 // As demais são buscadas sob demanda, sem alterar rotas nem comportamento.
@@ -43,6 +44,7 @@ export function AngelRouter() {
               {serviceRoutes}
               {bookingRoutes}
               {mimoRoutes}
+              <Route path="/pagina/:slug" element={<PaginaPublicaPage />} />
             </Route>
 
           <Route path="/admin/login" element={<AdminLogin />} />
