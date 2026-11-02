@@ -32,7 +32,37 @@ interface SecaoRow {
   atualizado_em: string
 }
 
-interface MidiaRow {
+interface BlocoRow {
+  id: number
+  secao_id: number
+  tipo: string
+  titulo: string | null
+  subtitulo: string | null
+  conteudo: string | null
+  url: string | null
+  ordem: number
+  visivel: boolean
+  metadata: Record<string, unknown> | null
+  criado_em: string
+  atualizado_em: string
+}
+
+function rowToBloco(row: BlocoRow): PaginaBloco {
+  return {
+    id: row.id,
+    secaoId: row.secao_id,
+    tipo: row.tipo as PaginaBloco['tipo'],
+    titulo: row.titulo ?? undefined,
+    subtitulo: row.subtitulo ?? undefined,
+    conteudo: row.conteudo ?? undefined,
+    url: row.url ?? undefined,
+    ordem: row.ordem,
+    visivel: row.visivel,
+    metadata: row.metadata ?? undefined,
+    criadoEm: row.criado_em,
+    atualizadoEm: row.atualizado_em,
+  }
+}
   id: number
   pagina_id: number | null
   secao_id: number | null
@@ -248,5 +278,64 @@ export const paginaRepositorySupabase: PaginaRepository = {
   async removerSecao(id) {
     const { error } = await supabase.from('pagina_secao').delete().eq('id', id)
     if (error) throw error
+  },
+
+  async adicionarBloco(input) {
+    const { data, error } = await supabase
+      .from('pagina_bloco')
+      .insert({
+        secao_id: input.secaoId,
+        tipo: input.tipo,
+        titulo: input.titulo ?? null,
+        subtitulo: input.subtitulo ?? null,
+        conteudo: input.conteudo ?? null,
+        url: input.url ?? null,
+        ordem: input.ordem ?? 0,
+        visivel: input.visivel ?? true,
+        metadata: input.metadata ?? null,
+      })
+      .select()
+      .single()
+    if (error) throw error
+    const b = data as BlocoRow
+    return rowToBloco(b)
+  },
+
+  async atualizarBloco(id, input) {
+    const updates: Record<string, unknown> = {}
+    if (input.tipo !== undefined) updates.tipo = input.tipo
+    if (input.titulo !== undefined) updates.titulo = input.titulo
+    if (input.subtitulo !== undefined) updates.subtitulo = input.subtitulo
+    if (input.conteudo !== undefined) updates.conteudo = input.conteudo
+    if (input.url !== undefined) updates.url = input.url
+    if (input.ordem !== undefined) updates.ordem = input.ordem
+    if (input.visivel !== undefined) updates.visivel = input.visivel
+    if (input.metadata !== undefined) updates.metadata = input.metadata
+
+    const { data, error } = await supabase
+      .from('pagina_bloco')
+      .update(updates)
+      .eq('id', id)
+      .select()
+      .single()
+    if (error) throw error
+    return rowToBloco(data as BlocoRow)
+  },
+
+  async removerBloco(id) {
+    const { error } = await supabase.from('pagina_bloco').delete().eq('id', id)
+    if (error) throw error
+  },
+
+  async reordenarSecoes(paginaId, ordens) {
+    for (const { id, ordem } of ordens) {
+      await supabase.from('pagina_secao').update({ ordem }).eq('id', id).eq('pagina_id', paginaId)
+    }
+  },
+
+  async reordenarBlocos(secaoId, ordens) {
+    for (const { id, ordem } of ordens) {
+      await supabase.from('pagina_bloco').update({ ordem }).eq('id', id).eq('secao_id', secaoId)
+    }
   },
 }
