@@ -130,7 +130,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
     grupo: 'Conteúdo',
     modulos: [
       { rotulo: 'Mídia', href: null, icon: Image, emBreve: true },
-      { rotulo: 'Páginas', href: null, icon: FileText, emBreve: true },
+      { rotulo: 'Páginas', href: '/admin/paginas', icon: FileText },
     ],
   },
   {
