@@ -274,6 +274,11 @@ ALTER TABLE pagina_secao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pagina_midia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experiencia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE experiencia_midia ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pagina ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pagina_secao ENABLE ROW LEVEL SECURITY;
+ALTER TABLE pagina_midia ENABLE ROW LEVEL SECURITY;
+ALTER TABLE experiencia ENABLE ROW LEVEL SECURITY;
+ALTER TABLE experiencia_midia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE servico_categoria ENABLE ROW LEVEL SECURITY;
 ALTER TABLE servico_midia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cliente_preferencia ENABLE ROW LEVEL SECURITY;
@@ -416,6 +421,10 @@ CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
     AND status = 'aberto'
     AND prioridade = 'normal'
     AND EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid())
+    AND (
+      atendimento_id IS NULL
+      OR EXISTS (SELECT 1 FROM atendimento a WHERE a.id = chamado.atendimento_id AND a.cliente_id = chamado.cliente_id)
+    )
   );
 
 CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
