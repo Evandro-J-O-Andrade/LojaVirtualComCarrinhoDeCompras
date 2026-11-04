@@ -401,7 +401,7 @@ CREATE TABLE IF NOT EXISTS agendamento_status (
 CREATE EXTENSION IF NOT EXISTS btree_gist;
 CREATE TABLE IF NOT EXISTS disponibilidade (
   id bigserial PRIMARY KEY,
-  profissional_id bigint REFERENCES profissional(id) ON DELETE CASCADE,
+  profissional_id bigint NOT NULL REFERENCES profissional(id) ON DELETE CASCADE,
   dia_semana integer NOT NULL CHECK (dia_semana BETWEEN 0 AND 6),
   horario_inicio time NOT NULL,
   horario_fim time NOT NULL,
@@ -409,7 +409,7 @@ CREATE TABLE IF NOT EXISTS disponibilidade (
   criado_em timestamptz NOT NULL DEFAULT now(),
   atualizado_em timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT disp_horario_check CHECK (horario_fim > horario_inicio),
-  CONSTRAINT disp_no_overlap EXCLUDE USING gist (profissional_id WITH =, dia_semana WITH =, tsrange(horario_inicio::timestamp, horario_fim::timestamp) WITH &&)
+  CONSTRAINT disp_no_overlap EXCLUDE USING gist (profissional_id WITH =, dia_semana WITH =, tsrange(horario_inicio::timestamp, horario_fim::timestamp) WITH &&) WHERE (ativo = true)
 );
 CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 
