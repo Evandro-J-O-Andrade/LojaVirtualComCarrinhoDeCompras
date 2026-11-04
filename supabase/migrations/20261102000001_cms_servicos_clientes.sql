@@ -4,6 +4,15 @@
 -- Reutiliza: servico, cliente, endereco, atendimento, mimo
 -- RLS: público lê apenas conteúdo publicado no período; admin escreve via is_admin()
 
+-- Função auxiliar para atualização automática de atualizado_em
+CREATE OR REPLACE FUNCTION update_atualizado_em()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.atualizado_em = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
 -- ============================================================
 -- CMS: Páginas dinâmicas
 -- ============================================================
@@ -266,6 +275,7 @@ CREATE INDEX IF NOT EXISTS idx_chamado_status ON chamado(status);
 CREATE INDEX IF NOT EXISTS idx_chamado_interacao_chamado ON chamado_interacao(chamado_id);
 CREATE INDEX IF NOT EXISTS idx_integracao_evento_tipo ON integracao_evento(tipo);
 CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
+CREATE INDEX IF NOT EXISTS idx_automacao_execucao_status ON automacao_execucao(status);
 
 -- ============================================================
 -- RLS: habilitar em todas as tabelas novas
@@ -283,6 +293,7 @@ ALTER TABLE chamado ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE integracao_evento ENABLE ROW LEVEL SECURITY;
 ALTER TABLE disponibilidade ENABLE ROW LEVEL SECURITY;
+ALTER TABLE automacao_execucao ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
 -- RLS: Conteúdo público (pagina, pagina_secao, pagina_midia)
@@ -365,7 +376,7 @@ CREATE POLICY "chamado_admin_all" ON chamado FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 CREATE POLICY "chamado_interacao_own_read" ON chamado_interacao FOR SELECT TO authenticated
-  USING (EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid()));
+  USING (interno = false AND EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid()));
 
 CREATE POLICY "chamado_interacao_admin_all" ON chamado_interacao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
@@ -429,15 +440,11 @@ CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
   WITH CHECK (EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid()));
 
 CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
-  WITH CHECK (EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid()));
-CREATE OR REPLACE FUNCTION update_atualizado_em()
-RETURNS TRIGGER AS $$
-BEGIN
-  NEW.atualizado_em = now();
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
+  WITH CHECK (
+    interno = false
+    AND (autor IS NULL OR autor = auth.uid())
+    AND EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid())
+  );
 DO $$
 DECLARE
   t text;
