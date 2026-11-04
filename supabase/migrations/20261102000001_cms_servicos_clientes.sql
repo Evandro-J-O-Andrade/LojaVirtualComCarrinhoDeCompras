@@ -210,6 +210,7 @@ CREATE TABLE IF NOT EXISTS cliente_interacao (
 CREATE TABLE IF NOT EXISTS chamado (
   id bigserial PRIMARY KEY,
   cliente_id bigint REFERENCES cliente(id),
+  atendimento_id bigint REFERENCES atendimento(id) ON DELETE SET NULL,
   titulo varchar(255) NOT NULL,
   descricao text,
   status varchar(20) NOT NULL DEFAULT 'aberto',
@@ -233,17 +234,9 @@ CREATE TABLE IF NOT EXISTS chamado_interacao (
 
 -- ============================================================
 -- Integrações: eventos e automações
+-- NOTA: evento é a outbox central (idempotência, retry, rastreabilidade).
+-- integracao_evento foi removida para evitar outbox duplicada.
 -- ============================================================
-CREATE TABLE IF NOT EXISTS integracao_evento (
-  id bigserial PRIMARY KEY,
-  tipo varchar(100) NOT NULL,
-  origem varchar(50) NOT NULL,
-  payload jsonb,
-  processado boolean NOT NULL DEFAULT false,
-  criado_em timestamptz NOT NULL DEFAULT now(),
-  processado_em timestamptz
-);
-
 CREATE TABLE IF NOT EXISTS automacao_execucao (
   id bigserial PRIMARY KEY,
   nome varchar(255) NOT NULL,
@@ -268,9 +261,9 @@ CREATE INDEX IF NOT EXISTS idx_servico_midia_servico ON servico_midia(servico_id
 CREATE INDEX IF NOT EXISTS idx_cliente_preferencia_cliente ON cliente_preferencia(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_cliente_interacao_cliente ON cliente_interacao(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_chamado_cliente ON chamado(cliente_id);
+CREATE INDEX IF NOT EXISTS idx_chamado_atendimento ON chamado(atendimento_id);
 CREATE INDEX IF NOT EXISTS idx_chamado_status ON chamado(status);
 CREATE INDEX IF NOT EXISTS idx_chamado_interacao_chamado ON chamado_interacao(chamado_id);
-CREATE INDEX IF NOT EXISTS idx_integracao_evento_tipo ON integracao_evento(tipo);
 CREATE INDEX IF NOT EXISTS idx_automacao_execucao_status ON automacao_execucao(status);
 
 -- ============================================================
@@ -287,7 +280,6 @@ ALTER TABLE cliente_preferencia ENABLE ROW LEVEL SECURITY;
 ALTER TABLE cliente_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado_interacao ENABLE ROW LEVEL SECURITY;
-ALTER TABLE integracao_evento ENABLE ROW LEVEL SECURITY;
 ALTER TABLE automacao_execucao ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
@@ -382,16 +374,13 @@ CREATE POLICY "chamado_interacao_admin_all" ON chamado_interacao FOR ALL TO auth
 -- ============================================================
 -- RLS: Integrações (apenas admin / service role)
 -- ============================================================
-CREATE POLICY "integracao_evento_admin_all" ON integracao_evento FOR ALL TO authenticated
-  USING (is_admin()) WITH CHECK (is_admin());
-
 CREATE POLICY "automacao_execucao_admin_all" ON automacao_execucao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- Agenda: status e disponibilidade
--- NOTA: disponibilidade complementa agenda (horários recorrentes por profissional).
--- agenda registra slots específicos; disponibilidade define padrões semanais.
+-- NOTA: disponibilidade foi removida. agenda é a fonte única de verdade
+-- para horários recorrentes do profissional. agenda_bloqueio cobre exceções.
 -- ============================================================
 CREATE TABLE IF NOT EXISTS agendamento_status (
   id bigserial PRIMARY KEY,
@@ -402,21 +391,6 @@ CREATE TABLE IF NOT EXISTS agendamento_status (
   ativo boolean NOT NULL DEFAULT true,
   CONSTRAINT as_codigo_unique UNIQUE (codigo)
 );
-
-CREATE EXTENSION IF NOT EXISTS btree_gist;
-CREATE TABLE IF NOT EXISTS disponibilidade (
-  id bigserial PRIMARY KEY,
-  profissional_id bigint NOT NULL REFERENCES profissional(id) ON DELETE CASCADE,
-  dia_semana integer NOT NULL CHECK (dia_semana BETWEEN 0 AND 6),
-  horario_inicio time NOT NULL,
-  horario_fim time NOT NULL,
-  ativo boolean NOT NULL DEFAULT true,
-  criado_em timestamptz NOT NULL DEFAULT now(),
-  atualizado_em timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT disp_horario_check CHECK (horario_fim > horario_inicio),
-  CONSTRAINT disp_no_overlap EXCLUDE USING gist (profissional_id WITH =, dia_semana WITH =, tsrange(horario_inicio::timestamp, horario_fim::timestamp) WITH &&) WHERE (ativo = true)
-);
-CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 
 -- Seed status padrão
 INSERT INTO agendamento_status (codigo, nome, ordem) VALUES
@@ -431,13 +405,9 @@ ON CONFLICT (codigo) DO NOTHING;
 
 -- RLS para novas tabelas
 ALTER TABLE agendamento_status ENABLE ROW LEVEL SECURITY;
-ALTER TABLE disponibilidade ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "agendamento_status_public_read" ON agendamento_status FOR SELECT TO public USING (ativo = true);
 CREATE POLICY "agendamento_status_admin_all" ON agendamento_status FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
-
-CREATE POLICY "disponibilidade_public_read" ON disponibilidade FOR SELECT TO public USING (ativo = true);
-CREATE POLICY "disponibilidade_admin_all" ON disponibilidade FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 -- RLS: chamados - cliente pode criar os seus
 CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
@@ -458,7 +428,7 @@ DO $$
 DECLARE
   t text;
 BEGIN
-  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico', 'servico_categoria', 'cliente_preferencia', 'chamado', 'disponibilidade'])
+  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico', 'servico_categoria', 'cliente_preferencia', 'chamado'])
   LOOP
     EXECUTE format(
       'DROP TRIGGER IF EXISTS trg_%s_atualizado ON %s; CREATE TRIGGER trg_%s_atualizado BEFORE UPDATE ON %s FOR EACH ROW EXECUTE FUNCTION update_atualizado_em()',
