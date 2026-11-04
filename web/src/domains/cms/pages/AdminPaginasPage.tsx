@@ -4,7 +4,7 @@ import type { Pagina, PaginaInput, PaginaSecao, PaginaBloco, PaginaBlocoTipo, Pa
 
 const BLOCO_TIPOS: PaginaBlocoTipo[] = [
   'banner', 'texto', 'imagem', 'video', 'produtos_destaque', 'categorias',
-  'promocoes', 'beneficios', 'servicos', 'cta', 'galeria', 'html',
+  'promocoes', 'beneficios', 'servicos', 'cta', 'galeria',
 ]
 
 export function AdminPaginasPage() {

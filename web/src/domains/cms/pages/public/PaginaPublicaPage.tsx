@@ -47,7 +47,7 @@ function BlocoRenderer({ bloco }: { bloco: PaginaBloco }) {
   if (!bloco.visivel) return null
   switch (bloco.tipo) {
     case 'texto':
-      return <div className="prose mb-4" dangerouslySetInnerHTML={{ __html: bloco.conteudo ?? '' }} />
+      return <div className="prose mb-4 whitespace-pre-wrap">{bloco.conteudo ?? ''}</div>
     case 'imagem':
       return bloco.url ? <img src={bloco.url} alt={bloco.titulo ?? ''} className="rounded-lg mb-4" /> : null
     case 'banner':
@@ -73,8 +73,6 @@ function BlocoRenderer({ bloco }: { bloco: PaginaBloco }) {
           )}
         </div>
       )
-    case 'html':
-      return <div className="mb-4" dangerouslySetInnerHTML={{ __html: bloco.conteudo ?? '' }} />
     case 'galeria':
       return (
         <div className="mb-4 grid grid-cols-2 md:grid-cols-3 gap-4">

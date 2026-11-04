@@ -14,7 +14,6 @@ export type PaginaBlocoTipo =
   | 'servicos'
   | 'cta'
   | 'galeria'
-  | 'html'
 
 export interface PaginaBloco {
   id: number

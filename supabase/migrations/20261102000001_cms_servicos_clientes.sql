@@ -78,7 +78,7 @@ CREATE TABLE IF NOT EXISTS pagina_bloco (
   metadata jsonb,
   criado_em timestamptz NOT NULL DEFAULT now(),
   atualizado_em timestamptz NOT NULL DEFAULT now(),
-  CONSTRAINT pb_tipo_check CHECK (tipo IN ('banner', 'texto', 'imagem', 'video', 'produtos_destaque', 'categorias', 'promocoes', 'beneficios', 'servicos', 'cta', 'galeria', 'html'))
+  CONSTRAINT pb_tipo_check CHECK (tipo IN ('banner', 'texto', 'imagem', 'video', 'produtos_destaque', 'categorias', 'promocoes', 'beneficios', 'servicos', 'cta', 'galeria'))
 );
 
 CREATE TABLE IF NOT EXISTS pagina_revisao (
