@@ -274,7 +274,6 @@ CREATE INDEX IF NOT EXISTS idx_chamado_cliente ON chamado(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_chamado_status ON chamado(status);
 CREATE INDEX IF NOT EXISTS idx_chamado_interacao_chamado ON chamado_interacao(chamado_id);
 CREATE INDEX IF NOT EXISTS idx_integracao_evento_tipo ON integracao_evento(tipo);
-CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 CREATE INDEX IF NOT EXISTS idx_automacao_execucao_status ON automacao_execucao(status);
 
 -- ============================================================
@@ -413,6 +412,7 @@ CREATE TABLE IF NOT EXISTS disponibilidade (
   criado_em timestamptz NOT NULL DEFAULT now(),
   atualizado_em timestamptz NOT NULL DEFAULT now()
 );
+CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 
 -- Seed status padrão
 INSERT INTO agendamento_status (codigo, nome, ordem) VALUES
@@ -437,7 +437,12 @@ CREATE POLICY "disponibilidade_admin_all" ON disponibilidade FOR ALL TO authenti
 
 -- RLS: chamados - cliente pode criar os seus
 CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
-  WITH CHECK (EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid()));
+  WITH CHECK (
+    responsavel IS NULL
+    AND status = 'aberto'
+    AND prioridade = 'normal'
+    AND EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid())
+  );
 
 CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
   WITH CHECK (
