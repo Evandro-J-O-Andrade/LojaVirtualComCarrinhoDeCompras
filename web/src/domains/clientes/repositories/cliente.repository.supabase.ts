@@ -8,7 +8,7 @@ interface ClienteRow {
   email: string | null
   telefone: string | null
   cpf: string | null
-  nascimento: string | null
+  data_nascimento: string | null
   auth_user_id: string | null
   criado_em: string
   atualizado_em: string
@@ -35,7 +35,7 @@ function rowToCliente(row: ClienteRow): Cliente {
     email: row.email ?? undefined,
     telefone: row.telefone ?? undefined,
     cpf: row.cpf ?? undefined,
-    nascimento: row.nascimento ?? undefined,
+    nascimento: row.data_nascimento ?? undefined,
     authUserId: row.auth_user_id ?? undefined,
     criadoEm: row.criado_em,
     atualizadoEm: row.atualizado_em,
@@ -96,7 +96,7 @@ export const clienteRepositorySupabase: ClienteRepository = {
         email: input.email ?? null,
         telefone: input.telefone ?? null,
         cpf: input.cpf ?? null,
-        nascimento: input.nascimento ?? null,
+        data_nascimento: input.nascimento ?? null,
         auth_user_id: (input as ClienteInput & { authUserId?: string }).authUserId ?? null,
       })
       .select()
@@ -111,7 +111,7 @@ export const clienteRepositorySupabase: ClienteRepository = {
     if (input.email !== undefined) updates.email = input.email
     if (input.telefone !== undefined) updates.telefone = input.telefone
     if (input.cpf !== undefined) updates.cpf = input.cpf
-    if (input.nascimento !== undefined) updates.nascimento = input.nascimento
+    if (input.nascimento !== undefined) updates.data_nascimento = input.nascimento
     if ((input as ClienteInput & { authUserId?: string }).authUserId !== undefined) {
       updates.auth_user_id = (input as ClienteInput & { authUserId?: string }).authUserId
     }

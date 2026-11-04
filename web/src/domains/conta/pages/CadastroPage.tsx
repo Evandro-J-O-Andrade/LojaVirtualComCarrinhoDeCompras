@@ -143,7 +143,7 @@ export function CadastroPage() {
           email: email.trim(),
           telefone: telefone.trim() || null,
           cpf: apenasDigitos(cpf) || null,
-          nascimento: nascimento || null,
+          data_nascimento: nascimento || null,
         }
         if (userId) {
           clientePayload.auth_user_id = userId
