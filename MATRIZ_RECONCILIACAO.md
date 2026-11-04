@@ -6,6 +6,8 @@
 |---------|---------------------|---------------|------------------|--------|
 | Catálogo (Produtos) | ✅ produto.repository.supabase.ts | ✅ AdminProdutosPage, AdminCategoriasPage | ✅ ProductDetailPage, ProductsPage | Conectado |
 | Fornecedores | ❌ não existe | ❌ | ❌ | Ausente |
+| PDV (Ponto de Venda) | ❌ não existe | ❌ | ❌ | Ausente |
+| Comissões | ❌ não existe | ❌ | ❌ | Ausente |
 | Compras (Pedidos de compra) | ❌ não existe | ❌ | ❌ | Ausente |
 | Estoque | ❌ não existe | ❌ AdminEstoquePage (placeholder) | ❌ | Ausente |
 | CMS (Páginas) | ✅ pagina.repository.supabase.ts | ✅ AdminPaginasPage | ✅ PaginaPublicaPage | Parcial |
