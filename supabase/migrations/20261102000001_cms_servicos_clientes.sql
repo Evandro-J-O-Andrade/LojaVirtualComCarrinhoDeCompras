@@ -100,13 +100,13 @@ CREATE INDEX IF NOT EXISTS idx_pagina_revisao_pagina ON pagina_revisao(pagina_id
 ALTER TABLE pagina_bloco ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pagina_revisao ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "pagina_bloco_public_read" ON pagina_bloco FOR SELECT TO public
+DROP POLICY IF EXISTS "pagina_bloco_public_read" ON pagina_bloco; CREATE POLICY "pagina_bloco_public_read" ON pagina_bloco FOR SELECT TO public
   USING (visivel = true AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_bloco.secao_id AND ps.ativo = true AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
 
-CREATE POLICY "pagina_bloco_admin_all" ON pagina_bloco FOR ALL TO authenticated
+DROP POLICY IF EXISTS "pagina_bloco_admin_all" ON pagina_bloco; CREATE POLICY "pagina_bloco_admin_all" ON pagina_bloco FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "pagina_revisao_admin_all" ON pagina_revisao FOR ALL TO authenticated
+DROP POLICY IF EXISTS "pagina_revisao_admin_all" ON pagina_revisao; CREATE POLICY "pagina_revisao_admin_all" ON pagina_revisao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- Trigger para pagina_bloco
@@ -286,95 +286,95 @@ ALTER TABLE automacao_execucao ENABLE ROW LEVEL SECURITY;
 -- RLS: Conteúdo público (pagina, pagina_secao, pagina_midia)
 -- Leitura pública apenas de conteúdo publicado e no período
 -- ============================================================
-CREATE POLICY "pagina_public_read" ON pagina FOR SELECT TO public
+DROP POLICY IF EXISTS "pagina_public_read" ON pagina; CREATE POLICY "pagina_public_read" ON pagina FOR SELECT TO public
   USING (status = 'publicado' AND (publicado_em IS NULL OR publicado_em <= now()) AND (expira_em IS NULL OR expira_em > now()));
 
-CREATE POLICY "pagina_admin_all" ON pagina FOR ALL TO authenticated
+DROP POLICY IF EXISTS "pagina_admin_all" ON pagina; CREATE POLICY "pagina_admin_all" ON pagina FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "pagina_secao_public_read" ON pagina_secao FOR SELECT TO public
+DROP POLICY IF EXISTS "pagina_secao_public_read" ON pagina_secao; CREATE POLICY "pagina_secao_public_read" ON pagina_secao FOR SELECT TO public
   USING (ativo = true AND EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_secao.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
 
-CREATE POLICY "pagina_secao_admin_all" ON pagina_secao FOR ALL TO authenticated
+DROP POLICY IF EXISTS "pagina_secao_admin_all" ON pagina_secao; CREATE POLICY "pagina_secao_admin_all" ON pagina_secao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "pagina_midia_public_read" ON pagina_midia FOR SELECT TO public
+DROP POLICY IF EXISTS "pagina_midia_public_read" ON pagina_midia; CREATE POLICY "pagina_midia_public_read" ON pagina_midia FOR SELECT TO public
   USING (
     (pagina_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_midia.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
     OR
     (secao_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_midia.secao_id AND ps.ativo = true AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
   );
 
-CREATE POLICY "pagina_midia_admin_all" ON pagina_midia FOR ALL TO authenticated
+DROP POLICY IF EXISTS "pagina_midia_admin_all" ON pagina_midia; CREATE POLICY "pagina_midia_admin_all" ON pagina_midia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- RLS: Experiências (mesmo padrão)
 -- ============================================================
-CREATE POLICY "experiencia_public_read" ON experiencia FOR SELECT TO public
+DROP POLICY IF EXISTS "experiencia_public_read" ON experiencia; CREATE POLICY "experiencia_public_read" ON experiencia FOR SELECT TO public
   USING (status = 'publicado' AND (publicado_em IS NULL OR publicado_em <= now()) AND (expira_em IS NULL OR expira_em > now()));
 
-CREATE POLICY "experiencia_admin_all" ON experiencia FOR ALL TO authenticated
+DROP POLICY IF EXISTS "experiencia_admin_all" ON experiencia; CREATE POLICY "experiencia_admin_all" ON experiencia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "experiencia_midia_public_read" ON experiencia_midia FOR SELECT TO public
+DROP POLICY IF EXISTS "experiencia_midia_public_read" ON experiencia_midia; CREATE POLICY "experiencia_midia_public_read" ON experiencia_midia FOR SELECT TO public
   USING (EXISTS (SELECT 1 FROM experiencia e WHERE e.id = experiencia_midia.experiencia_id AND e.status = 'publicado' AND (e.publicado_em IS NULL OR e.publicado_em <= now()) AND (e.expira_em IS NULL OR e.expira_em > now())));
 
-CREATE POLICY "experiencia_midia_admin_all" ON experiencia_midia FOR ALL TO authenticated
+DROP POLICY IF EXISTS "experiencia_midia_admin_all" ON experiencia_midia; CREATE POLICY "experiencia_midia_admin_all" ON experiencia_midia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- RLS para servico (leitura de serviços ativos por anon e authenticated)
 DROP POLICY IF EXISTS "servico_read_active" ON servico;
-CREATE POLICY "servico_read_active" ON servico FOR SELECT TO public
+DROP POLICY IF EXISTS "servico_read_active" ON servico; CREATE POLICY "servico_read_active" ON servico FOR SELECT TO public
   USING (ativo = true);
 -- ============================================================
-CREATE POLICY "servico_categoria_public_read" ON servico_categoria FOR SELECT TO public
+DROP POLICY IF EXISTS "servico_categoria_public_read" ON servico_categoria; CREATE POLICY "servico_categoria_public_read" ON servico_categoria FOR SELECT TO public
   USING (ativo = true);
 
-CREATE POLICY "servico_categoria_admin_all" ON servico_categoria FOR ALL TO authenticated
+DROP POLICY IF EXISTS "servico_categoria_admin_all" ON servico_categoria; CREATE POLICY "servico_categoria_admin_all" ON servico_categoria FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "servico_midia_public_read" ON servico_midia FOR SELECT TO public
+DROP POLICY IF EXISTS "servico_midia_public_read" ON servico_midia; CREATE POLICY "servico_midia_public_read" ON servico_midia FOR SELECT TO public
   USING (EXISTS (SELECT 1 FROM servico s WHERE s.id = servico_midia.servico_id AND s.ativo = true));
 
-CREATE POLICY "servico_midia_admin_all" ON servico_midia FOR ALL TO authenticated
+DROP POLICY IF EXISTS "servico_midia_admin_all" ON servico_midia; CREATE POLICY "servico_midia_admin_all" ON servico_midia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- RLS: Clientes (isolamento por usuário autenticado)
 -- ============================================================
-CREATE POLICY "cliente_preferencia_own_read" ON cliente_preferencia FOR SELECT TO authenticated
+DROP POLICY IF EXISTS "cliente_preferencia_own_read" ON cliente_preferencia; CREATE POLICY "cliente_preferencia_own_read" ON cliente_preferencia FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM cliente c WHERE c.id = cliente_preferencia.cliente_id AND c.auth_user_id = auth.uid()));
 
-CREATE POLICY "cliente_preferencia_admin_all" ON cliente_preferencia FOR ALL TO authenticated
+DROP POLICY IF EXISTS "cliente_preferencia_admin_all" ON cliente_preferencia; CREATE POLICY "cliente_preferencia_admin_all" ON cliente_preferencia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "cliente_interacao_own_read" ON cliente_interacao FOR SELECT TO authenticated
+DROP POLICY IF EXISTS "cliente_interacao_own_read" ON cliente_interacao; CREATE POLICY "cliente_interacao_own_read" ON cliente_interacao FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM cliente c WHERE c.id = cliente_interacao.cliente_id AND c.auth_user_id = auth.uid()));
 
-CREATE POLICY "cliente_interacao_admin_all" ON cliente_interacao FOR ALL TO authenticated
+DROP POLICY IF EXISTS "cliente_interacao_admin_all" ON cliente_interacao; CREATE POLICY "cliente_interacao_admin_all" ON cliente_interacao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- RLS: Chamados (admin gerencia; cliente lê os seus)
 -- ============================================================
-CREATE POLICY "chamado_own_read" ON chamado FOR SELECT TO authenticated
+DROP POLICY IF EXISTS "chamado_own_read" ON chamado; CREATE POLICY "chamado_own_read" ON chamado FOR SELECT TO authenticated
   USING (EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid()));
 
-CREATE POLICY "chamado_admin_all" ON chamado FOR ALL TO authenticated
+DROP POLICY IF EXISTS "chamado_admin_all" ON chamado; CREATE POLICY "chamado_admin_all" ON chamado FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
-CREATE POLICY "chamado_interacao_own_read" ON chamado_interacao FOR SELECT TO authenticated
+DROP POLICY IF EXISTS "chamado_interacao_own_read" ON chamado_interacao; CREATE POLICY "chamado_interacao_own_read" ON chamado_interacao FOR SELECT TO authenticated
   USING (interno = false AND EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid()));
 
-CREATE POLICY "chamado_interacao_admin_all" ON chamado_interacao FOR ALL TO authenticated
+DROP POLICY IF EXISTS "chamado_interacao_admin_all" ON chamado_interacao; CREATE POLICY "chamado_interacao_admin_all" ON chamado_interacao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
 -- RLS: Integrações (apenas admin / service role)
 -- ============================================================
-CREATE POLICY "automacao_execucao_admin_all" ON automacao_execucao FOR ALL TO authenticated
+DROP POLICY IF EXISTS "automacao_execucao_admin_all" ON automacao_execucao; CREATE POLICY "automacao_execucao_admin_all" ON automacao_execucao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
@@ -406,11 +406,11 @@ ON CONFLICT (codigo) DO NOTHING;
 -- RLS para novas tabelas
 ALTER TABLE agendamento_status ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "agendamento_status_public_read" ON agendamento_status FOR SELECT TO public USING (ativo = true);
-CREATE POLICY "agendamento_status_admin_all" ON agendamento_status FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+DROP POLICY IF EXISTS "agendamento_status_public_read" ON agendamento_status; CREATE POLICY "agendamento_status_public_read" ON agendamento_status FOR SELECT TO public USING (ativo = true);
+DROP POLICY IF EXISTS "agendamento_status_admin_all" ON agendamento_status; CREATE POLICY "agendamento_status_admin_all" ON agendamento_status FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
 
 -- RLS: chamados - cliente pode criar os seus
-CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
+DROP POLICY IF EXISTS "chamado_own_insert" ON chamado; CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
   WITH CHECK (
     responsavel IS NULL
     AND status = 'aberto'
@@ -422,7 +422,7 @@ CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
     )
   );
 
-CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
+DROP POLICY IF EXISTS "chamado_interacao_own_insert" ON chamado_interacao; CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
   WITH CHECK (
     interno = false
     AND (autor IS NULL OR autor = auth.uid())
