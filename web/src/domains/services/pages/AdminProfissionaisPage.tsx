@@ -6,7 +6,6 @@ interface ProfissionalRow {
   nome: string
   email: string | null
   telefone: string | null
-  especialidade: string | null
   ativo: boolean
   criado_em: string
 }
@@ -16,7 +15,7 @@ export function AdminProfissionaisPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [editing, setEditing] = useState<ProfissionalRow | null>(null)
-  const [form, setForm] = useState({ nome: '', email: '', telefone: '', especialidade: '', ativo: true })
+  const [form, setForm] = useState({ nome: '', email: '', telefone: '', ativo: true })
 
   const carregar = useCallback(async () => {
     setLoading(true)
@@ -34,11 +33,11 @@ export function AdminProfissionaisPage() {
 
   useEffect(() => { carregar() }, [carregar])
 
-  const resetForm = () => { setForm({ nome: '', email: '', telefone: '', especialidade: '', ativo: true }); setEditing(null) }
+  const resetForm = () => { setForm({ nome: '', email: '', telefone: '', ativo: true }); setEditing(null) }
 
   const handleSave = async () => {
     try {
-      const payload = { nome: form.nome, email: form.email || null, telefone: form.telefone || null, especialidade: form.especialidade || null, ativo: form.ativo }
+      const payload = { nome: form.nome, email: form.email || null, telefone: form.telefone || null, ativo: form.ativo }
       if (editing) {
         const { error: err } = await supabase.from('profissional').update(payload).eq('id', editing.id)
         if (err) throw err
@@ -52,7 +51,7 @@ export function AdminProfissionaisPage() {
 
   const handleEdit = (item: ProfissionalRow) => {
     setEditing(item)
-    setForm({ nome: item.nome, email: item.email ?? '', telefone: item.telefone ?? '', especialidade: item.especialidade ?? '', ativo: item.ativo })
+    setForm({ nome: item.nome, email: item.email ?? '', telefone: item.telefone ?? '', ativo: item.ativo })
   }
 
   const handleDelete = async (id: number) => {
@@ -79,7 +78,6 @@ export function AdminProfissionaisPage() {
           <input placeholder="Nome" value={form.nome} onChange={e => setForm(f => ({...f, nome: e.target.value}))} className="p-2 border rounded" />
           <input placeholder="E-mail" value={form.email} onChange={e => setForm(f => ({...f, email: e.target.value}))} className="p-2 border rounded" />
           <input placeholder="Telefone" value={form.telefone} onChange={e => setForm(f => ({...f, telefone: e.target.value}))} className="p-2 border rounded" />
-          <input placeholder="Especialidade" value={form.especialidade} onChange={e => setForm(f => ({...f, especialidade: e.target.value}))} className="p-2 border rounded" />
           <label className="flex items-center gap-2"><input type="checkbox" checked={form.ativo} onChange={e => setForm(f => ({...f, ativo: e.target.checked}))} /> Ativo</label>
         </div>
         <div className="flex gap-2 mt-4">
@@ -88,14 +86,13 @@ export function AdminProfissionaisPage() {
         </div>
       </div>
       <table className="w-full border-collapse">
-        <thead><tr className="border-b bg-gray-100"><th className="text-left p-2">Nome</th><th className="text-left p-2">E-mail</th><th className="text-left p-2">Telefone</th><th className="text-left p-2">Especialidade</th><th className="text-left p-2">Status</th><th className="text-left p-2">Ações</th></tr></thead>
+        <thead><tr className="border-b bg-gray-100"><th className="text-left p-2">Nome</th><th className="text-left p-2">E-mail</th><th className="text-left p-2">Telefone</th><th className="text-left p-2">Status</th><th className="text-left p-2">Ações</th></tr></thead>
         <tbody>
           {items.map((item) => (
             <tr key={item.id} className="border-b">
               <td className="p-2">{item.nome}</td>
               <td className="p-2 text-sm">{item.email ?? '—'}</td>
               <td className="p-2 text-sm">{item.telefone ?? '—'}</td>
-              <td className="p-2">{item.especialidade ?? '—'}</td>
               <td className="p-2">{item.ativo ? 'Ativo' : 'Inativo'}</td>
               <td className="p-2">
                 <button onClick={() => handleEdit(item)} className="px-2 py-1 bg-blue-500 text-white rounded text-sm mr-2">Editar</button>

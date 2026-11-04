@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Pagina, PaginaMidia, PaginaStatus } from '../model/pagina'
+import type { Pagina, PaginaMidia, PaginaStatus, PaginaBloco, PaginaBlocoInput } from '../model/pagina'
 import type { PaginaRepository } from './pagina.repository'
 
 interface PaginaRow {
@@ -92,7 +92,11 @@ export const paginaRepositorySupabase: PaginaRepository = {
       .from('pagina')
       .select('*')
       .order('ordem', { ascending: true })
-    if (error) throw error
+    if (error) {
+      // Table may not exist yet (migration pending) — return empty
+      if (error.code === '42P01' || error.message.includes('404') || error.message.includes('does not exist')) return []
+      throw error
+    }
     return (data ?? []).map((r) => rowToPagina(r as PaginaRow))
   },
 
@@ -247,6 +251,44 @@ export const paginaRepositorySupabase: PaginaRepository = {
 
   async removerSecao(id) {
     const { error } = await supabase.from('pagina_secao').delete().eq('id', id)
+    if (error) throw error
+  },
+
+  async adicionarBloco(input: PaginaBlocoInput) {
+    const { data, error } = await supabase
+      .from('pagina_bloco')
+      .insert({
+        secao_id: input.secaoId,
+        tipo: input.tipo,
+        titulo: input.titulo ?? null,
+        subtitulo: input.subtitulo ?? null,
+        conteudo: input.conteudo ?? null,
+        url: input.url ?? null,
+        ordem: input.ordem ?? 0,
+        visivel: input.visivel ?? true,
+        metadata: input.metadata ?? null,
+      })
+      .select()
+      .single()
+    if (error) throw error
+    const b = data as { id: number; secao_id: number; tipo: string; titulo: string | null; subtitulo: string | null; conteudo: string | null; url: string | null; ordem: number; visivel: boolean; criado_em: string; atualizado_em: string }
+    return {
+      id: b.id,
+      secaoId: b.secao_id,
+      tipo: b.tipo as PaginaBloco['tipo'],
+      titulo: b.titulo ?? undefined,
+      subtitulo: b.subtitulo ?? undefined,
+      conteudo: b.conteudo ?? undefined,
+      url: b.url ?? undefined,
+      ordem: b.ordem,
+      visivel: b.visivel,
+      criadoEm: b.criado_em,
+      atualizadoEm: b.atualizado_em,
+    }
+  },
+
+  async removerBloco(id) {
+    const { error } = await supabase.from('pagina_bloco').delete().eq('id', id)
     if (error) throw error
   },
 }

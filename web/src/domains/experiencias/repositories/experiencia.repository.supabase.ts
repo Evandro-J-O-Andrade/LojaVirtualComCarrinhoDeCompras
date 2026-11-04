@@ -65,7 +65,10 @@ export const experienciaRepositorySupabase: ExperienciaRepository = {
       .from('experiencia')
       .select('*')
       .order('ordem', { ascending: true })
-    if (error) throw error
+    if (error) {
+      if (error.code === '42P01' || error.message.includes('404') || error.message.includes('does not exist')) return []
+      throw error
+    }
     return (data ?? []).map((r) => rowToExperiencia(r as ExperienciaRow))
   },
 
