@@ -332,7 +332,10 @@ CREATE POLICY "experiencia_midia_admin_all" ON experiencia_midia FOR ALL TO auth
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
--- RLS: Serviços (público lê categorias ativas e mídia de serviços)
+-- RLS para servico (leitura de serviços ativos por anon e authenticated)
+DROP POLICY IF EXISTS "servico_read_active" ON servico;
+CREATE POLICY "servico_read_active" ON servico FOR SELECT TO public
+  USING (ativo = true);
 -- ============================================================
 CREATE POLICY "servico_categoria_public_read" ON servico_categoria FOR SELECT TO public
   USING (ativo = true);
@@ -387,6 +390,8 @@ CREATE POLICY "automacao_execucao_admin_all" ON automacao_execucao FOR ALL TO au
 
 -- ============================================================
 -- Agenda: status e disponibilidade
+-- NOTA: disponibilidade complementa agenda (horários recorrentes por profissional).
+-- agenda registra slots específicos; disponibilidade define padrões semanais.
 -- ============================================================
 CREATE TABLE IF NOT EXISTS agendamento_status (
   id bigserial PRIMARY KEY,
@@ -453,7 +458,7 @@ DO $$
 DECLARE
   t text;
 BEGIN
-  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico_categoria', 'cliente_preferencia', 'chamado', 'disponibilidade'])
+  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico', 'servico_categoria', 'cliente_preferencia', 'chamado', 'disponibilidade'])
   LOOP
     EXECUTE format(
       'DROP TRIGGER IF EXISTS trg_%s_atualizado ON %s; CREATE TRIGGER trg_%s_atualizado BEFORE UPDATE ON %s FOR EACH ROW EXECUTE FUNCTION update_atualizado_em()',
