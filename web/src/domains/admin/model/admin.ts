@@ -130,7 +130,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
   {
     grupo: 'Conteúdo',
     modulos: [
-      { rotulo: 'Mídia', href: null, icon: Image, emBreve: true },
+      { rotulo: 'Mídia', href: '/admin/midia', icon: Image },
       { rotulo: 'Páginas', href: '/admin/paginas', icon: FileText },
     ],
   },
@@ -138,7 +138,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
     grupo: 'Sistema',
     modulos: [
       { rotulo: 'Auditoria', href: '/admin/auditoria', icon: ShieldCheck },
-      { rotulo: 'Configurações', href: null, icon: Settings, emBreve: true },
+      { rotulo: 'Configurações', href: '/admin/configuracoes', icon: Settings },
     ],
   },
 ]

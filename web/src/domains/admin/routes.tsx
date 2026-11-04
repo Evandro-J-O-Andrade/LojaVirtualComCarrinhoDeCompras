@@ -23,6 +23,8 @@ import { AdminKitsPage } from '../produtos/pages/lazy'
 import { AdminEventosPage } from '../atendimento/pages/lazy'
 import { AdminAuditoriaPage } from './pages/AdminAuditoriaPage'
 import { AdminClientesPage } from '../clientes/pages/lazy'
+import { AdminMidiaPage } from './pages/AdminMidiaPage'
+import { AdminConfiguracoesPage } from './pages/AdminConfiguracoesPage'
   import { AdminAgendaPage } from '../booking/pages/lazy'
 import { AdminAgendamentosPage } from '../booking/pages/lazy'
 
@@ -110,6 +112,14 @@ export const adminRoutes = (
     <Route
       path="/admin/auditoria"
       element={<AdminAuditoriaPage />}
+    />
+    <Route
+      path="/admin/midia"
+      element={<AdminMidiaPage />}
+    />
+    <Route
+      path="/admin/configuracoes"
+      element={<AdminConfiguracoesPage />}
     />
     <Route
       path="/admin/clientes"

@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Pagina, PaginaMidia, PaginaStatus, PaginaBloco, PaginaBlocoInput, PaginaSecao } from '../model/pagina'
+import type { Pagina, PaginaMidia, PaginaStatus, PaginaBloco, PaginaBlocoInput } from '../model/pagina'
 import type { PaginaRepository } from './pagina.repository'
 
 interface PaginaRow {
