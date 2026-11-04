@@ -101,7 +101,7 @@ ALTER TABLE pagina_bloco ENABLE ROW LEVEL SECURITY;
 ALTER TABLE pagina_revisao ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "pagina_bloco_public_read" ON pagina_bloco FOR SELECT TO public
-  USING (EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_bloco.secao_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
+  USING (visivel = true AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_bloco.secao_id AND ps.ativo = true AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
 
 CREATE POLICY "pagina_bloco_admin_all" ON pagina_bloco FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
@@ -163,7 +163,7 @@ DO $$
 BEGIN
   IF NOT EXISTS (
     SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'servico' AND column_name = 'categoria_id'
+    WHERE table_schema = 'public' AND table_name = 'servico' AND column_name = 'categoria_id'
   ) THEN
     ALTER TABLE servico ADD COLUMN categoria_id bigint REFERENCES servico_categoria(id);
   END IF;
@@ -258,15 +258,12 @@ CREATE TABLE IF NOT EXISTS automacao_execucao (
 -- ============================================================
 -- Indexes
 -- ============================================================
-CREATE INDEX IF NOT EXISTS idx_pagina_slug ON pagina(slug);
 CREATE INDEX IF NOT EXISTS idx_pagina_status ON pagina(status);
 CREATE INDEX IF NOT EXISTS idx_pagina_secao_pagina ON pagina_secao(pagina_id);
 CREATE INDEX IF NOT EXISTS idx_pagina_midia_pagina ON pagina_midia(pagina_id);
 CREATE INDEX IF NOT EXISTS idx_pagina_midia_secao ON pagina_midia(secao_id);
-CREATE INDEX IF NOT EXISTS idx_experiencia_slug ON experiencia(slug);
 CREATE INDEX IF NOT EXISTS idx_experiencia_status ON experiencia(status);
 CREATE INDEX IF NOT EXISTS idx_experiencia_midia_exp ON experiencia_midia(experiencia_id);
-CREATE INDEX IF NOT EXISTS idx_servico_categoria_slug ON servico_categoria(slug);
 CREATE INDEX IF NOT EXISTS idx_servico_midia_servico ON servico_midia(servico_id);
 CREATE INDEX IF NOT EXISTS idx_cliente_preferencia_cliente ON cliente_preferencia(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_cliente_interacao_cliente ON cliente_interacao(cliente_id);
@@ -304,7 +301,7 @@ CREATE POLICY "pagina_admin_all" ON pagina FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 CREATE POLICY "pagina_secao_public_read" ON pagina_secao FOR SELECT TO public
-  USING (EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_secao.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
+  USING (ativo = true AND EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_secao.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
 
 CREATE POLICY "pagina_secao_admin_all" ON pagina_secao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
@@ -313,7 +310,7 @@ CREATE POLICY "pagina_midia_public_read" ON pagina_midia FOR SELECT TO public
   USING (
     (pagina_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_midia.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
     OR
-    (secao_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_midia.secao_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
+    (secao_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_midia.secao_id AND ps.ativo = true AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
   );
 
 CREATE POLICY "pagina_midia_admin_all" ON pagina_midia FOR ALL TO authenticated
@@ -401,6 +398,7 @@ CREATE TABLE IF NOT EXISTS agendamento_status (
   CONSTRAINT as_codigo_unique UNIQUE (codigo)
 );
 
+CREATE EXTENSION IF NOT EXISTS btree_gist;
 CREATE TABLE IF NOT EXISTS disponibilidade (
   id bigserial PRIMARY KEY,
   profissional_id bigint REFERENCES profissional(id) ON DELETE CASCADE,
@@ -409,7 +407,9 @@ CREATE TABLE IF NOT EXISTS disponibilidade (
   horario_fim time NOT NULL,
   ativo boolean NOT NULL DEFAULT true,
   criado_em timestamptz NOT NULL DEFAULT now(),
-  atualizado_em timestamptz NOT NULL DEFAULT now()
+  atualizado_em timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT disp_horario_check CHECK (horario_fim > horario_inicio),
+  CONSTRAINT disp_no_overlap EXCLUDE USING gist (profissional_id WITH =, dia_semana WITH =, tsrange(horario_inicio::timestamp, horario_fim::timestamp) WITH &&)
 );
 CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 

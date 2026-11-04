@@ -75,25 +75,42 @@ export const experienciaRepositorySupabase: ExperienciaRepository = {
       .select('*')
       .eq('id', id)
       .single()
-    if (error || !exp) return null
+    if (error) {
+      if (error.code === 'PGRST116') return null
+      throw error
+    }
+    if (!exp) return null
 
-    const { data: midias } = await supabase
+    const { data: midias, error: midiasErr } = await supabase
       .from('experiencia_midia')
       .select('*')
       .eq('experiencia_id', id)
       .order('ordem', { ascending: true })
+    if (midiasErr) throw midiasErr
 
-    return rowToExperiencia(exp as ExperienciaRow, midias as MidiaRow[] | null ?? undefined)
+    return rowToExperiencia(exp as ExperienciaRow, (midias as MidiaRow[] | null) ?? undefined)
   },
 
   async buscarPorSlug(slug) {
-    const { data, error } = await supabase
+    const { data: exp, error } = await supabase
       .from('experiencia')
       .select('*')
       .eq('slug', slug)
       .single()
-    if (error || !data) return null
-    return rowToExperiencia(data as ExperienciaRow)
+    if (error) {
+      if (error.code === 'PGRST116') return null
+      throw error
+    }
+    if (!exp) return null
+
+    const { data: midias, error: midiasErr } = await supabase
+      .from('experiencia_midia')
+      .select('*')
+      .eq('experiencia_id', (exp as ExperienciaRow).id)
+      .order('ordem', { ascending: true })
+    if (midiasErr) throw midiasErr
+
+    return rowToExperiencia(exp as ExperienciaRow, (midias as MidiaRow[] | null) ?? undefined)
   },
 
   async criar(input) {

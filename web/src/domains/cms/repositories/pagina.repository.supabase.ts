@@ -1,5 +1,5 @@
 import { supabase } from '@/lib/supabase'
-import type { Pagina, PaginaMidia, PaginaStatus, PaginaBloco, PaginaBlocoInput } from '../model/pagina'
+import type { Pagina, PaginaMidia, PaginaStatus, PaginaBloco, PaginaBlocoInput, PaginaSecao } from '../model/pagina'
 import type { PaginaRepository } from './pagina.repository'
 
 interface PaginaRow {
@@ -28,6 +28,22 @@ interface SecaoRow {
   conteudo: string | null
   ordem: number
   ativo: boolean
+  criado_em: string
+  atualizado_em: string
+  blocos?: BlocoRow[]
+}
+
+interface BlocoRow {
+  id: number
+  secao_id: number
+  tipo: string
+  titulo: string | null
+  subtitulo: string | null
+  conteudo: string | null
+  url: string | null
+  ordem: number
+  visivel: boolean
+  metadata: Record<string, unknown> | null
   criado_em: string
   atualizado_em: string
 }
@@ -71,6 +87,20 @@ function rowToPagina(row: PaginaRow, secoes?: SecaoRow[], midias?: MidiaRow[]): 
       ativo: s.ativo,
       criadoEm: s.criado_em,
       atualizadoEm: s.atualizado_em,
+      blocos: (s.blocos ?? []).map((b) => ({
+        id: b.id,
+        secaoId: b.secao_id,
+        tipo: b.tipo as PaginaBloco['tipo'],
+        titulo: b.titulo ?? undefined,
+        subtitulo: b.subtitulo ?? undefined,
+        conteudo: b.conteudo ?? undefined,
+        url: b.url ?? undefined,
+        ordem: b.ordem,
+        visivel: b.visivel,
+        metadata: b.metadata ?? undefined,
+        criadoEm: b.criado_em,
+        atualizadoEm: b.atualizado_em,
+      })),
     })),
     midias: midias?.map((m) => ({
       id: m.id,
@@ -86,6 +116,48 @@ function rowToPagina(row: PaginaRow, secoes?: SecaoRow[], midias?: MidiaRow[]): 
   }
 }
 
+async function carregarCompleto(paginaId: number): Promise<Pagina> {
+  const { data: pagina, error: paginaErr } = await supabase
+    .from('pagina')
+    .select('*')
+    .eq('id', paginaId)
+    .single()
+  if (paginaErr) throw paginaErr
+  if (!pagina) throw new Error('Página não encontrada')
+
+  const { data: secoes, error: secoesErr } = await supabase
+    .from('pagina_secao')
+    .select('*')
+    .eq('pagina_id', paginaId)
+    .order('ordem', { ascending: true })
+  if (secoesErr) throw secoesErr
+
+  const secoesComBlocos = await Promise.all(
+    ((secoes as SecaoRow[] | null) ?? []).map(async (s) => {
+      const { data: blocos, error: blocosErr } = await supabase
+        .from('pagina_bloco')
+        .select('*')
+        .eq('secao_id', s.id)
+        .order('ordem', { ascending: true })
+      if (blocosErr) throw blocosErr
+      return { ...s, blocos: (blocos as BlocoRow[] | null) ?? [] }
+    }),
+  )
+
+  const { data: midias, error: midiasErr } = await supabase
+    .from('pagina_midia')
+    .select('*')
+    .eq('pagina_id', paginaId)
+    .order('ordem', { ascending: true })
+  if (midiasErr) throw midiasErr
+
+  return rowToPagina(
+    pagina as PaginaRow,
+    secoesComBlocos as SecaoRow[],
+    (midias as MidiaRow[] | null) ?? undefined,
+  )
+}
+
 export const paginaRepositorySupabase: PaginaRepository = {
   async listar() {
     const { data, error } = await supabase
@@ -97,26 +169,11 @@ export const paginaRepositorySupabase: PaginaRepository = {
   },
 
   async buscarPorId(id) {
-    const { data: pagina, error } = await supabase
-      .from('pagina')
-      .select('*')
-      .eq('id', id)
-      .single()
-    if (error || !pagina) return null
-
-    const { data: secoes } = await supabase
-      .from('pagina_secao')
-      .select('*')
-      .eq('pagina_id', id)
-      .order('ordem', { ascending: true })
-
-    const { data: midias } = await supabase
-      .from('pagina_midia')
-      .select('*')
-      .eq('pagina_id', id)
-      .order('ordem', { ascending: true })
-
-    return rowToPagina(pagina as PaginaRow, (secoes as SecaoRow[] | null) ?? undefined, (midias as MidiaRow[] | null) ?? undefined)
+    try {
+      return await carregarCompleto(id)
+    } catch {
+      return null
+    }
   },
 
   async buscarPorSlug(slug) {
@@ -125,36 +182,12 @@ export const paginaRepositorySupabase: PaginaRepository = {
       .select('*')
       .eq('slug', slug)
       .single()
-    if (error || !pagina) return null
-
-    const { data: secoes } = await supabase
-      .from('pagina_secao')
-      .select('*')
-      .eq('pagina_id', (pagina as { id: number }).id)
-      .order('ordem', { ascending: true })
-
-    const secoesComBlocos = await Promise.all(
-      ((secoes as { id: number }[] | null) ?? []).map(async (s) => {
-        const { data: blocos } = await supabase
-          .from('pagina_bloco')
-          .select('*')
-          .eq('secao_id', s.id)
-          .order('ordem', { ascending: true })
-        return { ...s, blocos: blocos ?? [] }
-      }),
-    )
-
-    const { data: midias } = await supabase
-      .from('pagina_midia')
-      .select('*')
-      .eq('pagina_id', (pagina as { id: number }).id)
-      .order('ordem', { ascending: true })
-
-    return rowToPagina(
-      pagina as PaginaRow,
-      secoesComBlocos as unknown as SecaoRow[],
-      (midias as MidiaRow[] | null) ?? undefined,
-    )
+    if (error) {
+      if (error.code === 'PGRST116') return null
+      throw error
+    }
+    if (!pagina) return null
+    return carregarCompleto((pagina as PaginaRow).id)
   },
 
   async criar(input) {
