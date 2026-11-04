@@ -92,11 +92,7 @@ export const paginaRepositorySupabase: PaginaRepository = {
       .from('pagina')
       .select('*')
       .order('ordem', { ascending: true })
-    if (error) {
-      // Table may not exist yet (migration pending) — return empty
-      if (error.code === '42P01' || error.message.includes('404') || error.message.includes('does not exist')) return []
-      throw error
-    }
+    if (error) throw error
     return (data ?? []).map((r) => rowToPagina(r as PaginaRow))
   },
 
@@ -124,13 +120,41 @@ export const paginaRepositorySupabase: PaginaRepository = {
   },
 
   async buscarPorSlug(slug) {
-    const { data, error } = await supabase
+    const { data: pagina, error } = await supabase
       .from('pagina')
       .select('*')
       .eq('slug', slug)
       .single()
-    if (error || !data) return null
-    return rowToPagina(data as PaginaRow)
+    if (error || !pagina) return null
+
+    const { data: secoes } = await supabase
+      .from('pagina_secao')
+      .select('*')
+      .eq('pagina_id', (pagina as { id: number }).id)
+      .order('ordem', { ascending: true })
+
+    const secoesComBlocos = await Promise.all(
+      ((secoes as { id: number }[] | null) ?? []).map(async (s) => {
+        const { data: blocos } = await supabase
+          .from('pagina_bloco')
+          .select('*')
+          .eq('secao_id', s.id)
+          .order('ordem', { ascending: true })
+        return { ...s, blocos: blocos ?? [] }
+      }),
+    )
+
+    const { data: midias } = await supabase
+      .from('pagina_midia')
+      .select('*')
+      .eq('pagina_id', (pagina as { id: number }).id)
+      .order('ordem', { ascending: true })
+
+    return rowToPagina(
+      pagina as PaginaRow,
+      secoesComBlocos as unknown as SecaoRow[],
+      (midias as MidiaRow[] | null) ?? undefined,
+    )
   },
 
   async criar(input) {

@@ -291,7 +291,6 @@ ALTER TABLE cliente_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE integracao_evento ENABLE ROW LEVEL SECURITY;
-ALTER TABLE disponibilidade ENABLE ROW LEVEL SECURITY;
 ALTER TABLE automacao_execucao ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
