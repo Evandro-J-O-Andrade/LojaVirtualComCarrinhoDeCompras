@@ -8,10 +8,10 @@
 CREATE OR REPLACE FUNCTION update_atualizado_em()
 RETURNS TRIGGER AS $$
 BEGIN
-  NEW.atualizado_em = now();
+  NEW.atualizado_em = pg_catalog.now();
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = '';
 
 -- ============================================================
 -- CMS: Páginas dinâmicas
@@ -447,7 +447,7 @@ CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO 
   WITH CHECK (
     interno = false
     AND (autor IS NULL OR autor = auth.uid())
-    AND EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid())
+    AND EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid() AND ch.status IN ('aberto', 'em_andamento'))
   );
 DO $$
 DECLARE
