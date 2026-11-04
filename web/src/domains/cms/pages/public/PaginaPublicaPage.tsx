@@ -75,6 +75,23 @@ function BlocoRenderer({ bloco }: { bloco: PaginaBloco }) {
       )
     case 'html':
       return <div className="mb-4" dangerouslySetInnerHTML={{ __html: bloco.conteudo ?? '' }} />
+    case 'galeria':
+      return (
+        <div className="mb-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+          {bloco.url && <img src={bloco.url} alt={bloco.titulo ?? ''} className="rounded-lg" />}
+        </div>
+      )
+    case 'produtos_destaque':
+    case 'categorias':
+    case 'promocoes':
+    case 'beneficios':
+    case 'servicos':
+      return (
+        <div className="mb-4 p-4 border rounded-lg bg-gray-50">
+          {bloco.titulo && <h3 className="text-lg font-semibold mb-2">{bloco.titulo}</h3>}
+          {bloco.conteudo && <p className="text-gray-600">{bloco.conteudo}</p>}
+        </div>
+      )
     default:
       return null
   }
