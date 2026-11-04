@@ -100,7 +100,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
       },
       { rotulo: 'Categorias', href: '/admin/categorias', icon: Tag },
       { rotulo: 'Promoções', href: '/admin/promocoes', icon: Megaphone },
-      { rotulo: 'Kits', href: null, icon: Layers, emBreve: true },
+      { rotulo: 'Kits', href: '/admin/kits', icon: Layers },
       { rotulo: 'Orçamentos', href: '/admin/orcamentos', icon: FileText },
       { rotulo: 'Pedidos', href: '/admin/pedidos', icon: ShoppingBag },
       { rotulo: 'Pagamentos', href: '/admin/pagamentos', icon: CreditCard },
@@ -116,7 +116,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
       { rotulo: 'Agenda', href: '/admin/agenda', icon: CalendarClock },
       { rotulo: 'Agendamentos', href: '/admin/agendamentos', icon: ClipboardList },
       { rotulo: 'Mimos', href: '/admin/mimos', icon: Store },
-      { rotulo: 'Eventos', href: null, icon: BarChart3, emBreve: true },
+      { rotulo: 'Eventos', href: '/admin/eventos', icon: BarChart3 },
     ],
   },
   {
@@ -137,7 +137,7 @@ export const ADMIN_GRUPOS: AdminGrupo[] = [
   {
     grupo: 'Sistema',
     modulos: [
-      { rotulo: 'Auditoria', href: null, icon: ShieldCheck, emBreve: true },
+      { rotulo: 'Auditoria', href: '/admin/auditoria', icon: ShieldCheck },
       { rotulo: 'Configurações', href: null, icon: Settings, emBreve: true },
     ],
   },

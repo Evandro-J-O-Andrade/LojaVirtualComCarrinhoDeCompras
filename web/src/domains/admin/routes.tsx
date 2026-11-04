@@ -19,6 +19,9 @@ import { AdminPromocoesPage } from '../produtos/pages/lazy'
   import { AdminPedidosPage } from '../pedidos/pages/lazy'
   import { AdminPagamentosPage } from '../pagamentos/pages/lazy'
 import { AdminEstoquePage } from '../produtos/pages/lazy'
+import { AdminKitsPage } from '../produtos/pages/lazy'
+import { AdminEventosPage } from '../atendimento/pages/lazy'
+import { AdminAuditoriaPage } from './pages/AdminAuditoriaPage'
 import { AdminClientesPage } from '../clientes/pages/lazy'
   import { AdminAgendaPage } from '../booking/pages/lazy'
 import { AdminAgendamentosPage } from '../booking/pages/lazy'
@@ -96,10 +99,22 @@ export const adminRoutes = (
         path="/admin/estoque"
         element={<AdminEstoquePage />}
       />
-      <Route
-        path="/admin/clientes"
-        element={<AdminClientesPage />}
-      />
+    <Route
+      path="/admin/kits"
+      element={<AdminKitsPage />}
+    />
+    <Route
+      path="/admin/eventos"
+      element={<AdminEventosPage />}
+    />
+    <Route
+      path="/admin/auditoria"
+      element={<AdminAuditoriaPage />}
+    />
+    <Route
+      path="/admin/clientes"
+      element={<AdminClientesPage />}
+    />
       <Route
         path="/admin/agenda"
         element={<AdminAgendaPage />}

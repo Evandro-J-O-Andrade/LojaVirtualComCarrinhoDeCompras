@@ -35,3 +35,9 @@ export const AdminEstoquePage = lazy(() =>
     default: m.AdminEstoquePage,
   })),
 )
+
+export const AdminKitsPage = lazy(() =>
+  import('./AdminKitsPage').then((m) => ({
+    default: m.AdminKitsPage,
+  })),
+)

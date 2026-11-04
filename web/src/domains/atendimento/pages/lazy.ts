@@ -23,3 +23,9 @@ export const AdminNotificacoesPage = lazy(() =>
     default: m.AdminNotificacoesPage,
   })),
 )
+
+export const AdminEventosPage = lazy(() =>
+  import('./AdminEventosPage').then((m) => ({
+    default: m.AdminEventosPage,
+  })),
+)
