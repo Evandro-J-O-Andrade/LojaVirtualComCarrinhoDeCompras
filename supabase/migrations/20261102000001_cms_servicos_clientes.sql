@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS pagina_midia (
   principal boolean NOT NULL DEFAULT false,
   criado_em timestamptz NOT NULL DEFAULT now(),
   CONSTRAINT pm_tipo_check CHECK (tipo IN ('imagem', 'video', 'banner')),
-  CONSTRAINT pm_owner_check CHECK (pagina_id IS NOT NULL OR secao_id IS NOT NULL)
+  CONSTRAINT pm_owner_check CHECK ((pagina_id IS NOT NULL) <> (secao_id IS NOT NULL))
 );
 
 -- ============================================================
@@ -301,7 +301,11 @@ CREATE POLICY "pagina_secao_admin_all" ON pagina_secao FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
 
 CREATE POLICY "pagina_midia_public_read" ON pagina_midia FOR SELECT TO public
-  USING (EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_midia.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())));
+  USING (
+    (pagina_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina p WHERE p.id = pagina_midia.pagina_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
+    OR
+    (secao_id IS NOT NULL AND EXISTS (SELECT 1 FROM pagina_secao ps JOIN pagina p ON p.id = ps.pagina_id WHERE ps.id = pagina_midia.secao_id AND p.status = 'publicado' AND (p.publicado_em IS NULL OR p.publicado_em <= now()) AND (p.expira_em IS NULL OR p.expira_em > now())))
+  );
 
 CREATE POLICY "pagina_midia_admin_all" ON pagina_midia FOR ALL TO authenticated
   USING (is_admin()) WITH CHECK (is_admin());
@@ -390,7 +394,7 @@ DO $$
 DECLARE
   t text;
 BEGIN
-  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'experiencia', 'servico_categoria', 'cliente_preferencia', 'chamado'])
+  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico_categoria', 'cliente_preferencia', 'chamado'])
   LOOP
     EXECUTE format(
       'DROP TRIGGER IF EXISTS trg_%s_atualizado ON %s; CREATE TRIGGER trg_%s_atualizado BEFORE UPDATE ON %s FOR EACH ROW EXECUTE FUNCTION update_atualizado_em()',
