@@ -26,7 +26,7 @@ export function ProdutoGaleria({
   const [lightboxAberta, setLightboxAberta] = useState(false)
 
   useEffect(() => {
-    if (indice >= midias.length) {
+    if (indice >= midias.length && midias.length > 0) {
       setIndice(Math.max(0, midias.length - 1))
     }
   }, [midias, indice])
@@ -41,8 +41,9 @@ export function ProdutoGaleria({
     )
   }
 
-  const midia = midias[indice]
-  if (!midia) return null
+const indiceSeguro = midias.length > 0 ? Math.min(indice, midias.length - 1) : 0
+const midia = midias[indiceSeguro]
+if (!midia) return null
   const anterior = () =>
     setIndice((atual) => (atual - 1 + midias.length) % midias.length)
   const proxima = () =>
@@ -66,7 +67,7 @@ export function ProdutoGaleria({
           <>
             <ProdutoImagem
               src={midia.url}
-              alt={midia.alt ?? `${nome} — imagem ${indice + 1}`}
+              alt={midia.alt ?? `${nome} — imagem ${indiceSeguro + 1}`}
             />
             {midia.titulo && (
               <p className="absolute bottom-3 left-3 rounded-full bg-surface/85 px-3 py-1 text-xs text-content">
@@ -123,7 +124,7 @@ export function ProdutoGaleria({
                   ? 'Ver vídeo de demonstração'
                   : `Ver imagem ${posicao + 1}`
               }
-              aria-current={posicao === indice}
+              aria-current={posicao === indiceSeguro}
               className={cn(
                 'flex h-20 w-20 items-center justify-center overflow-hidden rounded-xl border-2 text-xs font-semibold transition-all',
                 posicao === indice
