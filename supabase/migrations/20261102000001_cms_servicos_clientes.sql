@@ -265,7 +265,7 @@ CREATE INDEX IF NOT EXISTS idx_chamado_cliente ON chamado(cliente_id);
 CREATE INDEX IF NOT EXISTS idx_chamado_status ON chamado(status);
 CREATE INDEX IF NOT EXISTS idx_chamado_interacao_chamado ON chamado_interacao(chamado_id);
 CREATE INDEX IF NOT EXISTS idx_integracao_evento_tipo ON integracao_evento(tipo);
-CREATE INDEX IF NOT EXISTS idx_automacao_execucao_status ON automacao_execucao(status);
+CREATE INDEX IF NOT EXISTS idx_disponibilidade_profissional ON disponibilidade(profissional_id);
 
 -- ============================================================
 -- RLS: habilitar em todas as tabelas novas
@@ -282,7 +282,7 @@ ALTER TABLE cliente_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado ENABLE ROW LEVEL SECURITY;
 ALTER TABLE chamado_interacao ENABLE ROW LEVEL SECURITY;
 ALTER TABLE integracao_evento ENABLE ROW LEVEL SECURITY;
-ALTER TABLE automacao_execucao ENABLE ROW LEVEL SECURITY;
+ALTER TABLE disponibilidade ENABLE ROW LEVEL SECURITY;
 
 -- ============================================================
 -- RLS: Conteúdo público (pagina, pagina_secao, pagina_midia)
@@ -380,8 +380,56 @@ CREATE POLICY "automacao_execucao_admin_all" ON automacao_execucao FOR ALL TO au
   USING (is_admin()) WITH CHECK (is_admin());
 
 -- ============================================================
--- Triggers: atualizado_em automático
+-- Agenda: status e disponibilidade
 -- ============================================================
+CREATE TABLE IF NOT EXISTS agendamento_status (
+  id bigserial PRIMARY KEY,
+  codigo varchar(30) NOT NULL,
+  nome varchar(100) NOT NULL,
+  descricao text,
+  ordem integer NOT NULL DEFAULT 0,
+  ativo boolean NOT NULL DEFAULT true,
+  CONSTRAINT as_codigo_unique UNIQUE (codigo)
+);
+
+CREATE TABLE IF NOT EXISTS disponibilidade (
+  id bigserial PRIMARY KEY,
+  profissional_id bigint REFERENCES profissional(id) ON DELETE CASCADE,
+  dia_semana integer NOT NULL CHECK (dia_semana BETWEEN 0 AND 6),
+  horario_inicio time NOT NULL,
+  horario_fim time NOT NULL,
+  ativo boolean NOT NULL DEFAULT true,
+  criado_em timestamptz NOT NULL DEFAULT now(),
+  atualizado_em timestamptz NOT NULL DEFAULT now()
+);
+
+-- Seed status padrão
+INSERT INTO agendamento_status (codigo, nome, ordem) VALUES
+  ('solicitado', 'Solicitado', 1),
+  ('confirmado', 'Confirmado', 2),
+  ('concluido', 'Concluído', 3),
+  ('cancelado', 'Cancelado', 4),
+  ('nao_compareceu', 'Não compareceu', 5),
+  ('reagendado', 'Reagendado', 6),
+  ('expirado', 'Expirado', 7)
+ON CONFLICT (codigo) DO NOTHING;
+
+-- RLS para novas tabelas
+ALTER TABLE agendamento_status ENABLE ROW LEVEL SECURITY;
+ALTER TABLE disponibilidade ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "agendamento_status_public_read" ON agendamento_status FOR SELECT TO public USING (ativo = true);
+CREATE POLICY "agendamento_status_admin_all" ON agendamento_status FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+
+CREATE POLICY "disponibilidade_public_read" ON disponibilidade FOR SELECT TO public USING (ativo = true);
+CREATE POLICY "disponibilidade_admin_all" ON disponibilidade FOR ALL TO authenticated USING (is_admin()) WITH CHECK (is_admin());
+
+-- RLS: chamados - cliente pode criar os seus
+CREATE POLICY "chamado_own_insert" ON chamado FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM cliente c WHERE c.id = chamado.cliente_id AND c.auth_user_id = auth.uid()));
+
+CREATE POLICY "chamado_interacao_own_insert" ON chamado_interacao FOR INSERT TO authenticated
+  WITH CHECK (EXISTS (SELECT 1 FROM chamado ch JOIN cliente c ON c.id = ch.cliente_id WHERE ch.id = chamado_interacao.chamado_id AND c.auth_user_id = auth.uid()));
 CREATE OR REPLACE FUNCTION update_atualizado_em()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -394,7 +442,7 @@ DO $$
 DECLARE
   t text;
 BEGIN
-  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico_categoria', 'cliente_preferencia', 'chamado'])
+  FOR t IN SELECT unnest(ARRAY['pagina', 'pagina_secao', 'pagina_bloco', 'experiencia', 'servico_categoria', 'cliente_preferencia', 'chamado', 'disponibilidade'])
   LOOP
     EXECUTE format(
       'DROP TRIGGER IF EXISTS trg_%s_atualizado ON %s; CREATE TRIGGER trg_%s_atualizado BEFORE UPDATE ON %s FOR EACH ROW EXECUTE FUNCTION update_atualizado_em()',
