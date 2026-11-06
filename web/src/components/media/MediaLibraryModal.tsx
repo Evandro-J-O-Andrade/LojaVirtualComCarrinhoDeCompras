@@ -86,7 +86,7 @@ export function MediaLibraryModal({ open, onClose, onSelect, allowVideo = true }
             <div className="border-2 border-dashed rounded-lg p-8 text-center">
               <Upload className="mx-auto mb-4 text-gray-400" size={40} />
               <p className="mb-4 text-sm text-gray-600">Arraste ou selecione imagens e vídeos</p>
-              <input type="file" accept="image/*,video/*" onChange={handleUpload} disabled={uploading} className="hidden" id="media-upload" />
+              <input type="file" accept="image/*,video/*,application/pdf,application/xml,text/xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document" onChange={handleUpload} disabled={uploading} className="hidden" id="media-upload" />
               <label htmlFor="media-upload">
                 <Button variant="outline" disabled={uploading} onClick={() => document.getElementById('media-upload')?.click()} type="button">{uploading ? 'Enviando...' : 'Selecionar arquivo'}</Button>
               </label>

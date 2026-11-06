@@ -102,7 +102,7 @@ export function AdminMidiaPage() {
           <input
             type="file"
             multiple
-            accept="image/*,video/*"
+            accept="image/*,video/*,application/pdf,application/xml,text/xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             className="hidden"
             onChange={handleUpload}
             disabled={uploading}
