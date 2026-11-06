@@ -158,8 +158,8 @@ export function AdminMidiaPage() {
                   {copied === item.url ? <Check size={16} /> : <Copy size={16} />}
                 </button>
                 <button
-                  onClick={() => handleDelete(item.name)}
-                  className="rounded-full bg-red-500 p-2 text-white hover:bg-red-600"
+                  onClick={(e) => { e.stopPropagation(); handleDelete(item.name) }}
+                  className="rounded-full bg-red-500 p-2 text-white hover:bg-red-600 cursor-pointer"
                   title="Excluir"
                 >
                   <Trash2 size={16} />
