@@ -71,14 +71,20 @@ export function AdminMidiaPage() {
   }
 
   const handleDelete = async (name: string) => {
+    if (!confirm(`Excluir "${name}"?`)) return
     try {
       const { error: delError } = await supabase.storage
         .from('product-images')
         .remove([name])
-      if (delError) throw delError
+      if (delError) {
+        console.error('Delete error:', delError)
+        throw delError
+      }
       await loadMedia()
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao excluir')
+      const msg = err instanceof Error ? err.message : 'Erro ao excluir'
+      console.error('handleDelete failed:', err)
+      setError(msg)
     }
   }
 
