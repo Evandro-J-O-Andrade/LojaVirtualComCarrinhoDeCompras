@@ -51,10 +51,8 @@ export function AdminProdutosPage() {
   const { pode, motivo } = useAdminPermissao()
 
   const [busca, setBusca] = useState('')
-  const [status, setStatus] =
-    useState<FiltroStatus>('todos')
-  const [categoriaSlug, setCategoriaSlug] =
-    useState('')
+  const [status, setStatus] = useState<FiltroStatus>('todos')
+  const [categoriaSlug, setCategoriaSlug] = useState('')
 
   const estado = estadoAdminProdutos(data, error)
 
@@ -278,7 +276,7 @@ function productsRows(produtos: Produto[]) {
           >
           Abrir
           <ChevronRight size={16} aria-hidden />
-        </Link>
+          </Link>
       </TableCell>
     </TableRow>
   ))
