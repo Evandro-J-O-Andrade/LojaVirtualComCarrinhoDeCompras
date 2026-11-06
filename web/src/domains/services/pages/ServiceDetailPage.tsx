@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { CalendarOff } from 'lucide-react'
@@ -13,11 +14,24 @@ import {
   formatServiceDuration,
   serviceJsonLd,
 } from '../model/service'
+import { paginaRepositorySupabase } from '@/domains/cms/repositories/pagina.repository.supabase'
+import type { Pagina } from '@/domains/cms/model/pagina'
 
 export function ServiceDetailPage() {
   const navigate = useNavigate()
   const { slug } = useParams<{ slug: string }>()
   const { data: servico, isLoading, error, refetch } = useService(slug)
+  const [cmsPage, setCmsPage] = useState<Pagina | null>(null)
+
+  useEffect(() => {
+    if (!slug) return
+    paginaRepositorySupabase.buscarPorSlug(`servico-${slug}`).then((p) => {
+      if (p) setCmsPage(p)
+    }).catch(() => {})
+  }, [slug])
+
+  const duracao = servico ? formatServiceDuration(servico.duracaoMinutos) : null
+  const imagem = servico?.imagemCapa || SERVICE_IMAGE_FALLBACK
 
   if (isLoading) {
     return (
@@ -75,9 +89,6 @@ export function ServiceDetailPage() {
       </div>
     )
   }
-
-  const duracao = formatServiceDuration(servico.duracaoMinutos)
-  const imagem = servico.imagemCapa || SERVICE_IMAGE_FALLBACK
 
   return (
     <div>
@@ -153,6 +164,26 @@ export function ServiceDetailPage() {
               )}
             </div>
           )}
+
+          {cmsPage?.secoes?.map((secao) => (
+            <div key={secao.id} className="mt-14">
+              {secao.titulo && <h2 className="title-h2 mb-4">{secao.titulo}</h2>}
+              {secao.subtitulo && <p className="text-gray-500 mb-4">{secao.subtitulo}</p>}
+              {secao.blocos?.map((bloco) => {
+                if (!bloco.visivel) return null
+                if (bloco.tipo === 'texto') return <div key={bloco.id} className="prose mb-4 whitespace-pre-wrap">{bloco.conteudo}</div>
+                if (bloco.tipo === 'imagem' && bloco.url) return <img key={bloco.id} src={bloco.url} alt={bloco.titulo ?? ''} className="rounded-lg mb-4" />
+                if (bloco.tipo === 'cta') return (
+                  <div key={bloco.id} className="mb-4 text-center">
+                    {bloco.titulo && <h3 className="text-xl font-semibold mb-2">{bloco.titulo}</h3>}
+                    {bloco.conteudo && <p className="mb-3">{bloco.conteudo}</p>}
+                    {bloco.url && <a href={bloco.url} className="inline-block px-6 py-3 bg-blue-600 text-white rounded-lg">{bloco.subtitulo ?? 'Saiba mais'}</a>}
+                  </div>
+                )
+                return null
+              })}
+            </div>
+          ))}
         </div>
       </div>
     </div>
