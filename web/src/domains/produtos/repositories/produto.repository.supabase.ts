@@ -211,11 +211,15 @@ export class SupabaseProdutoRepository implements ProdutoRepository {
   }
 
   async deleteProduto(id: string): Promise<void> {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from('produto')
       .delete()
       .eq('id', Number(id))
+      .select('id')
     if (error) throw error
+    if (!data || data.length === 0) {
+      throw new Error('Produto não foi excluído. Verifique se você tem permissão de administrador ou se o produto possui dependências.')
+    }
   }
   async listProdutos(filtro?: ProdutoFiltro): Promise<Produto[]> {
     let query = supabase
