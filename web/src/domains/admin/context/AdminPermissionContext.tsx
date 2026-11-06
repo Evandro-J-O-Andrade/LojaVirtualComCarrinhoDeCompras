@@ -10,7 +10,7 @@ import type { AdminAcao } from '../model/admin'
 import { verificarAdmin } from '../services/adminAuth'
 
 interface AdminPermissionContextType {
-  estado: 'pendente' | 'conectado'
+  estado: 'carregando' | 'autorizado' | 'negado'
   pode(acao: AdminAcao): boolean
   motivo: string
 }
@@ -20,8 +20,8 @@ const AdminPermissionContext =
     undefined,
   )
 
-const MOTIVO_PENDENTE =
-  'Permissões reais chegam com o RBAC na integração do backend'
+const MOTIVO_NEGADO =
+  'Acesso negado: usuário não é administrador'
 
 export function AdminPermissionProvider({
   children,
@@ -30,6 +30,7 @@ export function AdminPermissionProvider({
 }) {
   const [admin, setAdmin] = useState(false)
   const [carregando, setCarregando] = useState(true)
+  const [erro, setErro] = useState(false)
 
   useEffect(() => {
     let ativo = true
@@ -41,6 +42,7 @@ export function AdminPermissionProvider({
       })
       .catch(() => {
         if (!ativo) return
+        setErro(true)
         setAdmin(false)
         setCarregando(false)
       })
@@ -52,14 +54,24 @@ export function AdminPermissionProvider({
   const value = useMemo<AdminPermissionContextType>(
     () => ({
       estado: carregando
-        ? 'pendente'
+        ? 'carregando'
         : admin
-          ? 'conectado'
-          : 'pendente',
-      pode: () => !carregando && admin,
-      motivo: carregando || !admin ? MOTIVO_PENDENTE : '',
+          ? 'autorizado'
+          : 'negado',
+      pode: () => {
+        if (carregando) return false
+        if (!admin) return false
+        return true
+      },
+      motivo: carregando
+        ? 'Carregando permissões...'
+        : admin
+          ? ''
+          : erro
+            ? 'Erro ao verificar permissões. Tente novamente.'
+            : MOTIVO_NEGADO,
     }),
-    [admin, carregando],
+    [admin, carregando, erro],
   )
 
   return (

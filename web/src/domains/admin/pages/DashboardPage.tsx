@@ -325,9 +325,11 @@ export function DashboardPage() {
           <p className="text-sm text-content-muted">
             Estado:{' '}
             <span className="font-medium text-soft-black">
-              {permissaoEstado === 'pendente'
-                ? 'pendente'
-                : 'conectado'}
+              {permissaoEstado === 'carregando'
+                ? 'carregando'
+                : permissaoEstado === 'autorizado'
+                  ? 'autorizado'
+                  : 'negado'}
             </span>
             . {motivo}.
           </p>
