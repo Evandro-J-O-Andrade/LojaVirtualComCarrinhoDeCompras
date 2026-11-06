@@ -135,8 +135,7 @@ export function CadastroPage() {
 
       // Tentar criar cliente e endereço após cadastro
       try {
-        const { data: authUser } = await supabase.auth.getUser()
-        const userId = authUser.user?.id
+        const userId = resultado.user?.id
 
         const clientePayload: Record<string, unknown> = {
           nome: nome.trim(),
@@ -155,7 +154,13 @@ export function CadastroPage() {
           .select()
           .maybeSingle()
 
-        if (!clienteErro && clienteCriado && cepLimpo && logradouro && numero && bairro && cidade && uf) {
+        if (clienteErro) {
+          console.error('Erro ao criar cliente:', clienteErro)
+          setErro(`Conta criada, mas houve um erro ao registrar o cadastro comercial: ${clienteErro.message}`)
+          return
+        }
+
+        if (clienteCriado && cepLimpo && logradouro && numero && bairro && cidade && uf) {
           await supabase.from('endereco').insert({
             cliente_id: clienteCriado.id,
             logradouro: logradouro.trim(),
@@ -169,8 +174,10 @@ export function CadastroPage() {
             ativo: true,
           })
         }
-      } catch {
-        // Não bloquear o cadastro se criação de cliente/endereco falhar
+      } catch (err) {
+        console.error('Erro inesperado ao criar cliente:', err)
+        setErro('Conta criada, mas houve um erro ao registrar o cadastro comercial. Entre em contato com o suporte.')
+        return
       }
 
       setSucesso(true)

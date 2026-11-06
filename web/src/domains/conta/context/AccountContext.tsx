@@ -46,7 +46,7 @@ interface AccountContextType {
     email: string,
     senha: string,
     nome: string,
-  ) => Promise<{ error?: string }>
+  ) => Promise<{ error?: string; user?: import('@supabase/supabase-js').User | null }>
   signOut: () => Promise<void>
   /** Alteração de senha via Supabase Auth (não é própria). */
   alterarSenha: (novaSenha: string) => Promise<{

@@ -29,7 +29,7 @@ interface AuthContextType {
     email: string,
     password: string,
     name: string,
-  ) => Promise<{ error?: string }>
+  ) => Promise<{ error?: string; user?: User | null }>
   signOut: () => Promise<void>
   /** Alteração de senha via Supabase Auth — nunca implementação própria. */
   alterarSenha: (novaSenha: string) => Promise<{ error?: string }>
@@ -109,13 +109,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (!supabaseConfigurado) {
         return { error: MENSAGEM_SEM_CONFIGURACAO }
       }
-      const { error: erro } = await supabase.auth.signUp({
+      const { data, error: erro } = await supabase.auth.signUp({
         email,
         password,
         options: { data: { name } },
       })
       if (erro) return { error: erro.message }
-      return {}
+      return { user: data.user }
     },
     [],
   )
