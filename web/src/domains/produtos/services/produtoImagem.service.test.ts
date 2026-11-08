@@ -50,7 +50,7 @@ describe('ProdutoImagemService', () => {
       const getPublicUrl = vi.fn().mockReturnValue({
         data: {
           publicUrl:
-            'https://bmqxgibhuzekxpcgosap.supabase.co/storage/v1/object/public/product-images/produto-1/abc.webp',
+            'https://example.supabase.co/storage/v1/object/public/product-images/produto-1/abc.webp',
         },
       })
       mockSupabase.storage.from.mockReturnValue({
@@ -112,7 +112,7 @@ describe('ProdutoImagemService', () => {
         remove: vi.fn(),
         getPublicUrl: vi.fn().mockReturnValue({
           data: {
-            publicUrl: 'https://test.supabase.co/storage/v1/object/public/product-images/produto-1/unique-id.webp',
+            publicUrl: 'https://example.supabase.co/storage/v1/object/public/product-images/produto-1/unique-id.webp',
           },
         }),
       })
@@ -164,7 +164,7 @@ describe('ProdutoImagemService', () => {
         remove: vi.fn().mockImplementation(removeImpl ?? (() => ({ error: null }))),
         getPublicUrl: vi.fn().mockImplementation((caminho: string) => ({
           data: {
-            publicUrl: `https://test.supabase.co/storage/v1/object/public/product-images/${caminho}`,
+            publicUrl: `https://example.supabase.co/storage/v1/object/public/product-images/${caminho}`,
           },
         })),
       })
@@ -253,7 +253,7 @@ describe('ProdutoImagemService', () => {
       const resultado = await service.removerImagem(
         1,
         42,
-        'https://bmqxgibhuzekxpcgosap.supabase.co/storage/v1/object/public/product-images/produto-1/test.webp',
+        'https://example.supabase.co/storage/v1/object/public/product-images/produto-1/test.webp',
       )
 
       expect(resultado.storageRemovido).toBe(true)
@@ -324,7 +324,7 @@ describe('ProdutoImagemService', () => {
       const resultado = await service.removerImagem(
         1,
         42,
-        'https://bmqxgibhuzekxpcgosap.supabase.co/storage/v1/object/public/product-images/produto-1/missing.webp',
+        'https://example.supabase.co/storage/v1/object/public/product-images/produto-1/missing.webp',
       )
 
       expect(resultado.storageRemovido).toBe(false)
@@ -352,7 +352,7 @@ describe('ProdutoImagemService', () => {
       const resultado = await service.removerImagem(
         1,
         42,
-        'https://bmqxgibhuzekxpcgosap.supabase.co/storage/v1/object/public/product-images/produto-1/img.webp',
+        'https://example.supabase.co/storage/v1/object/public/product-images/produto-1/img.webp',
       )
 
       expect(resultado.storageRemovido).toBe(false)
