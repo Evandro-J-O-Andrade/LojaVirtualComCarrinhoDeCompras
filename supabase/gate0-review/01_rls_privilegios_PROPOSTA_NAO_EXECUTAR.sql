@@ -115,10 +115,11 @@ CREATE POLICY permissions_select_all ON public.permissions
   FOR SELECT TO authenticated
   USING (true);
 
--- role_permissions: visualizar via roles acessíveis
+-- role_permissions: visualizar via roles acessíveis + ROOT bypass
 CREATE POLICY role_permissions_select ON public.role_permissions
   FOR SELECT TO authenticated
   USING (
+    public.is_admin() OR
     role_id IN (SELECT id FROM public.roles WHERE tenant_id IS NULL OR tenant_id IN (
       SELECT tm.tenant_id FROM public.tenant_memberships tm
       JOIN public.people p ON p.id = tm.person_id

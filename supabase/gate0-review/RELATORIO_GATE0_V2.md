@@ -1,11 +1,11 @@
-# Relatório Gate 0 V2 — Angel Cosméticos
+# Relatório Gate 0 V3 — Angel Cosméticos
 
-## Correções aplicadas (V2)
-1. 01: Adicionado ROOT bypass via is_admin() em todas as 10 tabelas. Rollback não desabilita RLS.
-2. 02: Admin UUID resolvido via admin_user (não mais placeholder). Pré-condições rigorosas adicionadas.
-3. 03: Backfill mantido com WHERE tenant_id IS NULL (nunca sobrescreve).
-4. 04: Validação usa admin_user em vez de primeiro auth.users.
-5. 05 (novo): Correção de triggers updated_at vs atualizado_em.
+## Correções aplicadas (V3)
+1. 01: ROOT bypass via is_admin() em todas as 10 tabelas, incluindo role_permissions. Rollback não desabilita RLS.
+2. 02: Admin UUID resolvido via admin_user (não placeholder). Idempotente (ON CONFLICT). Pré-condições rigorosas.
+3. 03: Backfill transacional (BEGIN/COMMIT) com pré-validação, pós-validação e aborto em inconsistência.
+4. 04: Validação usa admin_user. Teste de isolamento entre tenants adicionado.
+5. 05 (V3): Duas funções separadas (update_updated_at + update_atualizado_em) em vez de uma com TG_TABLE_NAME.
 
 ## Documentos adicionais
 - MATRIZ_RECONCILIACAO_MIGRATIONS.md

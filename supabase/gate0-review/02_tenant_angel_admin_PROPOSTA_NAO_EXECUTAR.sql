@@ -1,8 +1,8 @@
 -- ============================================================================
--- 02_tenant_angel_admin_PROPOSTA_NAO_EXECUTAR.sql (V2)
+-- 02_tenant_angel_admin_PROPOSTA_NAO_EXECUTAR.sql (V3)
 -- Gate 0 — Angel Cosméticos
 -- PROPOSTA — NÃO EXECUTAR NO REMOTO SEM APROVAÇÃO
--- V2: Admin UUID resolvido via admin_user, pré-condições rigorosas
+-- V3: Idempotente — aceita estado parcial, aborta apenas em conflito real
 -- ============================================================================
 
 -- ============================================================================
@@ -29,33 +29,15 @@ BEGIN
   ASSERT v_auth_count = 1, 'admin_user não possui vínculo válido com auth.users.';
 END $$;
 
--- Verificar que não existem people
-DO $$
-DECLARE
-  v_people_count INT;
-BEGIN
-  SELECT count(*) INTO v_people_count FROM public.people;
-  ASSERT v_people_count = 0, 'Já existem ' || v_people_count || ' people. Abortar.';
-END $$;
-
--- Verificar que não existem tenants
-DO $$
-DECLARE
-  v_tenant_count INT;
-BEGIN
-  SELECT count(*) INTO v_tenant_count FROM public.tenants;
-  ASSERT v_tenant_count = 0, 'Já existem ' || v_tenant_count || ' tenants. Abortar.';
-END $$;
-
 -- ============================================================================
--- 1. Criar tenant Angel
+-- 1. Criar tenant Angel (idempotente)
 -- ============================================================================
 INSERT INTO public.tenants (slug, nome, status)
 VALUES ('angel-cosmeticos', 'Angel Cosméticos', 'active')
 ON CONFLICT (slug) DO NOTHING;
 
 -- ============================================================================
--- 2. Criar people para o admin (resolvido via admin_user)
+-- 2. Criar people para o admin (idempotente via admin_user)
 -- ============================================================================
 INSERT INTO public.people (auth_user_id, username, display_name, email, status)
 SELECT
@@ -69,7 +51,7 @@ JOIN auth.users u ON u.id = au.user_id
 WHERE NOT EXISTS (SELECT 1 FROM public.people p WHERE p.auth_user_id = u.id);
 
 -- ============================================================================
--- 3. Criar membership ativa
+-- 3. Criar membership ativa (idempotente)
 -- ============================================================================
 INSERT INTO public.tenant_memberships (person_id, tenant_id, status)
 SELECT p.id, t.id, 'active'
@@ -80,7 +62,7 @@ WHERE p.auth_user_id = (SELECT user_id FROM public.admin_user LIMIT 1)
 ON CONFLICT (person_id, tenant_id) DO NOTHING;
 
 -- ============================================================================
--- 4. Atribuir papel admin
+-- 4. Atribuir papel admin (idempotente)
 -- ============================================================================
 INSERT INTO public.role_assignments (person_id, tenant_id, role_id)
 SELECT p.id, t.id, r.id

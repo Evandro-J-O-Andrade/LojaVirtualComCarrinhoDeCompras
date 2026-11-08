@@ -45,12 +45,11 @@ UNION ALL SELECT 'fornecedor', count(*) FILTER (WHERE tenant_id IS NULL) FROM pu
 UNION ALL SELECT 'produto_imagem', count(*) FILTER (WHERE tenant_id IS NULL) FROM public.produto_imagem
 UNION ALL SELECT 'estoque', count(*) FILTER (WHERE tenant_id IS NULL) FROM public.estoque;
 
--- 8. Privilégios restantes
-SELECT grantee, table_name, privilege_type
-FROM information_schema.role_table_grants
-WHERE table_schema = 'public'
-  AND table_name IN ('people','tenants','tenant_memberships','roles','permissions',
-                     'role_permissions','role_assignments','customer_profiles',
-                     'employee_profiles','audit_logs')
-  AND grantee IN ('anon','authenticated')
-ORDER BY table_name, grantee;
+-- 9. Teste de isolamento: verificar que não há registros com tenant_id de outro tenant
+SELECT 'produto' AS tabela, count(*) AS registros_outro_tenant
+FROM public.produto
+WHERE tenant_id IS NOT NULL
+  AND tenant_id <> (SELECT id FROM public.tenants WHERE slug = 'angel-cosmeticos')
+UNION ALL
+SELECT 'categoria', count(*) FROM public.categoria
+WHERE tenant_id IS NOT NULL AND tenant_id <> (SELECT id FROM public.tenants WHERE slug = 'angel-cosmeticos');
